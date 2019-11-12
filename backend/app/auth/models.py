@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, Group
 
-class MyUser(AbstractUser):
+class User(AbstractUser):
 
     phone = models.CharField(blank=True, null=True, max_length=16)
 
