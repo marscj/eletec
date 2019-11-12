@@ -30,7 +30,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'backend.urls'
-AUTH_USER_MODEL = 'auth.User'
+AUTH_USER_MODEL = 'user.MyUser'
 
 TEMPLATES = [
     {
