@@ -3,3 +3,7 @@
 2019-11-12 13:12:56.085 +04 [9226] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
 2019-11-12 13:12:56.119 +04 [9227] LOG:  database system was shut down at 2019-11-11 19:32:55 +04
 2019-11-12 13:12:56.136 +04 [9226] LOG:  database system is ready to accept connections
+2019-11-12 18:35:54.001 +04 [9226] LOG:  received smart shutdown request
+2019-11-12 18:35:54.002 +04 [9226] LOG:  background worker "logical replication launcher" (PID 9233) exited with exit code 1
+2019-11-12 18:35:54.002 +04 [9228] LOG:  shutting down
+2019-11-12 18:35:54.011 +04 [9226] LOG:  database system is shut down
