@@ -9,12 +9,22 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+
+    'rest_framework',
+    'rest_framework.authtoken',
+    'rest_framework_jwt',
+    'rest_framework_extensions',
+    
+    'rest_auth',
+    'rest_auth.registration',
+    'allauth',
+    'allauth.account',
 
     'app.user',
 ]
@@ -30,7 +40,10 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'backend.urls'
+
 AUTH_USER_MODEL = 'user.User'
+
+WSGI_APPLICATION = 'backend.wsgi.application'
 
 TEMPLATES = [
     {
@@ -47,8 +60,6 @@ TEMPLATES = [
         },
     },
 ]
-
-WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
@@ -74,12 +85,44 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Dubai'
 
 USE_I18N = True
 
-USE_L10N = True
+USE_L10N = False
 
 USE_TZ = True
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(os.path.dirname(os.path.dirname(BASE_DIR)), 'static')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(os.path.dirname(os.path.dirname(BASE_DIR)), 'media')
+
+
+ACCOUNT_USERNAME_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = 'username'
+
+SITE_ID = 1
+REST_USE_JWT = True
+REST_SESSION_LOGIN = False
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+    )
+}
+
+REST_AUTH_SERIALIZERS = {
+    'USER_DETAILS_SERIALIZER': 'app.user.serializers.UserDetailSerializer',
+    'LOGIN_SERIALIZER': 'app.user.serializers.LoginSerializer',
+    'PASSWORD_RESET_SERIALIZER': 'app.user.serializers.PasswordResetSerializer',
+}
+
+REST_AUTH_REGISTER_SERIALIZERS = {
+    'REGISTER_SERIALIZER': 'app.user.serializers.RegisterSerializer'
+}
+
+AUTHENTICATION_BACKENDS = (
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
