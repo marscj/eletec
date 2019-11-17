@@ -27,6 +27,9 @@ INSTALLED_APPS = [
     'allauth.account',
 
     'app.user',
+    'app.order',
+    'app.job',
+    'app.contract'
 ]
 
 MIDDLEWARE = [
