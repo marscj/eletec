@@ -7,9 +7,9 @@ class Order(models.Model):
 
     STATUS = (
         (1, 'NEW'),
-        (2, 'PENDING'),
-        (3, 'CONFIRM'),
-        (4, 'COMPLETE'),
+        (2, 'CONFIRM'),
+        (3, 'COMPLETE'),
+        (4, 'PENDING'),
         (5, 'CANCEL'),
         (6, 'DELETE'),
     )
