@@ -33,11 +33,11 @@ class Address(models.Model):
 
     building = models.TextField(blank=True, null=True)
 
-    officeNo = models.TextField(blank=True, null=True)
+    office_no = models.TextField(blank=True, null=True)
 
     style = models.IntegerField(blank=True, null=True, choices=STYLE_SHEET, default=1)
 
-    villaNo = models.TextField(blank=True, null=True)
+    villa_no = models.TextField(blank=True, null=True)
 
     lat = models.FloatField(blank=True, null=True)
 
