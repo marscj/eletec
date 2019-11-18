@@ -5,7 +5,7 @@ from app.user.models import User
 
 class Order(models.Model):
 
-    STATUS = (
+    STATUSHEET = (
         (1, 'NEW'),
         (2, 'CONFIRM'),
         (3, 'COMPLETE'),
@@ -14,7 +14,7 @@ class Order(models.Model):
         (6, 'DELETE'),
     )
 
-    status = models.IntegerField(blank=True, null=True, choices=STATUS, default=1)
+    status = models.IntegerField(blank=True, null=True, choices=STATUSHEET, default=1)
     
     cagetory = models.IntegerField(blank=True, null=True)
 
