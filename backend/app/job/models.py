@@ -13,7 +13,7 @@ class Job(models.Model):
 
     note = models.TextField(blank=True, null=True)
 
-    worker = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='job', blank=True, null=True)
+    worker = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='order', blank=True, null=True)
 
     contract = models.ForeignKey(Contract, on_delete=models.SET_NULL, related_name='job', blank=True, null=True)
 

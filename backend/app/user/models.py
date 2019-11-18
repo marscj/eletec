@@ -14,13 +14,13 @@ class User(AbstractUser):
 class Address(models.Model):
 
     MODELSHEET = (
-        (1, 'PERSONAL'),
-        (2, 'COMPANY')
+        (1, 'Personal'),
+        (2, 'Company')
     )
 
     STYLESHEET = (
-        (1, 'APARTMENT'),
-        (2, 'VILLA')
+        (1, 'Apartment'),
+        (2, 'Villa')
     )
 
     model = models.IntegerField(blank=True, null=True, choices=MODELSHEET, default=1)

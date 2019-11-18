@@ -6,12 +6,12 @@ from app.user.models import User
 class Order(models.Model):
 
     STATUSHEET = (
-        (1, 'NEW'),
-        (2, 'CONFIRM'),
-        (3, 'COMPLETE'),
-        (4, 'PENDING'),
-        (5, 'CANCEL'),
-        (6, 'DELETE'),
+        (1, 'New'),
+        (2, 'Confirm'),
+        (3, 'Complete'),
+        (4, 'Pending'),
+        (5, 'Cancel'),
+        (6, 'Delete'),
     )
 
     status = models.IntegerField(blank=True, null=True, choices=STATUSHEET, default=1)
@@ -42,13 +42,11 @@ class Order(models.Model):
 
     lgt = models.FloatField(blank=True, null=True)
 
-    staff = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='order', blank=True, null=True)
-
-    customer = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='order', blank=True, null=True)
-
     create_at = models.DateTimeField(auto_now_add=True)
 
     change_at = models.DateTimeField(auto_now=True)
+
+    customer = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='order', blank=True, null=True)
 
 
 
