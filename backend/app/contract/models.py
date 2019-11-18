@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.postgres.fields import ArrayField
 
 from app.user.models import User
 
@@ -16,6 +17,8 @@ class Contract(models.Model):
     date_of_issue = models.DateField(blank=True, null=True)
 
     date_of_expiry = models.DateField(blank=True, null=True)
+
+    visits = ArrayField(models.IntegerField(default=0), size=5)
 
     user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='contract', blank=True, null=True)
 
