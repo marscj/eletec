@@ -13,17 +13,17 @@ class User(AbstractUser):
 
 class Address(models.Model):
 
-    MODELSHEET = (
+    MODEL_SHEET = (
         (1, 'Personal'),
         (2, 'Company')
     )
 
-    STYLESHEET = (
+    STYLE_SHEET = (
         (1, 'Apartment'),
         (2, 'Villa')
     )
 
-    model = models.IntegerField(blank=True, null=True, choices=MODELSHEET, default=1)
+    model = models.IntegerField(blank=True, null=True, choices=MODEL_SHEET, default=1)
 
     city = models.TextField(blank=True, null=True)
 
@@ -35,7 +35,7 @@ class Address(models.Model):
 
     officeNo = models.TextField(blank=True, null=True)
 
-    style = models.IntegerField(blank=True, null=True, choices=STYLESHEET, default=1)
+    style = models.IntegerField(blank=True, null=True, choices=STYLE_SHEET, default=1)
 
     villaNo = models.TextField(blank=True, null=True)
 
