@@ -22,15 +22,15 @@ class Order(models.Model):
 
     subInfo = models.TextField(blank=True, null=True)
 
-    fromDate = models.DateTimeField(blank=True, null=True)
+    other_info = models.TextField(blank=True, null=True)
 
-    toDate = models.DateTimeField(blank=True, null=True)
+    from_date = models.DateTimeField(blank=True, null=True)
+
+    to_date = models.DateTimeField(blank=True, null=True)
 
     addr = models.TextField(blank=True, null=True)
 
     image = models.ImageField(blank=True, null=True)
-
-    otherInfo = models.TextField(blank=True, null=True)
 
     code = models.CharField(blank=True, null=True, default=get_random_string(length=4))
 
