@@ -9,7 +9,7 @@ class Contract(models.Model):
         (1, 'Economy'),
         (2, 'Standard'),
         (3, 'Premium'),
-        (4, 'Customized'),
+        (4, 'Customized')
     )
     
     option = models.IntegerField(blank=True, null=True, choices=OPTION_SHEET, default=1)
@@ -18,7 +18,8 @@ class Contract(models.Model):
 
     date_of_expiry = models.DateField(blank=True, null=True)
 
-    visits = ArrayField(models.IntegerField(default=0), size=5)
+    visit = ArrayField(models.IntegerField(default=0), size=5)
 
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='contract', blank=True, null=True)
+    customer = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='contract', blank=True, null=True)
 
+ 
