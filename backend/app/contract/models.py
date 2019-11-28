@@ -14,9 +14,9 @@ class Contract(models.Model):
     
     option = models.IntegerField(blank=True, null=True, choices=OPTION_SHEET, default=1)
 
-    date_of_issue = models.DateField(blank=True, null=True)
+    issue_date = models.DateField(blank=True, null=True)
 
-    date_of_expiry = models.DateField(blank=True, null=True)
+    expiry_date = models.DateField(blank=True, null=True)
 
     visit = ArrayField(models.IntegerField(default=0), size=5)
 
