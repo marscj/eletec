@@ -1,8 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, Group
 
-import json
-
 class User(AbstractUser):
 
     phoneNumber = models.CharField(blank=True, null=True, max_length=16)
