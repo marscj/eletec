@@ -28,5 +28,17 @@ export const asyncRouterMap = [
         meta: { title: "OrderList", keepAlive: true, permission: [] }
       }
     ]
+  },
+  {
+    path: "*",
+    redirect: "/404",
+    hidden: true
+  }
+];
+
+export const constantRouterMap = [
+  {
+    path: "/404",
+    component: () => import("@/views/error/404")
   }
 ];
