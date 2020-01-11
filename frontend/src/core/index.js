@@ -4,6 +4,8 @@ import VueStorage from "vue-ls";
 import Antd from "ant-design-vue";
 import "ant-design-vue/dist/antd.less";
 
+import "@/components/global.less";
+
 Vue.use(Antd);
 Vue.use(VueStorage, {
   namespace: "pro__", // key prefix

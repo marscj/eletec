@@ -22,9 +22,9 @@ export const asyncRouterMap = [
     redirect: "order-list",
     children: [
       {
-        path: "/admin/order-list",
+        path: "/admin/order/list",
         name: "OrderList",
-        component: () => import("@/views/order/List"),
+        component: () => import("@/views/order/List.vue"),
         meta: { title: "OrderList", keepAlive: true, permission: [] }
       }
     ]
