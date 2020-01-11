@@ -1,22 +1,21 @@
-const CompressionPlugin = require("compression-webpack-plugin")
+const CompressionPlugin = require("compression-webpack-plugin");
 
 module.exports = {
-  publicPath: '/',
-  outputDir: 'dist',
+  publicPath: "/",
+  outputDir: "dist",
   configureWebpack: {
     optimization: {
       splitChunks: {
-        chunks: 'all'
+        chunks: "all"
       }
     },
     externals: {
-      'vue': 'Vue',
-      'vue-router': 'VueRouter',
-      'vuex': 'Vuex',
-      'axios': 'axios',
-      'ant-design-vue': 'antd',
-      'lodash': '_',
-      'moment': 'moment',
+      vue: "Vue",
+      "vue-router": "VueRouter",
+      vuex: "Vuex",
+      axios: "axios",
+      lodash: "_",
+      moment: "moment"
     },
     plugins: [
       new CompressionPlugin({
@@ -34,11 +33,11 @@ module.exports = {
       errors: true
     },
     proxy: {
-      '/api': {
-        target: 'http://127.0.0.1:8000',
+      "/api": {
+        target: "http://127.0.0.1:8000",
         ws: false,
         changeOrigin: true
       }
     }
-  },
-}
+  }
+};
