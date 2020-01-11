@@ -5,20 +5,25 @@ from app.user.models import User
 
 class Order(models.Model):
 
-    STATUS_SHEET = (
-        (1, 'New'),
-        (2, 'Confirm'),
-        (3, 'Complete'),
-        (4, 'Pending'),
-        (5, 'Cancel'),
-        (6, 'Delete'),
-    )
+    class Status(models.TextChoices):
+        New = 'New'
+        Confirm = 'Confirm'
+        Complete = 'Complete'
+        Pending = 'Pending'
+        Cancel = 'Cancel'
+        Delete = 'Delete'
+
+    class Category(models.TextChoices):
+        AC = 'Air Conditioner',
+        Electrical = 'Electrical',
+        Plumbing = 'Plumbing',
+        Cleaning = 'House Cleaning'
 
     # 订单状态
-    status = models.IntegerField(blank=True, null=True, choices=STATUS_SHEET, default=1)
+    status = models.CharField(blank=True, null=True, max_length=16, choices=Status.choices, default=Status.New)
     
     # 订单类型
-    cagetory = models.IntegerField(blank=True, null=True)
+    cagetory = models.CharField(blank=True, null=True, max_length=16, choices=Category.choices, default=Category.AC)
 
     # 信息
     main_info = models.TextField(blank=True, null=True)
