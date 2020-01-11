@@ -8,7 +8,8 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "core-js": "^3.4.4"
+    "core-js": "^3.4.4",
+    "enquire.js": "^2.1.6"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.1.0",
