@@ -9,7 +9,7 @@ import {
 export const asyncRouterMap = [
   {
     path: "/admin",
-    name: "index",
+    name: "admin",
     component: BasicLayout,
     meta: { title: "Admin" },
     redirect: "/admin/order"
@@ -19,7 +19,7 @@ export const asyncRouterMap = [
     name: "Order",
     component: PageView,
     meta: { title: "Order" },
-    redirect: "order-list",
+    redirect: "/admin/order/list",
     children: [
       {
         path: "/admin/order/list",
