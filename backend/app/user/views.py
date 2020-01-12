@@ -13,7 +13,7 @@ class sendSms(views.APIView):
     throttle_classes = [throttling.UserRateThrottle]
 
     def post(self, request, *args, **kwargs):
-        phone = request.data.get('phone_number', None)
+        phone_number = request.data.get('phone_number', None)
 
         url = "https://api.twilio.com/2010-04-01/Accounts/%s/Messages.json" % settings.TWILIO_ACCOUNT_SID
 
@@ -21,13 +21,13 @@ class sendSms(views.APIView):
             response = requests.post(url, data={
             'Body':'[Eletec] Your verification code is %s' % get_random_string(4, '0123456789'),
             'From':'+15005550006', 
-            'To':'+9710557199186'
+            'To':phone_number
         }, auth=(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN))
         else :
             response = requests.post(url, data={
                 'Body':'[Eletec] Your verification code is %s' % get_random_string(4, '0123456789'),
                 'From':'+13473086886',
-                'To': phone
+                'To': phone_number
             }, auth=(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN))
 
         return Response(response.json(), status=response.status_code)
