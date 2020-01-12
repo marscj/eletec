@@ -10,7 +10,7 @@ class Contract(models.Model):
         Premium = 'Premium'
         Customized = 'Customized'
 
-    option = models.CharField(blank=True, null=True, max_length=16, choices=Option.choices, default=Economy)
+    option = models.CharField(blank=True, null=True, max_length=16, choices=Option.choices, default=Option.Economy)
 
     issue_date = models.DateField(blank=True, null=True)
 

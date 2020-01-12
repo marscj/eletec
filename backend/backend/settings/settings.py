@@ -113,19 +113,27 @@ REST_SESSION_LOGIN = False
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-    )
+    ),
+    'DEFAULT_THROTTLE_CLASSES': (  # 定义限流类
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle'
+    ),
+    'DEFAULT_THROTTLE_RATES': {   # 定义限流速率，支持秒、分、时、天的限制
+        'anon': '1/m',
+        'user': '1/m'
+    }
 }
 
-REST_AUTH_SERIALIZERS = {
-    'USER_DETAILS_SERIALIZER': 'app.user.serializers.UserDetailSerializer',
-    'LOGIN_SERIALIZER': 'app.user.serializers.LoginSerializer',
-    'PASSWORD_RESET_SERIALIZER': 'app.user.serializers.PasswordResetSerializer',
-}
+# REST_AUTH_SERIALIZERS = {
+#     'USER_DETAILS_SERIALIZER': 'app.user.serializers.UserDetailSerializer',
+#     'LOGIN_SERIALIZER': 'app.user.serializers.LoginSerializer',
+#     'PASSWORD_RESET_SERIALIZER': 'app.user.serializers.PasswordResetSerializer',
+# }
 
-REST_AUTH_REGISTER_SERIALIZERS = {
-    'REGISTER_SERIALIZER': 'app.user.serializers.RegisterSerializer'
-}
+# REST_AUTH_REGISTER_SERIALIZERS = {
+#     'REGISTER_SERIALIZER': 'app.user.serializers.RegisterSerializer'
+# }
 
-AUTHENTICATION_BACKENDS = (
-    "allauth.account.auth_backends.AuthenticationBackend",
-)
+# AUTHENTICATION_BACKENDS = (
+#     "allauth.account.auth_backends.AuthenticationBackend",
+# )

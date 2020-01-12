@@ -47,7 +47,7 @@ class Order(models.Model):
     image = models.ImageField(blank=True, null=True)
 
     # 服务码
-    code = models.CharField(blank=True, null=True, default=get_random_string(length=4))
+    code = models.CharField(blank=True, null=True, max_length=4, default=get_random_string(length=4))
 
     # 评价
     eva_info = models.TextField(blank=True, null=True)
