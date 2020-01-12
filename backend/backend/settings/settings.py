@@ -17,9 +17,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
 
     'rest_framework',
-    'rest_framework.authtoken',
     'rest_framework_jwt',
-    'rest_framework_extensions',
 
     'app.user',
     'app.order',
@@ -113,17 +111,3 @@ REST_FRAMEWORK = {
 
 TWILIO_ACCOUNT_SID = 'AC3d23045bf1213f916b7c082028412e53'
 TWILIO_AUTH_TOKEN = 'c54b1663080a2dae8eb0c7cf71bccdcf'
-
-# REST_AUTH_SERIALIZERS = {
-#     'USER_DETAILS_SERIALIZER': 'app.user.serializers.UserDetailSerializer',
-#     'LOGIN_SERIALIZER': 'app.user.serializers.LoginSerializer',
-#     'PASSWORD_RESET_SERIALIZER': 'app.user.serializers.PasswordResetSerializer',
-# }
-
-# REST_AUTH_REGISTER_SERIALIZERS = {
-#     'REGISTER_SERIALIZER': 'app.user.serializers.RegisterSerializer'
-# }
-
-# AUTHENTICATION_BACKENDS = (
-#     "allauth.account.auth_backends.AuthenticationBackend",
-# )
