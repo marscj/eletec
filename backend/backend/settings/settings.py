@@ -20,11 +20,6 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_framework_jwt',
     'rest_framework_extensions',
-    
-    'rest_auth',
-    'rest_auth.registration',
-    'allauth',
-    'allauth.account',
 
     'app.user',
     'app.order',
@@ -102,14 +97,6 @@ STATIC_ROOT = os.path.join(os.path.dirname(os.path.dirname(BASE_DIR)), 'static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(os.path.dirname(os.path.dirname(BASE_DIR)), 'media')
 
-
-ACCOUNT_USERNAME_REQUIRED = True
-ACCOUNT_AUTHENTICATION_METHOD = 'username'
-
-SITE_ID = 1
-REST_USE_JWT = True
-REST_SESSION_LOGIN = False
-
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
@@ -123,6 +110,9 @@ REST_FRAMEWORK = {
         'user': '1/m'
     }
 }
+
+TWILIO_ACCOUNT_SID = 'AC3d23045bf1213f916b7c082028412e53'
+TWILIO_AUTH_TOKEN = 'c54b1663080a2dae8eb0c7cf71bccdcf'
 
 # REST_AUTH_SERIALIZERS = {
 #     'USER_DETAILS_SERIALIZER': 'app.user.serializers.UserDetailSerializer',
