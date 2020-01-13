@@ -66,3 +66,9 @@ class WorkTime(models.Model):
     to = models.TimeField(blank=True, null=True)
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='worktime', blank=True, null=True)
+
+class VerifyCode(models.Model):
+
+    code = models.CharField(null=True, blank=True, max_length=4)
+
+    

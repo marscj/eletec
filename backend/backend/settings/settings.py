@@ -18,6 +18,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'rest_framework_jwt',
+    'phonenumber_field',
 
     'app.user',
     'app.order',
