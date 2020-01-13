@@ -23,8 +23,6 @@ class sendSms(views.APIView):
 
             phone_number = serializers.data['phone_number']
 
-            print(phone_number)
-
             if settings.DEBUG:
                 response = requests.post(url, data={
                     'Body':'[Eletec] Your verification code is %s' % get_random_string(4, '0123456789'),
@@ -39,6 +37,8 @@ class sendSms(views.APIView):
                 }, auth=(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN))
 
             if response.ok:
-                print('ok')
+                return Response(response.json(), status=response.status_code)
+            else:
+                return Response({'non_field_errors': [response.json().get('message', 'unknow error')]}, status=400)
 
-            return Response(response.json(), status=response.status_code)
+            

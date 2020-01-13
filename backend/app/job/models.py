@@ -17,3 +17,6 @@ class Job(models.Model):
     worker = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='job', blank=True, null=True)
 
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, related_name='job', blank=True, null=True)
+
+    class Meta:
+        db_table = 'job'

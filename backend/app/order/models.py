@@ -70,7 +70,8 @@ class Order(models.Model):
     # 客人
     customer = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='order', blank=True, null=True)
 
-
+    class Meta:
+        db_table = 'order'
 
 
 

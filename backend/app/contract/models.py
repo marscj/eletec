@@ -18,6 +18,9 @@ class Contract(models.Model):
 
     customer = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='contract', blank=True, null=True)
 
+    class Meta:
+        db_table = 'contract'
+
     @property
     def visit(self):
         return [0,0,0,0]
