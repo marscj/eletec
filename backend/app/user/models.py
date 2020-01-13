@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractUser, Group
 
 class User(AbstractUser):
 
-    phone_number = models.CharField(blank=True, null=True, max_length=16)
+    phone_number = models.CharField(blank=True, null=True, unique=True, max_length=16)
 
     class Meta:
         db_table = 'user'
@@ -70,4 +70,4 @@ class VerifyCode(models.Model):
 
     code = models.CharField(null=True, blank=True, max_length=4)
 
-    phone_number = models.CharField(null=True, blank=True, max_length=16)
+    phone_number = models.CharField(null=True, blank=True, unique=True, max_length=16)
