@@ -44,6 +44,9 @@ class Address(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='addr', blank=True, null=True)
 
+    class Meta:
+        db_table = 'address'
+
 class Skill(models.Model):
 
     userful = models.BooleanField(blank=True, null=True, default=False)
@@ -53,6 +56,9 @@ class Skill(models.Model):
     other = models.TextField(blank=True, null=True)
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='skill', blank=True, null=True)
+
+    class Meta:
+        db_table = 'skill'
 
 class WorkTime(models.Model):
 
@@ -66,8 +72,14 @@ class WorkTime(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='worktime', blank=True, null=True)
 
+    class Meta:
+        db_table = 'worktime'
+
 class VerifyCode(models.Model):
 
-    code = models.CharField(null=True, blank=True, max_length=4)
+    verify_code = models.CharField(null=True, blank=True, max_length=4)
 
     phone_number = models.CharField(null=True, blank=True, unique=True, max_length=16)
+
+    class Meta:
+        db_table = 'verifycode'

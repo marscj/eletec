@@ -3,6 +3,9 @@ from django.utils.crypto import get_random_string
 
 from app.user.models import User
 
+def random_string():
+    return get_random_string(length=4)
+
 class Order(models.Model):
 
     class Status(models.TextChoices):
@@ -47,7 +50,7 @@ class Order(models.Model):
     image = models.ImageField(blank=True, null=True)
 
     # 服务码
-    code = models.CharField(blank=True, null=True, max_length=4, default=get_random_string(length=4))
+    code = models.CharField(blank=True, null=True, max_length=4, default=random_string)
 
     # 评价
     eva_info = models.TextField(blank=True, null=True)
