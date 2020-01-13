@@ -38,6 +38,7 @@ class sendSms(views.APIView):
 
                 return Response(response.json(), status=response.status_code)
             else:
+                print(response.json())
                 return Response({'non_field_errors': [response.json().get('message', 'unknow error')]}, status=400)
 
         

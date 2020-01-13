@@ -16,14 +16,17 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
 
+    'phone_login',
     'rest_framework',
     'rest_framework_jwt',
+    'rest_framework.authtoken',
     'phonenumber_field',
 
     'app.user',
     'app.order',
     'app.job',
-    'app.contract'
+    'app.contract',
+    'app.sms'
 ]
 
 MIDDLEWARE = [
@@ -98,7 +101,9 @@ MEDIA_ROOT = os.path.join(os.path.dirname(os.path.dirname(BASE_DIR)), 'media')
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+        # 'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
     ),
     'DEFAULT_THROTTLE_CLASSES': (  # 定义限流类
         'rest_framework.throttling.AnonRateThrottle',
@@ -109,6 +114,16 @@ REST_FRAMEWORK = {
         'user': '1/m'
     }
 }
+
+AUTHENTICATION_BACKENDS = [
+    'phone_login.backends.phone_backend.PhoneBackend',
+    'django.contrib.auth.backends.ModelBackend'
+]
+
+SENDSMS_BACKEND = 'sendsms.backends.console.SmsBackend'
+SENDSMS_TWILIO_ACCOUNT_SID = 'AC3d23045bf1213f916b7c082028412e53'
+SENDSMS_TWILIO_AUTH_TOKEN = 'c54b1663080a2dae8eb0c7cf71bccdcf'
+SENDSMS_FROM_NUMBER = '+15005550006'
 
 TWILIO_URL = "https://api.twilio.com/2010-04-01/Accounts/AC3d23045bf1213f916b7c082028412e53/Messages.json"
 TWILIO_ACCOUNT_SID = 'AC3d23045bf1213f916b7c082028412e53'
