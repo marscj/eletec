@@ -20,12 +20,10 @@ class sendSms(views.APIView):
 
         if serializers.is_valid(raise_exception=True):
 
-            url = "https://api.twilio.com/2010-04-01/Accounts/%s/Messages.json" % settings.TWILIO_ACCOUNT_SID
-
             phone_number = serializers.data['phone_number']
             verify_code = get_random_string(4, '0123456789')
 
-            response = requests.post(url, data={
+            response = requests.post(settings.TWILIO_URL, data={
                 'Body': '[Eletec] Your verification code is %s' % verify_code,
                 'From': settings.TWILIO_FROM_NUMBER,
                 'To': phone_number
