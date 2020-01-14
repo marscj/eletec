@@ -4,11 +4,10 @@ from .base import BaseSmsBackend
 
 import requests
 import json
-
-TWILIO_URL = getattr(settings, "TWILIO_URL", "")
-TWILIO_ACCOUNT_SID = getattr(settings, "TWILIO_ACCOUNT_SID", "")
-TWILIO_AUTH_TOKEN = getattr(settings, "TWILIO_AUTH_TOKEN", "")
-SENDSMS_FROM_NUMBER = getattr(settings, "SENDSMS_FROM_NUMBER", "")
+ 
+TWILIO_URL = getattr(settings, "SENDSMS_URL", "")
+TWILIO_ACCOUNT_SID = getattr(settings, "SENDSMS_ACCOUNT_SID", "")
+TWILIO_AUTH_TOKEN = getattr(settings, "SENDSMS_AUTH_TOKEN", "")
 
 class SmsBackend(BaseSmsBackend):
     def send_messages(self, messages):
