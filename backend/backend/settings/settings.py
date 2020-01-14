@@ -26,7 +26,7 @@ INSTALLED_APPS = [
     'app.job',
     'app.contract',
     'app.sendsms',
-    'app.authorzation.phone_login'
+    'app.authorzation.phone'
 ]
 
 MIDDLEWARE = [
@@ -116,9 +116,11 @@ REST_FRAMEWORK = {
 }
 
 AUTHENTICATION_BACKENDS = [
-    'phone_login.backends.phone_backend.PhoneBackend',
+    'app.authorzation.phone.backends.phone_backend.PhoneBackend',
     'django.contrib.auth.backends.ModelBackend'
 ]
+
+SENDSMS_BACKEND = 'app.sendsms.backend.console.SmsBackend' 
 
 TWILIO_URL = "https://api.twilio.com/2010-04-01/Accounts/AC3d23045bf1213f916b7c082028412e53/Messages.json"
 TWILIO_ACCOUNT_SID = 'AC3d23045bf1213f916b7c082028412e53'
