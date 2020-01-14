@@ -48,7 +48,6 @@ class GenerateOTP(generics.CreateAPIView):
     serializer_class = PhoneTokenCreateSerializer
 
     def post(self, request, format=None):
-        # Get the patient if present or result None.
         ser = self.serializer_class(
             data=request.data,
             context={'request': request}

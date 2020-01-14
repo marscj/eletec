@@ -22,10 +22,6 @@ class PhoneNumberField(serializers.CharField):
             phone_number = '+' + phone_number
         return phone_number
 
-# class PhoneNumberSerializer(serializers.Serializer):
-    
-#     phone_number = PhoneNumberField(required=True)
-
 class PhoneTokenCreateSerializer(serializers.ModelSerializer):
     phone_number = PhoneNumberField(required=True)
 
@@ -39,7 +35,6 @@ class PhoneTokenUser(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = '__all__'
-
 
 class PhoneTokenValidateSerializer(serializers.ModelSerializer):
     pk = serializers.IntegerField()
