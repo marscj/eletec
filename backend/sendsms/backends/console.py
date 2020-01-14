@@ -7,7 +7,7 @@ This is a total ripoff of django.core.mail.backends.console
 import sys
 import threading
 
-from sendsms.backends.base import BaseSmsBackend
+from .base import BaseSmsBackend
 
 
 class SmsBackend(BaseSmsBackend):

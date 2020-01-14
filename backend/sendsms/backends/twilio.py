@@ -1,6 +1,6 @@
 from django.conf import settings
 
-from sendsms.backends.base import BaseSmsBackend
+from .base import BaseSmsBackend
 
 import requests
 import json
