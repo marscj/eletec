@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class SmsConfig(AppConfig):
+class SendSmsConfig(AppConfig):
     name = 'app.sendsms'
