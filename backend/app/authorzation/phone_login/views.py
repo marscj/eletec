@@ -8,40 +8,40 @@ from django.utils.crypto import get_random_string
 import requests
 import json
 
-from .models import VerifyCode, PhoneToken
-from .serializers import PhoneNumberSerializer, PhoneTokenCreateSerializer, PhoneTokenValidateSerializer
+from .models import PhoneToken
+from .serializers import PhoneTokenCreateSerializer, PhoneTokenValidateSerializer
 
 from .utils import user_detail
 
-class sendSms(views.APIView):
-    throttle_classes = [throttling.UserRateThrottle]
+# class sendSms(views.APIView):
+#     throttle_classes = [throttling.UserRateThrottle]
     
-    def post(self, request, *args, **kwargs):
-        serializers = PhoneNumberSerializer(data=request.data, context={'request': request})
+#     def post(self, request, *args, **kwargs):
+#         serializers = PhoneNumberSerializer(data=request.data, context={'request': request})
 
-        if serializers.is_valid(raise_exception=True):
+#         if serializers.is_valid(raise_exception=True):
 
-            phone_number = serializers.data['phone_number']
-            verify_code = get_random_string(4, '0123456789')
+#             phone_number = serializers.data['phone_number']
+#             verify_code = get_random_string(4, '0123456789')
 
-            response = requests.post(settings.TWILIO_URL, data={
-                'Body': '[Eletec] Your verification code is %s' % verify_code,
-                'From': settings.TWILIO_FROM_NUMBER,
-                'To': phone_number
-            }, auth=(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN))
+#             response = requests.post(settings.TWILIO_URL, data={
+#                 'Body': '[Eletec] Your verification code is %s' % verify_code,
+#                 'From': settings.TWILIO_FROM_NUMBER,
+#                 'To': phone_number
+#             }, auth=(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN))
                 
-            if response.ok:
-                try: 
-                    verify = VerifyCode.objects.get(phone_number=phone_number)
-                    verify.verify_code = verify_code
-                    verify.save()
-                except VerifyCode.DoesNotExist:
-                    verify = VerifyCode.objects.create(phone_number=phone_number, verify_code=verify_code)
+#             if response.ok:
+#                 try: 
+#                     verify = VerifyCode.objects.get(phone_number=phone_number)
+#                     verify.verify_code = verify_code
+#                     verify.save()
+#                 except VerifyCode.DoesNotExist:
+#                     verify = VerifyCode.objects.create(phone_number=phone_number, verify_code=verify_code)
 
-                return Response(response.json(), status=response.status_code)
-            else:
-                print(response.json())
-                return Response({'non_field_errors': [response.json().get('message', 'unknow error')]}, status=400)
+#                 return Response(response.json(), status=response.status_code)
+#             else:
+#                 print(response.json())
+#                 return Response({'non_field_errors': [response.json().get('message', 'unknow error')]}, status=400)
 
 class GenerateOTP(CreateAPIView):
     queryset = PhoneToken.objects.all()

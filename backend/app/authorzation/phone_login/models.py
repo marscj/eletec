@@ -11,14 +11,14 @@ from django.utils.translation import ugettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
 from sendsms.message import SmsMessage
 
-class VerifyCode(models.Model):
+# class VerifyCode(models.Model):
 
-    verify_code = models.CharField(null=True, blank=True, max_length=4)
+#     verify_code = models.CharField(null=True, blank=True, max_length=4)
 
-    phone_number = models.CharField(null=True, blank=True, unique=True, max_length=16)
+#     phone_number = models.CharField(null=True, blank=True, unique=True, max_length=16)
 
-    class Meta:
-        db_table = 'verifycode'
+#     class Meta:
+#         db_table = 'verifycode'
 
 class PhoneNumberUserManager(BaseUserManager):
     use_in_migrations = True
