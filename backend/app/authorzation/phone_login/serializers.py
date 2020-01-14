@@ -2,6 +2,10 @@ from rest_framework import  serializers
 
 from phonenumber_field.phonenumber import to_python
 
+from .models import PhoneToken
+
+User = get_user_model()
+
 class PhoneNumberField(serializers.CharField):
     default_error_messages = {"invalid": "Enter a valid phone number."}
 
@@ -20,3 +24,26 @@ class PhoneNumberField(serializers.CharField):
 class PhoneNumberSerializer(serializers.Serializer):
     
     phone_number = PhoneNumberField(required=True)
+
+class PhoneTokenCreateSerializer(ModelSerializer):
+    phone_number = serializers.CharField(validators=PhoneNumberField().validators)
+
+    class Meta:
+        model = PhoneToken
+        fields = ('pk', 'phone_number')
+
+
+class PhoneTokenUser(ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = '__all__'
+
+
+class PhoneTokenValidateSerializer(ModelSerializer):
+    pk = serializers.IntegerField()
+    otp = serializers.CharField(max_length=40)
+
+    class Meta:
+        model = PhoneToken
+        fields = ('pk', 'otp')
