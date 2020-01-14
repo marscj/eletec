@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class AuthorzationConfig(AppConfig):
-    name = 'app.authorzation'
+class PhoneLoginConfig(AppConfig):
+    name = 'app.authorzation.phone_login'

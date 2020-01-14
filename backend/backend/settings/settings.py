@@ -26,7 +26,7 @@ INSTALLED_APPS = [
     'app.job',
     'app.contract',
     'app.sendsms',
-    'app.authorzation'
+    'app.authorzation.phone_login'
 ]
 
 MIDDLEWARE = [
