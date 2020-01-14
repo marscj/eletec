@@ -9,7 +9,7 @@ from django.db import models
 from django.utils.crypto import get_random_string
 from django.utils.translation import ugettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
-from sendsms.message import SmsMessage
+from app.sendsms.message import SmsMessage
 
 class PhoneNumberUserManager(BaseUserManager):
     use_in_migrations = True
@@ -75,7 +75,7 @@ class PhoneToken(models.Model):
             phone_token = PhoneToken(phone_number=number)
             phone_token.otp = otp
             phone_token.save()
-        except VerifyCode.DoesNotExist:
+        except PhoneToken.DoesNotExist:
             PhoneToken.objects.create(phone_number=number, otp=otp)
 
         from_phone = getattr(settings, 'SENDSMS_FROM_NUMBER')
