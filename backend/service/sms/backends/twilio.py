@@ -1,9 +1,9 @@
+import requests
+
+from django.core.validators import ValidationError
 from django.conf import settings
 
 from .base import BaseSmsBackend
-
-import requests
-import json
  
 TWILIO_URL = getattr(settings, "SENDSMS_URL", "")
 TWILIO_ACCOUNT_SID = getattr(settings, "SENDSMS_ACCOUNT_SID", "")
@@ -14,11 +14,15 @@ class SmsBackend(BaseSmsBackend):
         for message in messages:
             for to in message.to:
                 try:
-                    requests.post(settings.TWILIO_URL, data={
+                    message = requests.post(TWILIO_URL, data={
                         'Body': message.body,
-                        'From': to,
-                        'To': message.from_phone
-                    }, auth=(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN))
-                except:
+                        'From': message.from_phone,
+                        'To': to
+                    }, auth=(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN))
+
+                    if not message.ok:
+                        print(message.json())
+                        
+                except Exception:
                     if not self.fail_silently:
                         raise

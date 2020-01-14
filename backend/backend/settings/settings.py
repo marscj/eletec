@@ -121,10 +121,12 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend'
 ]
 
-SENDSMS_BACKEND = 'service.sms.backend.console.SmsBackend'
+SENDSMS_BACKEND = 'service.sms.backends.twilio.SmsBackend'
 
 # Twilio
 SENDSMS_URL = "https://api.twilio.com/2010-04-01/Accounts/AC3d23045bf1213f916b7c082028412e53/Messages.json"
 SENDSMS_ACCOUNT_SID = 'AC3d23045bf1213f916b7c082028412e53'
 SENDSMS_AUTH_TOKEN = 'c54b1663080a2dae8eb0c7cf71bccdcf'
 SENDSMS_FROM_NUMBER = '+15005550006'
+
+PHONE_LOGIN_DEBUG = True
