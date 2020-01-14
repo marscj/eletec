@@ -25,8 +25,8 @@ INSTALLED_APPS = [
     'app.order',
     'app.job',
     'app.contract',
-    'app.sendsms',
-    'app.authorzation.phone'
+    # 'app.sendsms',
+    # 'app.authorzation.phone'
 ]
 
 MIDDLEWARE = [
