@@ -66,21 +66,16 @@ class PhoneNumberAbstactUser(AbstractUser):
     objects = PhoneNumberUserManager()
 
     class Meta:
-        verbose_name = _('user')
-        verbose_name_plural = _('users')
         abstract = True
 
 
 class PhoneToken(models.Model):
-    phone_number = PhoneNumberField(editable=False)
-    otp = models.CharField(max_length=40, editable=False)
-    timestamp = models.DateTimeField(auto_now_add=True, editable=False)
+    phone_number = PhoneNumberField(blank=True, null=True)
+    otp = models.CharField(blank=True, null=True, max_length=6)
     attempts = models.IntegerField(default=0)
     used = models.BooleanField(default=False)
 
     class Meta:
-        verbose_name = "OTP Token"
-        verbose_name_plural = "OTP Tokens"
         db_table = 'phone_token'
 
     def __str__(self):
