@@ -71,7 +71,6 @@ class GenerateOTP(generics.CreateAPIView):
         return Response(
             {'reason': ser.errors}, status=status.HTTP_406_NOT_ACCEPTABLE)
 
-
 class ValidateOTP(generics.CreateAPIView):
     queryset = PhoneToken.objects.all()
     serializer_class = PhoneTokenValidateSerializer
