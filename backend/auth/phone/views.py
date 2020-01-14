@@ -46,6 +46,7 @@ from .utils import user_detail
 class GenerateOTP(generics.CreateAPIView):
     queryset = PhoneToken.objects.all()
     serializer_class = PhoneTokenCreateSerializer
+    throttle_classes = [throttling.UserRateThrottle]
 
     def post(self, request, format=None):
         ser = self.serializer_class(
@@ -74,6 +75,7 @@ class GenerateOTP(generics.CreateAPIView):
 class ValidateOTP(generics.CreateAPIView):
     queryset = PhoneToken.objects.all()
     serializer_class = PhoneTokenValidateSerializer
+    throttle_classes = [throttling.UserRateThrottle]
 
     def post(self, request, format=None):
         # Get the patient if present or result None.

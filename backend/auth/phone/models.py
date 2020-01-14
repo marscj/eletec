@@ -81,10 +81,7 @@ class PhoneToken(models.Model):
         from_phone = getattr(settings, 'SENDSMS_FROM_NUMBER')
 
         message = SmsMessage(
-            body=render_to_string(
-                "otp_sms.txt",
-                {"otp": otp, "id": phone_token.id}
-            ),
+            body='[Eletec] Your verification code is %s' % otp,
             from_phone=from_phone,
             to=[number]
 
