@@ -1,5 +1,5 @@
 from rest_framework.response import Response
-from rest_framework import views
+from rest_framework import views, generics
 from rest_framework import throttling
 
 from django.conf import settings
@@ -43,7 +43,7 @@ from .utils import user_detail
 #                 print(response.json())
 #                 return Response({'non_field_errors': [response.json().get('message', 'unknow error')]}, status=400)
 
-class GenerateOTP(CreateAPIView):
+class GenerateOTP(generics.CreateAPIView):
     queryset = PhoneToken.objects.all()
     serializer_class = PhoneTokenCreateSerializer
 
@@ -72,7 +72,7 @@ class GenerateOTP(CreateAPIView):
             {'reason': ser.errors}, status=status.HTTP_406_NOT_ACCEPTABLE)
 
 
-class ValidateOTP(CreateAPIView):
+class ValidateOTP(generics.CreateAPIView):
     queryset = PhoneToken.objects.all()
     serializer_class = PhoneTokenValidateSerializer
 
