@@ -8,7 +8,7 @@ import json
 TWILIO_URL = getattr(settings, "TWILIO_URL", "")
 TWILIO_ACCOUNT_SID = getattr(settings, "TWILIO_ACCOUNT_SID", "")
 TWILIO_AUTH_TOKEN = getattr(settings, "TWILIO_AUTH_TOKEN", "")
-TWILIO_FROM_NUMBER = getattr(settings, "TWILIO_FROM_NUMBER", "")
+SENDSMS_FROM_NUMBER = getattr(settings, "SENDSMS_FROM_NUMBER", "")
 
 class SmsBackend(BaseSmsBackend):
     def send_messages(self, messages):

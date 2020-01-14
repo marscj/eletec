@@ -121,7 +121,8 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend'
 ]
 
-SENDSMS_BACKEND = 'service.sms.backend.console.SmsBackend' 
+SENDSMS_BACKEND = 'service.sms.backend.console.SmsBackend'
+SENDSMS_FROM_NUMBER = '+15005550006'
 
 TWILIO_URL = "https://api.twilio.com/2010-04-01/Accounts/AC3d23045bf1213f916b7c082028412e53/Messages.json"
 TWILIO_ACCOUNT_SID = 'AC3d23045bf1213f916b7c082028412e53'
