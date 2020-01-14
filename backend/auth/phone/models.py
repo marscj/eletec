@@ -9,7 +9,7 @@ from django.db import models
 from django.utils.crypto import get_random_string
 from django.utils.translation import ugettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
-from app.sendsms.message import SmsMessage
+from service.sms.message import SmsMessage
 
 class PhoneNumberUserManager(BaseUserManager):
     use_in_migrations = True
