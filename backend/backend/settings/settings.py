@@ -16,11 +16,18 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
 
+    'corsheaders',
+
     'auth.phone',
     'rest_framework',
     'rest_framework_jwt',
     'rest_framework.authtoken',
     'phonenumber_field',
+
+    'rest_auth',
+    'rest_auth.registration',
+    'allauth',
+    'allauth.account',
 
     'app.user',
     'app.order',
@@ -74,9 +81,9 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    # },
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },

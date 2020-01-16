@@ -52,7 +52,9 @@ class PhoneBackend(ModelBackend):
         return user
 
     def authenticate(self, request, phone_number=None, otp=None, **extra_fields):
-        
+        if not phone_number or not otp:
+            return 
+            
         try:
             phone_token = PhoneToken.objects.get(phone_number=phone_number, otp=otp)
         except PhoneToken.DoesNotExist:
