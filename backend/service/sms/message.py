@@ -14,11 +14,7 @@ class SmsMessage(object):
         """
         Initialize a single SMS message (which can be sent to multiple recipients)
         """
-        if to:
-            # assert not isinstance(to, basetring), '"to" argument must be a list or tuple'
-            self.to = list(to)
-        else:
-            self.to = []
+        self.to = to
 
         self.from_phone = from_phone or getattr(
             settings, "SENDSMS_DEFAULT_FROM_PHONE", ""

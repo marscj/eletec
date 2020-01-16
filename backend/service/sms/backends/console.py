@@ -14,6 +14,7 @@ class SmsBackend(BaseSmsBackend):
     def __init__(self, *args, **kwargs):
         self.stream = kwargs.pop("stream", sys.stdout)
         self._lock = threading.RLock()
+        self.ok = False
         super(SmsBackend, self).__init__(*args, **kwargs)
 
     def send_messages(self, messages):
@@ -34,6 +35,10 @@ class SmsBackend(BaseSmsBackend):
                     self.stream.flush()  # flush after each message
                 if stream_created:
                     self.close()
+
+                self.ok = True
+                
+                return self
             except:
                 if not self.fail_silently:
                     raise
@@ -45,7 +50,7 @@ class SmsBackend(BaseSmsBackend):
 def render_message(message):
     return u"""from: %(from)s\nto: %(to)s\nflash: %(flash)s\n%(body)s""" % {
         "from": message.from_phone,
-        "to": ", ".join(message.to),
+        "to": message.to,
         "flash": message.flash,
-        "body": message.body,
+        "body": message.body, 
     }

@@ -41,6 +41,8 @@ class GenerateOTP(generics.CreateAPIView):
                 from_phone=from_phone,
                 to=phone_number
             ).send()
+
+            print(message)
             
             if message.ok:
                 return Response(token.data)
