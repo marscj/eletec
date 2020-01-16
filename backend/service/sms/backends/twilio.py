@@ -12,14 +12,14 @@ TWILIO_AUTH_TOKEN = getattr(settings, "SENDSMS_AUTH_TOKEN", "")
 class SmsBackend(BaseSmsBackend):
     def send_messages(self, messages):
         for message in messages:
-            for to in message.to:
-                try:
-                    return requests.post(TWILIO_URL, data={
-                        'Body': message.body,
-                        'From': message.from_phone,
-                        'To': to
-                    }, auth=(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN))
-                        
-                except Exception:
-                    if not self.fail_silently:
-                        raise
+            try:
+                return requests.post(TWILIO_URL, data={
+                    'Body': message.body,
+                    'From': message.from_phone,
+                    'To': message.to
+                }, auth=(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN))
+                    
+            except Exception:
+                if not self.fail_silently:
+                    raise
+                

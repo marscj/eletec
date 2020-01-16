@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate, login
 from django.core.exceptions import ObjectDoesNotExist
+from django.utils.crypto import get_random_string
 from django.conf import settings
 
 from rest_framework.response import Response
@@ -7,8 +8,7 @@ from rest_framework import views, generics
 from rest_framework import throttling
 from rest_framework import status
 
-import requests
-import json
+from service.sms.message import SmsMessage
 
 from .models import PhoneToken
 from .serializers import PhoneTokenCreateSerializer, PhoneTokenValidateSerializer
@@ -21,27 +21,33 @@ class GenerateOTP(generics.CreateAPIView):
     throttle_classes = [throttling.UserRateThrottle]
 
     def post(self, request, format=None):
-        ser = self.serializer_class(
-            data=request.data,
-            context={'request': request}
-        )
-        if ser.is_valid():
-            token = PhoneToken.create_otp_for_number(
-                request.data.get('phone_number')
-            )
-            if token:
-                phone_token = self.serializer_class(
-                    token, context={'request': request}
-                )
-                data = phone_token.data
-                if getattr(settings, 'PHONE_LOGIN_DEBUG', False):
-                    data['debug'] = token.otp
-                return Response(data)
-            return Response({
-                'reason': "you can not have more than {n} attempts per day, please try again tomorrow".format(
-                    n=getattr(settings, 'PHONE_LOGIN_ATTEMPTS', 10))}, status=status.HTTP_403_FORBIDDEN)
-        return Response(
-            {'reason': ser.errors}, status=status.HTTP_406_NOT_ACCEPTABLE)
+        token = self.serializer_class(data=request.data, context={'request': request})
+        
+        if token.is_valid():
+            otp = get_random_string(4, '0123456789')
+            phone_number = token.data.get('phone_number')
+
+            try: 
+                phone_token = PhoneToken.objects.get(phone_number=phone_number)
+                phone_token.otp = otp
+                phone_token.save()
+            except PhoneToken.DoesNotExist:
+                PhoneToken.objects.create(phone_number=phone_number, otp=otp)
+
+            from_phone = getattr(settings, 'SENDSMS_FROM_NUMBER')
+
+            message = SmsMessage(
+                body='[Eletec] Your verification code is %s' % otp,
+                from_phone=from_phone,
+                to=phone_number
+            ).send()
+            
+            if message.ok:
+                return Response(token.data)
+            else:
+                return Response({'error': 'failed to send'}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(token.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ValidateOTP(generics.CreateAPIView):
     queryset = PhoneToken.objects.all()
@@ -49,24 +55,18 @@ class ValidateOTP(generics.CreateAPIView):
     throttle_classes = [throttling.UserRateThrottle]
 
     def post(self, request, format=None):
-        # Get the patient if present or result None.
-        ser = self.serializer_class(
-            data=request.data, context={'request': request}
-        )
+        ser = self.serializer_class(data=request.data, context={'request': request})
         if ser.is_valid():
-            pk = request.data.get("pk")
+            phone_number = request.data.get("phone_number")
             otp = request.data.get("otp")
             try:
-                user = authenticate(request, pk=pk, otp=otp)
+                user = authenticate(request, phone_number=phone_number, otp=otp)
                 if user:
                     last_login = user.last_login
                 login(request, user)
                 response = user_detail(user, last_login)
                 return Response(response, status=status.HTTP_200_OK)
-            except ObjectDoesNotExist:
-                return Response(
-                    {'reason': "OTP doesn't exist"},
-                    status=status.HTTP_406_NOT_ACCEPTABLE
-                )
-        return Response(
-            {'reason': ser.errors}, status=status.HTTP_406_NOT_ACCEPTABLE)
+            except Exception as e:
+                return Response(e, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(ser.errors, status=status.HTTP_400_BAD_REQUEST)

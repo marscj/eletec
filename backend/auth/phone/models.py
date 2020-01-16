@@ -6,10 +6,7 @@ from django.conf import settings
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.utils.crypto import get_random_string
-from django.utils.translation import ugettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
-from service.sms.message import SmsMessage
 
 class PhoneNumberUserManager(BaseUserManager):
     use_in_migrations = True
@@ -62,36 +59,3 @@ class PhoneToken(models.Model):
 
     class Meta:
         db_table = 'phone_token'
-
-    def __str__(self):
-        return "{} - {}".format(self.phone_number, self.otp)
-
-    @classmethod
-    def create_otp_for_number(cls, number):
-
-        otp = get_random_string(4, '0123456789')
-
-        try: 
-            phone_token = PhoneToken.objects.get(phone_number=number)
-            phone_token.otp = otp
-            phone_token.save()
-        except PhoneToken.DoesNotExist:
-            PhoneToken.objects.create(phone_number=number, otp=otp)
-
-        from_phone = getattr(settings, 'SENDSMS_FROM_NUMBER')
-
-        message = SmsMessage(
-            body='[Eletec] Your verification code is %s' % otp,
-            from_phone=from_phone,
-            to=[number]
-
-        )
-        
-        res = message.send()
-
-        if res and res.ok:
-            return phone_token
-
-
-    def generate_otp(cls):
-        return get_random_string(4, '0123456789')

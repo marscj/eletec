@@ -4,6 +4,7 @@ import uuid
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.backends import ModelBackend
+from django.core.exceptions import ValidationError
 
 from ..models import PhoneToken
 from ..utils import model_field_attr
@@ -51,30 +52,15 @@ class PhoneBackend(ModelBackend):
         user = self.user_model.objects.create_user(**kwargs)
         return user
 
-    def authenticate(self, request, pk=None, otp=None, **extra_fields):
-        if pk is None:
-            return
-
-        # 1. Validating the PhoneToken with PK and OTP.
-        # 2. Check if phone_token and otp are same, within the given time range
-        timestamp_difference = datetime.datetime.now() - datetime.timedelta(
-            minutes=getattr(settings, 'PHONE_LOGIN_MINUTES', 10)
-        )
+    def authenticate(self, request, phone_number=None, otp=None, **extra_fields):
+        
         try:
-
-            phone_token = PhoneToken.objects.get(
-                pk=pk,
-                otp=otp,
-                used=False,
-                timestamp__gte=timestamp_difference
-            )
+            phone_token = PhoneToken.objects.get(phone_number=phone_number)
+            if phone_token not otp:
+                raise ValidationError('Please enter correct verify code')
         except PhoneToken.DoesNotExist:
-            phone_token = PhoneToken.objects.get(pk=pk)
-            phone_token.attempts = phone_token.attempts + 1
-            phone_token.save()
-            raise PhoneToken.DoesNotExist
+            raise ValidationError('Please send SMS verification')
 
-        # 3. Create new user if he doesn't exist. But, if he exists login.
         user = self.user_model.objects.filter(
             **self.get_phone_number_data(phone_token.phone_number)
         ).first()
@@ -85,6 +71,5 @@ class PhoneBackend(ModelBackend):
                 **extra_fields
             )
         phone_token.used = True
-        phone_token.attempts += 1
         phone_token.save()
         return user
