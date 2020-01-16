@@ -1,7 +1,8 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser, Group
+# from django.contrib.auth.models import AbstractUser, Group
+from auth.phone.models import PhoneNumberAbstactUser
 
-class User(AbstractUser):
+class User(PhoneNumberAbstactUser):
     
     class Meta:
         db_table = 'user'
