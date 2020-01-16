@@ -38,6 +38,32 @@ export const asyncRouterMap = [
 
 export const constantRouterMap = [
   {
+    path: "/",
+    component: BlankLayout,
+    redirect: "/home",
+    hidden: true,
+    children: [
+      {
+        path: "home",
+        name: "home",
+        component: () => import("@/views/Home")
+      }
+    ]
+  },
+  {
+    path: "/user",
+    component: UserLayout,
+    redirect: "/user/login",
+    hidden: true,
+    children: [
+      {
+        path: "login",
+        name: "login",
+        component: () => import("@/views/user/Login")
+      }
+    ]
+  },
+  {
     path: "/404",
     component: () => import("@/views/error/404")
   }
