@@ -17,16 +17,7 @@ const assetsCDN = {
     axios: "axios",
     lodash: "_",
     moment: "moment"
-  },
-  css: ["unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"],
-  js: [
-    "//cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js",
-    "//cdn.jsdelivr.net/npm/vue-router@3.1.3/dist/vue-router.min.js",
-    "//cdn.jsdelivr.net/npm/vuex@3.1.2/dist/vuex.min.js",
-    "//cdn.jsdelivr.net/npm/axios@0.19.0/dist/axios.min.js",
-    "//cdn.jsdelivr.net/npm/moment@2.24.0/moment.min.js",
-    "//cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"
-  ]
+  }
 };
 
 const vueConfig = {

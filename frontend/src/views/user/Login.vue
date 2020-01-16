@@ -1,46 +1,44 @@
 <template>
-  <div
-    class="h-screen flex w-full bg-img vx-row no-gutter items-center justify-center"
-    id="page-login"
-  >
-    <div class="vx-col sm:w-1/2 md:w-1/2 lg:w-3/4 xl:w-3/5 sm:m-0 m-4">
-      <vx-card>
-        <div slot="no-body" class="full-page-bg-color">
-          <div class="vx-row no-gutter justify-center items-center">
-            <div class="vx-col hidden lg:block lg:w-1/2">
-              <img
-                src="@/assets/images/login.png"
-                alt="login"
-                class="mx-auto"
-              />
+  <div class="flex items-center justify-center">
+    <div class="sm:w-1/2 md:w-1/2 lg:w-3/4 xl:w-3/5 sm:m-0 m-4">
+      <div class="shadow-xl">
+        <div class="flex flex-row " style="background-color:#eff2f7;">
+          <div class="w-1/2 p-16">
+            <img
+              src="@/assets/images/login.png"
+              alt="login"
+              class="object-fill mx-auto"
+            />
+          </div>
+
+          <div class="w-1/2 bg-white">
+            <div class="px-8 pt-8">
+              <h4 class="text-xl">Login</h4>
+              <p>Welcome back, please login to your account.</p>
             </div>
-
-            <div class="vx-col sm:w-full md:w-full lg:w-1/2 d-theme-dark-bg">
-              <div class="px-8 pt-8 login-tabs-container">
-                <div class="vx-card__title mb-4">
-                  <h4 class="mb-4">Login</h4>
-                  <p>Welcome back, please login to your account.</p>
-                </div>
-
-                <login-email></login-email>
-                <!-- <login-user-name > </login-user-name> -->
-              </div>
+            <div class="px-8">
+              <a-tabs :tabBarStyle="{ borderBottom: 'unset' }">
+                <a-tab-pane tab="USERNAME" key="1">
+                  <login-phone />
+                </a-tab-pane>
+                <a-tab-pane tab="PHONE" key="2"></a-tab-pane>
+              </a-tabs>
             </div>
           </div>
         </div>
-      </vx-card>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 // import LoginUserName from "./LoginUserName.vue"
-import LoginEmail from "./LoginEmail.vue";
+import LoginPhone from "./LoginPhone";
 
 export default {
   components: {
     // LoginUserName,
-    LoginEmail
+    LoginPhone
   }
 };
 </script>

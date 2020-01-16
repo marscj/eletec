@@ -91,11 +91,14 @@
         }
       }
     </style>
-    <!-- require cdn assets css -->
-    <% for (var i in htmlWebpackPlugin.options.cdn &&
-    htmlWebpackPlugin.options.cdn.css) { %>
-    <link rel="stylesheet" href="<%= htmlWebpackPlugin.options.cdn.css[i] %>" />
-    <% } %>
+    <link
+      href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/ant-design-vue@1.4.10/dist/antd.min.css"
+    />
   </head>
   <body>
     <noscript>
@@ -113,14 +116,12 @@
         </div>
       </div>
     </div>
-    <!-- require cdn assets js -->
-    <% for (var i in htmlWebpackPlugin.options.cdn &&
-    htmlWebpackPlugin.options.cdn.js) { %>
-    <script
-      type="text/javascript"
-      src="<%= htmlWebpackPlugin.options.cdn.js[i] %>"
-    ></script>
-    <% } %>
-    <!-- built files will be auto injected -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-router@3.1.3/dist/vue-router.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuex@3.1.2/dist/vuex.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/moment.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/ant-design-vue@1.4.10/dist/antd.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
   </body>
 </html>
