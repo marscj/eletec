@@ -11,17 +11,19 @@
             />
           </div>
 
-          <div class="w-1/2 bg-white">
-            <div class="px-8 pt-8">
+          <div class="w-1/2 bg-white py-10">
+            <div class="px-8">
               <h4 class="text-xl">Login</h4>
               <p>Welcome back, please login to your account.</p>
             </div>
             <div class="px-8">
               <a-tabs :tabBarStyle="{ borderBottom: 'unset' }">
                 <a-tab-pane tab="USERNAME" key="1">
+                  <login-username />
+                </a-tab-pane>
+                <a-tab-pane tab="PHONE" key="2">
                   <login-phone />
                 </a-tab-pane>
-                <a-tab-pane tab="PHONE" key="2"></a-tab-pane>
               </a-tabs>
             </div>
           </div>
@@ -32,12 +34,12 @@
 </template>
 
 <script>
-// import LoginUserName from "./LoginUserName.vue"
+import LoginUsername from "./LoginUsername.vue";
 import LoginPhone from "./LoginPhone";
 
 export default {
   components: {
-    // LoginUserName,
+    LoginUsername,
     LoginPhone
   }
 };
