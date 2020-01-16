@@ -17,7 +17,6 @@ INSTALLED_APPS = [
     'django.contrib.sites',
 
     'auth.phone',
-    'phone_login',
     'rest_framework',
     'rest_framework_jwt',
     'rest_framework.authtoken',
@@ -99,36 +98,63 @@ STATIC_ROOT = os.path.join(os.path.dirname(os.path.dirname(BASE_DIR)), 'static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(os.path.dirname(os.path.dirname(BASE_DIR)), 'media')
 
+# 跨域
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_HEADERS = ('*',)
+CORS_ALLOW_METHODS = ('*',)
+
 REST_FRAMEWORK = {
+    # 认证
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.TokenAuthentication',
-        # 'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
     ),
-    'DEFAULT_THROTTLE_CLASSES': (  # 定义限流类
+    # 自定义返回结果
+    'DEFAULT_RENDERER_CLASSES': [
+        'middleware.response.CustomJSONRenderer',
+    ],
+    # 过滤
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend',
+        'rest_framework.filters.SearchFilter',
+        'rest_framework.filters.OrderingFilter',
+    ],
+    # 定义限流类
+    'DEFAULT_THROTTLE_CLASSES': (  
         'rest_framework.throttling.AnonRateThrottle',
         'rest_framework.throttling.UserRateThrottle'
     ),
-    'DEFAULT_THROTTLE_RATES': {   # 定义限流速率，支持秒、分、时、天的限制
+    # 定义限流速率，支持秒、分、时、天的限制
+    'DEFAULT_THROTTLE_RATES': {   
         'anon': '1/m',
         'user': '1/m'
-    }
+    },
+    # 自定义分页
+    'DEFAULT_PAGINATION_CLASS': 'middleware.pagination.CustomPagination',
 }
 
 AUTHENTICATION_BACKENDS = [
-    'auth.phone.backends.phone_backend.PhoneBackend',
-    # 'phone_login.backends.phone_backend.PhoneBackend',
-    'django.contrib.auth.backends.ModelBackend'
+    # 短信认证登陆
+    'auth.phone.backends.phone_backend.PhoneBackend', 
+    # 用户名密码登陆
+    "allauth.account.auth_backends.AuthenticationBackend",
 ]
+
+PHONE_LOGIN_DEBUG = True
+
+REST_USE_JWT = True
+REST_SESSION_LOGIN = False
+ACCOUNT_USERNAME_REQUIRED = True
+ACCOUNT_EMAIL_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'username'
 
 # SENDSMS_BACKEND = 'service.sms.backends.twilio.SmsBackend'
 SENDSMS_BACKEND = 'service.sms.backends.console.SmsBackend'
-# SENDSMS_BACKEND = 'sendsms.backends.console.SmsBackend'
 
 # Twilio
 SENDSMS_URL = "https://api.twilio.com/2010-04-01/Accounts/AC3d23045bf1213f916b7c082028412e53/Messages.json"
 SENDSMS_ACCOUNT_SID = 'AC3d23045bf1213f916b7c082028412e53'
 SENDSMS_AUTH_TOKEN = 'c54b1663080a2dae8eb0c7cf71bccdcf'
 SENDSMS_FROM_NUMBER = '+15005550006'
-
-PHONE_LOGIN_DEBUG = True
