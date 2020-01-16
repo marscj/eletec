@@ -41,8 +41,6 @@ class GenerateOTP(generics.CreateAPIView):
                 from_phone=from_phone,
                 to=phone_number
             ).send()
-
-            print(message)
             
             if message.ok:
                 return Response(token.data)
@@ -57,8 +55,8 @@ class ValidateOTP(generics.CreateAPIView):
     throttle_classes = [throttling.UserRateThrottle]
 
     def post(self, request, format=None):
-        ser = self.serializer_class(data=request.data, context={'request': request})
-        if ser.is_valid():
+        token = self.serializer_class(data=request.data, context={'request': request})
+        if token.is_valid():
             phone_number = request.data.get("phone_number")
             otp = request.data.get("otp")
             try:
@@ -68,7 +66,8 @@ class ValidateOTP(generics.CreateAPIView):
                 login(request, user)
                 response = user_detail(user, last_login)
                 return Response(response, status=status.HTTP_200_OK)
-            except Exception as e:
+            except ValueError as e:
+                print('6666',e)
                 return Response(e, status=status.HTTP_400_BAD_REQUEST)
 
-        return Response(ser.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(token.errors, status=status.HTTP_400_BAD_REQUEST)

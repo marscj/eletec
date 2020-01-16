@@ -16,6 +16,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
 
+    # 'auth.phone',
+    'phone_login',
     'rest_framework',
     'rest_framework_jwt',
     'rest_framework.authtoken',
@@ -25,9 +27,6 @@ INSTALLED_APPS = [
     'app.order',
     'app.job',
     'app.contract',
-
-    'auth.phone',
-    'service.sms'
 ]
 
 MIDDLEWARE = [

@@ -55,9 +55,7 @@ class PhoneBackend(ModelBackend):
     def authenticate(self, request, phone_number=None, otp=None, **extra_fields):
         
         try:
-            phone_token = PhoneToken.objects.get(phone_number=phone_number)
-            if phone_token not otp:
-                raise ValidationError('Please enter correct verify code')
+            phone_token = PhoneToken.objects.get(phone_number=phone_number, otp=otp)
         except PhoneToken.DoesNotExist:
             raise ValidationError('Please send SMS verification')
 
