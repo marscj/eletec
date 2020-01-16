@@ -9,7 +9,7 @@
           <div class="vx-row no-gutter justify-center items-center">
             <div class="vx-col hidden lg:block lg:w-1/2">
               <img
-                src="@/assets/images/pages/login.png"
+                src="@/assets/images/login.png"
                 alt="login"
                 class="mx-auto"
               />
@@ -44,17 +44,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss">
-.login-tabs-container {
-  min-height: 400px;
-
-  .con-tab {
-    padding-bottom: 14px;
-  }
-
-  .con-slot-tabs {
-    margin-top: 1rem;
-  }
-}
-</style>
