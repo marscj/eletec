@@ -86,8 +86,12 @@ class PhoneToken(models.Model):
             to=[number]
 
         )
-        message.send()
-        return phone_token
+        
+        res = message.send()
+
+        if res and res.ok:
+            return phone_token
+
 
     def generate_otp(cls):
         return get_random_string(4, '0123456789')

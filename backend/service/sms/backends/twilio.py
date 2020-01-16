@@ -14,14 +14,11 @@ class SmsBackend(BaseSmsBackend):
         for message in messages:
             for to in message.to:
                 try:
-                    message = requests.post(TWILIO_URL, data={
+                    return requests.post(TWILIO_URL, data={
                         'Body': message.body,
                         'From': message.from_phone,
                         'To': to
                     }, auth=(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN))
-
-                    if not message.ok:
-                        print(message.json())
                         
                 except Exception:
                     if not self.fail_silently:
