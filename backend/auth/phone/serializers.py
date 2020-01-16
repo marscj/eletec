@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
-from rest_framework import  serializers
+from django.contrib.auth import authenticate, login
 
+from rest_framework import  serializers
 from phonenumber_field.serializerfields import PhoneNumberField
 
 from .models import PhoneToken
@@ -24,10 +25,19 @@ class PhoneTokenUser(serializers.ModelSerializer):
 
 class PhoneTokenValidateSerializer(serializers.ModelSerializer):
     phone_number = PhoneNumberField(required=True)
-    otp = serializers.CharField(max_length=4)
+    otp = serializers.CharField(required=True, max_length=4)
 
     class Meta:
         model = PhoneToken
-        fields = (
-            'phone_number', 'otp'
-        )
+        fields = '__all__'
+    
+    def validate(self, validate_data):
+        phone_number = validate_data.get("phone_number")
+        otp = validate_data.get("otp")
+        
+        try:
+            PhoneToken.objects.get(phone_number=phone_number, otp=otp)    
+        except PhoneToken.DoesNotExist:
+            raise serializers.ValidationError({'otp': 'Verification code error'})
+            
+        return validate_data

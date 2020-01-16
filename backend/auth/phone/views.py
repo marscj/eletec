@@ -57,17 +57,17 @@ class ValidateOTP(generics.CreateAPIView):
     def post(self, request, format=None):
         token = self.serializer_class(data=request.data, context={'request': request})
         if token.is_valid():
-            phone_number = request.data.get("phone_number")
-            otp = request.data.get("otp")
-            try:
-                user = authenticate(request, phone_number=phone_number, otp=otp)
-                if user:
-                    last_login = user.last_login
-                login(request, user)
-                response = user_detail(user, last_login)
-                return Response(response, status=status.HTTP_200_OK)
-            except ValueError as e:
-                print('6666',e)
-                return Response(e, status=status.HTTP_400_BAD_REQUEST)
+
+            phone_number = token.data.get("phone_number")
+            otp = token.data.get("otp")
+            
+            user = authenticate(request, phone_number=phone_number, otp=otp)
+
+            if user:
+                last_login = user.last_login
+                
+            login(request, user)
+            response = user_detail(user, last_login)
+            return Response(response, status=status.HTTP_200_OK)
 
         return Response(token.errors, status=status.HTTP_400_BAD_REQUEST)

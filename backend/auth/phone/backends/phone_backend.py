@@ -4,7 +4,6 @@ import uuid
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.backends import ModelBackend
-from django.core.exceptions import ValidationError
 
 from ..models import PhoneToken
 from ..utils import model_field_attr
@@ -57,7 +56,7 @@ class PhoneBackend(ModelBackend):
         try:
             phone_token = PhoneToken.objects.get(phone_number=phone_number, otp=otp)
         except PhoneToken.DoesNotExist:
-            raise ValidationError('Please send SMS verification')
+            raise PhoneToken.DoesNotExist
 
         user = self.user_model.objects.filter(
             **self.get_phone_number_data(phone_token.phone_number)
