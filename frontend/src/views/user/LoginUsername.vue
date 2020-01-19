@@ -27,10 +27,10 @@
       </a-form-item>
     </a-form>
 
-    <div class="flex flex-wrap justify-between py-5">
+    <a-row type="flex" justify="space-between" align="middle">
       <a-button type="primary" ghost>Register</a-button>
       <a-button type="primary" ghost>Login</a-button>
-    </div>
+    </a-row>
   </div>
 </template>
 

@@ -4,7 +4,7 @@ import VueStorage from "vue-ls";
 import "@/components/global.less";
 
 import Antd from "ant-design-vue";
-import "ant-design-vue/dist/antd.less";
+import "ant-design-vue/dist/antd.css";
 
 import { VueAxios } from "@/utils/request";
 

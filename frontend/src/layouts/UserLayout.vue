@@ -1,12 +1,6 @@
 <template>
-  <div class="layout--full-page h-screen flex flex-col">
-    <route-view class="h-full"></route-view>
-
-    <div class="text-center">
-      <div class="m-10">
-        Copyright &copy; 2020 Eletec
-      </div>
-    </div>
+  <div class="layout--full-page">
+    <route-view></route-view>
   </div>
 </template>
 
@@ -32,6 +26,7 @@ export default {
 
 <style lang="less" scoped>
 .layout--full-page {
+  height: 100%;
   background: #e3e5e9 url(~@/assets/background.svg) no-repeat 50%;
   background-position: center;
   background-repeat: no-repeat;
