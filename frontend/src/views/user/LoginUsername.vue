@@ -27,10 +27,10 @@
       </a-form-item>
     </a-form>
 
-    <a-row type="flex" justify="space-between" align="middle">
+    <!-- <a-row type="flex" justify="space-between" align="middle">
       <a-button type="primary" ghost>Register</a-button>
       <a-button type="primary" ghost>Login</a-button>
-    </a-row>
+    </a-row> -->
   </div>
 </template>
 

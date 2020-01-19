@@ -34,6 +34,10 @@
         </a-col>
       </a-row>
     </a-form>
+    <!-- <a-row type="flex" justify="space-between" align="middle">
+      <a-button type="primary" ghost>Register1</a-button>
+      <a-button type="primary" ghost>Login2</a-button>
+    </a-row> -->
   </div>
 </template>
 
