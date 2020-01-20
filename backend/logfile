@@ -3,3 +3,7 @@
 2020-01-19 09:51:11.440 +04 [1541] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
 2020-01-19 09:51:11.464 +04 [1542] LOG:  database system was shut down at 2020-01-12 18:30:31 +04
 2020-01-19 09:51:11.472 +04 [1541] LOG:  database system is ready to accept connections
+2020-01-19 17:02:24.458 +04 [1541] LOG:  received smart shutdown request
+2020-01-19 17:02:24.461 +04 [1541] LOG:  background worker "logical replication launcher" (PID 1548) exited with exit code 1
+2020-01-19 17:02:24.461 +04 [1543] LOG:  shutting down
+2020-01-19 17:02:24.471 +04 [1541] LOG:  database system is shut down

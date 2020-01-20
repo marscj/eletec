@@ -1,0 +1,16 @@
+# Dockerfile*
+# docker-compose*
+# .dockerignore
+.git
+.env
+*/bin
+*/obj
+README.md
+LICENSE
+.vscode
+logfile
+.db.sqlite3
+log
+.DS_Store
+/media
+/static
