@@ -29,7 +29,7 @@
                   <h2 style="text-align: center;">Login</h2>
                 </div>
                 <div>
-                  <login-username style="padding: 20px 20px;" />
+                  <login-phone style="padding: 20px 20px;" />
                   <!-- <a-tabs
                     :tabBarStyle="{
                       textAlign: 'center',
@@ -64,13 +64,13 @@
 </template>
 
 <script>
-import LoginUsername from "./LoginUsername.vue";
-// import LoginPhone from "./LoginPhone";
+// import LoginUsername from "./LoginUsername.vue";
+import LoginPhone from "./LoginPhone";
 
 export default {
   components: {
-    LoginUsername
-    // LoginPhone
+    // LoginUsername
+    LoginPhone
   }
 };
 </script>
