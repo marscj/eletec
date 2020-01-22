@@ -17,9 +17,16 @@ export function phoneValidate(parameter) {
   });
 }
 
-export function Info() {
+export function getInfo() {
   return axios({
     url: api.Info,
+    method: "get"
+  });
+}
+
+export function logout() {
+  return axios({
+    url: api.Logout,
     method: "get"
   });
 }
