@@ -20,14 +20,8 @@ INSTALLED_APPS = [
 
     'auth.phone',
     'rest_framework',
-    'rest_framework_jwt',
     'rest_framework.authtoken',
     'phonenumber_field',
-
-    'rest_auth',
-    'rest_auth.registration',
-    'allauth',
-    'allauth.account',
 
     'app.user',
     'app.order',
@@ -119,7 +113,6 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.TokenAuthentication',
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
     ),
     # 自定义返回结果
     'DEFAULT_RENDERER_CLASSES': [

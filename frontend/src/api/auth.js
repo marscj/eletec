@@ -16,3 +16,10 @@ export function phoneValidate(parameter) {
     data: parameter
   });
 }
+
+export function Info() {
+  return axios({
+    url: api.Info,
+    method: "get"
+  });
+}

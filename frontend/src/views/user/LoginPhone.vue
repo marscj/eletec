@@ -169,7 +169,6 @@ export default {
     },
     loginSuccess() {
       this.$router.push({ path: "/" });
-      // 延迟 1 秒显示欢迎信息
       setTimeout(() => {
         this.$notification.success({
           message: "Welcome",
