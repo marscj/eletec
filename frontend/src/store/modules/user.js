@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { phoneGenerate, phoneValidate } from "@/api/phone_login";
+import { phoneValidate } from "@/api/auth";
 import { ACCESS_TOKEN } from "@/store/mutation-types";
 import { welcome } from "@/utils/util";
 
