@@ -11,7 +11,7 @@
     "ant-design-vue": "^1.4.10",
     "core-js": "^3.4.4",
     "enquire.js": "^2.1.6",
-    "tailwindcss": "^1.1.4",
+    "vee-validate": "^3.2.2",
     "vue-ls": "^3.2.1",
     "vue-svg-component-runtime": "^1.0.1"
   },

@@ -1,24 +1,31 @@
 <template>
-  <div>
-    <a-form>
+  <validation-observer ref="observer">
+    <a-form :form="form" @submit="handleSubmit">
       <a-row :gutter="16">
         <a-col :span="6">
           <a-input size="large" type="text" placeholder="+971" disabled />
         </a-col>
         <a-col :span="18">
           <a-form-item>
-            <a-input
-              size="large"
-              type="text"
-              placeholder="Phone Number"
-              v-model="from.phone_number"
+            <validation-provider
+              vid="phone_number"
+              name="phone number"
+              v-slot="{ errors }"
             >
-              <a-icon
-                slot="prefix"
-                type="mobile"
-                :style="{ color: 'rgba(0,0,0,.25)' }"
-              />
-            </a-input>
+              <a-input
+                size="large"
+                type="text"
+                placeholder="Phone Number"
+                v-model="from.phone_number"
+              >
+                <a-icon
+                  slot="prefix"
+                  type="mobile"
+                  :style="{ color: 'rgba(0,0,0,.25)' }"
+                />
+              </a-input>
+              <span class="errorText">{{ errors[0] }}</span>
+            </validation-provider>
           </a-form-item>
         </a-col>
       </a-row>
@@ -26,18 +33,25 @@
       <a-row :gutter="16">
         <a-col :span="16">
           <a-form-item>
-            <a-input
-              size="large"
-              type="text"
-              placeholder="Verify Code"
-              v-model="from.otp"
+            <validation-provider
+              vid="otp"
+              name="verify code"
+              v-slot="{ errors }"
             >
-              <a-icon
-                slot="prefix"
-                type="mail"
-                :style="{ color: 'rgba(0,0,0,.25)' }"
-              />
-            </a-input>
+              <a-input
+                size="large"
+                type="text"
+                placeholder="Verify Code"
+                v-model="from.otp"
+              >
+                <a-icon
+                  slot="prefix"
+                  type="mail"
+                  :style="{ color: 'rgba(0,0,0,.25)' }"
+                />
+              </a-input>
+              <span class="errorText">{{ errors[0] }}</span>
+            </validation-provider>
           </a-form-item>
         </a-col>
         <a-col :span="8">
@@ -52,16 +66,28 @@
         </a-col>
       </a-row>
       <a-row type="flex" justify="center" align="middle">
-        <a-button type="primary" ghost size="large" style="width: 100%;"
+        <a-button
+          type="primary"
+          ghost
+          size="large"
+          style="width: 100%;"
+          @click="handleSubmit"
+          :loading="state.loginBtn"
+          :disabled="state.loginBtn"
           >Login</a-button
         >
       </a-row>
     </a-form>
-  </div>
+    <validation-provider name="non_field_errors" v-slot="{ errors }">
+      <span class="errorText">{{ errors[0] }}</span>
+    </validation-provider>
+  </validation-observer>
 </template>
 
 <script>
 import { phoneGenerate } from "@/api/auth";
+import { mapActions, mapGetters } from "vuex";
+import { timeFix } from "@/utils/util";
 
 export default {
   data() {
@@ -75,7 +101,14 @@ export default {
       from: {}
     };
   },
+  computed: {
+    phone_number() {
+      return "+971" + this.from.phone_number;
+    }
+  },
   methods: {
+    ...mapActions(["Login"]),
+
     generate(e) {
       e.preventDefault();
 
@@ -91,8 +124,59 @@ export default {
 
       const hide = this.$message.loading("Sending", 0);
       phoneGenerate({
-        phone_number: "+971" + this.from.phone_number
-      }).then(res => {});
+        phone_number: this.phone_number
+      })
+        .then(res => {
+          setTimeout(hide, 2500);
+          this.$notification["success"]({
+            message: "Prompt",
+            description: "Sent successfully",
+            duration: 3
+          });
+        })
+        .catch(error => {
+          setTimeout(hide, 1);
+          clearInterval(interval);
+          this.state.time = 60;
+          this.state.smsSendBtn = false;
+
+          if (error.response) {
+            this.$refs.observer.setErrors(error.response.data.result);
+          }
+        })
+        .finally(() => {});
+    },
+    handleSubmit() {
+      const { Login } = this;
+
+      this.state.loginBtn = true;
+
+      Login({
+        phone_number: this.phone_number,
+        otp: this.from.otp
+      })
+        .then(res => {
+          this.loginSuccess();
+        })
+        .catch(error => {
+          if (error.response) {
+            this.$refs.observer.setErrors(error.response.data.result);
+          }
+        })
+        .finally(() => {
+          this.state.loginBtn = false;
+        });
+    },
+    loginSuccess() {
+      this.$router.push({ path: "/" });
+      // 延迟 1 秒显示欢迎信息
+      setTimeout(() => {
+        this.$notification.success({
+          message: "Welcome",
+          description: `${timeFix()}, Welcome back`
+        });
+      }, 1000);
+      this.isLoginError = false;
     }
   }
 };
