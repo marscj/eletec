@@ -138,8 +138,8 @@ REST_FRAMEWORK = {
     ),
     # 定义限流速率，支持秒、分、时、天的限制
     'DEFAULT_THROTTLE_RATES': {   
-        'anon': '1/m',
-        'user': '1/m'
+        'anon': '100/day',
+        'user': '100/day'
     },
     # 自定义分页
     'DEFAULT_PAGINATION_CLASS': 'middleware.pagination.CustomPagination',
