@@ -14,20 +14,30 @@ export const asyncRouterMap = [
     name: "admin",
     component: BasicLayout,
     meta: { title: "Admin" },
-    redirect: defaultRoutePath
-  },
-  {
-    path: "/admin/order",
-    name: "Order",
-    component: PageView,
-    meta: { title: "Order" },
-    redirect: "/admin/order/list",
+    redirect: defaultRoutePath,
     children: [
       {
-        path: "/admin/order/list",
-        name: "OrderList",
-        component: () => import("@/views/order/List.vue"),
-        meta: { title: "OrderList", keepAlive: true, permission: [] }
+        path: "/admin/order",
+        name: "Order",
+        component: PageView,
+        meta: { title: "Order" },
+        redirect: "/admin/order/list",
+        children: [
+          {
+            path: "/admin/order/list/:pageNo([1-9]\\d*)?",
+            name: "Orders",
+            hideChildrenInMenu: true,
+            component: () => import("@/views/order/List.vue"),
+            meta: { title: "Orders", keepAlive: true, permission: [] }
+          }
+        ]
+      },
+      {
+        path: "/admin/order/list1/:pageNo([1-9]\\d*)?",
+        name: "Orders1",
+        hideChildrenInMenu: true,
+        component: () => import("@/views/order/List1.vue"),
+        meta: { title: "Orders", keepAlive: true, permission: [] }
       }
     ]
   },
