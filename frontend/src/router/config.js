@@ -6,7 +6,7 @@ import {
   PageView
 } from "@/layouts";
 
-export const defaultRoutePath = "/admin/order";
+export const defaultRoutePath = "/admin/orders";
 
 export const asyncRouterMap = [
   {
@@ -17,12 +17,6 @@ export const asyncRouterMap = [
     redirect: defaultRoutePath,
     children: [
       {
-        path: "/admin/order",
-        name: "Order",
-        redirect: "/admin/orders",
-        hidden: true
-      },
-      {
         path: "/admin/orders/:pageNo([1-9]\\d*)?",
         name: "Orders",
         component: () => import("@/views/order/List.vue"),
@@ -30,7 +24,19 @@ export const asyncRouterMap = [
           title: "Orders",
           icon: "table",
           keepAlive: true,
-          permission: []
+          permission: ["admin"]
+        }
+      },
+      {
+        path: "/admin/order/:id",
+        name: "Order",
+        hidden: true,
+        component: () => import("@/views/order/List.vue"),
+        meta: {
+          title: "Order",
+          icon: "table",
+          keepAlive: true,
+          permission: ["admin"]
         }
       }
     ]

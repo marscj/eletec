@@ -125,10 +125,10 @@ REST_FRAMEWORK = {
         'rest_framework.filters.OrderingFilter',
     ],
     # 定义限流类
-    'DEFAULT_THROTTLE_CLASSES': (  
-        'rest_framework.throttling.AnonRateThrottle',
-        'rest_framework.throttling.UserRateThrottle'
-    ),
+    # 'DEFAULT_THROTTLE_CLASSES': (  
+    #     'rest_framework.throttling.AnonRateThrottle',
+    #     'rest_framework.throttling.UserRateThrottle'
+    # ),
     # 定义限流速率，支持秒、分、时、天的限制
     'DEFAULT_THROTTLE_RATES': {   
         'anon': '100/day',
