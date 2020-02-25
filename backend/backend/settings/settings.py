@@ -153,11 +153,11 @@ ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_EMAIL_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'username'
 
-# SENDSMS_BACKEND = 'service.sms.backends.twilio.SmsBackend'
-SENDSMS_BACKEND = 'service.sms.backends.console.SmsBackend'
+SENDSMS_BACKEND = 'service.sms.backends.twilio.SmsBackend'
+# SENDSMS_BACKEND = 'service.sms.backends.console.SmsBackend'
 
 # Twilio
-SENDSMS_URL = "https://api.twilio.com/2010-04-01/Accounts/AC3d23045bf1213f916b7c082028412e53/Messages.json"
-SENDSMS_ACCOUNT_SID = 'AC3d23045bf1213f916b7c082028412e53'
-SENDSMS_AUTH_TOKEN = 'c54b1663080a2dae8eb0c7cf71bccdcf'
-SENDSMS_FROM_NUMBER = '+15005550006'
+SENDSMS_URL = "https://api.twilio.com/2010-04-01/Accounts/ACda91c280b2cd6511484f79ec3f3e03cd/Messages.json"
+SENDSMS_ACCOUNT_SID = 'ACda91c280b2cd6511484f79ec3f3e03cd'
+SENDSMS_AUTH_TOKEN = '6f00b28a9cdf341c31481a6f549b40da'
+SENDSMS_FROM_NUMBER = '+15804564076'
