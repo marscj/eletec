@@ -1,9 +1,15 @@
 <template>
-  <div>
-    sdfsaf
-  </div>
+  <page-view>
+    sdfsd
+  </page-view>
 </template>
 
 <script>
-export default {};
+import { PageView } from "@/layouts";
+
+export default {
+  components: {
+    PageView
+  }
+};
 </script>
