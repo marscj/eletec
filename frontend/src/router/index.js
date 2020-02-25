@@ -1,6 +1,9 @@
 import Vue from "vue";
 import Router from "vue-router";
-import { constantRouterMap, asyncRouterMap } from "./config";
+import store from "@/store";
+import { ACCESS_TOKEN } from "@/store/mutation-types";
+import { constantRouterMap, asyncRouterMap, defaultRoutePath } from "./config";
+import { setDocumentTitle, domTitle } from "@/utils/domUtil";
 
 // hack router push callback
 const originalPush = Router.prototype.push;
@@ -12,9 +15,70 @@ Router.prototype.push = function push(location, onResolve, onReject) {
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   mode: "history",
   base: process.env.BASE_URL,
-  scrollBehavior: () => ({ y: 0 }),
+  scrollBehavior: () => ({ x: 0, y: 0 }),
   routes: constantRouterMap
 });
+
+router.beforeEach((to, from, next) => {
+  to.meta &&
+    typeof to.meta.title !== "undefined" &&
+    setDocumentTitle(`${to.meta.title} - ${domTitle}`);
+  if (Vue.ls.get(ACCESS_TOKEN)) {
+    if (to.path === "/user/login") {
+      next({ path: defaultRoutePath });
+    } else {
+      if (store.getters.groups.length === 0 && !store.getters.has_info) {
+        store
+          .dispatch("GetInfo")
+          .then(res => {
+            store.dispatch("GenerateRoutes", res).then(() => {
+              if (res.result.is_superuser) {
+                router.addRoutes(asyncRouterMap);
+              } else {
+                router.addRoutes(store.getters.addRouters);
+              }
+              const redirect = decodeURIComponent(
+                from.query.redirect || to.path
+              );
+
+              if (to.path === redirect) {
+                next({ ...to, replace: true });
+              } else {
+                next({ path: redirect });
+              }
+            });
+          })
+          .catch(() => {
+            store.dispatch("Logout").then(() => {
+              next({ path: "/user/login", query: { redirect: to.fullPath } });
+            });
+          });
+      } else {
+        next();
+      }
+    }
+  } else {
+    var whiteList = filterWhilteList(constantRouterMap, to);
+    if (whiteList && whiteList.length) {
+      next();
+    } else {
+      next({ path: "/user/login", query: { redirect: to.fullPath } });
+    }
+  }
+});
+
+function filterWhilteList(list, to) {
+  return list
+    .reduce(
+      (f, item) => (item.children ? f.concat(item.children) : f.concat(item)),
+      []
+    )
+    .filter(f => {
+      return f.path.includes(to.path);
+    });
+}
+
+export default router;

@@ -6,13 +6,15 @@ import {
   PageView
 } from "@/layouts";
 
+export const defaultRoutePath = "/admin/order";
+
 export const asyncRouterMap = [
   {
     path: "/admin",
     name: "admin",
     component: BasicLayout,
     meta: { title: "Admin" },
-    redirect: "/admin/order"
+    redirect: defaultRoutePath
   },
   {
     path: "/admin/order",
