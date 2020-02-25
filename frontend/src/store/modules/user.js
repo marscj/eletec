@@ -4,28 +4,42 @@ import { ACCESS_TOKEN } from "@/store/mutation-types";
 
 const user = {
   state: {
+    id: "",
     token: "",
-    name: "",
-    avatar: "",
-    roles: [],
-    info: {}
+    displayName: "",
+    photoURL: "",
+    groups: [],
+    is_superuser: false,
+    has_info: false
   },
 
   mutations: {
+    SET_ID: (state, id) => {
+      state.id = id;
+    },
+
     SET_TOKEN: (state, token) => {
       state.token = token;
     },
+
     SET_NAME: (state, name) => {
-      state.name = name;
+      state.displayName = name;
     },
-    SET_AVATAR: (state, avatar) => {
-      state.avatar = avatar;
+
+    SET_PHOTO: (state, url) => {
+      state.photoURL = url;
     },
-    SET_ROLES: (state, roles) => {
-      state.roles = roles;
+
+    SET_GROUPS: (state, groups) => {
+      state.groups = groups;
     },
-    SET_INFO: (state, info) => {
-      state.info = info;
+
+    SET_SUPERUSER: (state, is_superuser) => {
+      state.is_superuser = is_superuser;
+    },
+
+    SET_HAS_INFO: (state, info) => {
+      state.has_info = info;
     }
   },
 
@@ -38,6 +52,7 @@ const user = {
             const result = response.result;
             Vue.ls.set(ACCESS_TOKEN, result.token);
             commit("SET_TOKEN", result.token);
+            commit("SET_HAS_INFO", false);
             resolve();
           })
           .catch(error => {
@@ -50,36 +65,14 @@ const user = {
     GetInfo({ commit }) {
       return new Promise((resolve, reject) => {
         getInfo()
-          .then(response => {
-            const result = response.result;
-
-            if (result.role && result.role.permissions.length > 0) {
-              const role = result.role;
-              role.permissions = result.role.permissions;
-              role.permissions.map(per => {
-                if (
-                  per.actionEntitySet != null &&
-                  per.actionEntitySet.length > 0
-                ) {
-                  const action = per.actionEntitySet.map(action => {
-                    return action.action;
-                  });
-                  per.actionList = action;
-                }
-              });
-              role.permissionList = role.permissions.map(permission => {
-                return permission.permissionId;
-              });
-              commit("SET_ROLES", result.role);
-              commit("SET_INFO", result);
-            } else {
-              reject(new Error("getInfo: roles must be a non-null array !"));
-            }
-
-            commit("SET_NAME", { name: result.name });
-            commit("SET_AVATAR", result.avatar);
-
-            resolve(response);
+          .then(res => {
+            const { result } = res;
+            commit("SET_ID", result.id);
+            commit("SET_GROUPS", result.groups);
+            commit("SET_NAME", result.username);
+            commit("SET_SUPERUSER", result.is_superuser);
+            commit("SET_HAS_INFO", true);
+            resolve(res);
           })
           .catch(error => {
             reject(error);
@@ -88,21 +81,13 @@ const user = {
     },
 
     // 登出
-    Logout({ commit, state }) {
-      return new Promise(resolve => {
-        logout(state.token)
-          .then(() => {
-            resolve();
-          })
-          .catch(() => {
-            resolve();
-          })
-          .finally(() => {
-            commit("SET_TOKEN", "");
-            commit("SET_ROLES", []);
-            Vue.ls.remove(ACCESS_TOKEN);
-          });
-      });
+    Logout({ commit }) {
+      commit("SET_TOKEN", "");
+      commit("SET_GROUPS", []);
+      commit("SET_NAME", "");
+      commit("SET_SUPERUSER", false);
+      commit("SET_HAS_INFO", false);
+      Vue.ls.remove("accessToken");
     }
   }
 };

@@ -46,7 +46,7 @@ export const constantRouterMap = [
     hidden: true,
     children: [
       {
-        path: "home",
+        path: "/home",
         name: "home",
         component: () => import("@/views/Home")
       }
@@ -59,7 +59,7 @@ export const constantRouterMap = [
     hidden: true,
     children: [
       {
-        path: "login",
+        path: "/user/login",
         name: "login",
         component: () => import("@/views/user/Login")
       }

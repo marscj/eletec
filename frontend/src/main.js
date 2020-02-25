@@ -5,6 +5,11 @@ import router from "./router";
 import store from "./store/";
 import bootstrap from "./core/bootstrap";
 
+import "./utils/action";
+
+import PermissionHelper from "@/utils/permission";
+Vue.use(PermissionHelper);
+
 import "./core/";
 
 Vue.config.productionTip = false;

@@ -43,7 +43,6 @@ router.beforeEach((to, from, next) => {
               const redirect = decodeURIComponent(
                 from.query.redirect || to.path
               );
-
               if (to.path === redirect) {
                 next({ ...to, replace: true });
               } else {
