@@ -81,7 +81,7 @@ export default {
         this.$router.push({
           ...this.$route,
           name: this.$route.name,
-          params: Object.assign({}, this.$route.params, {
+          query: Object.assign({}, this.$route.query, {
             pageNo: val
           })
         });

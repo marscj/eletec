@@ -1,5 +1,5 @@
 <template>
-  <page-view>
+  <div>
     <a-card>
       <div class="table-page-search-wrapper">
         <a-form layout="inline">
@@ -41,18 +41,16 @@
         </span>
       </s-table>
     </a-card>
-  </page-view>
+  </div>
 </template>
 
 <script>
-import { PageView } from "@/layouts";
 import { STable, Ellipsis } from "@/components";
 
 import { getUsers } from "@/api/user";
 
 export default {
   components: {
-    PageView,
     STable
   },
   data() {

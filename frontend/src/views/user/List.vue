@@ -29,23 +29,25 @@
         showPagination="auto"
         bordered
       >
-        <span slot="date_joined" slot-scope="text">
+        <template slot="date_joined" slot-scope="text">
           <span>
             {{ text | moment("YYYY-MM-DD") }}
           </span>
-        </span>
-        <span slot="action">
+        </template>
+        <template slot="action" slot-scope="data">
           <template>
-            <a @click="handleEdit(record)">Edit</a>
+            <router-link :to="{ name: 'User', params: { id: data.id } }">
+              <span>Edit</span>
+            </router-link>
           </template>
-        </span>
+        </template>
       </s-table>
     </a-card>
   </page-view>
 </template>
 
 <script>
-import { PageView } from "@/layouts";
+import { PageView, RouteView } from "@/layouts";
 import { STable, Ellipsis } from "@/components";
 
 import { getUsers } from "@/api/user";

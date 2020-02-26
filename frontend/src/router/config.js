@@ -17,7 +17,7 @@ export const asyncRouterMap = [
     redirect: defaultRoutePath,
     children: [
       {
-        path: "/admin/orders/:pageNo([1-9]\\d*)?",
+        path: "/admin/orders",
         name: "Orders",
         component: () => import("@/views/order/List.vue"),
         meta: {
@@ -27,7 +27,7 @@ export const asyncRouterMap = [
         }
       },
       {
-        path: "/admin/order/:id",
+        path: "/admin/orders/:id",
         name: "Order",
         hidden: true,
         component: () => import("@/views/order/List.vue"),
@@ -36,7 +36,7 @@ export const asyncRouterMap = [
         }
       },
       {
-        path: "/admin/jobs/:pageNo([1-9]\\d*)?",
+        path: "/admin/jobs",
         name: "Jobs",
         component: () => import("@/views/job/List.vue"),
         meta: {
@@ -46,7 +46,7 @@ export const asyncRouterMap = [
         }
       },
       {
-        path: "/admin/job/:id",
+        path: "/admin/jobs/:id",
         name: "Job",
         hidden: true,
         component: () => import("@/views/order/List.vue"),
@@ -55,26 +55,29 @@ export const asyncRouterMap = [
         }
       },
       {
-        path: "/admin/users/:pageNo([1-9]\\d*)?",
+        path: "/admin/users/",
         name: "Users",
         component: () => import("@/views/user/List.vue"),
+        hideChildrenInMenu: true,
         meta: {
           title: "Users",
           icon: "team",
+          keepAlive: true,
           permission: ["admin"]
         }
       },
       {
-        path: "/admin/user/:id",
+        path: "/admin/users/:id",
         name: "User",
         hidden: true,
-        component: () => import("@/views/order/List.vue"),
+        component: () => import("@/views/user/Detail.vue"),
         meta: {
+          title: "User",
           permission: ["admin"]
         }
       },
       {
-        path: "/admin/permissions/:pageNo([1-9]\\d*)?",
+        path: "/admin/permissions",
         name: "Permissions",
         component: () => import("@/views/permission/List.vue"),
         meta: {
@@ -84,7 +87,7 @@ export const asyncRouterMap = [
         }
       },
       {
-        path: "/admin/permission/:id",
+        path: "/admin/permissions/:id",
         name: "Permission",
         hidden: true,
         component: () => import("@/views/order/List.vue"),
@@ -95,21 +98,23 @@ export const asyncRouterMap = [
       {
         path: "/admin/settings",
         name: "Settings",
-        component: RouteView,
-        redirect: "/admin/FAQS/",
+        component: PageView,
+        redirect: "/admin/faqs/",
         meta: { title: "Settings", icon: "setting", permission: [] },
         children: [
           {
-            path: "/admin/FAQS/:pageNo([1-9]\\d*)?",
+            path: "/admin/faqs",
             name: "FAQS",
+            hideChildrenInMenu: true,
             component: () => import("@/views/setting/fqa/List.vue"),
             meta: {
               title: "FAQS",
+              keepAlive: true,
               permission: ["admin"]
             }
           },
           {
-            path: "/admin/FAQ/:id",
+            path: "/admin/faqs/:id",
             name: "FAQ",
             hidden: true,
             component: () => import("@/views/order/List.vue"),
@@ -118,7 +123,7 @@ export const asyncRouterMap = [
             }
           },
           {
-            path: "/admin/app/:pageNo([1-9]\\d*)?",
+            path: "/admin/app",
             name: "AppSetting",
             component: () => import("@/views/setting/app/List.vue"),
             meta: {
