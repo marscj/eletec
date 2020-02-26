@@ -69,7 +69,7 @@ const user = {
             const { result } = res;
             commit("SET_ID", result.id);
             commit("SET_GROUPS", result.groups);
-            commit("SET_NAME", result.username);
+            commit("SET_NAME", result.phone_number);
             commit("SET_SUPERUSER", result.is_superuser);
             commit("SET_HAS_INFO", true);
             resolve(res);

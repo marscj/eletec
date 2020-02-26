@@ -22,7 +22,7 @@ export const asyncRouterMap = [
         component: () => import("@/views/order/List.vue"),
         meta: {
           title: "Orders",
-          icon: "table",
+          icon: "file-text",
           keepAlive: true,
           permission: ["admin"]
         }
@@ -33,8 +33,80 @@ export const asyncRouterMap = [
         hidden: true,
         component: () => import("@/views/order/List.vue"),
         meta: {
-          title: "Order",
-          icon: "table",
+          keepAlive: true,
+          permission: ["admin"]
+        }
+      },
+      {
+        path: "/admin/jobs/:pageNo([1-9]\\d*)?",
+        name: "Jobs",
+        component: () => import("@/views/order/List.vue"),
+        meta: {
+          title: "Jobs",
+          icon: "calendar",
+          keepAlive: true,
+          permission: ["admin"]
+        }
+      },
+      {
+        path: "/admin/job/:id",
+        name: "Job",
+        hidden: true,
+        component: () => import("@/views/order/List.vue"),
+        meta: {
+          keepAlive: true,
+          permission: ["admin"]
+        }
+      },
+      {
+        path: "/admin/users/:pageNo([1-9]\\d*)?",
+        name: "Users",
+        component: () => import("@/views/order/List.vue"),
+        meta: {
+          title: "Users",
+          icon: "team",
+          keepAlive: true,
+          permission: ["admin"]
+        }
+      },
+      {
+        path: "/admin/user/:id",
+        name: "User",
+        hidden: true,
+        component: () => import("@/views/order/List.vue"),
+        meta: {
+          keepAlive: true,
+          permission: ["admin"]
+        }
+      },
+      {
+        path: "/admin/permissions/:pageNo([1-9]\\d*)?",
+        name: "Permissions",
+        component: () => import("@/views/order/List.vue"),
+        meta: {
+          title: "Permissions",
+          icon: "solution",
+          keepAlive: true,
+          permission: ["admin"]
+        }
+      },
+      {
+        path: "/admin/permission/:id",
+        name: "Permission",
+        hidden: true,
+        component: () => import("@/views/order/List.vue"),
+        meta: {
+          keepAlive: true,
+          permission: ["admin"]
+        }
+      },
+      {
+        path: "/admin/app/:pageNo([1-9]\\d*)?",
+        name: "AppSetting",
+        component: () => import("@/views/order/List.vue"),
+        meta: {
+          title: "AppSetting",
+          icon: "setting",
           keepAlive: true,
           permission: ["admin"]
         }
