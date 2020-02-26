@@ -70,6 +70,7 @@ const user = {
             commit("SET_ID", result.id);
             commit("SET_GROUPS", result.groups);
             commit("SET_NAME", result.phone_number);
+            commit("SET_PHOTO", result.photoURL);
             commit("SET_SUPERUSER", result.is_superuser);
             commit("SET_HAS_INFO", true);
             resolve(res);
@@ -82,12 +83,24 @@ const user = {
 
     // 登出
     Logout({ commit }) {
-      commit("SET_TOKEN", "");
-      commit("SET_GROUPS", []);
-      commit("SET_NAME", "");
-      commit("SET_SUPERUSER", false);
-      commit("SET_HAS_INFO", false);
-      Vue.ls.remove("accessToken");
+      return new Promise(resolve => {
+        logout()
+          .then(() => {
+            resolve();
+          })
+          .catch(() => {
+            resolve();
+          })
+          .finally(() => {
+            commit("SET_TOKEN", "");
+            commit("SET_GROUPS", []);
+            commit("SET_NAME", "");
+            commit("SET_PHOTO", "");
+            commit("SET_SUPERUSER", false);
+            commit("SET_HAS_INFO", false);
+            Vue.ls.remove(ACCESS_TOKEN);
+          });
+      });
     }
   }
 };

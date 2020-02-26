@@ -172,7 +172,7 @@ export default {
       setTimeout(() => {
         this.$notification.success({
           message: "Welcome",
-          description: `${timeFix()}, Welcome back`
+          description: `${timeFix()}`
         });
       }, 1000);
       this.isLoginError = false;
