@@ -16,24 +16,20 @@
           <a-menu-item key="0">
             <router-link :to="{ name: 'center' }">
               <a-icon type="user" />
-              <span>个人中心</span>
+              <span>Profile</span>
             </router-link>
           </a-menu-item>
           <a-menu-item key="1">
             <router-link :to="{ name: 'settings' }">
               <a-icon type="setting" />
-              <span>账户设置</span>
+              <span>Setting</span>
             </router-link>
-          </a-menu-item>
-          <a-menu-item key="2" disabled>
-            <a-icon type="setting" />
-            <span>测试</span>
           </a-menu-item>
           <a-menu-divider />
           <a-menu-item key="3">
             <a href="javascript:;" @click="handleLogout">
               <a-icon type="logout" />
-              <span>退出登录</span>
+              <span>Logout</span>
             </a>
           </a-menu-item>
         </a-menu>
@@ -58,8 +54,8 @@ export default {
     ...mapActions(["Logout"]),
     handleLogout() {
       this.$confirm({
-        title: "提示",
-        content: "真的要注销登录吗 ?",
+        title: "prompt",
+        content: "would you like to logout?",
         onOk: () => {
           return this.Logout()
             .then(() => {
@@ -69,7 +65,7 @@ export default {
             })
             .catch(err => {
               this.$message.error({
-                title: "错误",
+                title: "error",
                 description: err.message
               });
             });

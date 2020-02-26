@@ -1,7 +1,10 @@
 const api = {
   Generate: "auth/phone/generate/",
   Validate: "auth/phone/validate/",
-  Info: "user/info/",
-  Logout: "user/logout/"
+  Info: "users/info/",
+  Logout: "users/logout/",
+  Users: "users/",
+  Groups: "groups/",
+  Permissions: "permissions"
 };
 export default api;
