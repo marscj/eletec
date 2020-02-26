@@ -160,7 +160,7 @@ export const constantRouterMap = [
       {
         path: "/user/login",
         name: "login",
-        component: () => import("@/views/user/Login")
+        component: () => import("@/views/auth/Login")
       }
     ]
   },
