@@ -91,7 +91,6 @@ const vueConfig = {
 };
 
 if (process.env.VUE_APP_PREVIEW === "true") {
-  console.log("VUE_APP_PREVIEW", true);
   vueConfig.configureWebpack.plugins.push(createThemeColorReplacerPlugin());
 }
 

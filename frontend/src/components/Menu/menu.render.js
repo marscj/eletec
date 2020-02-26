@@ -89,7 +89,6 @@ export default {
       ];
       const itemArr = [];
       const pIndex_ = pIndex + "_" + index;
-      console.log("menu", menu);
       if (!menu.hideChildrenInMenu) {
         menu.children.forEach(function(item, i) {
           itemArr.push(this2_.renderItem(h, item, pIndex_, i));

@@ -57,7 +57,7 @@ export const asyncRouterMap = [
       {
         path: "/admin/users/:pageNo([1-9]\\d*)?",
         name: "Users",
-        component: () => import("@/views/order/List.vue"),
+        component: () => import("@/views/user/List.vue"),
         meta: {
           title: "Users",
           icon: "team",

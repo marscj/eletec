@@ -63,7 +63,6 @@ const permission = {
         const { groups } = res.result;
         const { is_superuser } = res.result;
 
-        console.log(res);
         if (is_superuser) {
           commit("SET_ROUTERS", asyncRouterMap);
         } else {
