@@ -109,6 +109,7 @@ CORS_ALLOW_HEADERS = ('*',)
 CORS_ALLOW_METHODS = ('*',)
 
 REST_FRAMEWORK = {
+    'ORDERING_PARAM': 'sorter',
     # 认证
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.BasicAuthentication',

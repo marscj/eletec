@@ -27,6 +27,7 @@
         :data="loadData"
         :pageURI="true"
         showPagination="auto"
+        bordered
       >
         <span slot="action" slot-scope="text, record">
           <template>
