@@ -4,6 +4,14 @@ from auth.phone.models import PhoneNumberAbstactUser
 
 class User(PhoneNumberAbstactUser):
     
+    class Role(models.TextChoices):
+        Customer = 'Customer'
+        Staff = 'Staff'
+        Freelancer = 'Freelancer'
+        Admin = 'Admin'
+
+    role = models.CharField(default=Role.Customer, choices=Role.choices, max_length=16)
+
     class Meta:
         db_table = 'user'
 

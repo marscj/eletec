@@ -1,6 +1,6 @@
 <template>
   <div class="footer">
-    <div class="links">
+    <!-- <div class="links">
       <a
         href="https://pro.loacg.com/"
         target="_blank"
@@ -13,21 +13,21 @@
       </a>
       <a href="https://ant.design/">Ant Design</a>
       <a href="https://vue.ant.design/">Vue Antd</a>
-    </div>
+    </div> -->
     <div class="copyright">
       Copyright
-      <a-icon type="copyright" /> 2018 <span>白鹭学园技术组出品</span>
+      <a-icon type="copyright" /> 2020 <span>Eletec</span>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'GlobalFooter',
-  data () {
-    return {}
+  name: "GlobalFooter",
+  data() {
+    return {};
   }
-}
+};
 </script>
 
 <style lang="less" scoped>

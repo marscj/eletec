@@ -13,6 +13,11 @@ import {
   ValidationObserver
 } from "vee-validate/dist/vee-validate.full";
 
+import moment from "moment";
+Vue.filter("moment", function(dataStr, pattern = "YYYY-MM-DD HH:mm:ss") {
+  return moment(dataStr).format(pattern);
+});
+
 Vue.use(Antd);
 Vue.use(VueStorage, {
   namespace: "pro__", // key prefix

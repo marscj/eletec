@@ -29,11 +29,14 @@
         showPagination="auto"
         bordered
       >
-        <span slot="action" slot-scope="text, record">
+        <span slot="date_joined" slot-scope="text">
+          <span>
+            {{ text | moment("YYYY-MM-DD") }}
+          </span>
+        </span>
+        <span slot="action">
           <template>
-            <a @click="handleEdit(record)">配置</a>
-            <a-divider type="vertical" />
-            <a @click="handleSub(record)">订阅报警</a>
+            <a @click="handleEdit(record)">Edit</a>
           </template>
         </span>
       </s-table>
@@ -58,7 +61,26 @@ export default {
       columns: [
         {
           title: "#",
-          dataIndex: "id"
+          dataIndex: "id",
+          width: "100px"
+        },
+        {
+          title: "PHONE",
+          dataIndex: "phone_number"
+        },
+        {
+          title: "ROLE",
+          dataIndex: "role"
+        },
+        {
+          title: "DATE JOIN",
+          dataIndex: "date_joined",
+          scopedSlots: { customRender: "date_joined" }
+        },
+        {
+          title: "ACTION",
+          width: "100px",
+          scopedSlots: { customRender: "action" }
         }
       ],
       loadData: parameter => {
