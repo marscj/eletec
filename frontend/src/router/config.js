@@ -38,7 +38,7 @@ export const asyncRouterMap = [
       {
         path: "/admin/jobs/:pageNo([1-9]\\d*)?",
         name: "Jobs",
-        component: () => import("@/views/order/List.vue"),
+        component: () => import("@/views/job/List.vue"),
         meta: {
           title: "Jobs",
           icon: "calendar",
@@ -76,7 +76,7 @@ export const asyncRouterMap = [
       {
         path: "/admin/permissions/:pageNo([1-9]\\d*)?",
         name: "Permissions",
-        component: () => import("@/views/order/List.vue"),
+        component: () => import("@/views/permission/List.vue"),
         meta: {
           title: "Permissions",
           icon: "solution",
@@ -102,7 +102,7 @@ export const asyncRouterMap = [
           {
             path: "/admin/FAQS/:pageNo([1-9]\\d*)?",
             name: "FAQS",
-            component: () => import("@/views/order/List.vue"),
+            component: () => import("@/views/setting/fqa/List.vue"),
             meta: {
               title: "FAQS",
               permission: ["admin"]
@@ -120,7 +120,7 @@ export const asyncRouterMap = [
           {
             path: "/admin/app/:pageNo([1-9]\\d*)?",
             name: "AppSetting",
-            component: () => import("@/views/order/List.vue"),
+            component: () => import("@/views/setting/app/List.vue"),
             meta: {
               title: "App",
               permission: ["admin"]
