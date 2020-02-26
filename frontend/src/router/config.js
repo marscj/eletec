@@ -23,7 +23,6 @@ export const asyncRouterMap = [
         meta: {
           title: "Orders",
           icon: "file-text",
-          keepAlive: true,
           permission: ["admin"]
         }
       },
@@ -33,7 +32,6 @@ export const asyncRouterMap = [
         hidden: true,
         component: () => import("@/views/order/List.vue"),
         meta: {
-          keepAlive: true,
           permission: ["admin"]
         }
       },
@@ -44,7 +42,6 @@ export const asyncRouterMap = [
         meta: {
           title: "Jobs",
           icon: "calendar",
-          keepAlive: true,
           permission: ["admin"]
         }
       },
@@ -54,7 +51,6 @@ export const asyncRouterMap = [
         hidden: true,
         component: () => import("@/views/order/List.vue"),
         meta: {
-          keepAlive: true,
           permission: ["admin"]
         }
       },
@@ -65,7 +61,6 @@ export const asyncRouterMap = [
         meta: {
           title: "Users",
           icon: "team",
-          keepAlive: true,
           permission: ["admin"]
         }
       },
@@ -75,7 +70,6 @@ export const asyncRouterMap = [
         hidden: true,
         component: () => import("@/views/order/List.vue"),
         meta: {
-          keepAlive: true,
           permission: ["admin"]
         }
       },
@@ -86,7 +80,6 @@ export const asyncRouterMap = [
         meta: {
           title: "Permissions",
           icon: "solution",
-          keepAlive: true,
           permission: ["admin"]
         }
       },
@@ -96,7 +89,6 @@ export const asyncRouterMap = [
         hidden: true,
         component: () => import("@/views/order/List.vue"),
         meta: {
-          keepAlive: true,
           permission: ["admin"]
         }
       },
@@ -113,7 +105,6 @@ export const asyncRouterMap = [
             component: () => import("@/views/order/List.vue"),
             meta: {
               title: "FAQS",
-              keepAlive: true,
               permission: ["admin"]
             }
           },
@@ -123,7 +114,6 @@ export const asyncRouterMap = [
             hidden: true,
             component: () => import("@/views/order/List.vue"),
             meta: {
-              keepAlive: true,
               permission: ["admin"]
             }
           },
@@ -133,7 +123,6 @@ export const asyncRouterMap = [
             component: () => import("@/views/order/List.vue"),
             meta: {
               title: "App",
-              keepAlive: true,
               permission: ["admin"]
             }
           }
