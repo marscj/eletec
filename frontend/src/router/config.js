@@ -101,15 +101,43 @@ export const asyncRouterMap = [
         }
       },
       {
-        path: "/admin/app/:pageNo([1-9]\\d*)?",
-        name: "AppSetting",
-        component: () => import("@/views/order/List.vue"),
-        meta: {
-          title: "AppSetting",
-          icon: "setting",
-          keepAlive: true,
-          permission: ["admin"]
-        }
+        path: "/admin/settings",
+        name: "Settings",
+        component: RouteView,
+        redirect: "/admin/FAQS/",
+        meta: { title: "Settings", icon: "setting", permission: [] },
+        children: [
+          {
+            path: "/admin/FAQS/:pageNo([1-9]\\d*)?",
+            name: "FAQS",
+            component: () => import("@/views/order/List.vue"),
+            meta: {
+              title: "FAQS",
+              keepAlive: true,
+              permission: ["admin"]
+            }
+          },
+          {
+            path: "/admin/FAQ/:id",
+            name: "FAQ",
+            hidden: true,
+            component: () => import("@/views/order/List.vue"),
+            meta: {
+              keepAlive: true,
+              permission: ["admin"]
+            }
+          },
+          {
+            path: "/admin/app/:pageNo([1-9]\\d*)?",
+            name: "AppSetting",
+            component: () => import("@/views/order/List.vue"),
+            meta: {
+              title: "App",
+              keepAlive: true,
+              permission: ["admin"]
+            }
+          }
+        ]
       }
     ]
   },
