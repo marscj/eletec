@@ -1,6 +1,5 @@
 from django.contrib.auth import logout
 from django.contrib.auth.models import Group, Permission
-from django.core.mail import send_mail, BadHeaderError
 
 from rest_framework import status
 from rest_framework.response import Response
@@ -23,15 +22,6 @@ class UserInfoView(APIView):
     
     def get(self, request, format=None):
         serializer = UserSerializer(request.user)
-
-        print('111111')
-        try:
-            print('22222')
-            send_mail('Subject here', 'Here is the message.', 'mobileapp@eletec.ae', ['mars.jinxing@gmail.com'], fail_silently=False)
-            print('3333')
-        except BadHeaderError:
-            print('4444')
-
         return Response(serializer.data)
 
 class UserLogoutView(APIView):
