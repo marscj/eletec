@@ -112,7 +112,7 @@ REST_FRAMEWORK = {
     'ORDERING_PARAM': 'sorter',
     # 认证
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.TokenAuthentication',
     ),
     # 自定义返回结果

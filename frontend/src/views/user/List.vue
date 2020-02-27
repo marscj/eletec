@@ -29,10 +29,13 @@
         showPagination="auto"
         bordered
       >
-        <template slot="date_joined" slot-scope="text">
+        <!-- <template slot="date_joined" slot-scope="text">
           <span>
             {{ text | moment("YYYY-MM-DD") }}
           </span>
+        </template> -->
+        <template slot="active" slot-scope="text">
+          <a-checkbox :checked="text" disabled />
         </template>
         <template slot="action" slot-scope="data">
           <template>
@@ -64,24 +67,37 @@ export default {
         {
           title: "#",
           dataIndex: "id",
-          width: "100px"
+          width: "80px"
+        },
+        {
+          title: "NAME",
+          dataIndex: "name"
         },
         {
           title: "PHONE",
           dataIndex: "phone_number"
         },
         {
+          title: "EMAIL",
+          dataIndex: "email"
+        },
+        {
           title: "ROLE",
           dataIndex: "role"
         },
         {
-          title: "DATE JOIN",
-          dataIndex: "date_joined",
-          scopedSlots: { customRender: "date_joined" }
+          title: "GROUP",
+          dataIndex: "groups"
+        },
+        {
+          title: "ACTIVE",
+          dataIndex: "is_active",
+          width: "80px",
+          scopedSlots: { customRender: "active" }
         },
         {
           title: "ACTION",
-          width: "100px",
+          width: "80px",
           scopedSlots: { customRender: "action" }
         }
       ],

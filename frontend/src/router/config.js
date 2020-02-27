@@ -77,20 +77,20 @@ export const asyncRouterMap = [
         }
       },
       {
-        path: "/admin/permissions",
-        name: "Permissions",
-        component: () => import("@/views/permission/List.vue"),
+        path: "/admin/groups",
+        name: "Groups",
+        component: () => import("@/views/group/List.vue"),
         meta: {
-          title: "Permissions",
+          title: "Groups",
           icon: "solution",
           permission: ["admin"]
         }
       },
       {
-        path: "/admin/permissions/:id",
-        name: "Permission",
+        path: "/admin/groups/:id",
+        name: "Group",
         hidden: true,
-        component: () => import("@/views/order/List.vue"),
+        component: () => import("@/views/group/List.vue"),
         meta: {
           permission: ["admin"]
         }
@@ -117,7 +117,7 @@ export const asyncRouterMap = [
             path: "/admin/faqs/:id",
             name: "FAQ",
             hidden: true,
-            component: () => import("@/views/order/List.vue"),
+            component: () => import("@/views/setting/faq/List.vue"),
             meta: {
               permission: ["admin"]
             }
