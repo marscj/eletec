@@ -58,7 +58,6 @@ export const asyncRouterMap = [
         path: "/admin/users/",
         name: "Users",
         component: () => import("@/views/user/List.vue"),
-        hideChildrenInMenu: true,
         meta: {
           title: "Users",
           icon: "team",
@@ -70,11 +69,55 @@ export const asyncRouterMap = [
         path: "/admin/users/:id",
         name: "User",
         hidden: true,
-        component: () => import("@/views/user/Detail.vue"),
+        component: () => import("@/views/user/Index"),
+        redirect: "/admin/users/:id/profile",
+        hideChildrenInMenu: true,
         meta: {
           title: "User",
           permission: ["admin"]
-        }
+        },
+        children: [
+          {
+            path: "/admin/users/:id/profile",
+            name: "UserProfile",
+            component: () => import("@/views/user/UserProfile.vue"),
+            meta: {
+              title: "Profile",
+              hideHeader: true,
+              permission: []
+            }
+          },
+          {
+            path: "/admin/users/:id/address",
+            name: "UserAddress",
+            component: () => import("@/views/user/UserAddress.vue"),
+            meta: {
+              title: "Address",
+              hideHeader: true,
+              permission: []
+            }
+          },
+          {
+            path: "/admin/users/:id/skill",
+            name: "UserSkill",
+            component: () => import("@/views/user/UserSkill.vue"),
+            meta: {
+              title: "Skill",
+              hideHeader: true,
+              permission: []
+            }
+          },
+          {
+            path: "/admin/users/:id/worktime",
+            name: "UserWorkTime",
+            component: () => import("@/views/user/UserWorkTime.vue"),
+            meta: {
+              title: "WorkTime",
+              hideHeader: true,
+              permission: []
+            }
+          }
+        ]
       },
       {
         path: "/admin/groups",
@@ -106,7 +149,7 @@ export const asyncRouterMap = [
             path: "/admin/faqs",
             name: "FAQS",
             hideChildrenInMenu: true,
-            component: () => import("@/views/setting/fqa/List.vue"),
+            component: () => import("@/views/setting/faq/List.vue"),
             meta: {
               title: "FAQS",
               keepAlive: true,
