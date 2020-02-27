@@ -26,7 +26,15 @@ class Address(models.Model):
         (2, 'Villa')
     )
 
-    model = models.IntegerField(blank=True, null=True, choices=MODEL_SHEET, default=1)
+    class Model(models.TextChoices):
+        Personal = 'Personal'
+        Company = 'Company'
+
+    class Style(models.TextChoices):
+        Apartment = 'Apartment'
+        Villa = 'Villa'
+
+    model = models.CharField(default=Model.Personal, choices=Model.choices, max_length=16)
 
     city = models.TextField(blank=True, null=True)
 
@@ -38,7 +46,7 @@ class Address(models.Model):
 
     office_no = models.TextField(blank=True, null=True)
 
-    style = models.IntegerField(blank=True, null=True, choices=STYLE_SHEET, default=1)
+    style = models.CharField(default=Style.Apartment, choices=Style.choices, max_length=16)
 
     villa_no = models.TextField(blank=True, null=True)
 
@@ -48,7 +56,7 @@ class Address(models.Model):
 
     address = models.TextField(blank=True, null=True)
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='addr', blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='address', blank=True, null=True)
 
     class Meta:
         db_table = 'address'
