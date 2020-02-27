@@ -42,6 +42,14 @@
           <span>{{ data.first_name }} {{ data.last_name }} </span>
         </template>
 
+        <template slot="groups" slot-scope="data">
+          <span>{{
+            $_.join(
+              data.map(f => f.name),
+              ", "
+            )
+          }}</span>
+        </template>
         <template slot="action" slot-scope="data">
           <template>
             <router-link :to="{ name: 'User', params: { id: data.id } }">
@@ -92,7 +100,8 @@ export default {
         },
         {
           title: "GROUP",
-          dataIndex: "groups"
+          dataIndex: "groups",
+          scopedSlots: { customRender: "groups" }
         },
         {
           title: "ACTIVE",

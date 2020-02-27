@@ -12,6 +12,9 @@ Vue.use(PermissionHelper);
 
 import "./core/";
 
+import _ from "lodash";
+Object.defineProperty(Vue.prototype, "$_", { value: _ });
+
 Vue.config.productionTip = false;
 
 new Vue({
