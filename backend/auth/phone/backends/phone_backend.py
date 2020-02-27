@@ -68,6 +68,9 @@ class PhoneBackend(ModelBackend):
                 phone_token=phone_token,
                 **extra_fields
             )
+        
         phone_token.used = True
         phone_token.save()
-        return user
+
+        if self.user_can_authenticate(user):
+            return user

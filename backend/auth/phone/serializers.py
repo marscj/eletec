@@ -39,5 +39,8 @@ class PhoneTokenValidateSerializer(serializers.ModelSerializer):
             PhoneToken.objects.get(phone_number=phone_number, otp=otp)    
         except PhoneToken.DoesNotExist:
             raise serializers.ValidationError({'otp': 'Verification code error'})
+
+        if not authenticate(self.context['request'], phone_number=phone_number, otp=otp):
+            raise serializers.ValidationError("Please enter the correct phone number and code for a account. Note that both fields may be case-sensitive.")
             
         return validate_data

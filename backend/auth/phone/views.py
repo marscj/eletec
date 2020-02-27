@@ -65,9 +65,8 @@ class ValidateOTP(generics.CreateAPIView):
 
             if user:
                 last_login = user.last_login
-                
-            login(request, user)
-            response = user_detail(user, last_login)
-            return Response(response, status=status.HTTP_200_OK)
+                login(request, user)
+                response = user_detail(user, last_login)
+                return Response(response, status=status.HTTP_200_OK)
 
         return Response(token.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -143,16 +143,16 @@ AUTHENTICATION_BACKENDS = [
     # 短信认证登陆
     'auth.phone.backends.phone_backend.PhoneBackend', 
     # 用户名密码登陆
-    "allauth.account.auth_backends.AuthenticationBackend",
+    # "allauth.account.auth_backends.AuthenticationBackend",
 ]
 
-PHONE_LOGIN_DEBUG = True
+# PHONE_LOGIN_DEBUG = True
 
-REST_USE_JWT = True
-REST_SESSION_LOGIN = False
-ACCOUNT_USERNAME_REQUIRED = True
-ACCOUNT_EMAIL_REQUIRED = False
-ACCOUNT_AUTHENTICATION_METHOD = 'username'
+# REST_USE_JWT = True
+# REST_SESSION_LOGIN = False
+# ACCOUNT_USERNAME_REQUIRED = True
+# ACCOUNT_EMAIL_REQUIRED = False
+# ACCOUNT_AUTHENTICATION_METHOD = 'username'
 
 SENDSMS_BACKEND = 'service.sms.backends.twilio.SmsBackend'
 # SENDSMS_BACKEND = 'service.sms.backends.console.SmsBackend'
@@ -162,3 +162,12 @@ SENDSMS_URL = "https://api.twilio.com/2010-04-01/Accounts/ACda91c280b2cd6511484f
 SENDSMS_ACCOUNT_SID = 'ACda91c280b2cd6511484f79ec3f3e03cd'
 SENDSMS_AUTH_TOKEN = '6f00b28a9cdf341c31481a6f549b40da'
 SENDSMS_FROM_NUMBER = '+15804564076'
+
+# SMS
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'mars.jinxing@gmail.com'
+EMAIL_HOST_PASSWORD = 'Mjx123456'
