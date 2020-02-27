@@ -13,26 +13,27 @@
               border: '0',
               width: device == 'mobile' ? '560px' : 'auto'
             }"
+            :defaultSelectedKeys="['1']"
             :selectedKeys="selectedKeys"
             type="inner"
             @openChange="onOpenChange"
           >
-            <a-menu-item key="1">
+            <a-menu-item key="/admin/users/:id/profile">
               <router-link :to="{ name: 'UserProfile', id: $route.params.id }">
                 Profile
               </router-link>
             </a-menu-item>
-            <a-menu-item key="2">
+            <a-menu-item key="/admin/users/:id/address">
               <router-link :to="{ name: 'UserAddress', id: $route.params.id }">
                 Address
               </router-link>
             </a-menu-item>
-            <a-menu-item key="3">
+            <a-menu-item key="/admin/users/:id/skill">
               <router-link :to="{ name: 'UserSkill', id: $route.params.id }">
                 Skill
               </router-link>
             </a-menu-item>
-            <a-menu-item key="4">
+            <a-menu-item key="/admin/users/:id/worktime">
               <router-link :to="{ name: 'UserWorkTime', id: $route.params.id }">
                 WorkTime
               </router-link>
@@ -52,7 +53,7 @@
 </template>
 
 <script>
-import { PageView, RouteView } from "@/layouts";
+import { RouteView } from "@/layouts";
 import { mixinDevice } from "@/utils/mixin.js";
 
 export default {
@@ -66,27 +67,7 @@ export default {
       mode: "inline",
 
       openKeys: [],
-      selectedKeys: [],
-
-      // cropper
-      preview: {},
-      option: {
-        img: "/avatar2.jpg",
-        info: true,
-        size: 1,
-        outputType: "jpeg",
-        canScale: false,
-        autoCrop: true,
-        // 只有自动截图开启 宽度高度才生效
-        autoCropWidth: 180,
-        autoCropHeight: 180,
-        fixedBox: true,
-        // 开启宽度和高度比例
-        fixed: true,
-        fixedNumber: [1, 1]
-      },
-
-      pageTitle: ""
+      selectedKeys: []
     };
   },
   created() {
