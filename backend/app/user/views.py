@@ -9,7 +9,7 @@ from rest_framework.permissions import IsAuthenticated, DjangoModelPermissions
 from rest_framework.authtoken import views
 
 from .models import User, Address, Skill, WorkTime
-from .serializers import UserSerializer, GroupDetailSerializer, PermissionSerializer, AddressSerializer, SkillSerializer, WorkTimeSerializer
+from .serializers import UserSerializer, GroupSerializer, PermissionSerializer, AddressSerializer, SkillSerializer, WorkTimeSerializer
 from middleware.permission import CustomModelPermissions
 
 class UserView(ModelViewSet):
@@ -32,7 +32,7 @@ class UserLogoutView(APIView):
         return Response(status=status.HTTP_200_OK)
 
 class UserGroupView(ModelViewSet):
-    serializer_class = GroupDetailSerializer
+    serializer_class = GroupSerializer
     permission_classes = [IsAuthenticated, CustomModelPermissions]
     queryset = Group.objects.all()
 

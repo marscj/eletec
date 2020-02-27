@@ -46,7 +46,7 @@
 
         <validation-provider vid="email" v-slot="{ errors }">
           <a-form-item label="Email">
-            <a-input v-model="form.email"> </a-input>
+            <a-input v-model="form.email" disabled> </a-input>
           </a-form-item>
           <span class="errorText">{{ errors[0] }}</span>
         </validation-provider>
@@ -62,8 +62,14 @@
         </a-form-item>
 
         <a-form-item label="Group">
-          <a-select mode="multiple">
-            <a-select-option key="1" value="1">1</a-select-option>
+          <a-select v-model="this.form.groups" mode="multiple">
+            <v-select
+              v-model="groups"
+              :options="groupData"
+              multiple
+              label="name"
+              :disabled="!canChangeGroup"
+            ></v-select>
           </a-select>
         </a-form-item>
 
@@ -80,25 +86,38 @@
 </template>
 
 <script>
-import { getUser, updateUser } from "@/api/user";
+import { getUser, updateUser, getGroups } from "@/api/user";
 export default {
   data() {
     return {
-      form: {}
+      form: {},
+      groups: []
     };
   },
   mounted() {
-    this.getData();
+    this.getUserData();
   },
   methods: {
-    getData() {
+    getUserData() {
       getUser(this.$route.params.id).then(res => {
         const { result } = res;
         this.form = result;
+        return this.getGroupData();
+      });
+    },
+    getGroupData() {
+      getGroups().then(res => {
+        const { result } = res;
+        this.groups = this.result;
       });
     },
     submit() {
-      console.log("submit");
+      updateUser(this.$route.params.id, {
+        first_name: this.form.first_name,
+        last_name: this.form.last_name,
+        role: this.form.role,
+        groups_id: this.form.groups.map(f => f.id)
+      });
     }
   }
 };

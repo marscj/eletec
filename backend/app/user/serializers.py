@@ -5,14 +5,6 @@ from rest_framework import  serializers
 
 from .models import User, Address, Skill, WorkTime
 
-class UserSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = User
-        exclude = (
-            'password',
-        )
-
 class ContentTypeSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -27,7 +19,7 @@ class PermissionSerializer(serializers.ModelSerializer):
         model = Permission
         fields = '__all__'
 
-class GroupDetailSerializer(serializers.ModelSerializer):
+class GroupSerializer(serializers.ModelSerializer):
     
     permissions = PermissionSerializer(read_only=True, many=True)
 
@@ -46,6 +38,29 @@ class GroupDetailSerializer(serializers.ModelSerializer):
                 instance.permissions.remove(permission)
             else:
                 instance.permissions.add(permission)
+
+        return super().update(instance, validated_data)
+
+class UserSerializer(serializers.ModelSerializer):
+
+    groups = GroupSerializer(required=False, many=True)
+
+    groups_id = serializers.PrimaryKeyRelatedField(required=False, write_only=True, many=True, allow_null=True, queryset=Group.objects.all())
+
+    class Meta:
+        model = User
+        exclude = (
+            'password',
+        )
+    
+    def update(self, instance, validated_data):
+        groups_id = validated_data.pop('groups_id', None)
+        if groups_id is not None:
+            for group in list(instance.groups.all()):
+                instance.groups.remove(group)
+                    
+            for id in groups_id:
+                instance.groups.add(id)
 
         return super().update(instance, validated_data)
 
