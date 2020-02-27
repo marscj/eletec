@@ -39,7 +39,7 @@
         </template>
 
         <template slot="name" slot-scope="data">
-          <span>{{ data.last_name }} {{ data.first_name }}</span>
+          <span>{{ data.first_name }} {{ data.last_name }} </span>
         </template>
 
         <template slot="action" slot-scope="data">
