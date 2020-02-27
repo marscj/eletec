@@ -3,7 +3,7 @@ from django.contrib.auth.models import Group, Permission
 
 from rest_framework import  serializers
 
-from .models import User
+from .models import User, Address, Skill, WorkTime
 
 class UserSerializer(serializers.ModelSerializer):
 
@@ -48,3 +48,21 @@ class GroupDetailSerializer(serializers.ModelSerializer):
                 instance.permissions.add(permission)
 
         return super().update(instance, validated_data)
+
+class AddressSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Address
+        fields = '__all__'
+
+class SkillSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Skill
+        fields = '__all__'
+
+class WorkTimeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = WorkTime
+        fields = '__all__'

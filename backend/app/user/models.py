@@ -16,16 +16,6 @@ class User(PhoneNumberAbstactUser):
 
 class Address(models.Model):
 
-    MODEL_SHEET = (
-        (1, 'Personal'),
-        (2, 'Company')
-    )
-
-    STYLE_SHEET = (
-        (1, 'Apartment'),
-        (2, 'Villa')
-    )
-
     class Model(models.TextChoices):
         Personal = 'Personal'
         Company = 'Company'
@@ -76,13 +66,24 @@ class Skill(models.Model):
 
 class WorkTime(models.Model):
 
-    userful = models.BooleanField(blank=True, null=True, default=False)
+    class DaysOfWeek(models.TextChoices):
+        Monday = 'Monday'
+        Tuesday = 'Tuesday'
+        Wednesday = 'Wednesday'
+        Thursday = 'Thursday'
+        Friday = 'Friday'
+        Saturday = 'Saturday'
+        Sunday = 'Sunday'
+
+    useful = models.BooleanField(blank=True, null=True, default=False)
 
     name = models.CharField(blank=True, null=True, max_length=36)
 
     form = models.TimeField(blank=True, null=True)
 
     to = models.TimeField(blank=True, null=True)
+
+    days_of_week = models.CharField(default=DaysOfWeek.Monday, choices=DaysOfWeek.choices, max_length=16)
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='worktime', blank=True, null=True)
 

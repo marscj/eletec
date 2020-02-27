@@ -8,8 +8,8 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated, DjangoModelPermissions
 from rest_framework.authtoken import views
 
-from .models import User
-from .serializers import UserSerializer, GroupDetailSerializer, PermissionSerializer
+from .models import User, Address, Skill, WorkTime
+from .serializers import UserSerializer, GroupDetailSerializer, PermissionSerializer, AddressSerializer, SkillSerializer, WorkTimeSerializer
 from middleware.permission import CustomModelPermissions
 
 class UserView(ModelViewSet):
@@ -39,5 +39,19 @@ class UserGroupView(ModelViewSet):
 class PermissionView(ModelViewSet):
     serializer_class = PermissionSerializer
     permission_classes = [IsAuthenticated, DjangoModelPermissions]
-    queryset = Permission.objects.filter(content_type__model__in=['user', 'group', 'vehicle', 'order', 'itinerary', 'category', 'price', 'orderitinerary', 'invoice', 'driver'])
+    queryset = Permission.objects.filter(content_type__model__in=['user', 'group', 'order', 'job', 'contract'])
     
+class AddressView(ModelViewSet):
+    serializer_class = AddressSerializer
+    permission_classes = [IsAuthenticated, CustomModelPermissions]
+    queryset = Address.objects.all()
+
+class SkillView(ModelViewSet):
+    serializer_class = SkillSerializer
+    permission_classes = [IsAuthenticated, CustomModelPermissions]
+    queryset = Skill.objects.all()
+
+class WorkTimeView(ModelViewSet):
+    serializer_class = WorkTimeSerializer
+    permission_classes = [IsAuthenticated, CustomModelPermissions]
+    queryset = WorkTime.objects.all()
