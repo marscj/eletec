@@ -34,9 +34,14 @@
             {{ text | moment("YYYY-MM-DD") }}
           </span>
         </template> -->
-        <template slot="active" slot-scope="text">
-          <a-checkbox :checked="text" disabled />
+        <template slot="active" slot-scope="data">
+          <a-checkbox :checked="data" disabled />
         </template>
+
+        <template slot="name" slot-scope="data">
+          <span>{{ data.last_name }} {{ data.first_name }}</span>
+        </template>
+
         <template slot="action" slot-scope="data">
           <template>
             <router-link :to="{ name: 'User', params: { id: data.id } }">
@@ -71,7 +76,7 @@ export default {
         },
         {
           title: "NAME",
-          dataIndex: "name"
+          scopedSlots: { customRender: "name" }
         },
         {
           title: "PHONE",

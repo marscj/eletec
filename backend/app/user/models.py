@@ -8,7 +8,6 @@ class User(PhoneNumberAbstactUser):
         Customer = 'Customer'
         Staff = 'Staff'
         Freelancer = 'Freelancer'
-        Admin = 'Admin'
 
     role = models.CharField(default=Role.Customer, choices=Role.choices, max_length=16)
 
