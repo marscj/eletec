@@ -23,7 +23,7 @@ export const asyncRouterMap = [
         meta: {
           title: "Orders",
           icon: "file-text",
-          permission: ["admin"]
+          permission: ["order"]
         }
       },
       {
@@ -32,7 +32,7 @@ export const asyncRouterMap = [
         hidden: true,
         component: () => import("@/views/order/List.vue"),
         meta: {
-          permission: ["admin"]
+          permission: ["order"]
         }
       },
       {
@@ -42,7 +42,7 @@ export const asyncRouterMap = [
         meta: {
           title: "Jobs",
           icon: "calendar",
-          permission: ["admin"]
+          permission: ["job"]
         }
       },
       {
@@ -51,7 +51,7 @@ export const asyncRouterMap = [
         hidden: true,
         component: () => import("@/views/order/List.vue"),
         meta: {
-          permission: ["admin"]
+          permission: ["job"]
         }
       },
       {
@@ -62,7 +62,7 @@ export const asyncRouterMap = [
           title: "Users",
           icon: "team",
           keepAlive: true,
-          permission: ["admin"]
+          permission: ["user"]
         }
       },
       {
@@ -74,7 +74,7 @@ export const asyncRouterMap = [
         hideChildrenInMenu: true,
         meta: {
           title: "User",
-          permission: ["admin"]
+          permission: ["user"]
         },
         children: [
           {
@@ -84,7 +84,7 @@ export const asyncRouterMap = [
             meta: {
               title: "Profile",
               hideHeader: true,
-              permission: []
+              permission: ["user"]
             }
           },
           {
@@ -94,7 +94,7 @@ export const asyncRouterMap = [
             meta: {
               title: "Address",
               hideHeader: true,
-              permission: []
+              permission: ["user"]
             }
           },
           {
@@ -104,7 +104,7 @@ export const asyncRouterMap = [
             meta: {
               title: "Skill",
               hideHeader: true,
-              permission: []
+              permission: ["user"]
             }
           },
           {
@@ -114,7 +114,7 @@ export const asyncRouterMap = [
             meta: {
               title: "WorkTime",
               hideHeader: true,
-              permission: []
+              permission: ["user"]
             }
           }
         ]
@@ -126,7 +126,7 @@ export const asyncRouterMap = [
         meta: {
           title: "Groups",
           icon: "solution",
-          permission: ["admin"]
+          permission: ["group"]
         }
       },
       {
@@ -135,7 +135,7 @@ export const asyncRouterMap = [
         hidden: true,
         component: () => import("@/views/group/List.vue"),
         meta: {
-          permission: ["admin"]
+          permission: ["group"]
         }
       },
       {
@@ -153,7 +153,7 @@ export const asyncRouterMap = [
             meta: {
               title: "FAQS",
               keepAlive: true,
-              permission: ["admin"]
+              permission: ["faq"]
             }
           },
           {
@@ -162,7 +162,7 @@ export const asyncRouterMap = [
             hidden: true,
             component: () => import("@/views/setting/faq/List.vue"),
             meta: {
-              permission: ["admin"]
+              permission: ["faq"]
             }
           },
           {
@@ -171,7 +171,7 @@ export const asyncRouterMap = [
             component: () => import("@/views/setting/app/List.vue"),
             meta: {
               title: "App",
-              permission: ["admin"]
+              permission: []
             }
           }
         ]

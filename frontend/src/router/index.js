@@ -35,11 +35,7 @@ router.beforeEach((to, from, next) => {
           .dispatch("GetInfo")
           .then(res => {
             store.dispatch("GenerateRoutes", res).then(() => {
-              if (res.result.is_superuser) {
-                router.addRoutes(asyncRouterMap);
-              } else {
-                router.addRoutes(store.getters.addRouters);
-              }
+              router.addRoutes(store.getters.addRouters);
               const redirect = decodeURIComponent(
                 from.query.redirect || to.path
               );
