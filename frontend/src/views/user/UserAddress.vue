@@ -1,104 +1,211 @@
 <template>
-  <div>
-    <validation-observer ref="observer">
-      <validation-provider name="non_field_errors" v-slot="{ errors }">
-        <span class="errorText">{{ errors[0] }}</span>
-      </validation-provider>
+  <div class="content">
+    <div class="table-operator">
+      <a-button type="primary" icon="plus" @click="openModal()">New</a-button>
+    </div>
 
-      <a-form
-        :form="form"
-        :submit="submit"
-        :label-col="{ span: 5 }"
-        :wrapper-col="{ span: 12 }"
-      >
-        <validation-provider
-          vid="phone_number"
-          name="phone number"
-          v-slot="{ errors }"
+    <s-table
+      ref="table"
+      size="default"
+      :rowKey="record => record.id"
+      :columns="columns"
+      :data="loadData"
+      :pageURI="true"
+      showPagination="auto"
+      bordered
+    >
+      <template slot="action" slot-scope="data">
+        <template>
+          <a @click="openModal(data)">Edit</a>
+        </template>
+      </template>
+    </s-table>
+
+    <a-modal v-model="modal" title="Edit">
+      <validation-observer ref="observer">
+        <validation-provider name="non_field_errors" v-slot="{ errors }">
+          <span class="errorText">{{ errors[0] }}</span>
+        </validation-provider>
+
+        <a-form
+          :form="form"
+          :submit="submit"
+          :label-col="{ span: 6 }"
+          :wrapper-col="{ span: 12 }"
         >
-          <a-form-item label="Phone Number" required>
-            <a-input v-model="form.phone_number" disabled> </a-input>
+          <a-form-item label="Model">
+            <validation-provider vid="model" v-slot="{ errors }">
+              <a-select v-model="form.model" defaultValue="Personal">
+                <a-select-option key="1" value="Personal"
+                  >Personal</a-select-option
+                >
+                <a-select-option key="2" value="Company"
+                  >Company</a-select-option
+                >
+              </a-select>
+              <span class="errorText">{{ errors[0] }}</span>
+            </validation-provider>
           </a-form-item>
-          <span class="errorText">{{ errors[0] }}</span>
-        </validation-provider>
 
-        <validation-provider
-          vid="first_name"
-          name="first name"
-          v-slot="{ errors }"
-        >
-          <a-form-item label="First Name">
-            <a-input v-model="form.first_name"> </a-input>
+          <a-form-item label="City">
+            <validation-provider vid="city" v-slot="{ errors }">
+              <a-input v-model="form.city"> </a-input>
+              <span class="errorText">{{ errors[0] }}</span>
+            </validation-provider>
           </a-form-item>
-          <span class="errorText">{{ errors[0] }}</span>
-        </validation-provider>
 
-        <validation-provider
-          vid="last_name"
-          name="last name"
-          v-slot="{ errors }"
-        >
-          <a-form-item label="Last Name">
-            <a-input v-model="form.last_name"> </a-input>
+          <a-form-item label="Community">
+            <validation-provider vid="community" v-slot="{ errors }">
+              <a-input v-model="form.community"> </a-input>
+              <span class="errorText">{{ errors[0] }}</span>
+            </validation-provider>
           </a-form-item>
-          <span class="errorText">{{ errors[0] }}</span>
-        </validation-provider>
 
-        <validation-provider vid="email" v-slot="{ errors }">
-          <a-form-item label="Email">
-            <a-input v-model="form.email"> </a-input>
+          <a-form-item label="Street">
+            <validation-provider vid="street" v-slot="{ errors }">
+              <a-input v-model="form.street"> </a-input>
+              <span class="errorText">{{ errors[0] }}</span>
+            </validation-provider>
           </a-form-item>
-          <span class="errorText">{{ errors[0] }}</span>
-        </validation-provider>
 
-        <a-form-item label="Role">
-          <a-select v-model="form.role">
-            <a-select-option key="1" value="Customer">Customer</a-select-option>
-            <a-select-option key="2" value="Staff">Staff</a-select-option>
-            <a-select-option key="3" value="Freelancer"
-              >Freelancer</a-select-option
+          <a-form-item label="Building">
+            <validation-provider vid="building" v-slot="{ errors }">
+              <a-input v-model="form.building"> </a-input>
+              <span class="errorText">{{ errors[0] }}</span>
+            </validation-provider>
+          </a-form-item>
+
+          <a-form-item label="Style">
+            <validation-provider vid="style" v-slot="{ errors }">
+              <a-select v-model="form.style" defaultValue="Apartment">
+                <a-select-option key="1" value="Apartment"
+                  >Apartment</a-select-option
+                >
+                <a-select-option key="2" value="Villa">Villa</a-select-option>
+              </a-select>
+              <span class="errorText">{{ errors[0] }}</span>
+            </validation-provider>
+          </a-form-item>
+
+          <a-form-item label="OfficeNo">
+            <validation-provider
+              vid="office_no"
+              name="OfficeNo"
+              v-slot="{ errors }"
             >
-          </a-select>
-        </a-form-item>
+              <a-input v-model="form.office_no"> </a-input>
+              <span class="errorText">{{ errors[0] }}</span>
+            </validation-provider>
+          </a-form-item>
 
-        <a-form-item label="Group">
-          <a-select mode="multiple">
-            <a-select-option key="1" value="1">1</a-select-option>
-          </a-select>
-        </a-form-item>
+          <a-form-item label="Address" help="from the map">
+            <validation-provider
+              vid="address"
+              name="address"
+              v-slot="{ errors }"
+            >
+              <a-input v-model="form.address"> </a-input>
+              <span class="errorText">{{ errors[0] }}</span>
+            </validation-provider>
+          </a-form-item>
 
-        <a-form-item label="Active">
-          <a-checkbox v-model="form.is_active" />
-        </a-form-item>
+          <a-form-item label="Latitude" help="from the map">
+            <validation-provider vid="lat" name="latitude" v-slot="{ errors }">
+              <a-input v-model="form.lat"> </a-input>
+              <span class="errorText">{{ errors[0] }}</span>
+            </validation-provider>
+          </a-form-item>
 
-        <a-button type="primary" html-type="submit" @click="submit">
-          Submit
-        </a-button>
-      </a-form>
-    </validation-observer>
+          <a-form-item label="Longitude" help="from the map">
+            <validation-provider vid="lgt" name="longitude" v-slot="{ errors }">
+              <a-input v-model="form.lgt"> </a-input>
+              <span class="errorText">{{ errors[0] }}</span>
+            </validation-provider>
+          </a-form-item>
+
+          <a-button type="primary" html-type="submit" @click="submit">
+            Submit
+          </a-button>
+        </a-form>
+      </validation-observer>
+    </a-modal>
   </div>
 </template>
 
 <script>
-import { getUser, updateUser } from "@/api/user";
+import { getAddress, updateAddress } from "@/api/user";
+import { STable, Ellipsis } from "@/components";
 export default {
+  components: {
+    STable
+  },
   data() {
     return {
+      modal: false,
+      columns: [
+        {
+          title: "Model",
+          dataIndex: "model"
+        },
+        {
+          title: "City",
+          dataIndex: "city"
+        },
+
+        {
+          title: "Community",
+          dataIndex: "community"
+        },
+        {
+          title: "Street",
+          dataIndex: "street"
+        },
+        {
+          title: "Building",
+          dataIndex: "building"
+        },
+        {
+          title: "Style",
+          dataIndex: "style"
+        },
+        {
+          title: "OfficeNo",
+          dataIndex: "office_no"
+        },
+        {
+          title: "VillaNo",
+          dataIndex: "villa_no"
+        },
+        {
+          title: "Address",
+          dataIndex: "address"
+        },
+        {
+          title: "ACTION",
+          width: "80px",
+          scopedSlots: { customRender: "action" }
+        }
+      ],
+      loadData: parameter => {
+        return getAddress(
+          Object.assign(parameter, {
+            user_id: this.$store.getters.user.id
+          })
+        ).then(res => {
+          console.log(res, "---");
+          return res.result;
+        });
+      },
       form: {}
     };
   },
-  mounted() {
-    this.getData();
-  },
   methods: {
-    getData() {
-      getUser(this.$route.params.id).then(res => {
-        const { result } = res;
-        this.form = result;
-      });
+    openModal(val) {
+      this.modal = true;
+      this.form = Object.assign({}, val);
     },
     submit() {
-      console.log("submit");
+      updateAddress(this.form.id, this.form);
     }
   }
 };

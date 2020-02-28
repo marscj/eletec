@@ -8,51 +8,52 @@
       <a-form
         :form="form"
         :submit="submit"
-        :label-col="{ span: 5 }"
+        :label-col="{ span: 6 }"
         :wrapper-col="{ span: 12 }"
       >
         <a-form-item label="Username" required>
           <a-input v-model="form.username" disabled> </a-input>
         </a-form-item>
-        <validation-provider
-          vid="phone_number"
-          name="phone number"
-          v-slot="{ errors }"
-        >
-          <a-form-item label="Phone Number" required>
+
+        <a-form-item label="Phone Number" required>
+          <validation-provider
+            vid="phone_number"
+            name="phone number"
+            v-slot="{ errors }"
+          >
             <a-input v-model="form.phone_number"> </a-input>
-          </a-form-item>
-          <span class="errorText">{{ errors[0] }}</span>
-        </validation-provider>
+            <span class="errorText">{{ errors[0] }}</span>
+          </validation-provider>
+        </a-form-item>
 
-        <validation-provider vid="email" v-slot="{ errors }">
-          <a-form-item label="Email">
+        <a-form-item label="Email">
+          <validation-provider vid="email" v-slot="{ errors }">
             <a-input v-model="form.email"> </a-input>
-          </a-form-item>
-          <span class="errorText">{{ errors[0] }}</span>
-        </validation-provider>
+            <span class="errorText">{{ errors[0] }}</span>
+          </validation-provider>
+        </a-form-item>
 
-        <validation-provider
-          vid="first_name"
-          name="first name"
-          v-slot="{ errors }"
-        >
-          <a-form-item label="First Name">
+        <a-form-item label="First Name">
+          <validation-provider
+            vid="first_name"
+            name="first name"
+            v-slot="{ errors }"
+          >
             <a-input v-model="form.first_name"> </a-input>
-          </a-form-item>
-          <span class="errorText">{{ errors[0] }}</span>
-        </validation-provider>
+            <span class="errorText">{{ errors[0] }}</span>
+          </validation-provider>
+        </a-form-item>
 
-        <validation-provider
-          vid="last_name"
-          name="last name"
-          v-slot="{ errors }"
-        >
-          <a-form-item label="Last Name">
+        <a-form-item label="Last Name">
+          <validation-provider
+            vid="last_name"
+            name="last name"
+            v-slot="{ errors }"
+          >
             <a-input v-model="form.last_name"> </a-input>
-          </a-form-item>
-          <span class="errorText">{{ errors[0] }}</span>
-        </validation-provider>
+            <span class="errorText">{{ errors[0] }}</span>
+          </validation-provider>
+        </a-form-item>
 
         <a-form-item label="Role">
           <a-select v-model="form.role">

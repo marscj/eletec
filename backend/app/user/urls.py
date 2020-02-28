@@ -7,6 +7,9 @@ router = DefaultRouter()
 router.register(r'users', views.UserView, basename='users')
 router.register(r'groups', views.UserGroupView, basename='group')
 router.register(r'permissions', views.PermissionView, basename='permission')
+router.register(r'address', views.AddressView, basename='address')
+router.register(r'skills', views.SkillView, basename='skill')
+router.register(r'worktimes', views.WorkTimeView, basename='worktime')
 
 urlpatterns = [
     url(r'users/info/', views.UserInfoView.as_view(), name='info'),

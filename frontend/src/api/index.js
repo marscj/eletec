@@ -5,6 +5,9 @@ const api = {
   Logout: "users/logout/",
   Users: "users/",
   Groups: "groups/",
-  Permissions: "permissions"
+  Permissions: "permissions/",
+  Address: "address/",
+  Skills: "skills/",
+  WorkTimes: "worktimes/"
 };
 export default api;

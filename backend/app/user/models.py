@@ -33,9 +33,9 @@ class Address(models.Model):
 
     building = models.TextField(blank=True, null=True)
 
-    office_no = models.TextField(blank=True, null=True)
-
     style = models.CharField(default=Style.Apartment, choices=Style.choices, max_length=16)
+
+    office_no = models.TextField(blank=True, null=True)
 
     villa_no = models.TextField(blank=True, null=True)
 
@@ -51,17 +51,26 @@ class Address(models.Model):
         db_table = 'address'
 
 class Skill(models.Model):
+    
+    class SkillSheet(models.TextChoices):
+        AC = 'A/C'
+        Electrical = 'Electrical'
+        Plumbing = 'Plumbing'
+        Cleaning = 'Cleaning'
+        Duct = 'Duct Cleaning'
+        Other = 'Other'
 
-    userful = models.BooleanField(blank=True, null=True, default=False)
+    useful = models.BooleanField(blank=True, null=True, default=False)
 
-    name = models.CharField(blank=True, null=True, max_length=36)
+    skill = models.CharField(default=SkillSheet.AC, choices=SkillSheet.choices, max_length=16)
 
-    other = models.TextField(blank=True, null=True)
+    remark = models.TextField(blank=True, null=True)
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='skill', blank=True, null=True)
 
     class Meta:
         db_table = 'skill'
+        unique_together = ('skill', 'user')
 
 class WorkTime(models.Model):
 
@@ -76,15 +85,14 @@ class WorkTime(models.Model):
 
     useful = models.BooleanField(blank=True, null=True, default=False)
 
-    name = models.CharField(blank=True, null=True, max_length=36)
+    week = models.CharField(default=DaysOfWeek.Monday, choices=DaysOfWeek.choices, max_length=16)
 
     form = models.TimeField(blank=True, null=True)
 
-    to = models.TimeField(blank=True, null=True)
-
-    days_of_week = models.CharField(default=DaysOfWeek.Monday, choices=DaysOfWeek.choices, max_length=16)
+    to = models.TimeField(blank=True, null=True)    
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='worktime', blank=True, null=True)
 
     class Meta:
         db_table = 'worktime'
+        unique_together = ('week', 'user')
