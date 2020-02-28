@@ -1,6 +1,5 @@
 from django.db import models
 
-from app.contract.models import Contract
 from app.user.models import User
 from app.order.models import Order
 

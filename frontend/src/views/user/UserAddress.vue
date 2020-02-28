@@ -35,7 +35,7 @@
         >
           <a-form-item label="Model">
             <validation-provider vid="model" v-slot="{ errors }">
-              <a-select v-model="form.model" defaultValue="Personal">
+              <a-select v-model="form.model">
                 <a-select-option key="1" value="Personal"
                   >Personal</a-select-option
                 >
@@ -77,7 +77,7 @@
 
           <a-form-item label="Style">
             <validation-provider vid="style" v-slot="{ errors }">
-              <a-select v-model="form.style" defaultValue="Apartment">
+              <a-select v-model="form.style">
                 <a-select-option key="1" value="Apartment"
                   >Apartment</a-select-option
                 >
@@ -202,7 +202,13 @@ export default {
   methods: {
     openModal(val) {
       this.modal = true;
-      this.form = Object.assign({}, val);
+      this.form = Object.assign(
+        {
+          model: "Personal",
+          style: "Apartment"
+        },
+        val
+      );
     },
     submit() {
       updateAddress(this.form.id, this.form);

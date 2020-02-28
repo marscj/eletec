@@ -33,92 +33,38 @@
           :label-col="{ span: 6 }"
           :wrapper-col="{ span: 12 }"
         >
-          <a-form-item label="Model">
-            <validation-provider vid="model" v-slot="{ errors }">
-              <a-select v-model="form.model" defaultValue="Personal">
-                <a-select-option key="1" value="Personal"
-                  >Personal</a-select-option
+          <a-form-item label="Skill">
+            <validation-provider vid="skill" v-slot="{ errors }">
+              <a-select v-model="form.skill">
+                <a-select-option key="1" value="A/C">A/C</a-select-option>
+                <a-select-option key="2" value="Electrical"
+                  >Electrical</a-select-option
                 >
-                <a-select-option key="2" value="Company"
-                  >Company</a-select-option
+                <a-select-option key="3" value="Plumbing"
+                  >Plumbing</a-select-option
                 >
+                <a-select-option key="4" value="Cleaning"
+                  >Cleaning</a-select-option
+                >
+                <a-select-option key="5" value="Duct Cleaning"
+                  >Duct Cleaning</a-select-option
+                >
+                <a-select-option key="6" value="Other">Other</a-select-option>
               </a-select>
               <span class="errorText">{{ errors[0] }}</span>
             </validation-provider>
           </a-form-item>
 
-          <a-form-item label="City">
-            <validation-provider vid="city" v-slot="{ errors }">
-              <a-input v-model="form.city"> </a-input>
+          <a-form-item v-if="form.skill === 'Other'" label="Remark">
+            <validation-provider vid="remark" v-slot="{ errors }">
+              <a-textarea v-model="form.remark"> </a-textarea>
               <span class="errorText">{{ errors[0] }}</span>
             </validation-provider>
           </a-form-item>
 
-          <a-form-item label="Community">
-            <validation-provider vid="community" v-slot="{ errors }">
-              <a-input v-model="form.community"> </a-input>
-              <span class="errorText">{{ errors[0] }}</span>
-            </validation-provider>
-          </a-form-item>
-
-          <a-form-item label="Street">
-            <validation-provider vid="street" v-slot="{ errors }">
-              <a-input v-model="form.street"> </a-input>
-              <span class="errorText">{{ errors[0] }}</span>
-            </validation-provider>
-          </a-form-item>
-
-          <a-form-item label="Building">
-            <validation-provider vid="building" v-slot="{ errors }">
-              <a-input v-model="form.building"> </a-input>
-              <span class="errorText">{{ errors[0] }}</span>
-            </validation-provider>
-          </a-form-item>
-
-          <a-form-item label="Style">
-            <validation-provider vid="style" v-slot="{ errors }">
-              <a-select v-model="form.style" defaultValue="Apartment">
-                <a-select-option key="1" value="Apartment"
-                  >Apartment</a-select-option
-                >
-                <a-select-option key="2" value="Villa">Villa</a-select-option>
-              </a-select>
-              <span class="errorText">{{ errors[0] }}</span>
-            </validation-provider>
-          </a-form-item>
-
-          <a-form-item label="OfficeNo">
-            <validation-provider
-              vid="office_no"
-              name="OfficeNo"
-              v-slot="{ errors }"
-            >
-              <a-input v-model="form.office_no"> </a-input>
-              <span class="errorText">{{ errors[0] }}</span>
-            </validation-provider>
-          </a-form-item>
-
-          <a-form-item label="Address" help="from the map">
-            <validation-provider
-              vid="address"
-              name="address"
-              v-slot="{ errors }"
-            >
-              <a-input v-model="form.address"> </a-input>
-              <span class="errorText">{{ errors[0] }}</span>
-            </validation-provider>
-          </a-form-item>
-
-          <a-form-item label="Latitude" help="from the map">
-            <validation-provider vid="lat" name="latitude" v-slot="{ errors }">
-              <a-input v-model="form.lat"> </a-input>
-              <span class="errorText">{{ errors[0] }}</span>
-            </validation-provider>
-          </a-form-item>
-
-          <a-form-item label="Longitude" help="from the map">
-            <validation-provider vid="lgt" name="longitude" v-slot="{ errors }">
-              <a-input v-model="form.lgt"> </a-input>
+          <a-form-item label="Useful">
+            <validation-provider vid="useful" v-slot="{ errors }">
+              <a-checkbox v-model="form.useful"></a-checkbox>
               <span class="errorText">{{ errors[0] }}</span>
             </validation-provider>
           </a-form-item>
@@ -168,7 +114,6 @@ export default {
             user_id: this.$store.getters.user.id
           })
         ).then(res => {
-          console.log(res, "---");
           return res.result;
         });
       },
@@ -178,7 +123,13 @@ export default {
   methods: {
     openModal(val) {
       this.modal = true;
-      this.form = Object.assign({}, val);
+      this.form = Object.assign(
+        {
+          useful: true,
+          skill: "A/C"
+        },
+        val
+      );
     },
     submit() {
       updateSkill(this.form.id, this.form);

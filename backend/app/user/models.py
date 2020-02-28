@@ -96,3 +96,26 @@ class WorkTime(models.Model):
     class Meta:
         db_table = 'worktime'
         unique_together = ('week', 'user')
+
+class Contract(models.Model):
+
+    class Option(models.TextChoices):
+        Economy = 'Economy'
+        Standard = 'Standard'
+        Premium = 'Premium'
+        Customized = 'Customized'
+
+    option = models.CharField(blank=True, null=True, max_length=16, choices=Option.choices, default=Option.Economy)
+
+    issue_date = models.DateField(blank=True, null=True)
+
+    expiry_date = models.DateField(blank=True, null=True)
+
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='contract', blank=True, null=True)
+
+    class Meta:
+        db_table = 'contract'
+
+    @property
+    def visit(self):
+        return [0,0,0,0]

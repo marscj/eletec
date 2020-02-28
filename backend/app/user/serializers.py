@@ -3,7 +3,7 @@ from django.contrib.auth.models import Group, Permission
 
 from rest_framework import  serializers
 
-from .models import User, Address, Skill, WorkTime
+from .models import User, Address, Skill, WorkTime, Contract
 
 class ContentTypeSerializer(serializers.ModelSerializer):
 
@@ -80,4 +80,11 @@ class WorkTimeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = WorkTime
+        fields = '__all__'
+
+
+class ContractSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Contract
         fields = '__all__'
