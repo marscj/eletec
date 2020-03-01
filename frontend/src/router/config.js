@@ -83,8 +83,16 @@ export const asyncRouterMap = [
             component: () => import("@/views/user/UserProfile.vue"),
             meta: {
               title: "Profile",
-              hideHeader: true,
-              permission: ["user"]
+              hideHeader: true
+            }
+          },
+          {
+            path: "/admin/users/:id/contract",
+            name: "UserContract",
+            component: () => import("@/views/user/UserContract.vue"),
+            meta: {
+              title: "Contract",
+              hideHeader: true
             }
           },
           {
@@ -92,9 +100,8 @@ export const asyncRouterMap = [
             name: "UserAddress",
             component: () => import("@/views/user/UserAddress.vue"),
             meta: {
-              title: "Address",
-              hideHeader: true,
-              permission: ["user"]
+              title: "Contract",
+              hideHeader: true
             }
           },
           {
@@ -103,8 +110,7 @@ export const asyncRouterMap = [
             component: () => import("@/views/user/UserSkill.vue"),
             meta: {
               title: "Skill",
-              hideHeader: true,
-              permission: ["user"]
+              hideHeader: true
             }
           },
           {
@@ -113,8 +119,7 @@ export const asyncRouterMap = [
             component: () => import("@/views/user/UserWorkTime.vue"),
             meta: {
               title: "WorkTime",
-              hideHeader: true,
-              permission: ["user"]
+              hideHeader: true
             }
           }
         ]
@@ -171,7 +176,7 @@ export const asyncRouterMap = [
             component: () => import("@/views/setting/app/List.vue"),
             meta: {
               title: "App",
-              permission: []
+              permission: ["app"]
             }
           }
         ]
