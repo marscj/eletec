@@ -1,5 +1,5 @@
 <template>
-  <div class="page-header-index-wide">
+  <page-view class="page-header-index-wide">
     <a-card
       :bordered="false"
       :bodyStyle="{ padding: '16px 0', height: '100%' }"
@@ -54,11 +54,11 @@
         </div>
       </div>
     </a-card>
-  </div>
+  </page-view>
 </template>
 
 <script>
-import { RouteView } from "@/layouts";
+import { RouteView, PageView } from "@/layouts";
 import { mixinDevice } from "@/utils/mixin.js";
 
 export default {
@@ -72,7 +72,8 @@ export default {
       mode: "inline",
 
       openKeys: [],
-      selectedKeys: []
+      selectedKeys: [],
+      title: "asds"
     };
   },
   created() {

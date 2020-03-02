@@ -5,8 +5,8 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.backends import ModelBackend
 
-from ..models import PhoneToken
-from ..utils import model_field_attr
+from .models import PhoneToken
+from .utils import model_field_attr
 
 
 class PhoneBackend(ModelBackend):
@@ -37,7 +37,7 @@ class PhoneBackend(ModelBackend):
         """
         password = self.user_model.objects.make_random_password()
 
-        username = extra_fields.get('username', self.get_username())
+        username = extra_fields.get('username', phone_token.phone_number)
         password = extra_fields.get('password', password)
         kwargs = {
             'username': username,

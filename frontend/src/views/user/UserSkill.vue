@@ -4,7 +4,7 @@
       ref="table"
       size="default"
       rowKey="id"
-      :grid="{ gutter: 24, lg: 3, md: 2, sm: 1, xs: 1 }"
+      :grid="{ gutter: 24, lg: 2, md: 2, sm: 1, xs: 1 }"
       :dataSource="listData"
       :loading="loading"
     >
@@ -99,6 +99,7 @@ export default {
         .then(res => {
           res.result.unshift({});
           this.listData = res.result;
+          console.log(res, "---");
         })
         .finally(() => {
           this.loading = false;
@@ -123,6 +124,7 @@ export default {
         )
           .then(res => {
             this.modal = false;
+            return this.getSkillData();
           })
           .catch(error => {
             if (error.response) {
@@ -133,6 +135,7 @@ export default {
         updateSkill(this.form.id, this.form)
           .then(res => {
             this.modal = false;
+            return this.getSkillData();
           })
           .catch(error => {
             if (error.response) {

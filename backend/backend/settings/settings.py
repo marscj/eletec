@@ -139,8 +139,10 @@ REST_FRAMEWORK = {
 }
 
 AUTHENTICATION_BACKENDS = [
+    # 系统默认
+    'django.contrib.auth.backends.ModelBackend',
     # 短信认证登陆
-    'auth.phone.backends.phone_backend.PhoneBackend', 
+    'auth.phone.backend.PhoneBackend', 
     # 用户名密码登陆
     # "allauth.account.auth_backends.AuthenticationBackend",
 ]

@@ -38,7 +38,7 @@ class PhoneNumberUserManager(BaseUserManager):
         return self._create_user(username, phone_number, email, password, **extra_fields)
 
 class PhoneNumberAbstactUser(AbstractUser):
-    phone_number = PhoneNumberField(unique=True)
+    phone_number = PhoneNumberField(unique=True, blank=True, null=True)
     objects = PhoneNumberUserManager()
 
     class Meta:
