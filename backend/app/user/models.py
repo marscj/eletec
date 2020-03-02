@@ -70,7 +70,7 @@ class Skill(models.Model):
 
     class Meta:
         db_table = 'skill'
-        unique_together = ('skill', 'user')
+        unique_together = ('skill', 'user_id')
 
 class WorkTime(models.Model):
 
@@ -95,7 +95,7 @@ class WorkTime(models.Model):
 
     class Meta:
         db_table = 'worktime'
-        unique_together = ('week', 'user')
+        unique_together = ('week', 'user_id')
 
 class Contract(models.Model):
 

@@ -72,6 +72,10 @@ class AddressSerializer(serializers.ModelSerializer):
 
 class SkillSerializer(serializers.ModelSerializer):
 
+    user = serializers.PrimaryKeyRelatedField(required=False, read_only=True, many=False)
+
+    user_id = serializers.IntegerField(required=False, write_only=True)
+
     class Meta:
         model = Skill
         fields = '__all__'
