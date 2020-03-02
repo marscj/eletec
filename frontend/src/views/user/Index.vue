@@ -1,5 +1,5 @@
 <template>
-  <page-view class="page-header-index-wide">
+  <div class="page-header-index-wide">
     <a-card
       :bordered="false"
       :bodyStyle="{ padding: '16px 0', height: '100%' }"
@@ -49,12 +49,13 @@
           <div class="account-settings-info-title">
             <span>{{ $route.meta.title }}</span>
           </div>
+
           <a-divider></a-divider>
           <route-view></route-view>
         </div>
       </div>
     </a-card>
-  </page-view>
+  </div>
 </template>
 
 <script>
@@ -126,7 +127,7 @@ export default {
 
   .account-settings-info-right {
     flex: 1 1;
-    padding: 8px 40px;
+    padding: 8px 30px;
 
     .account-settings-info-title {
       color: rgba(0, 0, 0, 0.85);

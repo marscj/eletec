@@ -35,25 +35,25 @@ export const asyncRouterMap = [
           permission: ["order"]
         }
       },
-      {
-        path: "/admin/jobs",
-        name: "Jobs",
-        component: () => import("@/views/job/List.vue"),
-        meta: {
-          title: "Jobs",
-          icon: "calendar",
-          permission: ["job"]
-        }
-      },
-      {
-        path: "/admin/jobs/:id",
-        name: "Job",
-        hidden: true,
-        component: () => import("@/views/order/List.vue"),
-        meta: {
-          permission: ["job"]
-        }
-      },
+      // {
+      //   path: "/admin/jobs",
+      //   name: "Jobs",
+      //   component: () => import("@/views/job/List.vue"),
+      //   meta: {
+      //     title: "Jobs",
+      //     icon: "calendar",
+      //     permission: ["job"]
+      //   }
+      // },
+      // {
+      //   path: "/admin/jobs/:id",
+      //   name: "Job",
+      //   hidden: true,
+      //   component: () => import("@/views/order/List.vue"),
+      //   meta: {
+      //     permission: ["job"]
+      //   }
+      // },
       {
         path: "/admin/users/",
         name: "Users",
@@ -118,25 +118,25 @@ export const asyncRouterMap = [
           }
         ]
       },
-      {
-        path: "/admin/groups",
-        name: "Groups",
-        component: () => import("@/views/group/List.vue"),
-        meta: {
-          title: "Groups",
-          icon: "solution",
-          permission: ["group"]
-        }
-      },
-      {
-        path: "/admin/groups/:id",
-        name: "Group",
-        hidden: true,
-        component: () => import("@/views/group/List.vue"),
-        meta: {
-          permission: ["group"]
-        }
-      },
+      // {
+      //   path: "/admin/groups",
+      //   name: "Groups",
+      //   component: () => import("@/views/group/List.vue"),
+      //   meta: {
+      //     title: "Groups",
+      //     icon: "solution",
+      //     permission: ["group"]
+      //   }
+      // },
+      // {
+      //   path: "/admin/groups/:id",
+      //   name: "Group",
+      //   hidden: true,
+      //   component: () => import("@/views/group/List.vue"),
+      //   meta: {
+      //     permission: ["group"]
+      //   }
+      // },
       {
         path: "/admin/settings",
         name: "Settings",

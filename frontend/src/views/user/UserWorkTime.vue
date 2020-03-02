@@ -1,25 +1,25 @@
 <template>
   <div class="content">
     <a-list
-      ref="table"
+      ref="list"
       size="default"
       rowKey="id"
-      :grid="{ gutter: 24, lg: 1, md: 2, sm: 1, xs: 1 }"
+      :grid="{ gutter: 24, lg: 1, md: 1, sm: 1, xs: 1 }"
       :dataSource="listData"
       :loading="loading"
     >
       <a-list-item slot="renderItem" slot-scope="item">
         <template v-if="!item || item.id === undefined">
-          <a-button class="new-btn" type="dashed" @click="openModal()">
-            <a-icon type="plus" />
-            New
-          </a-button>
+          <div align="right" class="table-operator">
+            <a-button type="primary" icon="plus" @click="openModal()">
+              New
+            </a-button>
+          </div>
         </template>
         <template v-else>
           <a-card :hoverable="true">
-            <a-card-meta :description="item.skill"> </a-card-meta>
-            {{ item.remark }}
-
+            <a-card-meta :description="item.week"> </a-card-meta>
+            {{ item.form | moment("HH:mm") }} - {{ item.to | moment("HH:mm") }}
             <template class="ant-card-actions" slot="actions">
               <a @click="openModal(item)">Edit</a>
               <a-popconfirm
@@ -75,9 +75,16 @@
             </validation-provider>
           </a-form-item>
 
-          <a-form-item label="Remark">
-            <validation-provider vid="remark" v-slot="{ errors }">
-              <a-textarea v-model="form.remark"> </a-textarea>
+          <a-form-item label="Form">
+            <validation-provider vid="form" v-slot="{ errors }">
+              <a-time-picker v-model="form.form" format="HH:mm" />
+              <span class="errorText">{{ errors[0] }}</span>
+            </validation-provider>
+          </a-form-item>
+
+          <a-form-item label="To">
+            <validation-provider vid="to" v-slot="{ errors }">
+              <a-time-picker v-model="form.to" format="HH:mm" />
               <span class="errorText">{{ errors[0] }}</span>
             </validation-provider>
           </a-form-item>
@@ -88,6 +95,7 @@
 </template>
 
 <script>
+import moment from "moment";
 import {
   getWorkTimes,
   updateWorkTime,
@@ -108,12 +116,16 @@ export default {
     this.getListData();
   },
   methods: {
+    moment,
     getListData() {
       this.loading = true;
       getWorkTimes({ user_id: this.$route.params.id })
         .then(res => {
           res.result.unshift({});
-          this.listData = res.result;
+          this.listData = res.result.map(f => {
+            (f.form = moment(f.form, "HH:mm")), (f.to = moment(f.to, "HH:mm"));
+            return f;
+          });
         })
         .finally(() => {
           this.loading = false;
@@ -126,13 +138,26 @@ export default {
           useful: true,
           week: "Monday"
         },
+        val,
         val
+          ? {
+              form: moment(val.form, "HH:mm"),
+              to: moment(val.to, "HH:mm")
+            }
+          : {
+              form: moment("08:00", "HH:mm"),
+              to: moment("18:00", "HH:mm")
+            }
       );
     },
     submit() {
       if (this.form.id === undefined) {
         createWorkTime(
-          Object.assign(this.form, {
+          Object.assign({
+            week: this.form.week,
+            useful: this.form.useful,
+            form: moment(this.form.form).format("HH:mm:ss"),
+            to: moment(this.form.to).format("HH:mm:ss"),
             user_id: this.$route.params.id
           })
         )
@@ -170,76 +195,3 @@ export default {
   }
 };
 </script>
-
-<style lang="less" scoped>
-@import "~@/components/index.less";
-
-.card-list {
-  /deep/ .ant-card-body:hover {
-    .ant-card-meta-title > a {
-      color: @primary-color;
-    }
-  }
-
-  /deep/ .ant-card-meta-title {
-    margin-bottom: 12px;
-
-    & > a {
-      display: inline-block;
-      max-width: 100%;
-      color: rgba(0, 0, 0, 0.85);
-    }
-  }
-
-  /deep/ .meta-content {
-    position: relative;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    height: 64px;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-
-    margin-bottom: 1em;
-  }
-}
-
-.card-avatar {
-  width: 48px;
-  height: 48px;
-  border-radius: 48px;
-}
-
-.ant-card-actions {
-  background: #f7f9fa;
-
-  li {
-    float: left;
-    text-align: center;
-    margin: 12px 0;
-    color: rgba(0, 0, 0, 0.45);
-    width: 50%;
-
-    &:not(:last-child) {
-      border-right: 1px solid #e8e8e8;
-    }
-
-    a {
-      color: rgba(0, 0, 0, 0.45);
-      line-height: 22px;
-      display: inline-block;
-      width: 100%;
-      &:hover {
-        color: @primary-color;
-      }
-    }
-  }
-}
-
-.new-btn {
-  background-color: #fff;
-  border-radius: 2px;
-  width: 100%;
-  height: 110px;
-}
-</style>

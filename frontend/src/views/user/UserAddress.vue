@@ -1,27 +1,52 @@
 <template>
   <div class="content">
-    <div class="table-operator">
-      <a-button type="primary" icon="plus" @click="openModal()">New</a-button>
-    </div>
-
-    <s-table
-      ref="table"
+    <a-list
+      ref="list"
       size="default"
-      :rowKey="record => record.id"
-      :columns="columns"
-      :data="loadData"
-      :pageURI="true"
-      showPagination="auto"
-      bordered
+      rowKey="id"
+      :grid="{ gutter: 24, lg: 1, md: 1, sm: 1, xs: 1 }"
+      :dataSource="listData"
+      :loading="loading"
     >
-      <template slot="action" slot-scope="data">
-        <template>
-          <a @click="openModal(data)">Edit</a>
+      <a-list-item slot="renderItem" slot-scope="item">
+        <template v-if="!item || item.id === undefined">
+          <div align="right" class="table-operator">
+            <a-button type="primary" icon="plus" @click="openModal()">
+              New
+            </a-button>
+          </div>
         </template>
-      </template>
-    </s-table>
+        <template v-else>
+          <a-row type="flex" justify="center" align="middle">
+            <a-col :span="2">
+              <a-radio v-model="item.defAddr" />
+            </a-col>
+            <a-col :span="22">
+              <a-card :hoverable="true">
+                <a-card-meta :description="item.title"> </a-card-meta>
+                <template class="ant-card-actions" slot="actions">
+                  <a @click="openModal(item)">Edit</a>
+                  <a-popconfirm
+                    title="Are you sure delete this data?"
+                    @confirm="deleteData(item)"
+                    okText="Yes"
+                    cancelText="No"
+                  >
+                    <a href="#">Delete</a>
+                  </a-popconfirm>
+                </template>
+              </a-card>
+            </a-col>
+          </a-row>
+        </template>
+      </a-list-item>
+    </a-list>
 
-    <a-modal v-model="modal" title="Edit">
+    <a-modal
+      v-model="modal"
+      :title="this.form.id === undefined ? 'Create' : 'Edit'"
+      @ok="submit"
+    >
       <validation-observer ref="observer">
         <validation-provider name="non_field_errors" v-slot="{ errors }">
           <span class="errorText">{{ errors[0] }}</span>
@@ -47,85 +72,17 @@
             </validation-provider>
           </a-form-item>
 
-          <a-form-item label="City">
-            <validation-provider vid="city" v-slot="{ errors }">
-              <a-input v-model="form.city"> </a-input>
+          <a-form-item label="Form">
+            <validation-provider vid="form" v-slot="{ errors }">
               <span class="errorText">{{ errors[0] }}</span>
             </validation-provider>
           </a-form-item>
 
-          <a-form-item label="Community">
-            <validation-provider vid="community" v-slot="{ errors }">
-              <a-input v-model="form.community"> </a-input>
+          <a-form-item label="To">
+            <validation-provider vid="to" v-slot="{ errors }">
               <span class="errorText">{{ errors[0] }}</span>
             </validation-provider>
           </a-form-item>
-
-          <a-form-item label="Street">
-            <validation-provider vid="street" v-slot="{ errors }">
-              <a-input v-model="form.street"> </a-input>
-              <span class="errorText">{{ errors[0] }}</span>
-            </validation-provider>
-          </a-form-item>
-
-          <a-form-item label="Building">
-            <validation-provider vid="building" v-slot="{ errors }">
-              <a-input v-model="form.building"> </a-input>
-              <span class="errorText">{{ errors[0] }}</span>
-            </validation-provider>
-          </a-form-item>
-
-          <a-form-item label="Style">
-            <validation-provider vid="style" v-slot="{ errors }">
-              <a-select v-model="form.style">
-                <a-select-option key="1" value="Apartment"
-                  >Apartment</a-select-option
-                >
-                <a-select-option key="2" value="Villa">Villa</a-select-option>
-              </a-select>
-              <span class="errorText">{{ errors[0] }}</span>
-            </validation-provider>
-          </a-form-item>
-
-          <a-form-item label="OfficeNo">
-            <validation-provider
-              vid="office_no"
-              name="OfficeNo"
-              v-slot="{ errors }"
-            >
-              <a-input v-model="form.office_no"> </a-input>
-              <span class="errorText">{{ errors[0] }}</span>
-            </validation-provider>
-          </a-form-item>
-
-          <a-form-item label="Address" help="from the map">
-            <validation-provider
-              vid="address"
-              name="address"
-              v-slot="{ errors }"
-            >
-              <a-input v-model="form.address"> </a-input>
-              <span class="errorText">{{ errors[0] }}</span>
-            </validation-provider>
-          </a-form-item>
-
-          <a-form-item label="Latitude" help="from the map">
-            <validation-provider vid="lat" name="latitude" v-slot="{ errors }">
-              <a-input v-model="form.lat"> </a-input>
-              <span class="errorText">{{ errors[0] }}</span>
-            </validation-provider>
-          </a-form-item>
-
-          <a-form-item label="Longitude" help="from the map">
-            <validation-provider vid="lgt" name="longitude" v-slot="{ errors }">
-              <a-input v-model="form.lgt"> </a-input>
-              <span class="errorText">{{ errors[0] }}</span>
-            </validation-provider>
-          </a-form-item>
-
-          <a-button type="primary" html-type="submit" @click="submit">
-            Submit
-          </a-button>
         </a-form>
       </validation-observer>
     </a-modal>
@@ -133,85 +90,83 @@
 </template>
 
 <script>
-import { getAddress, updateAddress } from "@/api/user";
-import { STable, Ellipsis } from "@/components";
+import {
+  getAddress,
+  updateAddress,
+  createAddress,
+  deleteAddress
+} from "@/api/user";
+
 export default {
-  components: {
-    STable
-  },
   data() {
     return {
       modal: false,
-      columns: [
-        {
-          title: "Model",
-          dataIndex: "model"
-        },
-        {
-          title: "City",
-          dataIndex: "city"
-        },
-
-        {
-          title: "Community",
-          dataIndex: "community"
-        },
-        {
-          title: "Street",
-          dataIndex: "street"
-        },
-        {
-          title: "Building",
-          dataIndex: "building"
-        },
-        {
-          title: "Style",
-          dataIndex: "style"
-        },
-        {
-          title: "OfficeNo",
-          dataIndex: "office_no"
-        },
-        {
-          title: "VillaNo",
-          dataIndex: "villa_no"
-        },
-        {
-          title: "Address",
-          dataIndex: "address"
-        },
-        {
-          title: "ACTION",
-          width: "80px",
-          scopedSlots: { customRender: "action" }
-        }
-      ],
-      loadData: parameter => {
-        return getAddress(
-          Object.assign(parameter, {
-            user_id: this.$store.getters.user.id
-          })
-        ).then(res => {
-          console.log(res, "---");
-          return res.result;
-        });
-      },
+      listData: [],
+      loading: false,
       form: {}
     };
   },
+  mounted() {
+    this.getListData();
+  },
   methods: {
+    getListData() {
+      this.loading = true;
+      getAddress({ user_id: this.$route.params.id })
+        .then(res => {
+          res.result.unshift({});
+          this.listData = res.result;
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
     openModal(val) {
       this.modal = true;
       this.form = Object.assign(
         {
-          model: "Personal",
-          style: "Apartment"
+          model: "Personal"
         },
         val
       );
     },
     submit() {
-      updateAddress(this.form.id, this.form);
+      if (this.form.id === undefined) {
+        createAddress(
+          Object.assign({
+            user_id: this.$route.params.id
+          })
+        )
+          .then(res => {
+            this.modal = false;
+            return this.getListData();
+          })
+          .catch(error => {
+            if (error.response) {
+              this.$refs.observer.setErrors(error.response.data.result);
+            }
+          });
+      } else {
+        updateAddress(this.form.id, this.form)
+          .then(res => {
+            this.modal = false;
+            return this.getListData();
+          })
+          .catch(error => {
+            if (error.response) {
+              this.$refs.observer.setErrors(error.response.data.result);
+            }
+          });
+      }
+    },
+
+    deleteData(val) {
+      this.loading = true;
+      deleteAddress(val.id)
+        .then(res => {
+          return this.getListData();
+        })
+        .finally(() => (this.loading = false));
     }
   }
 };

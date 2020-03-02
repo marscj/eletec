@@ -65,14 +65,25 @@ class UserSerializer(serializers.ModelSerializer):
         return super().update(instance, validated_data)
 
 class AddressSerializer(serializers.ModelSerializer):
+    
+    user_id = serializers.IntegerField()
+
+    title = serializers.SerializerMethodField()
 
     class Meta:
         model = Address
         fields = '__all__'
 
-class SkillSerializer(serializers.ModelSerializer):
+    def get_title(self, obj):
+        if obj.onMap:
+            return obj.address
 
-    # user = serializers.PrimaryKeyRelatedField(required=False, read_only=True, many=False)
+        if obj.model == Address.Model.Personal:
+            return '%s / %s / %s / %s / %s' % (obj.city, obj.community, obj.street, obj.building, obj.roomNo)
+        else:
+            return '%s / %s / %s / %s / %s' % (obj.city, obj.community, obj.street, obj.building, obj.officeNo)
+
+class SkillSerializer(serializers.ModelSerializer):
 
     user_id = serializers.IntegerField()
 

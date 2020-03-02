@@ -1,9 +1,7 @@
 import {
   API,
   updateSuccess,
-  updateFailed,
   createSuccess,
-  createFailed,
   deleteSuccess,
   deleteFailed
 } from "./index";
@@ -29,9 +27,7 @@ export function updateUser(pk, data) {
     url: API.Users + `${pk}/`,
     method: "put",
     data: data
-  })
-    .then(updateSuccess)
-    .catch(updateFailed);
+  }).then(updateSuccess);
 }
 
 export function getContract(parameter) {
@@ -47,9 +43,7 @@ export function updateContract(pk, data) {
     url: API.Contracts + `${pk}/`,
     method: "put",
     data: data
-  })
-    .then(updateSuccess)
-    .catch(updateFailed);
+  }).then(updateSuccess);
 }
 
 export function createContract(data) {
@@ -57,9 +51,7 @@ export function createContract(data) {
     url: API.Contracts,
     method: "post",
     data: data
-  })
-    .then(createSuccess)
-    .catch(createFailed);
+  }).then(createSuccess);
 }
 
 export function deleteContract(pk) {
@@ -84,9 +76,7 @@ export function updateAddress(pk, data) {
     url: API.Address + `${pk}/`,
     method: "put",
     data: data
-  })
-    .then(updateSuccess)
-    .catch(updateFailed);
+  }).then(updateSuccess);
 }
 
 export function createAddress(data) {
@@ -94,9 +84,7 @@ export function createAddress(data) {
     url: API.Address,
     method: "post",
     data: data
-  })
-    .then(createSuccess)
-    .catch(createFailed);
+  }).then(createSuccess);
 }
 
 export function deleteAddress(pk) {
@@ -121,9 +109,7 @@ export function updateSkill(pk, data) {
     url: API.Skills + `${pk}/`,
     method: "put",
     data: data
-  })
-    .then(updateSuccess)
-    .catch(updateFailed);
+  }).then(updateSuccess);
 }
 
 export function createSkill(data) {
@@ -131,9 +117,7 @@ export function createSkill(data) {
     url: API.Skills,
     method: "post",
     data: data
-  })
-    .then(createSuccess)
-    .catch(createFailed);
+  }).then(createSuccess);
 }
 
 export function deleteSkill(pk) {
@@ -158,9 +142,7 @@ export function updateWorkTime(pk, data) {
     url: API.WorkTimes + `${pk}/`,
     method: "put",
     data: data
-  })
-    .then(updateSuccess)
-    .catch(updateFailed);
+  }).then(updateSuccess);
 }
 
 export function createWorkTime(data) {
@@ -168,9 +150,7 @@ export function createWorkTime(data) {
     url: API.WorkTimes,
     method: "post",
     data: data
-  })
-    .then(createSuccess)
-    .catch(createFailed);
+  }).then(createSuccess);
 }
 
 export function deleteWorkTime(pk) {

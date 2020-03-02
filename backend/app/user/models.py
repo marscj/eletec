@@ -23,6 +23,10 @@ class Address(models.Model):
         Apartment = 'Apartment'
         Villa = 'Villa'
 
+    defAddr= models.BooleanField(default=False)
+
+    onMap = models.BooleanField(default=False)
+
     model = models.CharField(default=Model.Personal, choices=Model.choices, max_length=16)
 
     city = models.TextField(blank=True, null=True)
@@ -35,9 +39,9 @@ class Address(models.Model):
 
     style = models.CharField(default=Style.Apartment, choices=Style.choices, max_length=16)
 
-    office_no = models.TextField(blank=True, null=True)
+    officeNo = models.TextField(blank=True, null=True)
 
-    villa_no = models.TextField(blank=True, null=True)
+    roomNo = models.TextField(blank=True, null=True)
 
     lat = models.FloatField(blank=True, null=True)
 

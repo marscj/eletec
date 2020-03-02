@@ -1,9 +1,7 @@
 import {
   API,
   updateSuccess,
-  updateFailed,
   createSuccess,
-  createFailed,
   deleteSuccess,
   deleteFailed
 } from "./index";
@@ -29,9 +27,7 @@ export function updateGroup(pk, data) {
     url: API.Groups + `${pk}/`,
     method: "put",
     data: data
-  })
-    .then(updateSuccess)
-    .catch(updateFailed);
+  }).then(updateSuccess);
 }
 
 export function createGroups(data) {
@@ -39,9 +35,7 @@ export function createGroups(data) {
     url: API.Groups,
     method: "post",
     data: data
-  })
-    .then(createSuccess)
-    .catch(createFailed);
+  }).then(createSuccess);
 }
 
 export function getPermissions(parameter) {
@@ -64,9 +58,7 @@ export function updatePermission(pk, data) {
     url: API.Permissions + `${pk}/`,
     method: "put",
     data: data
-  })
-    .then(updateSuccess)
-    .catch(updateFailed);
+  }).then(updateSuccess);
 }
 
 export function createPermission(data) {
@@ -74,7 +66,5 @@ export function createPermission(data) {
     url: API.Permissions,
     method: "post",
     data: data
-  })
-    .then(createSuccess)
-    .catch(createFailed);
+  }).then(createSuccess);
 }
