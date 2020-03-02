@@ -46,6 +46,8 @@ class UserSerializer(serializers.ModelSerializer):
 
     groups = GroupSerializer(required=False, many=True)
 
+    photo = VersatileImageFieldSerializer(required=False, allow_null=True, sizes='image_size')
+
     groups_id = serializers.PrimaryKeyRelatedField(required=False, write_only=True, many=True, allow_null=True, queryset=Group.objects.all())
 
     class Meta:

@@ -3,6 +3,12 @@ from django.db import models
 from versatileimagefield.fields import VersatileImageField, PPOIField
 from auth.phone.models import PhoneNumberAbstactUser
 
+def photo_file_name(instance, filename):
+    ext = filename.split('.')[-1]
+    
+    file_path = 'resource/{id}/{filename}'.format(id=instance.id, filename='photo', ext=ext) 
+    return file_path
+
 class User(PhoneNumberAbstactUser):
     
     class Role(models.TextChoices):
@@ -11,6 +17,10 @@ class User(PhoneNumberAbstactUser):
         Freelancer = 'Freelancer'
 
     role = models.CharField(default=Role.Customer, choices=Role.choices, max_length=16)
+
+    photo = VersatileImageField(blank=True, null=True, upload_to=photo_file_name, ppoi_field='image_ppoi',)
+    
+    image_ppoi = PPOIField()
 
     class Meta:
         db_table = 'user'
@@ -120,7 +130,7 @@ class Contract(models.Model):
     class Meta:
         db_table = 'contract'
 
-def content_file_name(instance, filename):
+def resource_file_name(instance, filename):
     ext = filename.split('.')[-1]
     
     file_path = 'resource/{user_id}/{filename}'.format(user_id=instance.user_id, filename=filename, ext=ext) 
@@ -130,7 +140,7 @@ class Resource(models.Model):
 
     filename = models.CharField(blank=True, null=True, max_length=64, default='unknow')
 
-    image = VersatileImageField(blank=True, null=True, upload_to=content_file_name, ppoi_field='image_ppoi',)
+    image = VersatileImageField(blank=True, null=True, upload_to=resource_file_name, ppoi_field='image_ppoi',)
     
     image_ppoi = PPOIField()
 

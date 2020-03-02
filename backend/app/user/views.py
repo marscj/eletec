@@ -24,6 +24,8 @@ class UserInfoView(APIView):
     
     def get(self, request, format=None):
         serializer = UserSerializer(request.user)
+        if serializer.is_valid():
+            print(serializer.data)
         return Response(serializer.data)
 
 class UserLogoutView(APIView):

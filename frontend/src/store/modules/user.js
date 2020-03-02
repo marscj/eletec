@@ -70,7 +70,8 @@ const user = {
             commit("SET_ID", result.id);
             commit("SET_GROUPS", result.groups);
             commit("SET_NAME", result.phone_number);
-            commit("SET_PHOTO", result.photoURL);
+            console.log(result.photo, "set -----");
+            commit("SET_PHOTO", result.photo ? result.photo.thumbnail : "");
             commit("SET_SUPERUSER", result.is_superuser);
             commit("SET_HAS_INFO", true);
             resolve(res);

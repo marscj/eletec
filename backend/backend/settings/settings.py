@@ -176,7 +176,7 @@ EMAIL_HOST_PASSWORD = 'eletec2015'
 VERSATILEIMAGEFIELD_RENDITION_KEY_SETS = {
     'image_size': [
         ('full_size', 'url'),
-        ('thumbnail', 'thumbnail__200x200'),
+        ('thumbnail', 'thumbnail__400x400'),
         ('samll', 'crop__640x360'),
         ('medium', 'crop__854x480'),
         ('large', 'crop__1280x720'),

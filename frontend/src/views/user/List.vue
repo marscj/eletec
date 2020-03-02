@@ -98,11 +98,11 @@ export default {
           title: "ROLE",
           dataIndex: "role"
         },
-        {
-          title: "GROUP",
-          dataIndex: "groups",
-          scopedSlots: { customRender: "groups" }
-        },
+        // {
+        //   title: "GROUP",
+        //   dataIndex: "groups",
+        //   scopedSlots: { customRender: "groups" }
+        // },
         {
           title: "ACTIVE",
           dataIndex: "is_active",

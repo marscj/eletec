@@ -27,7 +27,7 @@
         </template>
         <template v-else>
           <a-card :hoverable="true">
-            <img alt="images" :src="item.image.large" slot="cover" />
+            <img :src="item.image.large" slot="cover" alt="images" />
 
             <template class="ant-card-actions" slot="actions">
               <a-popconfirm
