@@ -1,9 +1,9 @@
-import api from "./index";
+import { API } from "./index";
 import { axios } from "@/utils/request";
 
 export function phoneGenerate(parameter) {
   return axios({
-    url: api.Generate,
+    url: API.Generate,
     method: "post",
     data: parameter
   });
@@ -11,7 +11,7 @@ export function phoneGenerate(parameter) {
 
 export function phoneValidate(parameter) {
   return axios({
-    url: api.Validate,
+    url: API.Validate,
     method: "post",
     data: parameter
   });
@@ -19,14 +19,14 @@ export function phoneValidate(parameter) {
 
 export function getInfo() {
   return axios({
-    url: api.Info,
+    url: API.Info,
     method: "get"
   });
 }
 
 export function logout() {
   return axios({
-    url: api.Logout,
+    url: API.Logout,
     method: "get"
   });
 }

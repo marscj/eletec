@@ -82,6 +82,8 @@ class SkillSerializer(serializers.ModelSerializer):
 
 class WorkTimeSerializer(serializers.ModelSerializer):
 
+    user_id = serializers.IntegerField()
+
     class Meta:
         model = WorkTime
         fields = '__all__'
@@ -89,6 +91,8 @@ class WorkTimeSerializer(serializers.ModelSerializer):
 
 class ContractSerializer(serializers.ModelSerializer):
 
+    user_id = serializers.IntegerField()
+    
     class Meta:
         model = Contract
         fields = '__all__'

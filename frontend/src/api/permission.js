@@ -1,9 +1,17 @@
-import api from "./index";
+import {
+  API,
+  updateSuccess,
+  updateFailed,
+  createSuccess,
+  createFailed,
+  deleteSuccess,
+  deleteFailed
+} from "./index";
 import { axios } from "@/utils/request";
 
 export function getGroups(parameter) {
   return axios({
-    url: api.Groups,
+    url: API.Groups,
     method: "get",
     params: parameter
   });
@@ -11,30 +19,34 @@ export function getGroups(parameter) {
 
 export function getGroup(pk) {
   return axios({
-    url: api.Groups + `${pk}/`,
+    url: API.Groups + `${pk}/`,
     method: "get"
   });
 }
 
 export function updateGroup(pk, data) {
   return axios({
-    url: api.Groups + `${pk}/`,
+    url: API.Groups + `${pk}/`,
     method: "put",
     data: data
-  });
+  })
+    .then(updateSuccess)
+    .catch(updateFailed);
 }
 
 export function createGroups(data) {
   return axios({
-    url: api.Groups,
+    url: API.Groups,
     method: "post",
     data: data
-  });
+  })
+    .then(createSuccess)
+    .catch(createFailed);
 }
 
 export function getPermissions(parameter) {
   return axios({
-    url: api.Permissions,
+    url: API.Permissions,
     method: "get",
     params: parameter
   });
@@ -42,23 +54,27 @@ export function getPermissions(parameter) {
 
 export function getPermission(pk) {
   return axios({
-    url: api.Permissions + `${pk}/`,
+    url: API.Permissions + `${pk}/`,
     method: "get"
   });
 }
 
 export function updatePermission(pk, data) {
   return axios({
-    url: api.Permissions + `${pk}/`,
+    url: API.Permissions + `${pk}/`,
     method: "put",
     data: data
-  });
+  })
+    .then(updateSuccess)
+    .catch(updateFailed);
 }
 
 export function createPermission(data) {
   return axios({
-    url: api.Permissions,
+    url: API.Permissions,
     method: "post",
     data: data
-  });
+  })
+    .then(createSuccess)
+    .catch(createFailed);
 }

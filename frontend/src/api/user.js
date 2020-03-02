@@ -1,9 +1,17 @@
-import api from "./index";
+import {
+  API,
+  updateSuccess,
+  updateFailed,
+  createSuccess,
+  createFailed,
+  deleteSuccess,
+  deleteFailed
+} from "./index";
 import { axios } from "@/utils/request";
 
 export function getUsers(parameter) {
   return axios({
-    url: api.Users,
+    url: API.Users,
     method: "get",
     params: parameter
   });
@@ -11,22 +19,61 @@ export function getUsers(parameter) {
 
 export function getUser(pk) {
   return axios({
-    url: api.Users + `${pk}/`,
+    url: API.Users + `${pk}/`,
     method: "get"
   });
 }
 
 export function updateUser(pk, data) {
   return axios({
-    url: api.Users + `${pk}/`,
+    url: API.Users + `${pk}/`,
     method: "put",
     data: data
+  })
+    .then(updateSuccess)
+    .catch(updateFailed);
+}
+
+export function getContract(parameter) {
+  return axios({
+    url: API.Contracts,
+    method: "get",
+    params: parameter
   });
+}
+
+export function updateContract(pk, data) {
+  return axios({
+    url: API.Contracts + `${pk}/`,
+    method: "put",
+    data: data
+  })
+    .then(updateSuccess)
+    .catch(updateFailed);
+}
+
+export function createContract(data) {
+  return axios({
+    url: API.Contracts,
+    method: "post",
+    data: data
+  })
+    .then(createSuccess)
+    .catch(createFailed);
+}
+
+export function deleteContract(pk) {
+  return axios({
+    url: API.Contracts + `${pk}/`,
+    method: "delete"
+  })
+    .then(deleteSuccess)
+    .catch(deleteFailed);
 }
 
 export function getAddress(parameter) {
   return axios({
-    url: api.Address,
+    url: API.Address,
     method: "get",
     params: parameter
   });
@@ -34,23 +81,36 @@ export function getAddress(parameter) {
 
 export function updateAddress(pk, data) {
   return axios({
-    url: api.Address + `${pk}/`,
+    url: API.Address + `${pk}/`,
     method: "put",
     data: data
-  });
+  })
+    .then(updateSuccess)
+    .catch(updateFailed);
 }
 
 export function createAddress(data) {
   return axios({
-    url: api.Address,
+    url: API.Address,
     method: "post",
     data: data
-  });
+  })
+    .then(createSuccess)
+    .catch(createFailed);
+}
+
+export function deleteAddress(pk) {
+  return axios({
+    url: API.Address + `${pk}/`,
+    method: "delete"
+  })
+    .then(deleteSuccess)
+    .catch(deleteFailed);
 }
 
 export function getSkills(parameter) {
   return axios({
-    url: api.Skills,
+    url: API.Skills,
     method: "get",
     params: parameter
   });
@@ -58,23 +118,36 @@ export function getSkills(parameter) {
 
 export function updateSkill(pk, data) {
   return axios({
-    url: api.Skills + `${pk}/`,
+    url: API.Skills + `${pk}/`,
     method: "put",
     data: data
-  });
+  })
+    .then(updateSuccess)
+    .catch(updateFailed);
 }
 
 export function createSkill(data) {
   return axios({
-    url: api.Skills,
+    url: API.Skills,
     method: "post",
     data: data
-  });
+  })
+    .then(createSuccess)
+    .catch(createFailed);
+}
+
+export function deleteSkill(pk) {
+  return axios({
+    url: API.Skills + `${pk}/`,
+    method: "delete"
+  })
+    .then(deleteSuccess)
+    .catch(deleteFailed);
 }
 
 export function getWorkTimes(parameter) {
   return axios({
-    url: api.WorkTimes,
+    url: API.WorkTimes,
     method: "get",
     params: parameter
   });
@@ -82,16 +155,29 @@ export function getWorkTimes(parameter) {
 
 export function updateWorkTime(pk, data) {
   return axios({
-    url: api.WorkTimes + `${pk}/`,
+    url: API.WorkTimes + `${pk}/`,
     method: "put",
     data: data
-  });
+  })
+    .then(updateSuccess)
+    .catch(updateFailed);
 }
 
 export function createWorkTime(data) {
   return axios({
-    url: api.WorkTimes,
+    url: API.WorkTimes,
     method: "post",
     data: data
-  });
+  })
+    .then(createSuccess)
+    .catch(createFailed);
+}
+
+export function deleteWorkTime(pk) {
+  return axios({
+    url: API.WorkTimes + `${pk}/`,
+    method: "delete"
+  })
+    .then(deleteSuccess)
+    .catch(deleteFailed);
 }

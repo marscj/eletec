@@ -1,27 +1,46 @@
 <template>
   <div class="content">
-    <div class="table-operator">
-      <a-button type="primary" icon="plus" @click="openModal()">New</a-button>
-    </div>
-
-    <s-table
+    <a-list
       ref="table"
       size="default"
-      :rowKey="record => record.id"
-      :columns="columns"
-      :data="loadData"
-      :pageURI="true"
-      showPagination="auto"
-      bordered
+      rowKey="id"
+      :grid="{ gutter: 24, lg: 1, md: 2, sm: 1, xs: 1 }"
+      :dataSource="listData"
+      :loading="loading"
     >
-      <template slot="action" slot-scope="data">
-        <template>
-          <a @click="openModal(data)">Edit</a>
+      <a-list-item slot="renderItem" slot-scope="item">
+        <template v-if="!item || item.id === undefined">
+          <a-button class="new-btn" type="dashed" @click="openModal()">
+            <a-icon type="plus" />
+            New
+          </a-button>
         </template>
-      </template>
-    </s-table>
+        <template v-else>
+          <a-card :hoverable="true">
+            <a-card-meta :description="item.skill"> </a-card-meta>
+            {{ item.remark }}
 
-    <a-modal v-model="modal" title="Edit">
+            <template class="ant-card-actions" slot="actions">
+              <a @click="openModal(item)">Edit</a>
+              <a-popconfirm
+                title="Are you sure delete this data?"
+                @confirm="deleteData(item)"
+                okText="Yes"
+                cancelText="No"
+              >
+                <a href="#">Delete</a>
+              </a-popconfirm>
+            </template>
+          </a-card>
+        </template>
+      </a-list-item>
+    </a-list>
+
+    <a-modal
+      v-model="modal"
+      :title="this.form.id === undefined ? 'Create' : 'Edit'"
+      @ok="submit"
+    >
       <validation-observer ref="observer">
         <validation-provider name="non_field_errors" v-slot="{ errors }">
           <span class="errorText">{{ errors[0] }}</span>
@@ -33,7 +52,7 @@
           :label-col="{ span: 6 }"
           :wrapper-col="{ span: 12 }"
         >
-          <a-form-item label="Week">
+          <a-form-item label="Days of week">
             <validation-provider vid="week" v-slot="{ errors }">
               <a-select v-model="form.week">
                 <a-select-option key="1" value="Monday">Monday</a-select-option>
@@ -56,30 +75,12 @@
             </validation-provider>
           </a-form-item>
 
-          <a-form-item label="Form">
-            <validation-provider vid="form" v-slot="{ errors }">
-              <a-time-picker v-model="form.form" format="HH:mm" />
+          <a-form-item label="Remark">
+            <validation-provider vid="remark" v-slot="{ errors }">
+              <a-textarea v-model="form.remark"> </a-textarea>
               <span class="errorText">{{ errors[0] }}</span>
             </validation-provider>
           </a-form-item>
-
-          <a-form-item label="To">
-            <validation-provider vid="to" v-slot="{ errors }">
-              <a-time-picker v-model="form.to" format="HH:mm" />
-              <span class="errorText">{{ errors[0] }}</span>
-            </validation-provider>
-          </a-form-item>
-
-          <a-form-item label="Useful">
-            <validation-provider vid="useful" v-slot="{ errors }">
-              <a-checkbox v-model="form.useful"></a-checkbox>
-              <span class="errorText">{{ errors[0] }}</span>
-            </validation-provider>
-          </a-form-item>
-
-          <a-button type="primary" html-type="submit" @click="submit">
-            Submit
-          </a-button>
         </a-form>
       </validation-observer>
     </a-modal>
@@ -87,48 +88,37 @@
 </template>
 
 <script>
-import { getWorkTimes, updateWorkTime } from "@/api/user";
-import { STable, Ellipsis } from "@/components";
+import {
+  getWorkTimes,
+  updateWorkTime,
+  createWorkTime,
+  deleteWorkTime
+} from "@/api/user";
+
 export default {
-  components: {
-    STable
-  },
   data() {
     return {
       modal: false,
-      columns: [
-        {
-          title: "Skill",
-          dataIndex: "skill"
-        },
-        {
-          title: "Useful",
-          dataIndex: "useful"
-        },
-
-        {
-          title: "Remark",
-          dataIndex: "remark"
-        },
-        {
-          title: "ACTION",
-          width: "80px",
-          scopedSlots: { customRender: "action" }
-        }
-      ],
-      loadData: parameter => {
-        return getWorkTimes(
-          Object.assign(parameter, {
-            user_id: this.$store.getters.user.id
-          })
-        ).then(res => {
-          return res.result;
-        });
-      },
+      listData: [],
+      loading: false,
       form: {}
     };
   },
+  mounted() {
+    this.getListData();
+  },
   methods: {
+    getListData() {
+      this.loading = true;
+      getWorkTimes({ user_id: this.$route.params.id })
+        .then(res => {
+          res.result.unshift({});
+          this.listData = res.result;
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
     openModal(val) {
       this.modal = true;
       this.form = Object.assign(
@@ -140,8 +130,116 @@ export default {
       );
     },
     submit() {
-      updateWorkTime(this.form.id, this.form);
+      if (this.form.id === undefined) {
+        createWorkTime(
+          Object.assign(this.form, {
+            user_id: this.$route.params.id
+          })
+        )
+          .then(res => {
+            this.modal = false;
+            return this.getListData();
+          })
+          .catch(error => {
+            if (error.response) {
+              this.$refs.observer.setErrors(error.response.data.result);
+            }
+          });
+      } else {
+        updateWorkTime(this.form.id, this.form)
+          .then(res => {
+            this.modal = false;
+            return this.getListData();
+          })
+          .catch(error => {
+            if (error.response) {
+              this.$refs.observer.setErrors(error.response.data.result);
+            }
+          });
+      }
+    },
+
+    deleteData(val) {
+      this.loading = true;
+      deleteWorkTime(val.id)
+        .then(res => {
+          return this.getListData();
+        })
+        .finally(() => (this.loading = false));
     }
   }
 };
 </script>
+
+<style lang="less" scoped>
+@import "~@/components/index.less";
+
+.card-list {
+  /deep/ .ant-card-body:hover {
+    .ant-card-meta-title > a {
+      color: @primary-color;
+    }
+  }
+
+  /deep/ .ant-card-meta-title {
+    margin-bottom: 12px;
+
+    & > a {
+      display: inline-block;
+      max-width: 100%;
+      color: rgba(0, 0, 0, 0.85);
+    }
+  }
+
+  /deep/ .meta-content {
+    position: relative;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    height: 64px;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+
+    margin-bottom: 1em;
+  }
+}
+
+.card-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 48px;
+}
+
+.ant-card-actions {
+  background: #f7f9fa;
+
+  li {
+    float: left;
+    text-align: center;
+    margin: 12px 0;
+    color: rgba(0, 0, 0, 0.45);
+    width: 50%;
+
+    &:not(:last-child) {
+      border-right: 1px solid #e8e8e8;
+    }
+
+    a {
+      color: rgba(0, 0, 0, 0.45);
+      line-height: 22px;
+      display: inline-block;
+      width: 100%;
+      &:hover {
+        color: @primary-color;
+      }
+    }
+  }
+}
+
+.new-btn {
+  background-color: #fff;
+  border-radius: 2px;
+  width: 100%;
+  height: 110px;
+}
+</style>

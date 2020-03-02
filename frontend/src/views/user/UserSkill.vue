@@ -4,7 +4,7 @@
       ref="table"
       size="default"
       rowKey="id"
-      :grid="{ gutter: 24, lg: 2, md: 2, sm: 1, xs: 1 }"
+      :grid="{ gutter: 24, lg: 1, md: 2, sm: 1, xs: 1 }"
       :dataSource="listData"
       :loading="loading"
     >
@@ -17,21 +17,30 @@
         </template>
         <template v-else>
           <a-card :hoverable="true">
-            <a-card-meta>
-              <div class="meta-content" slot="description">
-                {{ item.skill }}
-              </div>
-            </a-card-meta>
+            <a-card-meta :description="item.skill"> </a-card-meta>
+            {{ item.remark }}
+
             <template class="ant-card-actions" slot="actions">
               <a @click="openModal(item)">Edit</a>
-              <a>Delete</a>
+              <a-popconfirm
+                title="Are you sure delete this data?"
+                @confirm="deleteData(item)"
+                okText="Yes"
+                cancelText="No"
+              >
+                <a href="#">Delete</a>
+              </a-popconfirm>
             </template>
           </a-card>
         </template>
       </a-list-item>
     </a-list>
 
-    <a-modal v-model="modal" title="Edit" @ok="submit">
+    <a-modal
+      v-model="modal"
+      :title="this.form.id === undefined ? 'Create' : 'Edit'"
+      @ok="submit"
+    >
       <validation-observer ref="observer">
         <validation-provider name="non_field_errors" v-slot="{ errors }">
           <span class="errorText">{{ errors[0] }}</span>
@@ -78,7 +87,7 @@
 </template>
 
 <script>
-import { getSkills, updateSkill, createSkill } from "@/api/user";
+import { getSkills, updateSkill, createSkill, deleteSkill } from "@/api/user";
 
 export default {
   data() {
@@ -90,16 +99,15 @@ export default {
     };
   },
   mounted() {
-    this.getSkillData();
+    this.getListData();
   },
   methods: {
-    getSkillData() {
+    getListData() {
       this.loading = true;
       getSkills({ user_id: this.$route.params.id })
         .then(res => {
           res.result.unshift({});
           this.listData = res.result;
-          console.log(res, "---");
         })
         .finally(() => {
           this.loading = false;
@@ -124,7 +132,7 @@ export default {
         )
           .then(res => {
             this.modal = false;
-            return this.getSkillData();
+            return this.getListData();
           })
           .catch(error => {
             if (error.response) {
@@ -135,7 +143,7 @@ export default {
         updateSkill(this.form.id, this.form)
           .then(res => {
             this.modal = false;
-            return this.getSkillData();
+            return this.getListData();
           })
           .catch(error => {
             if (error.response) {
@@ -143,6 +151,15 @@ export default {
             }
           });
       }
+    },
+
+    deleteData(val) {
+      this.loading = true;
+      deleteSkill(val.id)
+        .then(res => {
+          return this.getListData();
+        })
+        .finally(() => (this.loading = false));
     }
   }
 };

@@ -12,7 +12,6 @@ const service = axios.create({
 });
 
 const err = error => {
-  console.log(err, "----");
   if (error.response) {
     const data = error.response.data;
     const token = Vue.ls.get(ACCESS_TOKEN);
@@ -22,7 +21,7 @@ const err = error => {
         description: data.message
       });
     }
-    if (error.response.status === 401 && !data.result) {
+    if (error.response.status === 401) {
       notification.error({
         message: "Unauthorized",
         description: "Authorization verification failed"
