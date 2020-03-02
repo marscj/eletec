@@ -2,8 +2,9 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import Group, Permission
 
 from rest_framework import  serializers
+from versatileimagefield.serializers import VersatileImageFieldSerializer
 
-from .models import User, Address, Skill, WorkTime, Contract
+from .models import User, Address, Skill, WorkTime, Contract, Resource
 
 class ContentTypeSerializer(serializers.ModelSerializer):
 
@@ -114,4 +115,14 @@ class ContractSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Contract
+        fields = '__all__'
+
+class ResourceSerializer(serializers.ModelSerializer):
+
+    image = VersatileImageFieldSerializer(required=False, allow_null=True, sizes='image_size')
+    
+    user_id = serializers.IntegerField()
+    
+    class Meta:
+        model = Resource
         fields = '__all__'

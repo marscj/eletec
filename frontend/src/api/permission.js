@@ -3,7 +3,11 @@ import {
   updateSuccess,
   createSuccess,
   deleteSuccess,
-  deleteFailed
+  deleteFailed,
+  createFailed,
+  updateFailed,
+  uploadSuccess,
+  uploadFailed
 } from "./index";
 import { axios } from "@/utils/request";
 
@@ -27,7 +31,9 @@ export function updateGroup(pk, data) {
     url: API.Groups + `${pk}/`,
     method: "put",
     data: data
-  }).then(updateSuccess);
+  })
+    .then(updateSuccess)
+    .catch(updateFailed);
 }
 
 export function createGroups(data) {
@@ -35,7 +41,9 @@ export function createGroups(data) {
     url: API.Groups,
     method: "post",
     data: data
-  }).then(createSuccess);
+  })
+    .then(createSuccess)
+    .catch(createFailed);
 }
 
 export function getPermissions(parameter) {
@@ -58,7 +66,9 @@ export function updatePermission(pk, data) {
     url: API.Permissions + `${pk}/`,
     method: "put",
     data: data
-  }).then(updateSuccess);
+  })
+    .then(updateSuccess)
+    .catch(updateFailed);
 }
 
 export function createPermission(data) {
@@ -66,5 +76,7 @@ export function createPermission(data) {
     url: API.Permissions,
     method: "post",
     data: data
-  }).then(createSuccess);
+  })
+    .then(createSuccess)
+    .catch(createFailed);
 }

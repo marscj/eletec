@@ -17,12 +17,13 @@ INSTALLED_APPS = [
     'django.contrib.sites',
 
     'corsheaders',
+    'versatileimagefield',
 
-    'auth.phone',
     'rest_framework',
     'rest_framework.authtoken',
     'phonenumber_field',
 
+    'auth.phone',
     'app.user',
     'app.order',
     'app.job',
@@ -170,3 +171,13 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 2525
 EMAIL_HOST_USER = 'mobileapp@eletec.ae'
 EMAIL_HOST_PASSWORD = 'eletec2015'
+
+# 图片处理
+VERSATILEIMAGEFIELD_RENDITION_KEY_SETS = {
+    'image_size': [
+        ('full_size', 'url'),
+        ('thumbnail', 'thumbnail__200x200'),
+        ('medium', 'crop__200x200'),
+        ('large', 'crop__400x400'),
+    ]
+}

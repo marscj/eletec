@@ -1,4 +1,6 @@
 from django.db import models
+
+from versatileimagefield.fields import VersatileImageField, PPOIField
 from auth.phone.models import PhoneNumberAbstactUser
 
 class User(PhoneNumberAbstactUser):
@@ -118,6 +120,21 @@ class Contract(models.Model):
     class Meta:
         db_table = 'contract'
 
-    @property
-    def visit(self):
-        return [0,0,0,0]
+def content_file_name(instance, filename):
+    ext = filename.split('.')[-1]
+    
+    file_path = 'resource/{user_id}/{filename}'.format(user_id=instance.user_id, filename=filename, ext=ext) 
+    return file_path
+
+class Resource(models.Model):
+
+    filename = models.CharField(blank=True, null=True, max_length=64, default='unknow')
+
+    image = VersatileImageField(blank=True, null=True, upload_to=content_file_name, ppoi_field='image_ppoi',)
+    
+    image_ppoi = PPOIField()
+
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='resource', blank=True, null=True)
+
+    class Meta:
+        db_table = 'resource'

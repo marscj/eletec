@@ -10,6 +10,7 @@ router.register(r'permissions', views.PermissionView, basename='permission')
 router.register(r'address', views.AddressView, basename='address')
 router.register(r'skills', views.SkillView, basename='skill')
 router.register(r'worktimes', views.WorkTimeView, basename='worktime')
+router.register(r'resources', views.ResourceView, basename='resource')
 
 urlpatterns = [
     url(r'users/info/', views.UserInfoView.as_view(), name='info'),

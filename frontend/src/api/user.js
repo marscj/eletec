@@ -3,7 +3,11 @@ import {
   updateSuccess,
   createSuccess,
   deleteSuccess,
-  deleteFailed
+  deleteFailed,
+  createFailed,
+  updateFailed,
+  uploadSuccess,
+  uploadFailed
 } from "./index";
 import { axios } from "@/utils/request";
 
@@ -27,7 +31,9 @@ export function updateUser(pk, data) {
     url: API.Users + `${pk}/`,
     method: "put",
     data: data
-  }).then(updateSuccess);
+  })
+    .then(updateSuccess)
+    .catch(updateFailed);
 }
 
 export function getContract(parameter) {
@@ -43,7 +49,9 @@ export function updateContract(pk, data) {
     url: API.Contracts + `${pk}/`,
     method: "put",
     data: data
-  }).then(updateSuccess);
+  })
+    .then(updateSuccess)
+    .catch(updateFailed);
 }
 
 export function createContract(data) {
@@ -51,7 +59,9 @@ export function createContract(data) {
     url: API.Contracts,
     method: "post",
     data: data
-  }).then(createSuccess);
+  })
+    .then(createSuccess)
+    .catch(createFailed);
 }
 
 export function deleteContract(pk) {
@@ -76,7 +86,9 @@ export function updateAddress(pk, data) {
     url: API.Address + `${pk}/`,
     method: "put",
     data: data
-  }).then(updateSuccess);
+  })
+    .then(updateSuccess)
+    .catch(updateFailed);
 }
 
 export function createAddress(data) {
@@ -84,7 +96,9 @@ export function createAddress(data) {
     url: API.Address,
     method: "post",
     data: data
-  }).then(createSuccess);
+  })
+    .then(createSuccess)
+    .catch(createFailed);
 }
 
 export function deleteAddress(pk) {
@@ -109,7 +123,9 @@ export function updateSkill(pk, data) {
     url: API.Skills + `${pk}/`,
     method: "put",
     data: data
-  }).then(updateSuccess);
+  })
+    .then(updateSuccess)
+    .catch(updateFailed);
 }
 
 export function createSkill(data) {
@@ -117,7 +133,9 @@ export function createSkill(data) {
     url: API.Skills,
     method: "post",
     data: data
-  }).then(createSuccess);
+  })
+    .then(createSuccess)
+    .catch(createFailed);
 }
 
 export function deleteSkill(pk) {
@@ -142,7 +160,9 @@ export function updateWorkTime(pk, data) {
     url: API.WorkTimes + `${pk}/`,
     method: "put",
     data: data
-  }).then(updateSuccess);
+  })
+    .then(updateSuccess)
+    .catch(updateFailed);
 }
 
 export function createWorkTime(data) {
@@ -150,7 +170,9 @@ export function createWorkTime(data) {
     url: API.WorkTimes,
     method: "post",
     data: data
-  }).then(createSuccess);
+  })
+    .then(createSuccess)
+    .catch(createFailed);
 }
 
 export function deleteWorkTime(pk) {
@@ -160,4 +182,22 @@ export function deleteWorkTime(pk) {
   })
     .then(deleteSuccess)
     .catch(deleteFailed);
+}
+
+export function getResources(parameter) {
+  return axios({
+    url: API.Resource,
+    method: "get",
+    params: parameter
+  });
+}
+
+export function uploadResource(data) {
+  return axios({
+    url: API.Resource,
+    method: "post",
+    data: data
+  })
+    .then(uploadSuccess)
+    .catch(uploadFailed);
 }
