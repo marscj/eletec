@@ -139,7 +139,6 @@ export default {
         //   groups_id: result.groups.map(f => f.id)
         // });
         this.form = result;
-        console.log(this.form, "----");
       });
     },
     // getGroupData() {
@@ -179,7 +178,6 @@ export default {
       this.uploading = true;
       updateUser(this.$route.params.id, formData)
         .then(res => {
-          console.log(res, "++++=");
           this.getUserData();
         })
         .finally(() => {

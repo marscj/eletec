@@ -22,10 +22,8 @@ class UserView(ModelViewSet):
 class UserInfoView(APIView):
     permission_classes = [IsAuthenticated]
     
-    def get(self, request, format=None):
-        serializer = UserSerializer(request.user)
-        if serializer.is_valid():
-            print(serializer.data)
+    def get(self, request, format=None): 
+        serializer = UserSerializer(request.user, context={'request': request})
         return Response(serializer.data)
 
 class UserLogoutView(APIView):

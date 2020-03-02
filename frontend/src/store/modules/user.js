@@ -27,7 +27,7 @@ const user = {
     },
 
     SET_PHOTO: (state, url) => {
-      state.photoURL = url;
+      state.photo = url;
     },
 
     SET_GROUPS: (state, groups) => {
@@ -52,6 +52,7 @@ const user = {
             const result = response.result;
             Vue.ls.set(ACCESS_TOKEN, result.token);
             commit("SET_TOKEN", result.token);
+            commit("SET_ID", result.id);
             commit("SET_HAS_INFO", false);
             resolve();
           })
@@ -67,10 +68,10 @@ const user = {
         getInfo()
           .then(res => {
             const { result } = res;
+
             commit("SET_ID", result.id);
             commit("SET_GROUPS", result.groups);
             commit("SET_NAME", result.phone_number);
-            console.log(result.photo, "set -----");
             commit("SET_PHOTO", result.photo ? result.photo.thumbnail : "");
             commit("SET_SUPERUSER", result.is_superuser);
             commit("SET_HAS_INFO", true);
