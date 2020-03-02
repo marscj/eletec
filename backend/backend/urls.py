@@ -1,6 +1,7 @@
 from django.urls import path
 from django.conf.urls import include, url
-from django.views.generic import RedirectView
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^api/auth/phone/', include('auth.phone.urls')),
@@ -11,3 +12,6 @@ urlpatterns = [
     # url(r'^account/', include('allauth.urls')),
     # url(r'^accounts/profile/$', RedirectView.as_view(url='/', permanent=True), name='profile-redirect'),
 ]
+
+if settings.DEBUG: # new
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

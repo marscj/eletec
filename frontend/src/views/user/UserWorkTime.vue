@@ -123,7 +123,8 @@ export default {
         .then(res => {
           res.result.unshift({});
           this.listData = res.result.map(f => {
-            (f.form = moment(f.form, "HH:mm")), (f.to = moment(f.to, "HH:mm"));
+            f.form = moment(f.form, "HH:mm");
+            f.to = moment(f.to, "HH:mm");
             return f;
           });
         })
@@ -152,15 +153,13 @@ export default {
     },
     submit() {
       if (this.form.id === undefined) {
-        createWorkTime(
-          Object.assign({
-            week: this.form.week,
-            useful: this.form.useful,
-            form: moment(this.form.form).format("HH:mm:ss"),
-            to: moment(this.form.to).format("HH:mm:ss"),
-            user_id: this.$route.params.id
-          })
-        )
+        createWorkTime({
+          week: this.form.week,
+          useful: this.form.useful,
+          form: moment(this.form.form).format("HH:mm:ss"),
+          to: moment(this.form.to).format("HH:mm:ss"),
+          user_id: this.$route.params.id
+        })
           .then(res => {
             this.modal = false;
             return this.getListData();
@@ -171,7 +170,13 @@ export default {
             }
           });
       } else {
-        updateWorkTime(this.form.id, this.form)
+        updateWorkTime(this.form.id, {
+          week: this.form.week,
+          useful: this.form.useful,
+          form: moment(this.form.form).format("HH:mm:ss"),
+          to: moment(this.form.to).format("HH:mm:ss"),
+          user_id: this.$route.params.id
+        })
           .then(res => {
             this.modal = false;
             return this.getListData();

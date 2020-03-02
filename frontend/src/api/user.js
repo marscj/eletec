@@ -201,3 +201,12 @@ export function uploadResource(data) {
     .then(uploadSuccess)
     .catch(uploadFailed);
 }
+
+export function deleteResource(pk) {
+  return axios({
+    url: API.Resource + `${pk}/`,
+    method: "delete"
+  })
+    .then(deleteSuccess)
+    .catch(deleteFailed);
+}

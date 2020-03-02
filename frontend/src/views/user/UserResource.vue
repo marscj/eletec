@@ -27,11 +27,9 @@
         </template>
         <template v-else>
           <a-card :hoverable="true">
-            <a-card-meta :description="item.skill"> </a-card-meta>
-            {{ item.remark }}
+            <img alt="images" :src="item.image.large" slot="cover" />
 
             <template class="ant-card-actions" slot="actions">
-              <a @click="openModal(item)">Edit</a>
               <a-popconfirm
                 title="Are you sure delete this data?"
                 @confirm="deleteData(item)"
@@ -50,7 +48,7 @@
 
 <script>
 uploadResource;
-import { getResources, uploadResource } from "@/api/user";
+import { getResources, uploadResource, deleteResource } from "@/api/user";
 export default {
   data() {
     return {
@@ -69,6 +67,16 @@ export default {
         .then(res => {
           res.result.unshift({});
           this.listData = res.result;
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
+    deleteData(val) {
+      this.loading = true;
+      deleteResource(val.id)
+        .then(res => {
+          this.getListData();
         })
         .finally(() => {
           this.loading = false;
@@ -93,7 +101,7 @@ export default {
       this.uploading = true;
       uploadResource(formData)
         .then(res => {
-          console.log(res, "====");
+          this.getListData();
         })
         .finally(() => {
           this.uploading = false;

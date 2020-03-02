@@ -177,7 +177,8 @@ VERSATILEIMAGEFIELD_RENDITION_KEY_SETS = {
     'image_size': [
         ('full_size', 'url'),
         ('thumbnail', 'thumbnail__200x200'),
-        ('medium', 'crop__200x200'),
-        ('large', 'crop__400x400'),
+        ('samll', 'crop__640x360'),
+        ('medium', 'crop__854x480'),
+        ('large', 'crop__1280x720'),
     ]
 }

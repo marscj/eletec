@@ -1,4 +1,5 @@
 import notification from "ant-design-vue/es/notification";
+import message from "ant-design-vue/es/message";
 
 export const API = {
   Generate: "auth/phone/generate/",
@@ -22,11 +23,9 @@ export function updateSuccess(res) {
   return res;
 }
 
-export function updateFailed(res) {
-  notification.error({
-    message: "Update Failed!"
-  });
-  return res;
+export function updateFailed(error) {
+  message.error("Update Failed!");
+  throw error;
 }
 
 export function createSuccess(res) {
@@ -37,10 +36,8 @@ export function createSuccess(res) {
 }
 
 export function createFailed(error) {
-  notification.error({
-    message: "Create Failed!"
-  });
-  return error;
+  message.error("Create Failed!");
+  throw error;
 }
 
 export function uploadSuccess(res) {
@@ -51,10 +48,8 @@ export function uploadSuccess(res) {
 }
 
 export function uploadFailed(error) {
-  notification.error({
-    message: "Upload Failed!"
-  });
-  return error;
+  message.error("Upload Failed!");
+  throw error;
 }
 
 export function deleteSuccess(res) {
@@ -65,8 +60,6 @@ export function deleteSuccess(res) {
 }
 
 export function deleteFailed(error) {
-  notification.error({
-    message: "Delete Failed!"
-  });
-  return error;
+  message.error("Delete Failed!");
+  throw error;
 }

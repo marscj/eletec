@@ -133,6 +133,7 @@ export default {
         )
           .then(res => {
             this.modal = false;
+
             return this.getListData();
           })
           .catch(error => {
@@ -144,9 +145,11 @@ export default {
         updateSkill(this.form.id, this.form)
           .then(res => {
             this.modal = false;
+            console.log(res, "----");
             return this.getListData();
           })
           .catch(error => {
+            console.log(error, "++++");
             if (error.response) {
               this.$refs.observer.setErrors(error.response.data.result);
             }
