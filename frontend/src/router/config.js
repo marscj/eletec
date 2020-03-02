@@ -61,7 +61,6 @@ export const asyncRouterMap = [
         meta: {
           title: "Users",
           icon: "team",
-          keepAlive: true,
           permission: ["user"]
         }
       },
@@ -90,6 +89,14 @@ export const asyncRouterMap = [
             component: () => import("@/views/user/UserContract.vue"),
             meta: {
               title: "Contract"
+            }
+          },
+          {
+            path: "/admin/users/:id/resource",
+            name: "UserResource",
+            component: () => import("@/views/user/UserResource.vue"),
+            meta: {
+              title: "Resource"
             }
           },
           {
@@ -138,42 +145,34 @@ export const asyncRouterMap = [
       //   }
       // },
       {
-        path: "/admin/settings",
-        name: "Settings",
-        component: PageView,
-        redirect: "/admin/faqs/",
-        meta: { title: "Settings", icon: "setting", permission: [] },
-        children: [
-          {
-            path: "/admin/faqs",
-            name: "FAQS",
-            hideChildrenInMenu: true,
-            component: () => import("@/views/setting/faq/List.vue"),
-            meta: {
-              title: "FAQS",
-              keepAlive: true,
-              permission: ["faq"]
-            }
-          },
-          {
-            path: "/admin/faqs/:id",
-            name: "FAQ",
-            hidden: true,
-            component: () => import("@/views/setting/faq/List.vue"),
-            meta: {
-              permission: ["faq"]
-            }
-          },
-          {
-            path: "/admin/app",
-            name: "AppSetting",
-            component: () => import("@/views/setting/app/List.vue"),
-            meta: {
-              title: "App",
-              permission: ["app"]
-            }
-          }
-        ]
+        path: "/admin/faqs",
+        name: "FAQS",
+        hideChildrenInMenu: true,
+        component: () => import("@/views/setting/faq/List.vue"),
+        meta: {
+          title: "FAQS",
+          icon: "bars",
+          permission: ["faq"]
+        }
+      },
+      {
+        path: "/admin/faqs/:id",
+        name: "FAQ",
+        hidden: true,
+        component: () => import("@/views/setting/faq/List.vue"),
+        meta: {
+          permission: ["faq"]
+        }
+      },
+      {
+        path: "/admin/app",
+        name: "AppSetting",
+        component: () => import("@/views/setting/app/List.vue"),
+        meta: {
+          title: "App",
+          icon: "mobile",
+          permission: ["app"]
+        }
       }
     ]
   },

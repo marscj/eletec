@@ -78,10 +78,18 @@ class AddressSerializer(serializers.ModelSerializer):
         if obj.onMap:
             return obj.address
 
-        if obj.model == Address.Model.Personal:
-            return '%s / %s / %s / %s / %s' % (obj.city, obj.community, obj.street, obj.building, obj.roomNo)
-        else:
-            return '%s / %s / %s / %s / %s' % (obj.city, obj.community, obj.street, obj.building, obj.officeNo)
+        return '%s / %s / %s / %s / %s' % (obj.city, obj.community, obj.street, obj.building, obj.roomNo)
+
+    def update(self, instance, validated_data):
+        defAddr = validated_data.get('defAddr', None)
+
+        if defAddr:
+            qs = Address.objects.filter(user_id=instance.user_id)
+            for addr in qs:
+                addr.defAddr = False
+                addr.save()
+
+        return super().update(instance, validated_data)
 
 class SkillSerializer(serializers.ModelSerializer):
 

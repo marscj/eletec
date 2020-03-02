@@ -28,6 +28,11 @@
                 Contract
               </router-link>
             </a-menu-item>
+            <a-menu-item key="/admin/users/:id/resource">
+              <router-link :to="{ name: 'UserResource', id: $route.params.id }">
+                Resource
+              </router-link>
+            </a-menu-item>
             <a-menu-item key="/admin/users/:id/address">
               <router-link :to="{ name: 'UserAddress', id: $route.params.id }">
                 Address

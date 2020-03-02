@@ -72,16 +72,63 @@
             </validation-provider>
           </a-form-item>
 
-          <a-form-item label="Form">
-            <validation-provider vid="form" v-slot="{ errors }">
+          <a-form-item label="Style">
+            <validation-provider vid="style" v-slot="{ errors }">
+              <a-select v-model="form.style">
+                <a-select-option key="1" value="Apartment"
+                  >Apartment</a-select-option
+                >
+                <a-select-option key="2" value="Villa">Villa</a-select-option>
+              </a-select>
               <span class="errorText">{{ errors[0] }}</span>
             </validation-provider>
           </a-form-item>
 
-          <a-form-item label="To">
-            <validation-provider vid="to" v-slot="{ errors }">
+          <a-form-item label="City">
+            <validation-provider vid="city" v-slot="{ errors }">
+              <a-input v-model="form.city"></a-input>
               <span class="errorText">{{ errors[0] }}</span>
             </validation-provider>
+          </a-form-item>
+
+          <a-form-item label="Community">
+            <validation-provider vid="community" v-slot="{ errors }">
+              <a-input v-model="form.community"></a-input>
+              <span class="errorText">{{ errors[0] }}</span>
+            </validation-provider>
+          </a-form-item>
+
+          <a-form-item label="Street">
+            <validation-provider vid="street" v-slot="{ errors }">
+              <a-input v-model="form.street"></a-input>
+              <span class="errorText">{{ errors[0] }}</span>
+            </validation-provider>
+          </a-form-item>
+
+          <a-form-item label="Building">
+            <validation-provider vid="building" v-slot="{ errors }">
+              <a-input v-model="form.building"></a-input>
+              <span class="errorText">{{ errors[0] }}</span>
+            </validation-provider>
+          </a-form-item>
+
+          <a-form-item
+            :label="
+              form.style === 'Apartment'
+                ? form.model === 'Personal'
+                  ? 'RoomNo'
+                  : 'OfficeNo'
+                : 'VillaNo'
+            "
+          >
+            <validation-provider vid="roomNo" v-slot="{ errors }">
+              <a-input v-model="form.roomNo"></a-input>
+              <span class="errorText">{{ errors[0] }}</span>
+            </validation-provider>
+          </a-form-item>
+
+          <a-form-item label="Default Address">
+            <a-checkbox v-model="form.defAddr" />
           </a-form-item>
         </a-form>
       </validation-observer>
@@ -125,7 +172,8 @@ export default {
       this.modal = true;
       this.form = Object.assign(
         {
-          model: "Personal"
+          model: "Personal",
+          style: "Apartment"
         },
         val
       );
@@ -133,7 +181,7 @@ export default {
     submit() {
       if (this.form.id === undefined) {
         createAddress(
-          Object.assign({
+          Object.assign(this.form, {
             user_id: this.$route.params.id
           })
         )

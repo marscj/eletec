@@ -39,8 +39,6 @@ class Address(models.Model):
 
     style = models.CharField(default=Style.Apartment, choices=Style.choices, max_length=16)
 
-    officeNo = models.TextField(blank=True, null=True)
-
     roomNo = models.TextField(blank=True, null=True)
 
     lat = models.FloatField(blank=True, null=True)
