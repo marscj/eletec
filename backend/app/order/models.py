@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.crypto import get_random_string
 
 from app.user.models import User
+from app.contract.models import Contract
 
 def random_string():
     return get_random_string(length=4)
@@ -70,8 +71,11 @@ class Order(models.Model):
     # 修改时间
     change_at = models.DateTimeField(auto_now=True)
 
+    # 合同
+    contract = models.ForeignKey(Contract, on_delete=models.SET_NULL, related_name='order', blank=True, null=True)
+
     # 客人
-    customer = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='order', blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='order', blank=True, null=True)
 
     class Meta:
         db_table = 'order'

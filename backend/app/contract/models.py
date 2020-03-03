@@ -1,7 +1,6 @@
 from django.db import models
 
 from app.user.models import User
-from app.order.models import Order
 
 class Contract(models.Model):
 
@@ -17,7 +16,11 @@ class Contract(models.Model):
 
     expiry_date = models.DateField(blank=True, null=True)
 
-    remark = models.TextField(null=True, blank=True)
+    address = models.TextField(blank=True, null=True)
+
+    quantity = models.IntegerField(blank=True, null=True)
+
+    remark = models.TextField(blank=True, null=True)
 
     user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='contract', blank=True, null=True)
 
