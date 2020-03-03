@@ -12,3 +12,7 @@
 2020-03-02 09:46:45.744 +04 [1215] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
 2020-03-02 09:46:45.768 +04 [1216] LOG:  database system was shut down at 2020-03-01 11:42:23 +04
 2020-03-02 09:46:45.776 +04 [1215] LOG:  database system is ready to accept connections
+2020-03-03 03:28:31.412 +04 [1215] LOG:  received smart shutdown request
+2020-03-03 03:28:31.419 +04 [1215] LOG:  background worker "logical replication launcher" (PID 1222) exited with exit code 1
+2020-03-03 03:28:31.419 +04 [1217] LOG:  shutting down
+2020-03-03 03:28:31.431 +04 [1215] LOG:  database system is shut down

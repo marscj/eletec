@@ -70,7 +70,7 @@ class Skill(models.Model):
         AC = 'A/C'
         Electrical = 'Electrical'
         Plumbing = 'Plumbing'
-        Cleaning = 'Cleaning'
+        Cleaning = 'House Cleaning'
         Duct = 'Duct Cleaning'
         Other = 'Other'
 
@@ -110,25 +110,6 @@ class WorkTime(models.Model):
     class Meta:
         db_table = 'worktime'
         unique_together = ('week', 'user_id')
-
-class Contract(models.Model):
-
-    class Option(models.TextChoices):
-        Economy = 'Economy'
-        Standard = 'Standard'
-        Premium = 'Premium'
-        Customized = 'Customized'
-
-    option = models.CharField(blank=True, null=True, max_length=16, choices=Option.choices, default=Option.Economy)
-
-    issue_date = models.DateField(blank=True, null=True)
-
-    expiry_date = models.DateField(blank=True, null=True)
-
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='contract', blank=True, null=True)
-
-    class Meta:
-        db_table = 'contract'
 
 def resource_file_name(instance, filename):
     ext = filename.split('.')[-1]

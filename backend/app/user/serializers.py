@@ -4,7 +4,7 @@ from django.contrib.auth.models import Group, Permission
 from rest_framework import  serializers
 from versatileimagefield.serializers import VersatileImageFieldSerializer
 
-from .models import User, Address, Skill, WorkTime, Contract, Resource
+from .models import User, Address, Skill, WorkTime, Resource
 
 class ContentTypeSerializer(serializers.ModelSerializer):
 
@@ -108,15 +108,6 @@ class WorkTimeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = WorkTime
-        fields = '__all__'
-
-
-class ContractSerializer(serializers.ModelSerializer):
-
-    user_id = serializers.IntegerField()
-    
-    class Meta:
-        model = Contract
         fields = '__all__'
 
 class ResourceSerializer(serializers.ModelSerializer):
