@@ -10,8 +10,8 @@ export const defaultRoutePath = "/admin/orders";
 
 export const asyncRouterMap = [
   {
-    path: "/admin",
-    name: "admin",
+    path: "/",
+    name: "index",
     component: BasicLayout,
     meta: { title: "Admin" },
     redirect: defaultRoutePath,
@@ -34,6 +34,11 @@ export const asyncRouterMap = [
         meta: {
           permission: ["order"]
         }
+      },
+      {
+        path: "/admin",
+        redirect: defaultRoutePath,
+        hidden: true
       },
       // {
       //   path: "/admin/jobs",
@@ -184,19 +189,19 @@ export const asyncRouterMap = [
 ];
 
 export const constantRouterMap = [
-  {
-    path: "/",
-    component: BlankLayout,
-    redirect: "/home",
-    hidden: true,
-    children: [
-      {
-        path: "/home",
-        name: "home",
-        component: () => import("@/views/Home")
-      }
-    ]
-  },
+  // {
+  //   path: "/",
+  //   component: BlankLayout,
+  //   redirect: "/home",
+  //   hidden: true,
+  //   children: [
+  //     {
+  //       path: "/home",
+  //       name: "home",
+  //       component: () => import("@/views/Home")
+  //     }
+  //   ]
+  // },
   {
     path: "/user",
     component: UserLayout,
@@ -212,6 +217,16 @@ export const constantRouterMap = [
   },
   {
     path: "/404",
-    component: () => import("@/views/error/404")
+    component: () => import("@/views/error/404"),
+    children: [
+      {
+        path: "401",
+        children: [
+          {
+            path: "402"
+          }
+        ]
+      }
+    ]
   }
 ];

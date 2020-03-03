@@ -72,8 +72,16 @@ function filterWhilteList(list, to) {
       []
     )
     .filter(f => {
-      return f.path.includes(to.path);
+      return f.path === to.path;
     });
+}
+
+function filterAsyncRouter(list, to) {
+  return list.filter(route => {
+    if (route.children && route.children.length) {
+      route.children = filterAsyncRouter(route.children, to);
+    }
+  });
 }
 
 export default router;

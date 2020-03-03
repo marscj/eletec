@@ -99,8 +99,15 @@
           </a-select>
         </a-form-item> -->
 
-        <a-form-item label="Active">
+        <a-form-item label="Active" help="Whether the account is available">
           <a-checkbox v-model="form.is_active" />
+        </a-form-item>
+
+        <a-form-item
+          label="Admin"
+          help="Used to log in to the back-end website"
+        >
+          <a-checkbox v-model="form.is_superuser" />
         </a-form-item>
 
         <a-button
@@ -192,7 +199,9 @@ export default {
         email: this.form.email,
         first_name: this.form.first_name,
         last_name: this.form.last_name,
-        role: this.form.role
+        role: this.form.role,
+        is_active: this.form.is_active,
+        is_superuser: this.form.is_superuser
         // groups_id: this.form.groups_id
       })
         .catch(error => {
