@@ -22,7 +22,7 @@
             listType="picture-card"
           >
             <img
-              v-if="form && form.photo.thumbnail"
+              v-if="form && form.photo && form.photo.thumbnail"
               alt="images"
               :src="form.photo.thumbnail"
             />

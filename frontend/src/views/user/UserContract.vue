@@ -17,27 +17,20 @@
           </div>
         </template>
         <template v-else>
-          <a-row type="flex" justify="center" align="middle">
-            <a-col :span="2">
-              <a-radio v-model="item.defAddr" />
-            </a-col>
-            <a-col :span="22">
-              <a-card :hoverable="true">
-                <a-card-meta :description="item.title"> </a-card-meta>
-                <template class="ant-card-actions" slot="actions">
-                  <a @click="openModal(item)">Edit</a>
-                  <a-popconfirm
-                    title="Are you sure delete this data?"
-                    @confirm="deleteData(item)"
-                    okText="Yes"
-                    cancelText="No"
-                  >
-                    <a href="#">Delete</a>
-                  </a-popconfirm>
-                </template>
-              </a-card>
-            </a-col>
-          </a-row>
+          <a-card :hoverable="true">
+            <a-card-meta :description="item.title"> </a-card-meta>
+            <template class="ant-card-actions" slot="actions">
+              <a @click="openModal(item)">Edit</a>
+              <a-popconfirm
+                title="Are you sure delete this data?"
+                @confirm="deleteData(item)"
+                okText="Yes"
+                cancelText="No"
+              >
+                <a href="#">Delete</a>
+              </a-popconfirm>
+            </template>
+          </a-card>
         </template>
       </a-list-item>
     </a-list>
@@ -138,10 +131,10 @@
 
 <script>
 import {
-  getAddress,
-  updateAddress,
-  createAddress,
-  deleteAddress
+  getContracts,
+  updateContract,
+  createContract,
+  deleteContract
 } from "@/api/user";
 
 export default {
@@ -159,7 +152,7 @@ export default {
   methods: {
     getListData() {
       this.loading = true;
-      getAddress({ user_id: this.$route.params.id })
+      getContracts({ user_id: this.$route.params.id })
         .then(res => {
           res.result.unshift({});
           this.listData = res.result;
@@ -180,7 +173,7 @@ export default {
     },
     submit() {
       if (this.form.id === undefined) {
-        createAddress(
+        createContract(
           Object.assign(this.form, {
             user_id: this.$route.params.id
           })
@@ -195,7 +188,7 @@ export default {
             }
           });
       } else {
-        updateAddress(this.form.id, this.form)
+        updateContract(this.form.id, this.form)
           .then(res => {
             this.modal = false;
             return this.getListData();
@@ -210,7 +203,7 @@ export default {
 
     deleteData(val) {
       this.loading = true;
-      deleteAddress(val.id)
+      deleteContract(val.id)
         .then(res => {
           return this.getListData();
         })

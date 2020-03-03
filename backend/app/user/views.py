@@ -10,8 +10,8 @@ from rest_framework.authtoken import views
 
 import django_filters
 
-from .models import User, Address, Skill, WorkTime, Resource
-from .serializers import UserSerializer, GroupSerializer, PermissionSerializer, AddressSerializer, SkillSerializer, WorkTimeSerializer, ResourceSerializer
+from .models import User, Address, Skill, WorkTime, Resource, Contract
+from .serializers import UserSerializer, GroupSerializer, PermissionSerializer, AddressSerializer, SkillSerializer, WorkTimeSerializer, ResourceSerializer, ContractSerializer
 from middleware.permission import CustomModelPermissions
 
 class UserView(ModelViewSet):
@@ -42,6 +42,16 @@ class PermissionView(ModelViewSet):
     serializer_class = PermissionSerializer
     permission_classes = [IsAuthenticated, DjangoModelPermissions]
     queryset = Permission.objects.filter(content_type__model__in=['user', 'group', 'order', 'job', 'contract'])
+
+class ContractFilter(django_filters.FilterSet):
+    user_id = django_filters.NumberFilter('user__id')
+
+class ContractView(ModelViewSet):
+    serializer_class = ContractSerializer
+    permission_classes = [IsAuthenticated, CustomModelPermissions]
+    queryset = Contract.objects.all()
+
+    filter_class = ContractFilter
 
 class AddressFilter(django_filters.FilterSet):
     user_id = django_filters.NumberFilter('user__id')

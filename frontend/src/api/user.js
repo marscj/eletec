@@ -36,7 +36,7 @@ export function updateUser(pk, data) {
     .catch(updateFailed);
 }
 
-export function getContract(parameter) {
+export function getContracts(parameter) {
   return axios({
     url: API.Contracts,
     method: "get",

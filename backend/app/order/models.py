@@ -1,8 +1,7 @@
 from django.db import models
 from django.utils.crypto import get_random_string
 
-from app.user.models import User
-from app.contract.models import Contract
+from app.user.models import User, Contract
 
 def random_string():
     return get_random_string(length=4)
