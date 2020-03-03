@@ -13,9 +13,11 @@ class Job(models.Model):
 
     note = models.TextField(blank=True, null=True)
 
-    worker = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='job', blank=True, null=True)
+    staff = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='job_staff', blank=True, null=True)
 
-    order = models.ForeignKey(Order, on_delete=models.SET_NULL, related_name='job', blank=True, null=True)
+    freelancer = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='job_freelancer', blank=True, null=True)
+
+    order = models.ForeignKey(Order, on_delete=models.SET_NULL, related_name='job_order', blank=True, null=True)
 
     class Meta:
         db_table = 'job'
