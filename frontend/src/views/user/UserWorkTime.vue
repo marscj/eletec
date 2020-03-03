@@ -17,8 +17,7 @@
           </div>
         </template>
         <template v-else>
-          <a-card :hoverable="true">
-            <a-card-meta :description="item.week"> </a-card-meta>
+          <a-card :hoverable="true" :title="item.week">
             {{ item.form | moment("HH:mm") }} - {{ item.to | moment("HH:mm") }}
             <template class="ant-card-actions" slot="actions">
               <a @click="openModal(item)">Edit</a>

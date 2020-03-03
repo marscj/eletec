@@ -75,7 +75,7 @@ class VisitSerializer(serializers.Serializer):
 
     cagetory = serializers.CharField(max_length=16)
     
-    cagetory__count = serializers.IntegerField()
+    count = serializers.IntegerField()
 
 class ContractSerializer(serializers.ModelSerializer):
 
@@ -98,11 +98,9 @@ class ContractSerializer(serializers.ModelSerializer):
         return timezone.now().strftime('%Y-%m-%d') >= obj.issue_date.strftime('%Y-%m-%d') and timezone.now().strftime('%Y-%m-%d') <= obj.expiry_date.strftime('%Y-%m-%d')
 
     def get_visits(self, obj):
-        order_list = Order.objects.filter(contract=obj).values('cagetory').annotate(count=Count('cagetory'))
-        for i in order_list:
-            print(i, '-------')
-        print(order_list, 'end ===')
-        return 'abc'
+        query = Order.objects.filter(contract=obj).values('cagetory').annotate(count=Count('cagetory'))
+        serializer = VisitSerializer(instance=query, many=True)
+        return serializer.data
 
 class AddressSerializer(serializers.ModelSerializer):
     

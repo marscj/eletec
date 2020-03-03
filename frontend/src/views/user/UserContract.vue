@@ -17,32 +17,53 @@
           </div>
         </template>
         <template v-else>
-          <a-card :hoverable="true">
-            <a-card-meta :description="'ID:' + item.contractID"> </a-card-meta>
-            <div style="padding: 2px 0px; padding-top:15px;">
-              <em>Option: {{ item.option }}</em>
-            </div>
-            <div style="padding: 2px 0px">
-              <em>Issue: {{ item.issue_date }}</em>
-            </div>
-            <div style="padding: 2px 0px">
-              <em>Expiry: {{ item.expiry_date }}</em>
-            </div>
-            <div style="padding: 2px 0px">
-              <em
-                >Validity:
-                <a-checkbox v-model="item.validity" disabled></a-checkbox>
-              </em>
-            </div>
-            <div style="padding: 2px 0px">
-              <em>Usage count: </em>
-            </div>
-            <div style="padding: 2px 0px">
-              <em>Address: {{ item.address }}</em>
-            </div>
-            <div style="padding: 2px 0px">
-              <em>Remark: {{ item.remark }}</em>
-            </div>
+          <a-card :hoverable="true" :title="'ID: ' + item.contractID">
+            <ul style="padding: 0px 20px;">
+              <li>
+                <p>
+                  Option: <em>{{ item.option }}</em>
+                </p>
+              </li>
+              <li>
+                <p>
+                  Issue: <em>{{ item.issue_date }}</em>
+                </p>
+              </li>
+              <li>
+                <p>
+                  Expiry: <em>{{ item.expiry_date }}</em>
+                </p>
+              </li>
+              <li>
+                <p>
+                  Validity:
+                  <a-checkbox v-model="item.validity" disabled></a-checkbox>
+                </p>
+              </li>
+              <li v-if="item.visits.length">
+                <p>Usage Count:</p>
+                <ul style="padding: 0px 20px;">
+                  <li v-for="(data, index) in item.visits" :key="index">
+                    <p>
+                      {{ data.cagetory }} : <em> {{ data.count }}</em>
+                    </p>
+                  </li>
+                </ul>
+              </li>
+              <li v-else>
+                <p>Usage Count: <em>No data</em></p>
+              </li>
+              <li>
+                <p>
+                  Address: <em>{{ item.address }}</em>
+                </p>
+              </li>
+              <li>
+                <p>
+                  Remark: <em>{{ item.remark }}</em>
+                </p>
+              </li>
+            </ul>
             <template class="ant-card-actions" slot="actions">
               <a @click="openModal(item)">Edit</a>
               <a-popconfirm

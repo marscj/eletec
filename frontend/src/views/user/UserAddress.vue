@@ -23,7 +23,7 @@
             </a-col>
             <a-col :span="22">
               <a-card :hoverable="true">
-                <a-card-meta :description="item.title"> </a-card-meta>
+                <a-card-meta :title="item.title"> </a-card-meta>
                 <template class="ant-card-actions" slot="actions">
                   <a @click="openModal(item)">Edit</a>
                   <a-popconfirm

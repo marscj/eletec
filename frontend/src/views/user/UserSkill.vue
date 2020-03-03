@@ -17,10 +17,8 @@
           </div>
         </template>
         <template v-else>
-          <a-card :hoverable="true">
-            <a-card-meta :description="item.skill"> </a-card-meta>
-            {{ item.remark }}
-
+          <a-card :hoverable="true" :title="item.skill">
+            <p v-if="item.skill === 'Other'">{{ item.remark }}</p>
             <template class="ant-card-actions" slot="actions">
               <a @click="openModal(item)">Edit</a>
               <a-popconfirm
