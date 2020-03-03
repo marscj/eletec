@@ -18,7 +18,31 @@
         </template>
         <template v-else>
           <a-card :hoverable="true">
-            <a-card-meta :description="item.title"> </a-card-meta>
+            <a-card-meta :description="'ID:' + item.contractID"> </a-card-meta>
+            <div style="padding: 2px 0px; padding-top:15px;">
+              <em>Option: {{ item.option }}</em>
+            </div>
+            <div style="padding: 2px 0px">
+              <em>Issue: {{ item.issue_date }}</em>
+            </div>
+            <div style="padding: 2px 0px">
+              <em>Expiry: {{ item.expiry_date }}</em>
+            </div>
+            <div style="padding: 2px 0px">
+              <em
+                >Validity:
+                <a-checkbox v-model="item.validity" disabled></a-checkbox>
+              </em>
+            </div>
+            <div style="padding: 2px 0px">
+              <em>Usage count: </em>
+            </div>
+            <div style="padding: 2px 0px">
+              <em>Address: {{ item.address }}</em>
+            </div>
+            <div style="padding: 2px 0px">
+              <em>Remark: {{ item.remark }}</em>
+            </div>
             <template class="ant-card-actions" slot="actions">
               <a @click="openModal(item)">Edit</a>
               <a-popconfirm
@@ -51,77 +75,52 @@
           :label-col="{ span: 6 }"
           :wrapper-col="{ span: 12 }"
         >
-          <a-form-item label="Model">
-            <validation-provider vid="model" v-slot="{ errors }">
-              <a-select v-model="form.model">
-                <a-select-option key="1" value="Personal"
-                  >Personal</a-select-option
+          <a-form-item label="Option">
+            <validation-provider vid="option" v-slot="{ errors }">
+              <a-select v-model="form.option">
+                <a-select-option key="1" value="Economy"
+                  >Economy</a-select-option
                 >
-                <a-select-option key="2" value="Company"
-                  >Company</a-select-option
+                <a-select-option key="2" value="Standard"
+                  >Standard</a-select-option
+                >
+                <a-select-option key="3" value="Premium"
+                  >Premium</a-select-option
+                >
+                <a-select-option key="4" value="Customized"
+                  >Customized</a-select-option
                 >
               </a-select>
               <span class="errorText">{{ errors[0] }}</span>
             </validation-provider>
           </a-form-item>
 
-          <a-form-item label="Style">
-            <validation-provider vid="style" v-slot="{ errors }">
-              <a-select v-model="form.style">
-                <a-select-option key="1" value="Apartment"
-                  >Apartment</a-select-option
-                >
-                <a-select-option key="2" value="Villa">Villa</a-select-option>
-              </a-select>
+          <a-form-item label="Issue">
+            <validation-provider vid="issue_date" v-slot="{ errors }">
+              <a-date-picker v-model="form.issue_date" />
               <span class="errorText">{{ errors[0] }}</span>
             </validation-provider>
           </a-form-item>
 
-          <a-form-item label="City">
-            <validation-provider vid="city" v-slot="{ errors }">
-              <a-input v-model="form.city"></a-input>
+          <a-form-item label="Expiry">
+            <validation-provider vid="expiry_date" v-slot="{ errors }">
+              <a-date-picker v-model="form.expiry_date" />
               <span class="errorText">{{ errors[0] }}</span>
             </validation-provider>
           </a-form-item>
 
-          <a-form-item label="Community">
-            <validation-provider vid="community" v-slot="{ errors }">
-              <a-input v-model="form.community"></a-input>
+          <a-form-item label="Address">
+            <validation-provider vid="address" v-slot="{ errors }">
+              <a-input v-model="form.address"></a-input>
               <span class="errorText">{{ errors[0] }}</span>
             </validation-provider>
           </a-form-item>
 
-          <a-form-item label="Street">
-            <validation-provider vid="street" v-slot="{ errors }">
-              <a-input v-model="form.street"></a-input>
+          <a-form-item label="Remark">
+            <validation-provider vid="remark" v-slot="{ errors }">
+              <a-textarea v-model="form.remark"> </a-textarea>
               <span class="errorText">{{ errors[0] }}</span>
             </validation-provider>
-          </a-form-item>
-
-          <a-form-item label="Building">
-            <validation-provider vid="building" v-slot="{ errors }">
-              <a-input v-model="form.building"></a-input>
-              <span class="errorText">{{ errors[0] }}</span>
-            </validation-provider>
-          </a-form-item>
-
-          <a-form-item
-            :label="
-              form.style === 'Apartment'
-                ? form.model === 'Personal'
-                  ? 'RoomNo'
-                  : 'OfficeNo'
-                : 'VillaNo'
-            "
-          >
-            <validation-provider vid="roomNo" v-slot="{ errors }">
-              <a-input v-model="form.roomNo"></a-input>
-              <span class="errorText">{{ errors[0] }}</span>
-            </validation-provider>
-          </a-form-item>
-
-          <a-form-item label="Default Address">
-            <a-checkbox v-model="form.defAddr" />
           </a-form-item>
         </a-form>
       </validation-observer>
@@ -130,6 +129,7 @@
 </template>
 
 <script>
+import moment from "moment";
 import {
   getContracts,
   updateContract,
@@ -150,6 +150,7 @@ export default {
     this.getListData();
   },
   methods: {
+    moment,
     getListData() {
       this.loading = true;
       getContracts({ user_id: this.$route.params.id })
@@ -165,19 +166,31 @@ export default {
       this.modal = true;
       this.form = Object.assign(
         {
-          model: "Personal",
-          style: "Apartment"
+          option: "Economy"
         },
+        val,
         val
+          ? {
+              issue_date: moment(val.issue_date, "YYYY-MM-DD"),
+              expiry_date: moment(val.expiry_date, "YYYY-MM-DD")
+            }
+          : {
+              issue_date: moment(new Date(), "YYYY-MM-DD"),
+              expiry_date: moment(new Date(), "YYYY-MM-DD")
+            }
       );
     },
     submit() {
       if (this.form.id === undefined) {
-        createContract(
-          Object.assign(this.form, {
-            user_id: this.$route.params.id
-          })
-        )
+        createContract({
+          option: this.form.option,
+          issue_date: moment(this.form.issue_date).format("YYYY-MM-DD"),
+          expiry_date: moment(this.form.expiry_date).format("YYYY-MM-DD"),
+          address: this.form.address,
+          quantity: this.form.quantity,
+          remark: this.form.remark,
+          user_id: this.$route.params.id
+        })
           .then(res => {
             this.modal = false;
             return this.getListData();
@@ -188,7 +201,15 @@ export default {
             }
           });
       } else {
-        updateContract(this.form.id, this.form)
+        updateContract(this.form.id, {
+          option: this.form.option,
+          issue_date: moment(this.form.issue_date).format("YYYY-MM-DD"),
+          expiry_date: moment(this.form.expiry_date).format("YYYY-MM-DD"),
+          address: this.form.address,
+          quantity: this.form.quantity,
+          remark: this.form.remark,
+          user_id: this.$route.params.id
+        })
           .then(res => {
             this.modal = false;
             return this.getListData();

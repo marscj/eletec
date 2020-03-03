@@ -41,8 +41,6 @@ class Contract(models.Model):
 
     address = models.TextField(blank=True, null=True)
 
-    quantity = models.IntegerField(blank=True, null=True)
-
     remark = models.TextField(blank=True, null=True)
 
     user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='contract', blank=True, null=True)

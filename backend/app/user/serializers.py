@@ -1,10 +1,14 @@
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import Group, Permission
+from django.db.models import Count
 
 from rest_framework import  serializers
 from versatileimagefield.serializers import VersatileImageFieldSerializer
 
+from django.utils import timezone
+
 from .models import User, Address, Skill, WorkTime, Resource, Contract
+from app.order.models import Order
 
 class ContentTypeSerializer(serializers.ModelSerializer):
 
@@ -67,13 +71,38 @@ class UserSerializer(serializers.ModelSerializer):
 
         return super().update(instance, validated_data)
 
+class VisitSerializer(serializers.Serializer):
+
+    cagetory = serializers.CharField(max_length=16)
+    
+    cagetory__count = serializers.IntegerField()
+
 class ContractSerializer(serializers.ModelSerializer):
 
     user_id = serializers.IntegerField()
+
+    contractID = serializers.SerializerMethodField()
+
+    validity = serializers.SerializerMethodField()
+
+    visits = serializers.SerializerMethodField()
     
     class Meta:
         model = Contract
         fields = '__all__'
+
+    def get_contractID(self, obj):
+        return '%d-%s-%d' % (obj.user_id, obj.expiry_date.strftime("%Y%m%d") , obj.id)
+
+    def get_validity(self, obj):
+        return timezone.now().strftime('%Y-%m-%d') >= obj.issue_date.strftime('%Y-%m-%d') and timezone.now().strftime('%Y-%m-%d') <= obj.expiry_date.strftime('%Y-%m-%d')
+
+    def get_visits(self, obj):
+        order_list = Order.objects.filter(contract=obj).values('cagetory').annotate(count=Count('cagetory'))
+        for i in order_list:
+            print(i, '-------')
+        print(order_list, 'end ===')
+        return 'abc'
 
 class AddressSerializer(serializers.ModelSerializer):
     

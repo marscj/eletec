@@ -12,7 +12,7 @@ Vue.use(PermissionHelper);
 
 import "./core/";
 
-import "@/assets/css/tailwind.css";
+// import "@/assets/css/tailwind.css";
 
 import _ from "lodash";
 Object.defineProperty(Vue.prototype, "$_", { value: _ });
