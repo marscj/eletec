@@ -6,7 +6,6 @@ from django.conf.urls.static import static
 urlpatterns = [
     url(r'^api/auth/phone/', include('auth.phone.urls')),
     url(r'^api/', include('app.user.urls')),
-    url(r'^api/', include('app.contract.urls')),
 
     # url(r'^api/rest-auth/', include('rest_auth.urls')),
     # url(r'^api/rest-auth/registration/', include('rest_auth.registration.urls')),
