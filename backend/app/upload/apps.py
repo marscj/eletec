@@ -2,4 +2,7 @@ from django.apps import AppConfig
 
 
 class UploadConfig(AppConfig):
-    name = 'upload'
+    name = 'app.upload'
+
+    def ready(self):
+        from .import handle
