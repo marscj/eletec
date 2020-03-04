@@ -139,15 +139,7 @@
 </template>
 
 <script>
-const ModelOptions = [
-  { value: 0, label: "Personal" },
-  { value: 1, label: "Company" }
-];
-
-const StyleOptions = [
-  { value: 0, label: "Apartment" },
-  { value: 1, label: "Villa" }
-];
+import { ModelOptions, StyleOptions } from "./const";
 
 import {
   getAddress,

@@ -29,11 +29,11 @@
         showPagination="auto"
         bordered
       >
-        <!-- <template slot="date_joined" slot-scope="text">
+        <template slot="datetime" slot-scope="text">
           <span>
-            {{ text | moment("YYYY-MM-DD") }}
+            {{ text | moment("YYYY-MM-DD HH:mm") }}
           </span>
-        </template> -->
+        </template>
 
         <template slot="action" slot-scope="data">
           <template>
@@ -51,6 +51,7 @@
 import { PageView, RouteView } from "@/layouts";
 import { STable, Ellipsis } from "@/components";
 import { getOrders } from "@/api/order";
+import moment from "moment";
 
 const StatusOptions = [
   { value: 0, label: "New" },
@@ -85,11 +86,26 @@ export default {
           width: "140px"
         },
         {
-          title: "Category",
+          title: "CATEGORY",
           dataIndex: "category",
           customRender: (text, index, row) => {
             return <span>{categoryOptions[text].label}</span>;
           }
+        },
+        {
+          title: "FORM",
+          dataIndex: "form",
+          scopedSlots: { customRender: "datetime" }
+        },
+        {
+          title: "TO",
+          dataIndex: "to",
+          scopedSlots: { customRender: "datetime" }
+        },
+        {
+          title: "CREATE",
+          dataIndex: "create_at",
+          scopedSlots: { customRender: "datetime" }
         },
         {
           title: "ACTION",
@@ -105,6 +121,9 @@ export default {
         );
       }
     };
+  },
+  methods: {
+    moment
   }
 };
 </script>

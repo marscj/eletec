@@ -145,13 +145,7 @@
 
 <script>
 import moment from "moment";
-
-const Options = [
-  { value: 0, label: "Economy" },
-  { value: 1, label: "Standard" },
-  { value: 2, label: "Premium" },
-  { value: 3, label: "Customized" }
-];
+import { Options } from "./const";
 
 import {
   getContracts,

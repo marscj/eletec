@@ -79,15 +79,7 @@
 
 <script>
 import { getSkills, updateSkill, createSkill, deleteSkill } from "@/api/user";
-
-const SkillOptions = [
-  { value: 0, label: "Air Conditioner" },
-  { value: 1, label: "Electrical" },
-  { value: 2, label: "Plumbing" },
-  { value: 3, label: "House Cleaning" },
-  { value: 4, label: "Duct Cleaning" },
-  { value: 5, label: "Other" }
-];
+import { SkillOptions } from "./const";
 
 export default {
   data() {

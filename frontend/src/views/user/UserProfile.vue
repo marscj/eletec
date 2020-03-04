@@ -126,14 +126,7 @@
 
 <script>
 import { getUser, updateUser } from "@/api/user";
-// import { getGroups } from "@/api/permission";
-
-const RoleOptions = [
-  { value: 0, label: "Customer" },
-  { value: 1, label: "Staff" },
-  { value: 2, label: "Freelancer" },
-  { value: 3, label: "Operator" }
-];
+import { RoleOptions } from "./const";
 
 export default {
   data() {

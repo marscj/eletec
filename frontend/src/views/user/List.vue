@@ -66,13 +66,7 @@
 import { PageView, RouteView } from "@/layouts";
 import { STable, Ellipsis } from "@/components";
 import { getUsers } from "@/api/user";
-
-const RoleOptions = [
-  { value: 0, label: "Customer" },
-  { value: 1, label: "Staff" },
-  { value: 2, label: "Freelancer" },
-  { value: 3, label: "Operator" }
-];
+import { RoleOptions } from "./const";
 
 export default {
   components: {
