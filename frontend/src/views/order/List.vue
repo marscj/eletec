@@ -35,6 +35,52 @@
           </span>
         </template>
 
+        <template slot="info" slot-scope="data">
+          <div v-if="data.category != undefined">
+            Category:
+            <em class="font-bold text-blue-500">{{
+              CategoryOptions[data.category].label
+            }}</em>
+          </div>
+          <div v-if="data.main_info != undefined && data.category != undefined">
+            MainInfo:
+            <em class="font-bold text-blue-500">
+              {{ MainInfoOptions[data.category][data.main_info] }}
+            </em>
+          </div>
+          <div
+            v-if="
+              data.sub_info != undefined &&
+                data.main_info != undefined &&
+                data.category != undefined
+            "
+          >
+            SubInfo:
+            <em class="font-bold text-blue-500">
+              {{ SubInfoOptions[data.category][data.main_info][data.sub_info] }}
+            </em>
+          </div>
+          <div v-if="data.other_info">
+            <span>OtherInfo:</span>
+            <em class="font-bold text-blue-500">
+              {{ data.other_info }}
+            </em>
+          </div>
+          <div v-if="data.from_date">
+            Form:
+            <em class="font-bold text-blue-500">
+              {{ data.from_date | moment("YYYY-MM-DD HH:mm") }}
+            </em>
+          </div>
+
+          <div v-if="data.to_date">
+            To:
+            <em class="font-bold text-blue-500">
+              {{ data.to_date | moment("YYYY-MM-DD HH:mm") }}
+            </em>
+          </div>
+        </template>
+
         <template slot="action" slot-scope="data">
           <template>
             <router-link :to="{ name: 'User', params: { id: data.id } }">
@@ -51,23 +97,13 @@
 import { PageView, RouteView } from "@/layouts";
 import { STable, Ellipsis } from "@/components";
 import { getOrders } from "@/api/order";
+import {
+  StatusOptions,
+  CategoryOptions,
+  MainInfoOptions,
+  SubInfoOptions
+} from "./const";
 import moment from "moment";
-
-const StatusOptions = [
-  { value: 0, label: "New" },
-  { value: 1, label: "Confirm" },
-  { value: 2, label: "Complete" },
-  { value: 3, label: "Pending" },
-  { value: 4, label: "Cancel" },
-  { value: 5, label: "Delete" }
-];
-
-const categoryOptions = [
-  { value: 0, label: "Air Conditioner" },
-  { value: 1, label: "Electrical" },
-  { value: 2, label: "Plumbing" },
-  { value: 3, label: "House Cleaning" }
-];
 
 export default {
   components: {
@@ -77,7 +113,9 @@ export default {
   data() {
     return {
       StatusOptions,
-      categoryOptions,
+      CategoryOptions,
+      MainInfoOptions,
+      SubInfoOptions,
       queryParam: {},
       columns: [
         {
@@ -86,26 +124,20 @@ export default {
           width: "140px"
         },
         {
-          title: "CATEGORY",
-          dataIndex: "category",
-          customRender: (text, index, row) => {
-            return <span>{categoryOptions[text].label}</span>;
-          }
-        },
-        {
-          title: "FORM",
-          dataIndex: "form",
-          scopedSlots: { customRender: "datetime" }
-        },
-        {
-          title: "TO",
-          dataIndex: "to",
-          scopedSlots: { customRender: "datetime" }
+          title: "INFO",
+          scopedSlots: { customRender: "info" }
         },
         {
           title: "CREATE",
           dataIndex: "create_at",
           scopedSlots: { customRender: "datetime" }
+        },
+        {
+          title: "STATUS",
+          dataIndex: "status",
+          customRender: (text, index, row) => {
+            return <span>{StatusOptions[text].label}</span>;
+          }
         },
         {
           title: "ACTION",

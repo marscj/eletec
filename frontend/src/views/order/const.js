@@ -1,4 +1,20 @@
-export const MAININFO = [
+export const StatusOptions = [
+  { value: 0, label: "New" },
+  { value: 1, label: "Confirm" },
+  { value: 2, label: "Complete" },
+  { value: 3, label: "Pending" },
+  { value: 4, label: "Cancel" },
+  { value: 5, label: "Delete" }
+];
+
+export const CategoryOptions = [
+  { value: 0, label: "Air Conditioner" },
+  { value: 1, label: "Electrical" },
+  { value: 2, label: "Plumbing" },
+  { value: 3, label: "House Cleaning" }
+];
+
+export const MainInfoOptions = [
   [
     //AC
     "AC cooling repair",
@@ -34,7 +50,7 @@ export const MAININFO = [
   ]
 ];
 
-export const SUBINFO = [
+export const SubInfoOptions = [
   [
     //AC
     [
