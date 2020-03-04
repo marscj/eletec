@@ -79,9 +79,12 @@ class Order(models.Model):
     class Meta:
         db_table = 'order'
 
+    def __str__(self):
+        return self.orderID
+
     @property
     def orderID(self):
-        return '%d-%s' % (self.id, self.create_at.strftime("%Y%m%d"))
+        return '%d-%s' % (100000 + self.id, self.create_at.strftime("%y%m%d"))
 
 
 

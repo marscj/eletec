@@ -35,55 +35,84 @@
           </span>
         </template>
 
-        <template slot="info" slot-scope="data">
-          <div v-if="data.category != undefined">
-            Category:
-            <em class="font-bold text-blue-500">{{
-              CategoryOptions[data.category].label
-            }}</em>
-          </div>
-          <div v-if="data.main_info != undefined && data.category != undefined">
-            MainInfo:
-            <em class="font-bold text-blue-500">
-              {{ MainInfoOptions[data.category][data.main_info] }}
-            </em>
-          </div>
-          <div
-            v-if="
-              data.sub_info != undefined &&
-                data.main_info != undefined &&
-                data.category != undefined
-            "
-          >
-            SubInfo:
-            <em class="font-bold text-blue-500">
-              {{ SubInfoOptions[data.category][data.main_info][data.sub_info] }}
-            </em>
-          </div>
-          <div v-if="data.other_info">
-            <span>OtherInfo:</span>
-            <em class="font-bold text-blue-500">
-              {{ data.other_info }}
-            </em>
-          </div>
-          <div v-if="data.from_date">
-            Form:
-            <em class="font-bold text-blue-500">
-              {{ data.from_date | moment("YYYY-MM-DD HH:mm") }}
-            </em>
-          </div>
+        <template slot="date" slot-scope="text">
+          <span>
+            {{ text | moment("YYYY-MM-DD") }}
+          </span>
+        </template>
 
-          <div v-if="data.to_date">
-            To:
-            <em class="font-bold text-blue-500">
-              {{ data.to_date | moment("YYYY-MM-DD HH:mm") }}
-            </em>
-          </div>
+        <template slot="info" slot-scope="data">
+          <ul style="padding: 0px 20px;">
+            <li v-if="data.category != undefined">
+              Category:
+              <em class="font-bold text-blue-500">{{
+                CategoryOptions[data.category].label
+              }}</em>
+            </li>
+            <li
+              v-if="data.main_info != undefined && data.category != undefined"
+            >
+              MainInfo:
+              <em class="font-bold text-blue-500">
+                {{ MainInfoOptions[data.category][data.main_info] }}
+              </em>
+              <ul style="padding: 0px 20px;">
+                <li
+                  v-if="
+                    data.sub_info != undefined &&
+                      data.main_info != undefined &&
+                      data.category != undefined
+                  "
+                >
+                  SubInfo:
+                  <em class="font-bold text-blue-500">
+                    {{
+                      SubInfoOptions[data.category][data.main_info][
+                        data.sub_info
+                      ]
+                    }}
+                  </em>
+                </li>
+                <li v-if="data.other_info">
+                  <span>OtherInfo:</span>
+                  <span class="font-bold text-blue-500 ">
+                    <ellipsis :length="40" tooltip>
+                      {{ data.other_info }}
+                    </ellipsis>
+                  </span>
+                </li>
+              </ul>
+            </li>
+
+            <li v-if="data.from_date">
+              Form:
+              <em class="font-bold text-blue-500">
+                {{ data.from_date | moment("YYYY-MM-DD HH:mm") }}
+              </em>
+            </li>
+
+            <li v-if="data.to_date">
+              To:
+              <em class="font-bold text-blue-500">
+                {{ data.to_date | moment("YYYY-MM-DD HH:mm") }}
+              </em>
+            </li>
+          </ul>
+        </template>
+
+        <template slot="job" slot-scope="data">
+          <ul v-if="data" style="padding: 0px 20px;">
+            <li v-for="job in data" :key="job">
+              <ellipsis :length="7" tooltip>
+                {{ job }}
+              </ellipsis>
+            </li>
+          </ul>
         </template>
 
         <template slot="action" slot-scope="data">
           <template>
-            <router-link :to="{ name: 'User', params: { id: data.id } }">
+            <router-link :to="{ name: 'Order', params: { id: data.id } }">
               <span>Edit</span>
             </router-link>
           </template>
@@ -108,7 +137,8 @@ import moment from "moment";
 export default {
   components: {
     PageView,
-    STable
+    STable,
+    Ellipsis
   },
   data() {
     return {
@@ -128,13 +158,26 @@ export default {
           scopedSlots: { customRender: "info" }
         },
         {
+          title: "JOB",
+          dataIndex: "job",
+          width: "140px",
+          scopedSlots: { customRender: "job" }
+        },
+        {
+          title: "USER",
+          dataIndex: "user",
+          width: "120px"
+        },
+        {
           title: "CREATE",
           dataIndex: "create_at",
-          scopedSlots: { customRender: "datetime" }
+          width: "110px",
+          scopedSlots: { customRender: "date" }
         },
         {
           title: "STATUS",
           dataIndex: "status",
+          width: "100px",
           customRender: (text, index, row) => {
             return <span>{StatusOptions[text].label}</span>;
           }

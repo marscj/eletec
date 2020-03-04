@@ -38,10 +38,6 @@
           <a-checkbox :checked="data" disabled />
         </template>
 
-        <template slot="name" slot-scope="data">
-          <span>{{ data.first_name }} {{ data.last_name }} </span>
-        </template>
-
         <!-- <template slot="groups" slot-scope="data">
           <span>{{
             $_.join(
@@ -85,7 +81,7 @@ export default {
         },
         {
           title: "NAME",
-          scopedSlots: { customRender: "name" }
+          dataIndex: "name"
         },
         {
           title: "PHONE",

@@ -17,7 +17,14 @@ class Job(models.Model):
 
     freelancer = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='job_freelancer', blank=True, null=True)
 
-    order = models.ForeignKey(Order, on_delete=models.SET_NULL, related_name='job_order', blank=True, null=True)
+    order = models.ForeignKey(Order, on_delete=models.SET_NULL, related_name='job', blank=True, null=True)
 
     class Meta:
         db_table = 'job'
+
+    def __str__(self):
+        return self.jobID
+
+    @property
+    def jobID(self):
+        return '%d-%s' % (100000 + self.id, self.date.strftime("%y%m%d")) 

@@ -26,6 +26,15 @@ class User(PhoneNumberAbstactUser):
     class Meta:
         db_table = 'user'
 
+    def __str__(self):
+        if self.name:
+            return self.name
+        return self.username
+
+    @property
+    def name(self):
+        return self.get_full_name()
+
 class Contract(models.Model):
 
     class Option(models.IntegerChoices):
@@ -51,7 +60,7 @@ class Contract(models.Model):
 
     @property
     def contractID(self):
-        return  '%d-%s' % (self.id, self.expiry_date.strftime("%Y%m%d"))
+        return  '%d-%s' % (100000 + self.id, self.expiry_date.strftime("%y%m%d"))
 
 class Address(models.Model):
 

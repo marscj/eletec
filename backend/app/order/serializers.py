@@ -4,6 +4,12 @@ from .models import Order
 
 class OrderSerializer(serializers.ModelSerializer):
 
+    user = serializers.StringRelatedField(read_only=True)
+
+    job = serializers.StringRelatedField(read_only=True, many=True)
+    
+    user_id = serializers.IntegerField()
+
     orderID = serializers.SerializerMethodField()
 
     class Meta:

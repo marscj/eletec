@@ -17,6 +17,11 @@ export const asyncRouterMap = [
     redirect: defaultRoutePath,
     children: [
       {
+        path: "/admin",
+        redirect: defaultRoutePath,
+        hidden: true
+      },
+      {
         path: "/admin/orders",
         name: "Orders",
         component: () => import("@/views/order/List.vue"),
@@ -30,16 +35,13 @@ export const asyncRouterMap = [
         path: "/admin/orders/:id",
         name: "Order",
         hidden: true,
-        component: () => import("@/views/order/List.vue"),
+        component: () => import("@/views/order/Detail.vue"),
         meta: {
+          title: "Order",
           permission: ["order"]
         }
       },
-      {
-        path: "/admin",
-        redirect: defaultRoutePath,
-        hidden: true
-      },
+
       // {
       //   path: "/admin/jobs",
       //   name: "Jobs",
@@ -73,6 +75,7 @@ export const asyncRouterMap = [
         path: "/admin/users/:id",
         name: "User",
         hidden: true,
+        hideChildrenInMenu: true,
         component: () => import("@/views/user/Index"),
         redirect: "/admin/users/:id/profile",
         meta: {

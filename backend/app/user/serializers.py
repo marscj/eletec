@@ -54,12 +54,17 @@ class UserSerializer(serializers.ModelSerializer):
 
     groups_id = serializers.PrimaryKeyRelatedField(required=False, write_only=True, many=True, allow_null=True, queryset=Group.objects.all())
 
+    name = serializers.SerializerMethodField()
+
     class Meta:
         model = User
         exclude = (
             'password',
         )
     
+    def get_name(self, obj):
+        return obj.name
+        
     def update(self, instance, validated_data):
         groups_id = validated_data.pop('groups_id', None)
         if groups_id is not None:
