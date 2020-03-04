@@ -3,16 +3,16 @@ from rest_framework.permissions import IsAuthenticated, DjangoModelPermissions
 
 import django_filters
 
-from .models import Order
-from .serializers import OrderSerializer
+from .models import UploadImage
+from .serializers import UploadImageSerializer
 from middleware.permission import CustomModelPermissions
 
-class OrderFilter(django_filters.FilterSet):
-    user_id = django_filters.NumberFilter('user__id')
+class UploadImageFilter(django_filters.FilterSet):
+    project_id = django_filters.NumberFilter('project_id')
     
-class OrderView(ModelViewSet):
-    serializer_class = OrderSerializer
+class UploadImageView(ModelViewSet):
+    serializer_class = UploadImageSerializer
     permission_classes = [IsAuthenticated, CustomModelPermissions]
-    queryset = Order.objects.all()
+    queryset = UploadImage.objects.all()
 
-    filter_class = OrderFilter
+    filter_class = UploadImageFilter

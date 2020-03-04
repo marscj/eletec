@@ -15,7 +15,7 @@ class UploadImage(models.Model):
 
     flag = models.IntegerField(blank=True, null=True, choices=Flag.choices, default=Flag.Photo)
     
-    image = VersatileImageField(blank=True, null=True, upload_to=resource_file_name, ppoi_field='image_ppoi',)
+    image = VersatileImageField(blank=True, null=True, upload_to='resource/', ppoi_field='image_ppoi',)
     
     image_ppoi = PPOIField()
     

@@ -7,6 +7,7 @@ urlpatterns = [
     url(r'^api/auth/phone/', include('auth.phone.urls')),
     url(r'^api/', include('app.user.urls')),
     url(r'^api/', include('app.order.urls')),
+    url(r'^api/', include('app.upload.urls')),
 
     # url(r'^api/rest-auth/', include('rest_auth.urls')),
     # url(r'^api/rest-auth/registration/', include('rest_auth.registration.urls')),

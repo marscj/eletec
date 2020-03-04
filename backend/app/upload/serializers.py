@@ -4,7 +4,7 @@ from versatileimagefield.serializers import VersatileImageFieldSerializer
 
 from .models import UploadImage
 
-class UploadSerializer(serializers.ModelSerializer):
+class UploadImageSerializer(serializers.ModelSerializer):
 
     image = VersatileImageFieldSerializer(required=False, allow_null=True, sizes='image_size')
     
