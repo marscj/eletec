@@ -22,4 +22,4 @@ class UploadImage(models.Model):
     object_id = models.IntegerField()
 
     class Meta:
-        db_table = 'image'
+        db_table = 'upload'

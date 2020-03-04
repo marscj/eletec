@@ -16,17 +16,5 @@ class Migration(migrations.Migration):
         migrations.RemoveField(
             model_name='order',
             name='image',
-        ),
-        migrations.CreateModel(
-            name='Image',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('image', versatileimagefield.fields.VersatileImageField(blank=True, null=True, upload_to=app.order.models.resource_file_name)),
-                ('image_ppoi', versatileimagefield.fields.PPOIField(default='0.5x0.5', editable=False, max_length=20)),
-                ('order', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='image', to='order.Order')),
-            ],
-            options={
-                'db_table': 'image',
-            },
-        ),
+        )
     ]

@@ -4,5 +4,5 @@ from rest_framework.routers import DefaultRouter
 from .import views
 
 router = DefaultRouter()
-router.register(r'uploads', views.UserView, basename='uploads')
+router.register(r'uploads', views.UploadImageView, basename='uploads')
 urlpatterns = router.urls

@@ -83,11 +83,4 @@ class Order(models.Model):
     def orderID(self):
         return '%d-%s' % (100000 + self.id, self.create_at.strftime("%y%m%d"))
 
-def resource_file_name(instance, filename):
-    ext = filename.split('.')[-1]
-    
-    file_path = 'order/{order_id}/{filename}'.format(order_id=instance.order_id, filename=filename, ext=ext) 
-    return file_path
-
-
 
