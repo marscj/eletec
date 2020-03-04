@@ -88,7 +88,6 @@ export default {
   }
 
   /deep/ .term {
-    color: rgba(0, 0, 0, 0.85);
     display: table-cell;
     line-height: 20px;
     margin-right: 8px;

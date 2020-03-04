@@ -1,6 +1,8 @@
 from rest_framework import  serializers
 
-from .models import Order
+from versatileimagefield.serializers import VersatileImageFieldSerializer
+
+from .models import Order, Image
 
 class OrderSerializer(serializers.ModelSerializer):
 
@@ -18,3 +20,13 @@ class OrderSerializer(serializers.ModelSerializer):
 
     def get_orderID(self, obj):
         return obj.orderID
+
+class ImageSerializer(serializers.ModelSerializer):
+
+    image = VersatileImageFieldSerializer(required=False, allow_null=True, sizes='image_size')
+    
+    order_id = serializers.IntegerField()
+    
+    class Meta:
+        model = Resource
+        fields = '__all__'

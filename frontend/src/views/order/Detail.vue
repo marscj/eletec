@@ -1,13 +1,53 @@
 <template>
   <page-view :title="title">
     <a-card :bordered="false">
-      <description-list title="退款申请">
-        <detail-list-item term="取货单号">1000000000</detail-list-item>
-        <detail-list-item term="状态">已取货</detail-list-item>
-        <detail-list-item term="销售单号">1234123421</detail-list-item>
-        <detail-list-item term="子订单">3214321432</detail-list-item>
+      <description-list title="Base Info" v-if="form.category != undefined">
+        <detail-list-item term="Category">
+          {{ CategoryOptions[form.category].label }}</detail-list-item
+        >
+        <detail-list-item
+          term="Main Info"
+          v-if="form.main_info != undefined && form.category != undefined"
+        >
+          {{ MainInfoOptions[form.category][form.main_info] }}
+        </detail-list-item>
+        <detail-list-item
+          term="Sub Info"
+          v-if="
+            form.sub_info != undefined &&
+              form.main_info != undefined &&
+              form.category != undefined
+          "
+          >{{
+            SubInfoOptions[form.category][form.main_info][form.sub_info]
+          }}</detail-list-item
+        >
+        <detail-list-item term="From Date">{{
+          form.from_date | moment("YYYY-MM-DD HH:mm")
+        }}</detail-list-item>
+        <detail-list-item term="To Date">{{
+          form.to_date | moment("YYYY-MM-DD HH:mm")
+        }}</detail-list-item>
+        <detail-list-item term="Create Date">{{
+          form.create_at | moment("YYYY-MM-DD HH:mm")
+        }}</detail-list-item>
       </description-list>
       <a-divider style="margin-bottom: 32px" />
+
+      <description-list title="Other Info" v-if="form.other_info || form.image">
+        <a-card>
+          <img
+            alt="example"
+            src="http://127.0.0.1:8000/media/__sized__/resource/1/5-crop-c0-5__0-5-1280x720-70.jpg"
+            slot="cover"
+          />
+          <a-card-meta :description="form.other_info">
+            <!-- <template slot="description">www.instagram.com</template> -->
+          </a-card-meta>
+        </a-card>
+        <a-divider style="margin-bottom: 32px" />
+      </description-list>
+
       <description-list title="用户信息">
         <detail-list-item term="用户姓名">付小小</detail-list-item>
         <detail-list-item term="联系电话">18100000000</detail-list-item>
@@ -27,26 +67,24 @@
         :data="loadGoodsData"
       >
       </s-table>
-
-      <div class="title">退货进度</div>
-      <s-table
-        style="margin-bottom: 24px"
-        row-key="key"
-        :columns="scheduleColumns"
-        :data="loadScheduleData"
-      >
-        <template slot="status" slot-scope="status">
-          <a-badge :status="status" :text="status | statusFilter" />
-        </template>
-      </s-table>
     </a-card>
   </page-view>
 </template>
 
 <script>
+import { getOrder } from "@/api/order";
 import { PageView } from "@/layouts";
 import { STable, DescriptionList } from "@/components";
 const DetailListItem = DescriptionList.Item;
+
+import {
+  StatusOptions,
+  CategoryOptions,
+  MainInfoOptions,
+  SubInfoOptions
+} from "./const";
+
+import moment from "moment";
 
 export default {
   components: {
@@ -57,6 +95,11 @@ export default {
   },
   data() {
     return {
+      StatusOptions,
+      CategoryOptions,
+      MainInfoOptions,
+      SubInfoOptions,
+      form: {},
       goodsColumns: [
         {
           title: "商品编号",
@@ -138,89 +181,6 @@ export default {
         }).then(res => {
           return res;
         });
-      },
-
-      scheduleColumns: [
-        {
-          title: "时间",
-          dataIndex: "time",
-          key: "time"
-        },
-        {
-          title: "当前进度",
-          dataIndex: "rate",
-          key: "rate"
-        },
-        {
-          title: "状态",
-          dataIndex: "status",
-          key: "status",
-          scopedSlots: { customRender: "status" }
-        },
-        {
-          title: "操作员ID",
-          dataIndex: "operator",
-          key: "operator"
-        },
-        {
-          title: "耗时",
-          dataIndex: "cost",
-          key: "cost"
-        }
-      ],
-      loadScheduleData: () => {
-        return new Promise(resolve => {
-          resolve({
-            data: [
-              {
-                key: "1",
-                time: "2017-10-01 14:10",
-                rate: "联系客户",
-                status: "processing",
-                operator: "取货员 ID1234",
-                cost: "5mins"
-              },
-              {
-                key: "2",
-                time: "2017-10-01 14:05",
-                rate: "取货员出发",
-                status: "success",
-                operator: "取货员 ID1234",
-                cost: "1h"
-              },
-              {
-                key: "3",
-                time: "2017-10-01 13:05",
-                rate: "取货员接单",
-                status: "success",
-                operator: "取货员 ID1234",
-                cost: "5mins"
-              },
-              {
-                key: "4",
-                time: "2017-10-01 13:00",
-                rate: "申请审批通过",
-                status: "success",
-                operator: "系统",
-                cost: "1h"
-              },
-              {
-                key: "5",
-                time: "2017-10-01 12:00",
-                rate: "发起退货申请",
-                status: "success",
-                operator: "用户",
-                cost: "5mins"
-              }
-            ],
-            pageSize: 10,
-            pageNo: 1,
-            totalPage: 1,
-            totalCount: 10
-          });
-        }).then(res => {
-          return res;
-        });
       }
     };
   },
@@ -237,6 +197,20 @@ export default {
   computed: {
     title() {
       return this.$route.meta.title;
+    }
+  },
+  mounted() {
+    this.getUserData();
+  },
+  methods: {
+    moment,
+    getUserData() {
+      getOrder(this.$route.params.id).then(res => {
+        const { result } = res;
+        this.form = result;
+
+        console.log(this.form);
+      });
     }
   }
 };

@@ -37,7 +37,7 @@
 
         <template slot="date" slot-scope="text">
           <span>
-            {{ text | moment("YYYY-MM-DD") }}
+            {{ text | moment("MM-DD") }}
           </span>
         </template>
 
@@ -73,26 +73,26 @@
                     }}
                   </em>
                 </li>
-                <li v-if="data.other_info">
+                <!-- <li v-if="data.other_info">
                   <span>OtherInfo:</span>
                   <span class="font-bold text-blue-500 ">
                     <ellipsis :length="40" tooltip>
                       {{ data.other_info }}
                     </ellipsis>
                   </span>
-                </li>
+                </li> -->
               </ul>
             </li>
 
             <li v-if="data.from_date">
-              Form:
+              Form Date:
               <em class="font-bold text-blue-500">
                 {{ data.from_date | moment("YYYY-MM-DD HH:mm") }}
               </em>
             </li>
 
             <li v-if="data.to_date">
-              To:
+              To Date:
               <em class="font-bold text-blue-500">
                 {{ data.to_date | moment("YYYY-MM-DD HH:mm") }}
               </em>
@@ -103,7 +103,7 @@
         <template slot="job" slot-scope="data">
           <ul v-if="data" style="padding: 0px 20px;">
             <li v-for="job in data" :key="job">
-              <ellipsis :length="7" tooltip>
+              <ellipsis :length="30" tooltip>
                 {{ job }}
               </ellipsis>
             </li>
@@ -160,7 +160,7 @@ export default {
         {
           title: "JOB",
           dataIndex: "job",
-          width: "140px",
+          width: "172px",
           scopedSlots: { customRender: "job" }
         },
         {
@@ -171,7 +171,7 @@ export default {
         {
           title: "CREATE",
           dataIndex: "create_at",
-          width: "110px",
+          width: "80px",
           scopedSlots: { customRender: "date" }
         },
         {

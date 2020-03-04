@@ -43,9 +43,6 @@ class Order(models.Model):
     # 结束时间
     to_date = models.DateTimeField(blank=True, null=True)
 
-    # 图片
-    image = models.ImageField(blank=True, null=True)
-
     # 服务码
     code = models.CharField(blank=True, null=True, max_length=4, default=random_string)
 
@@ -86,7 +83,11 @@ class Order(models.Model):
     def orderID(self):
         return '%d-%s' % (100000 + self.id, self.create_at.strftime("%y%m%d"))
 
-
+def resource_file_name(instance, filename):
+    ext = filename.split('.')[-1]
+    
+    file_path = 'order/{order_id}/{filename}'.format(order_id=instance.order_id, filename=filename, ext=ext) 
+    return file_path
 
 
 
