@@ -73,7 +73,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 class VisitSerializer(serializers.Serializer):
 
-    cagetory = serializers.CharField(max_length=16)
+    category = serializers.CharField(max_length=16)
     
     count = serializers.IntegerField()
 
@@ -92,13 +92,13 @@ class ContractSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def get_contractID(self, obj):
-        return '%d-%s-%d' % (obj.user_id, obj.expiry_date.strftime("%Y%m%d") , obj.id)
+        return obj.contractID
 
     def get_validity(self, obj):
         return timezone.now().strftime('%Y-%m-%d') >= obj.issue_date.strftime('%Y-%m-%d') and timezone.now().strftime('%Y-%m-%d') <= obj.expiry_date.strftime('%Y-%m-%d')
 
     def get_visits(self, obj):
-        query = Order.objects.filter(contract=obj).values('cagetory').annotate(count=Count('cagetory'))
+        query = Order.objects.filter(contract=obj).values('category').annotate(count=Count('category'))
         serializer = VisitSerializer(instance=query, many=True)
         return serializer.data
 

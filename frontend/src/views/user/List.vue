@@ -42,14 +42,14 @@
           <span>{{ data.first_name }} {{ data.last_name }} </span>
         </template>
 
-        <template slot="groups" slot-scope="data">
+        <!-- <template slot="groups" slot-scope="data">
           <span>{{
             $_.join(
               data.map(f => f.name),
               ", "
             )
           }}</span>
-        </template>
+        </template> -->
         <template slot="action" slot-scope="data">
           <template>
             <router-link :to="{ name: 'User', params: { id: data.id } }">
@@ -65,8 +65,14 @@
 <script>
 import { PageView, RouteView } from "@/layouts";
 import { STable, Ellipsis } from "@/components";
-
 import { getUsers } from "@/api/user";
+
+const RoleOptions = [
+  { value: 0, label: "Customer" },
+  { value: 1, label: "Staff" },
+  { value: 2, label: "Freelancer" },
+  { value: 3, label: "Operator" }
+];
 
 export default {
   components: {
@@ -75,6 +81,7 @@ export default {
   },
   data() {
     return {
+      RoleOptions,
       queryParam: {},
       columns: [
         {
@@ -96,7 +103,10 @@ export default {
         },
         {
           title: "ROLE",
-          dataIndex: "role"
+          dataIndex: "role",
+          customRender: (text, index, row) => {
+            return <span>{RoleOptions[text].label}</span>;
+          }
         },
         // {
         //   title: "GROUP",

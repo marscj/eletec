@@ -131,7 +131,8 @@ import { getUser, updateUser } from "@/api/user";
 const RoleOptions = [
   { value: 0, label: "Customer" },
   { value: 1, label: "Staff" },
-  { value: 2, label: "Freelancer" }
+  { value: 2, label: "Freelancer" },
+  { value: 3, label: "Operator" }
 ];
 
 export default {

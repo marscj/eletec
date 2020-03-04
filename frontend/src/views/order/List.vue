@@ -34,22 +34,7 @@
             {{ text | moment("YYYY-MM-DD") }}
           </span>
         </template> -->
-        <template slot="active" slot-scope="data">
-          <a-checkbox :checked="data" disabled />
-        </template>
 
-        <template slot="name" slot-scope="data">
-          <span>{{ data.first_name }} {{ data.last_name }} </span>
-        </template>
-
-        <template slot="groups" slot-scope="data">
-          <span>{{
-            $_.join(
-              data.map(f => f.name),
-              ", "
-            )
-          }}</span>
-        </template>
         <template slot="action" slot-scope="data">
           <template>
             <router-link :to="{ name: 'User', params: { id: data.id } }">
@@ -65,8 +50,23 @@
 <script>
 import { PageView, RouteView } from "@/layouts";
 import { STable, Ellipsis } from "@/components";
+import { getOrders } from "@/api/order";
 
-import { getUsers } from "@/api/user";
+const StatusOptions = [
+  { value: 0, label: "New" },
+  { value: 1, label: "Confirm" },
+  { value: 2, label: "Complete" },
+  { value: 3, label: "Pending" },
+  { value: 4, label: "Cancel" },
+  { value: 5, label: "Delete" }
+];
+
+const categoryOptions = [
+  { value: 0, label: "Air Conditioner" },
+  { value: 1, label: "Electrical" },
+  { value: 2, label: "Plumbing" },
+  { value: 3, label: "House Cleaning" }
+];
 
 export default {
   components: {
@@ -75,34 +75,21 @@ export default {
   },
   data() {
     return {
+      StatusOptions,
+      categoryOptions,
       queryParam: {},
       columns: [
         {
           title: "#",
-          dataIndex: "id",
-          width: "80px"
+          dataIndex: "orderID",
+          width: "140px"
         },
         {
-          title: "NAME",
-          scopedSlots: { customRender: "name" }
-        },
-        {
-          title: "PHONE",
-          dataIndex: "phone_number"
-        },
-        {
-          title: "EMAIL",
-          dataIndex: "email"
-        },
-        {
-          title: "ROLE",
-          dataIndex: "role"
-        },
-        {
-          title: "ACTIVE",
-          dataIndex: "is_active",
-          width: "80px",
-          scopedSlots: { customRender: "active" }
+          title: "Category",
+          dataIndex: "category",
+          customRender: (text, index, row) => {
+            return <span>{categoryOptions[text].label}</span>;
+          }
         },
         {
           title: "ACTION",
@@ -111,9 +98,11 @@ export default {
         }
       ],
       loadData: parameter => {
-        return getUsers(Object.assign(parameter, this.queryParam)).then(res => {
-          return res.result;
-        });
+        return getOrders(Object.assign(parameter, this.queryParam)).then(
+          res => {
+            return res.result;
+          }
+        );
       }
     };
   }

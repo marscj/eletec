@@ -20,13 +20,13 @@ class Order(models.Model):
         AC =  0 #'Air Conditioner',
         Electrical = 1
         Plumbing = 2
-        Cleaning = 3 #'House Cleaning'
+        Cleaning = 3 #'House Cleaning',
 
     # 订单状态
     status = models.IntegerField(blank=True, null=True, choices=Status.choices, default=Status.New)
     
     # 订单类型
-    cagetory = models.IntegerField(blank=True, null=True, choices=Category.choices, default=Category.AC)
+    category = models.IntegerField(blank=True, null=True, choices=Category.choices, default=Category.AC)
 
     # 信息
     main_info = models.IntegerField(blank=True, null=True, default=0)
@@ -42,9 +42,6 @@ class Order(models.Model):
 
     # 结束时间
     to_date = models.DateTimeField(blank=True, null=True)
-
-    # 执行时间
-    action_date = models.DateTimeField(blank=True, null=True)
 
     # 图片
     image = models.ImageField(blank=True, null=True)
@@ -81,6 +78,10 @@ class Order(models.Model):
 
     class Meta:
         db_table = 'order'
+
+    @property
+    def orderID(self):
+        return '%d-%s' % (self.id, self.create_at.strftime("%Y%m%d"))
 
 
 

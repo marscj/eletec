@@ -1,3 +1,25 @@
-from django.shortcuts import render
+from django.contrib.auth import logout
+from django.contrib.auth.models import Group, Permission
 
-# Create your views here.
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.viewsets import ModelViewSet
+from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated, DjangoModelPermissions
+from rest_framework.authtoken import views
+
+import django_filters
+
+from .models import Order
+from .serializers import OrderSerializer
+from middleware.permission import CustomModelPermissions
+
+class OrderFilter(django_filters.FilterSet):
+    user_id = django_filters.NumberFilter('user__id')
+    
+class OrderView(ModelViewSet):
+    serializer_class = OrderSerializer
+    permission_classes = [IsAuthenticated, CustomModelPermissions]
+    queryset = Order.objects.all()
+
+    filter_class = OrderFilter

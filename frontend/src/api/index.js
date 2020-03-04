@@ -13,7 +13,8 @@ export const API = {
   Address: "address/",
   Skills: "skills/",
   WorkTimes: "worktimes/",
-  Resource: "resources/"
+  Resource: "resources/",
+  Orders: "orders/"
 };
 
 export function updateSuccess(res) {

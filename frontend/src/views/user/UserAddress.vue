@@ -19,7 +19,7 @@
         <template v-else>
           <a-row type="flex" justify="center" align="middle">
             <a-col :span="2">
-              <a-radio v-model="item.defAddr" />
+              <a-radio v-model="item.defAddr" disabled />
             </a-col>
             <a-col :span="22">
               <a-card :hoverable="true">

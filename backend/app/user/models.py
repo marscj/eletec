@@ -15,6 +15,7 @@ class User(PhoneNumberAbstactUser):
         Customer = 0
         Staff = 1
         Freelancer = 2
+        Operator = 3
 
     role = models.IntegerField(blank=True, null=True, choices=Role.choices, default=Role.Customer)
 
@@ -47,6 +48,10 @@ class Contract(models.Model):
 
     class Meta:
         db_table = 'contract'
+
+    @property
+    def contractID(self):
+        return  '%d-%s' % (self.id, self.expiry_date.strftime("%Y%m%d"))
 
 class Address(models.Model):
 
