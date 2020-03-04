@@ -1,5 +1,5 @@
 <template>
-  <page-view class="page-header-index-wide">
+  <page-view>
     <a-card
       :bordered="false"
       :bodyStyle="{ padding: '16px 0', height: '100%' }"
@@ -51,11 +51,11 @@
           </a-menu>
         </div>
         <div class="account-settings-info-right">
-          <div class="account-settings-info-title">
+          <!-- <div class="account-settings-info-title">
             <span>{{ $route.meta.title }}</span>
           </div>
 
-          <a-divider></a-divider>
+          <a-divider></a-divider> -->
           <route-view></route-view>
         </div>
       </div>
@@ -79,8 +79,7 @@ export default {
       mode: "inline",
 
       openKeys: [],
-      selectedKeys: [],
-      title: "asds"
+      selectedKeys: []
     };
   },
   created() {
