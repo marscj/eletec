@@ -66,7 +66,7 @@ export default {
   methods: {
     getListData() {
       this.loading = true;
-      getUploads({ object_id: this.$route.params.id })
+      getUploads({ object_id: this.$route.params.id, content: 0 })
         .then(res => {
           res.result.unshift({});
           this.listData = res.result;
@@ -99,6 +99,7 @@ export default {
     upload(request) {
       const formData = new FormData();
       formData.append("image", request.file);
+      formData.append("content", 0);
       formData.append("flag", 3);
       formData.append("object_id", this.$route.params.id);
       this.uploading = true;

@@ -70,7 +70,7 @@ class UserSerializer(serializers.ModelSerializer):
         return obj.name
 
     def get_photo(self, obj):
-        photo = UploadImage.objects.filter(object_id=obj.id, flag=UploadImage.Flag.Photo).last()
+        photo = UploadImage.objects.filter(object_id=obj.id, content=0, flag=UploadImage.Flag.Photo).last()
         if photo:
             serializer = UploadImageSerializer(photo, context=self.context)
             return serializer.data

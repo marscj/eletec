@@ -9,6 +9,7 @@ from middleware.permission import CustomModelPermissions
 
 class UploadImageFilter(django_filters.FilterSet):
     project_id = django_filters.NumberFilter('project_id')
+    content = django_filters.NumberFilter('content')
     
 class UploadImageView(ModelViewSet):
     serializer_class = UploadImageSerializer

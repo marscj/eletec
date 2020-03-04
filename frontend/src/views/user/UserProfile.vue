@@ -178,6 +178,7 @@ export default {
     upload(request) {
       const formData = new FormData();
       formData.append("image", request.file);
+      formData.append("content", 0);
       formData.append("flag", 0);
       formData.append("object_id", this.$route.params.id);
       this.uploading = true;

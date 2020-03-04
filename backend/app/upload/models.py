@@ -12,6 +12,12 @@ class UploadImage(models.Model):
         Id = 1
         License = 2
         Source = 3
+    
+    class Content(models.IntegerChoices):
+        User = 0
+        Order = 1
+
+    content = models.IntegerField(blank=True, null=True, choices=Content.choices, default=Content.User)
 
     flag = models.IntegerField(blank=True, null=True, choices=Flag.choices, default=Flag.Photo)
     

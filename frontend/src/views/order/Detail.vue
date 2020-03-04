@@ -1,6 +1,6 @@
 <template>
   <page-view :title="title">
-    <a-card :bordered="false">
+    <a-card :bordered="false" :loading="loading">
       <description-list title="Base Info" v-if="form.category != undefined">
         <detail-list-item term="Category">
           {{ CategoryOptions[form.category].label }}</detail-list-item
@@ -37,10 +37,13 @@
       <description-list title="Other Info" v-if="form.other_info || form.image">
         <a-card>
           <img
-            alt="example"
-            src="http://127.0.0.1:8000/media/__sized__/resource/1/5-crop-c0-5__0-5-1280x720-70.jpg"
+            v-for="data in images"
+            :key="data.id"
+            :src="data.image.medium"
+            alt="image"
             slot="cover"
           />
+
           <a-card-meta :description="form.other_info">
             <!-- <template slot="description">www.instagram.com</template> -->
           </a-card-meta>
@@ -73,6 +76,7 @@
 
 <script>
 import { getOrder } from "@/api/order";
+import { getUploads } from "@/api/upload";
 import { PageView } from "@/layouts";
 import { STable, DescriptionList } from "@/components";
 const DetailListItem = DescriptionList.Item;
@@ -100,6 +104,7 @@ export default {
       MainInfoOptions,
       SubInfoOptions,
       form: {},
+      images: [],
       goodsColumns: [
         {
           title: "商品编号",
@@ -204,13 +209,22 @@ export default {
   },
   methods: {
     moment,
-    getUserData() {
-      getOrder(this.$route.params.id).then(res => {
-        const { result } = res;
-        this.form = result;
-
-        console.log(this.form);
+    getImages() {
+      getUploads({ object_id: this.$route.params.id, content: 1 }).then(res => {
+        this.images = res.result;
       });
+    },
+    getUserData() {
+      this.loading = true;
+      getOrder(this.$route.params.id)
+        .then(res => {
+          const { result } = res;
+          this.form = result;
+          return this.getImages();
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     }
   }
 };
