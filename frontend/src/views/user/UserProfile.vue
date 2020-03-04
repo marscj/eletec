@@ -22,9 +22,9 @@
             listType="picture-card"
           >
             <img
-              v-if="form && form.photo && form.photo.thumbnail"
+              v-if="form && form.photo && form.photo.image.thumbnail"
               alt="images"
-              :src="form.photo.thumbnail"
+              :src="form.photo.image.thumbnail"
             />
 
             <div v-else>
@@ -126,6 +126,7 @@
 
 <script>
 import { getUser, updateUser } from "@/api/user";
+import { upload } from "@/api/upload";
 import { RoleOptions } from "./const";
 
 export default {
@@ -176,17 +177,11 @@ export default {
     },
     upload(request) {
       const formData = new FormData();
-      formData.append("photo", request.file);
-      formData.append("username", this.form.username);
-      formData.append("phone_number", this.form.phone_number);
-      formData.append("email", this.form.email);
-      formData.append("first_name", this.form.first_name);
-      formData.append("last_name", this.form.last_name);
-      formData.append("role", this.form.role);
-      formData.append("is_superuser", this.form.is_superuser);
-      formData.append("is_active", this.form.is_active);
+      formData.append("image", request.file);
+      formData.append("flag", 0);
+      formData.append("object_id", this.$route.params.id);
       this.uploading = true;
-      updateUser(this.$route.params.id, formData)
+      upload(formData)
         .then(res => {
           this.getUserData();
         })

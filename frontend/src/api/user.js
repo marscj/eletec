@@ -183,30 +183,3 @@ export function deleteWorkTime(pk) {
     .then(deleteSuccess)
     .catch(deleteFailed);
 }
-
-export function getResources(parameter) {
-  return axios({
-    url: API.Resource,
-    method: "get",
-    params: parameter
-  });
-}
-
-export function uploadResource(data) {
-  return axios({
-    url: API.Resource,
-    method: "post",
-    data: data
-  })
-    .then(uploadSuccess)
-    .catch(uploadFailed);
-}
-
-export function deleteResource(pk) {
-  return axios({
-    url: API.Resource + `${pk}/`,
-    method: "delete"
-  })
-    .then(deleteSuccess)
-    .catch(deleteFailed);
-}

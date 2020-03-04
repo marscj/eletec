@@ -9,6 +9,8 @@ from django.utils import timezone
 
 from .models import User, Address, Skill, WorkTime, Resource, Contract
 from app.order.models import Order
+from app.upload.models import UploadImage
+from app.upload.serializers import UploadImageSerializer
 
 class ContentTypeSerializer(serializers.ModelSerializer):
 
@@ -50,7 +52,9 @@ class UserSerializer(serializers.ModelSerializer):
 
     groups = GroupSerializer(required=False, many=True)
 
-    photo = VersatileImageFieldSerializer(required=False, allow_null=True, sizes='image_size')
+    # photo = VersatileImageFieldSerializer(required=False, allow_null=True, sizes='image_size')
+
+    photo = serializers.SerializerMethodField()
 
     groups_id = serializers.PrimaryKeyRelatedField(required=False, write_only=True, many=True, allow_null=True, queryset=Group.objects.all())
 
@@ -64,6 +68,12 @@ class UserSerializer(serializers.ModelSerializer):
     
     def get_name(self, obj):
         return obj.name
+
+    def get_photo(self, obj):
+        photo = UploadImage.objects.filter(object_id=obj.id, flag=UploadImage.Flag.Photo).last()
+        if photo:
+            serializer = UploadImageSerializer(photo, context=self.context)
+            return serializer.data
         
     def update(self, instance, validated_data):
         groups_id = validated_data.pop('groups_id', None)

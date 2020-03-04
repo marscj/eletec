@@ -34,7 +34,7 @@ class User(PhoneNumberAbstactUser):
     @property
     def name(self):
         return self.get_full_name()
-
+        
 class Contract(models.Model):
 
     class Option(models.IntegerChoices):

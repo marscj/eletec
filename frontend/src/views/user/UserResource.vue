@@ -12,7 +12,7 @@
         <template v-if="!item || item.id === undefined">
           <div align="right" class="table-operator">
             <a-upload
-              name="EmiratesID"
+              name="Id"
               :multiple="false"
               :beforeUpload="beforeUpload"
               :customRequest="upload"
@@ -28,6 +28,8 @@
         <template v-else>
           <a-card :hoverable="true">
             <img :src="item.image.large" slot="cover" alt="images" />
+
+            <a-card-meta :title="FlagOptions[item.flag]"></a-card-meta>
 
             <template class="ant-card-actions" slot="actions">
               <a-popconfirm
@@ -47,11 +49,12 @@
 </template>
 
 <script>
-uploadResource;
-import { getResources, uploadResource, deleteResource } from "@/api/user";
+import { FlagOptions } from "./const";
+import { getUploads, upload, deleteUpload } from "@/api/upload";
 export default {
   data() {
     return {
+      FlagOptions,
       loading: false,
       uploading: false,
       listData: []
@@ -63,7 +66,7 @@ export default {
   methods: {
     getListData() {
       this.loading = true;
-      getResources({ user_id: this.$route.params.id })
+      getUploads({ object_id: this.$route.params.id })
         .then(res => {
           res.result.unshift({});
           this.listData = res.result;
@@ -74,7 +77,7 @@ export default {
     },
     deleteData(val) {
       this.loading = true;
-      deleteResource(val.id)
+      deleteUpload(val.id)
         .then(res => {
           this.getListData();
         })
@@ -96,10 +99,10 @@ export default {
     upload(request) {
       const formData = new FormData();
       formData.append("image", request.file);
-      formData.append("filename", request.filename);
-      formData.append("user_id", this.$route.params.id);
+      formData.append("flag", 3);
+      formData.append("object_id", this.$route.params.id);
       this.uploading = true;
-      uploadResource(formData)
+      upload(formData)
         .then(res => {
           this.getListData();
         })

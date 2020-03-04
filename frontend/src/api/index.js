@@ -13,7 +13,7 @@ export const API = {
   Address: "address/",
   Skills: "skills/",
   WorkTimes: "worktimes/",
-  Resource: "resources/",
+  Upload: "uploads/",
   Orders: "orders/"
 };
 

@@ -40,3 +40,5 @@ export const WeekOptions = [
   { value: 5, label: "Saturday" },
   { value: 6, label: "Sunday" }
 ];
+
+export const FlagOptions = ["Photo", "Id", "License", "Source"];

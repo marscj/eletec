@@ -9,8 +9,8 @@ class UploadImage(models.Model):
 
     class Flag(models.IntegerChoices):
         Photo = 0
-        EmiratesID = 1
-        DriverLicense = 2
+        Id = 1
+        License = 2
         Source = 3
 
     flag = models.IntegerField(blank=True, null=True, choices=Flag.choices, default=Flag.Photo)
