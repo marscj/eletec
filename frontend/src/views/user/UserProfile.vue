@@ -80,10 +80,11 @@
 
         <a-form-item label="Role">
           <a-select v-model="form.role">
-            <a-select-option key="1" value="Customer">Customer</a-select-option>
-            <a-select-option key="2" value="Staff">Staff</a-select-option>
-            <a-select-option key="3" value="Freelancer"
-              >Freelancer</a-select-option
+            <a-select-option
+              v-for="data in RoleOptions"
+              :key="data.value"
+              :value="data.value"
+              >{{ data.label }}</a-select-option
             >
           </a-select>
         </a-form-item>
@@ -126,9 +127,17 @@
 <script>
 import { getUser, updateUser } from "@/api/user";
 // import { getGroups } from "@/api/permission";
+
+const RoleOptions = [
+  { value: 0, label: "Customer" },
+  { value: 1, label: "Staff" },
+  { value: 2, label: "Freelancer" }
+];
+
 export default {
   data() {
     return {
+      RoleOptions,
       loading: false,
       uploading: false,
       form: {}

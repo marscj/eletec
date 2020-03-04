@@ -17,8 +17,8 @@
           </div>
         </template>
         <template v-else>
-          <a-card :hoverable="true" :title="item.skill">
-            <p v-if="item.skill === 'Other'">{{ item.remark }}</p>
+          <a-card :hoverable="true" :title="SkillOptions[item.skill].label">
+            <p v-if="item.skill === 5">{{ item.remark }}</p>
             <template class="ant-card-actions" slot="actions">
               <a @click="openModal(item)">Edit</a>
               <a-popconfirm
@@ -54,20 +54,12 @@
           <a-form-item label="Skill">
             <validation-provider vid="skill" v-slot="{ errors }">
               <a-select v-model="form.skill">
-                <a-select-option key="1" value="A/C">A/C</a-select-option>
-                <a-select-option key="2" value="Electrical"
-                  >Electrical</a-select-option
+                <a-select-option
+                  v-for="data in SkillOptions"
+                  :key="data.value"
+                  :value="data.value"
+                  >{{ data.label }}</a-select-option
                 >
-                <a-select-option key="3" value="Plumbing"
-                  >Plumbing</a-select-option
-                >
-                <a-select-option key="4" value="Cleaning"
-                  >Cleaning</a-select-option
-                >
-                <a-select-option key="5" value="Duct Cleaning"
-                  >Duct Cleaning</a-select-option
-                >
-                <a-select-option key="6" value="Other">Other</a-select-option>
               </a-select>
               <span class="errorText">{{ errors[0] }}</span>
             </validation-provider>
@@ -88,9 +80,19 @@
 <script>
 import { getSkills, updateSkill, createSkill, deleteSkill } from "@/api/user";
 
+const SkillOptions = [
+  { value: 0, label: "Air Conditioner" },
+  { value: 1, label: "Electrical" },
+  { value: 2, label: "Plumbing" },
+  { value: 3, label: "House Cleaning" },
+  { value: 4, label: "Duct Cleaning" },
+  { value: 5, label: "Other" }
+];
+
 export default {
   data() {
     return {
+      SkillOptions,
       modal: false,
       listData: [],
       loading: false,
@@ -116,8 +118,7 @@ export default {
       this.modal = true;
       this.form = Object.assign(
         {
-          useful: true,
-          skill: "A/C"
+          skill: 0
         },
         val
       );

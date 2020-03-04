@@ -8,34 +8,34 @@ def random_string():
 
 class Order(models.Model):
 
-    class Status(models.TextChoices):
-        New = 'New'
-        Confirm = 'Confirm'
-        Complete = 'Complete'
-        Pending = 'Pending'
-        Cancel = 'Cancel'
-        Delete = 'Delete'
+    class Status(models.IntegerChoices):
+        New = 0
+        Confirm = 1
+        Complete = 2
+        Pending = 3
+        Cancel = 4
+        Delete = 5
 
-    class Category(models.TextChoices):
-        AC = 'Air Conditioner',
-        Electrical = 'Electrical',
-        Plumbing = 'Plumbing',
-        Cleaning = 'House Cleaning'
+    class Category(models.IntegerChoices):
+        AC =  0 #'Air Conditioner',
+        Electrical = 1
+        Plumbing = 2
+        Cleaning = 3 #'House Cleaning'
 
     # 订单状态
-    status = models.CharField(blank=True, null=True, max_length=16, choices=Status.choices, default=Status.New)
+    status = models.IntegerField(blank=True, null=True, choices=Status.choices, default=Status.New)
     
     # 订单类型
-    cagetory = models.CharField(blank=True, null=True, max_length=16, choices=Category.choices, default=Category.AC)
+    cagetory = models.IntegerField(blank=True, null=True, choices=Category.choices, default=Category.AC)
 
     # 信息
-    main_info = models.TextField(blank=True, null=True)
+    main_info = models.IntegerField(blank=True, null=True, default=0)
 
     # 副信息
-    sub_info = models.TextField(blank=True, null=True)
+    sub_info = models.IntegerField(blank=True, null=True, default=0)
 
     # 自定义信息
-    other_info = models.TextField(blank=True, null=True)
+    other_info = models.CharField(blank=True, null=True, max_length=256)
 
     # 开始时间
     from_date = models.DateTimeField(blank=True, null=True)
@@ -43,8 +43,8 @@ class Order(models.Model):
     # 结束时间
     to_date = models.DateTimeField(blank=True, null=True)
 
-    # 地址
-    addr = models.TextField(blank=True, null=True)
+    # 执行时间
+    action_date = models.DateTimeField(blank=True, null=True)
 
     # 图片
     image = models.ImageField(blank=True, null=True)
@@ -53,10 +53,13 @@ class Order(models.Model):
     code = models.CharField(blank=True, null=True, max_length=4, default=random_string)
 
     # 评价
-    eva_info = models.TextField(blank=True, null=True)
+    eva_info = models.CharField(blank=True, null=True, max_length=256)
 
     # 评价等级
     eva_lv = models.IntegerField(blank=True, null=True)
+
+    # 地址
+    addr = models.CharField(blank=True, null=True, max_length=128)
 
     # 坐标
     lat = models.FloatField(blank=True, null=True)

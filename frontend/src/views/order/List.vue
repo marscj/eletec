@@ -29,23 +29,41 @@
         showPagination="auto"
         bordered
       >
-        <span slot="date_joined" slot-scope="text">
+        <!-- <template slot="date_joined" slot-scope="text">
           <span>
             {{ text | moment("YYYY-MM-DD") }}
           </span>
-        </span>
-        <span slot="action">
+        </template> -->
+        <template slot="active" slot-scope="data">
+          <a-checkbox :checked="data" disabled />
+        </template>
+
+        <template slot="name" slot-scope="data">
+          <span>{{ data.first_name }} {{ data.last_name }} </span>
+        </template>
+
+        <template slot="groups" slot-scope="data">
+          <span>{{
+            $_.join(
+              data.map(f => f.name),
+              ", "
+            )
+          }}</span>
+        </template>
+        <template slot="action" slot-scope="data">
           <template>
-            <a @click="handleEdit(record)">Edit</a>
+            <router-link :to="{ name: 'User', params: { id: data.id } }">
+              <span>Edit</span>
+            </router-link>
           </template>
-        </span>
+        </template>
       </s-table>
     </a-card>
   </page-view>
 </template>
 
 <script>
-import { PageView } from "@/layouts";
+import { PageView, RouteView } from "@/layouts";
 import { STable, Ellipsis } from "@/components";
 
 import { getUsers } from "@/api/user";
@@ -62,24 +80,33 @@ export default {
         {
           title: "#",
           dataIndex: "id",
-          width: "100px"
+          width: "80px"
+        },
+        {
+          title: "NAME",
+          scopedSlots: { customRender: "name" }
         },
         {
           title: "PHONE",
           dataIndex: "phone_number"
         },
         {
+          title: "EMAIL",
+          dataIndex: "email"
+        },
+        {
           title: "ROLE",
           dataIndex: "role"
         },
         {
-          title: "DATE JOIN",
-          dataIndex: "date_joined",
-          scopedSlots: { customRender: "date_joined" }
+          title: "ACTIVE",
+          dataIndex: "is_active",
+          width: "80px",
+          scopedSlots: { customRender: "active" }
         },
         {
           title: "ACTION",
-          width: "100px",
+          width: "80px",
           scopedSlots: { customRender: "action" }
         }
       ],

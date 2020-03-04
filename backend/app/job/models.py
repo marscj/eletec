@@ -11,7 +11,7 @@ class Job(models.Model):
 
     unit = models.IntegerField(blank=True, null=True)
 
-    note = models.TextField(blank=True, null=True)
+    remark = models.CharField(blank=True, null=True, max_length=256)
 
     staff = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='job_staff', blank=True, null=True)
 

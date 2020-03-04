@@ -21,7 +21,7 @@
             <ul style="padding: 0px 20px;">
               <li>
                 <p>
-                  Option: <em>{{ item.option }}</em>
+                  Option: <em>{{ Options[item.option].label }}</em>
                 </p>
               </li>
               <li>
@@ -99,17 +99,11 @@
           <a-form-item label="Option">
             <validation-provider vid="option" v-slot="{ errors }">
               <a-select v-model="form.option">
-                <a-select-option key="1" value="Economy"
-                  >Economy</a-select-option
-                >
-                <a-select-option key="2" value="Standard"
-                  >Standard</a-select-option
-                >
-                <a-select-option key="3" value="Premium"
-                  >Premium</a-select-option
-                >
-                <a-select-option key="4" value="Customized"
-                  >Customized</a-select-option
+                <a-select-option
+                  v-for="data in Options"
+                  :key="data.value"
+                  :value="data.value"
+                  >{{ data.label }}</a-select-option
                 >
               </a-select>
               <span class="errorText">{{ errors[0] }}</span>
@@ -151,6 +145,14 @@
 
 <script>
 import moment from "moment";
+
+const Options = [
+  { value: 0, label: "Economy" },
+  { value: 1, label: "Standard" },
+  { value: 2, label: "Premium" },
+  { value: 3, label: "Customized" }
+];
+
 import {
   getContracts,
   updateContract,
@@ -161,6 +163,7 @@ import {
 export default {
   data() {
     return {
+      Options,
       modal: false,
       listData: [],
       loading: false,
@@ -187,7 +190,7 @@ export default {
       this.modal = true;
       this.form = Object.assign(
         {
-          option: "Economy"
+          option: 0
         },
         val,
         val

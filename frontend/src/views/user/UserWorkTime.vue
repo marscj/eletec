@@ -17,7 +17,7 @@
           </div>
         </template>
         <template v-else>
-          <a-card :hoverable="true" :title="item.week">
+          <a-card :hoverable="true" :title="WeekOptions[item.week].label">
             {{ item.form | moment("HH:mm") }} - {{ item.to | moment("HH:mm") }}
             <template class="ant-card-actions" slot="actions">
               <a @click="openModal(item)">Edit</a>
@@ -54,21 +54,12 @@
           <a-form-item label="Days of week">
             <validation-provider vid="week" v-slot="{ errors }">
               <a-select v-model="form.week">
-                <a-select-option key="1" value="Monday">Monday</a-select-option>
-                <a-select-option key="2" value="Tuesday"
-                  >Tuesday</a-select-option
+                <a-select-option
+                  v-for="data in WeekOptions"
+                  :key="data.value"
+                  :value="data.value"
+                  >{{ data.label }}</a-select-option
                 >
-                <a-select-option key="3" value="Wednesday"
-                  >Wednesday</a-select-option
-                >
-                <a-select-option key="4" value="Thursday"
-                  >Thursday</a-select-option
-                >
-                <a-select-option key="5" value="Friday">Friday</a-select-option>
-                <a-select-option key="6" value="Saturday"
-                  >Saturday</a-select-option
-                >
-                <a-select-option key="7" value="Sunday">Sunday</a-select-option>
               </a-select>
               <span class="errorText">{{ errors[0] }}</span>
             </validation-provider>
@@ -102,9 +93,20 @@ import {
   deleteWorkTime
 } from "@/api/user";
 
+const WeekOptions = [
+  { value: 0, label: "Monday" },
+  { value: 1, label: "Tuesday" },
+  { value: 2, label: "Wednesday" },
+  { value: 3, label: "Thursday" },
+  { value: 4, label: "Friday" },
+  { value: 5, label: "Saturday" },
+  { value: 6, label: "Sunday" }
+];
+
 export default {
   data() {
     return {
+      WeekOptions,
       modal: false,
       listData: [],
       loading: false,
@@ -135,8 +137,7 @@ export default {
       this.modal = true;
       this.form = Object.assign(
         {
-          useful: true,
-          week: "Monday"
+          week: 0
         },
         val,
         val
@@ -154,7 +155,6 @@ export default {
       if (this.form.id === undefined) {
         createWorkTime({
           week: this.form.week,
-          useful: this.form.useful,
           form: moment(this.form.form).format("HH:mm:ss"),
           to: moment(this.form.to).format("HH:mm:ss"),
           user_id: this.$route.params.id
@@ -171,7 +171,6 @@ export default {
       } else {
         updateWorkTime(this.form.id, {
           week: this.form.week,
-          useful: this.form.useful,
           form: moment(this.form.form).format("HH:mm:ss"),
           to: moment(this.form.to).format("HH:mm:ss"),
           user_id: this.$route.params.id

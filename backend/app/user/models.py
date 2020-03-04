@@ -11,12 +11,12 @@ def photo_file_name(instance, filename):
 
 class User(PhoneNumberAbstactUser):
     
-    class Role(models.TextChoices):
-        Customer = 'Customer'
-        Staff = 'Staff'
-        Freelancer = 'Freelancer'
+    class Role(models.IntegerChoices):
+        Customer = 0
+        Staff = 1
+        Freelancer = 2
 
-    role = models.CharField(default=Role.Customer, choices=Role.choices, max_length=16)
+    role = models.IntegerField(blank=True, null=True, choices=Role.choices, default=Role.Customer)
 
     photo = VersatileImageField(blank=True, null=True, upload_to=photo_file_name, ppoi_field='image_ppoi',)
     
@@ -27,21 +27,21 @@ class User(PhoneNumberAbstactUser):
 
 class Contract(models.Model):
 
-    class Option(models.TextChoices):
-        Economy = 'Economy'
-        Standard = 'Standard'
-        Premium = 'Premium'
-        Customized = 'Customized'
+    class Option(models.IntegerChoices):
+        Economy = 0
+        Standard = 1
+        Premium = 2
+        Customized = 3
 
-    option = models.CharField(blank=True, null=True, max_length=16, choices=Option.choices, default=Option.Economy)
+    option = models.IntegerField(blank=True, null=True, choices=Option.choices, default=Option.Economy)
 
     issue_date = models.DateField(blank=True, null=True)
 
     expiry_date = models.DateField(blank=True, null=True)
 
-    address = models.TextField(blank=True, null=True)
+    address = models.CharField(blank=True, null=True, max_length=128)
 
-    remark = models.TextField(blank=True, null=True)
+    remark = models.CharField(blank=True, null=True, max_length=256)
 
     user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='contract', blank=True, null=True)
 
@@ -50,37 +50,37 @@ class Contract(models.Model):
 
 class Address(models.Model):
 
-    class Model(models.TextChoices):
-        Personal = 'Personal'
-        Company = 'Company'
+    class Model(models.IntegerChoices):
+        Personal = 0
+        Company = 1
 
-    class Style(models.TextChoices):
-        Apartment = 'Apartment'
-        Villa = 'Villa'
+    class Style(models.IntegerChoices):
+        Apartment = 0
+        Villa = 1
 
     defAddr= models.BooleanField(default=False)
 
     onMap = models.BooleanField(default=False)
 
-    model = models.CharField(default=Model.Personal, choices=Model.choices, max_length=16)
+    model = models.IntegerField(blank=True, null=True, choices=Model.choices, default=Model.Personal)
 
-    city = models.TextField(blank=True, null=True)
+    style = models.IntegerField(blank=True, null=True, choices=Style.choices, default=Style.Apartment)
 
-    community = models.TextField(blank=True, null=True)
+    city = models.CharField(blank=True, null=True, max_length=32)
 
-    street = models.TextField(blank=True, null=True)
+    community = models.CharField(blank=True, null=True, max_length=32)
 
-    building = models.TextField(blank=True, null=True)
+    street = models.CharField(blank=True, null=True, max_length=64)
 
-    style = models.CharField(default=Style.Apartment, choices=Style.choices, max_length=16)
+    building = models.CharField(blank=True, null=True, max_length=64)
 
-    roomNo = models.TextField(blank=True, null=True)
+    roomNo = models.CharField(blank=True, null=True, max_length=32)
 
     lat = models.FloatField(blank=True, null=True)
 
     lgt = models.FloatField(blank=True, null=True)
 
-    address = models.TextField(blank=True, null=True)
+    address = models.CharField(blank=True, null=True, max_length=128)
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='address', blank=True, null=True)
 
@@ -89,19 +89,17 @@ class Address(models.Model):
 
 class Skill(models.Model):
     
-    class SkillSheet(models.TextChoices):
-        AC = 'A/C'
-        Electrical = 'Electrical'
-        Plumbing = 'Plumbing'
-        Cleaning = 'House Cleaning'
-        Duct = 'Duct Cleaning'
-        Other = 'Other'
+    class Skill(models.IntegerChoices):
+        AC = 0 
+        Electrical = 1
+        Plumbing = 2
+        Cleaning = 3
+        Duct = 4
+        Other = 5
 
-    useful = models.BooleanField(blank=True, null=True, default=False)
+    skill = models.IntegerField(blank=True, null=True, choices=Skill.choices, default=Skill.AC)
 
-    skill = models.CharField(default=SkillSheet.AC, choices=SkillSheet.choices, max_length=16)
-
-    remark = models.TextField(blank=True, null=True)
+    remark = models.CharField(blank=True, null=True, max_length=256)
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='skill', blank=True, null=True)
 
@@ -111,18 +109,16 @@ class Skill(models.Model):
 
 class WorkTime(models.Model):
 
-    class DaysOfWeek(models.TextChoices):
-        Monday = 'Monday'
-        Tuesday = 'Tuesday'
-        Wednesday = 'Wednesday'
-        Thursday = 'Thursday'
-        Friday = 'Friday'
-        Saturday = 'Saturday'
-        Sunday = 'Sunday'
+    class DaysOfWeek(models.IntegerChoices):
+        Monday = 0
+        Tuesday = 1
+        Wednesday = 2
+        Thursday = 3
+        Friday = 4
+        Saturday = 5
+        Sunday = 6
 
-    useful = models.BooleanField(blank=True, null=True, default=False)
-
-    week = models.CharField(default=DaysOfWeek.Monday, choices=DaysOfWeek.choices, max_length=16)
+    week = models.IntegerField(blank=True, null=True, choices=DaysOfWeek.choices, default=DaysOfWeek.Monday)
 
     form = models.TimeField(blank=True, null=True)
 

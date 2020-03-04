@@ -61,11 +61,11 @@
           <a-form-item label="Model">
             <validation-provider vid="model" v-slot="{ errors }">
               <a-select v-model="form.model">
-                <a-select-option key="1" value="Personal"
-                  >Personal</a-select-option
-                >
-                <a-select-option key="2" value="Company"
-                  >Company</a-select-option
+                <a-select-option
+                  v-for="data in ModelOptions"
+                  :key="data.value"
+                  :value="data.value"
+                  >{{ data.label }}</a-select-option
                 >
               </a-select>
               <span class="errorText">{{ errors[0] }}</span>
@@ -75,10 +75,12 @@
           <a-form-item label="Style">
             <validation-provider vid="style" v-slot="{ errors }">
               <a-select v-model="form.style">
-                <a-select-option key="1" value="Apartment"
-                  >Apartment</a-select-option
+                <a-select-option
+                  v-for="data in StyleOptions"
+                  :key="data.value"
+                  :value="data.value"
+                  >{{ data.label }}</a-select-option
                 >
-                <a-select-option key="2" value="Villa">Villa</a-select-option>
               </a-select>
               <span class="errorText">{{ errors[0] }}</span>
             </validation-provider>
@@ -114,8 +116,8 @@
 
           <a-form-item
             :label="
-              form.style === 'Apartment'
-                ? form.model === 'Personal'
+              form.style === 0
+                ? form.model === 0
                   ? 'RoomNo'
                   : 'OfficeNo'
                 : 'VillaNo'
@@ -137,6 +139,16 @@
 </template>
 
 <script>
+const ModelOptions = [
+  { value: 0, label: "Personal" },
+  { value: 1, label: "Company" }
+];
+
+const StyleOptions = [
+  { value: 0, label: "Apartment" },
+  { value: 1, label: "Villa" }
+];
+
 import {
   getAddress,
   updateAddress,
@@ -147,6 +159,8 @@ import {
 export default {
   data() {
     return {
+      ModelOptions,
+      StyleOptions,
       modal: false,
       listData: [],
       loading: false,
@@ -172,8 +186,8 @@ export default {
       this.modal = true;
       this.form = Object.assign(
         {
-          model: "Personal",
-          style: "Apartment"
+          model: 0,
+          style: 0
         },
         val
       );
