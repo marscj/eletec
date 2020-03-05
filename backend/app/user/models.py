@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.contenttypes.fields import GenericRelation
 
 from auth.phone.models import PhoneNumberAbstactUser
-from app.upload.models import Image
+from app.generic.models import Image
 
 class User(PhoneNumberAbstactUser):
     

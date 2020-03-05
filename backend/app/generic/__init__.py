@@ -1,1 +1,1 @@
-default_app_config = 'app.upload.apps.UploadConfig'
+default_app_config = 'app.generic.apps.GenericConfig'

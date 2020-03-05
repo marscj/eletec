@@ -6,8 +6,8 @@ from rest_framework import  serializers
 
 from django.utils import timezone
 
-from app.upload.models import Image
-from app.upload.serializers import ImageSerializer
+from app.generic.models import Image
+from app.generic.serializers import ImageSerializer
 
 from .models import User, Address, Skill, WorkTime, Contract
 
