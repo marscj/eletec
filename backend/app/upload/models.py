@@ -4,9 +4,6 @@ from django.contrib.contenttypes.models import ContentType
 
 from versatileimagefield.fields import VersatileImageField, PPOIField
 
-from app.user.models import User
-from app.order.models import Order
-
 class UploadImage(models.Model): 
 
     class Flag(models.IntegerChoices):

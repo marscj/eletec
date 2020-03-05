@@ -1,12 +1,8 @@
 from django.db import models
+from django.contrib.contenttypes.fields import GenericRelation
 
 from auth.phone.models import PhoneNumberAbstactUser
-
-def photo_file_name(instance, filename):
-    ext = filename.split('.')[-1]
-    
-    file_path = 'resource/{id}/{filename}'.format(id=instance.id, filename='photo', ext=ext) 
-    return file_path
+from app.upload.models import Image
 
 class User(PhoneNumberAbstactUser):
     
@@ -17,6 +13,8 @@ class User(PhoneNumberAbstactUser):
         Operator = 3
 
     role = models.IntegerField(blank=True, null=True, choices=Role.choices, default=Role.Customer)
+
+    images = GenericRelation(Image, related_query_name='user')
 
     class Meta:
         db_table = 'user'
