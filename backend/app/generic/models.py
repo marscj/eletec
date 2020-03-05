@@ -24,3 +24,21 @@ class Image(models.Model):
 
     class Meta:
         db_table = 'image'
+
+class Comment(models.Model):
+    
+    comment = models.CharField(blank=True, null=True, max_length=256)
+
+    rating = models.IntegerField(blank=True, null=True, default=3)
+    
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+
+    object_id = models.PositiveIntegerField()
+
+    content_object = GenericForeignKey('content_type', 'object_id')
+
+    def __str__(self):
+        return self.comment
+
+    class Meta:
+        db_table = 'comment'

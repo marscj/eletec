@@ -3,7 +3,7 @@ from django.contrib.contenttypes.models import ContentType
 
 from versatileimagefield.serializers import VersatileImageFieldSerializer
 
-from .models import UploadImage, Image
+from .models import Comment, Image
 
 class ContentTypeField(serializers.Field):
 
@@ -21,4 +21,12 @@ class ImageSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Image
+        fields = '__all__'
+
+class CommentSerializer(serializers.ModelSerializer):
+
+    content_type = ContentTypeField()
+    
+    class Meta:
+        model = Comment
         fields = '__all__'
