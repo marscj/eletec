@@ -29,7 +29,7 @@
           <a-card :hoverable="true">
             <img :src="item.image.large" slot="cover" alt="images" />
 
-            <a-card-meta :title="FlagOptions[item.flag]"></a-card-meta>
+            <a-card-meta :title="item.tag"></a-card-meta>
 
             <template class="ant-card-actions" slot="actions">
               <a-popconfirm
@@ -49,12 +49,10 @@
 </template>
 
 <script>
-import { FlagOptions } from "./const";
 import { getImages, uploadImage, deleteImage } from "@/api/image";
 export default {
   data() {
     return {
-      FlagOptions,
       loading: false,
       uploading: false,
       listData: []
@@ -99,8 +97,8 @@ export default {
     upload(request) {
       const formData = new FormData();
       formData.append("image", request.file);
-      formData.append("content", 0);
-      formData.append("flag", 3);
+      formData.append("tag", "resource");
+      formData.append("content_type", "user");
       formData.append("object_id", this.$route.params.id);
       this.uploading = true;
       uploadImage(formData)
