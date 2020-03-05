@@ -5,7 +5,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.utils.crypto import get_random_string
 
 from app.user.models import User, Contract
-from app.upload.models import Image
+from app.generic.models import Image, Comment
 
 def random_string():
     return get_random_string(length=4)
@@ -66,7 +66,7 @@ class Order(models.Model):
     change_at = models.DateTimeField(auto_now=True)
 
     # 评价
-    comment = GenericRelation(Comment, related_query_name='order')
+    comments = GenericRelation(Comment, related_query_name='order')
 
     # 评价
     images = GenericRelation(Image, related_query_name='order')
