@@ -7,17 +7,17 @@ import {
 } from "./index";
 import { axios } from "@/utils/request";
 
-export function getUploads(parameter) {
+export function getImages(parameter) {
   return axios({
-    url: API.Upload,
+    url: API.Images,
     method: "get",
     params: parameter
   });
 }
 
-export function upload(data) {
+export function uploadImage(data) {
   return axios({
-    url: API.Upload,
+    url: API.Images,
     method: "post",
     data: data
   })
@@ -25,9 +25,9 @@ export function upload(data) {
     .catch(uploadFailed);
 }
 
-export function deleteUpload(pk) {
+export function deleteImage(pk) {
   return axios({
-    url: API.Upload + `${pk}/`,
+    url: API.Images + `${pk}/`,
     method: "delete"
   })
     .then(deleteSuccess)

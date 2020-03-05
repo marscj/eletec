@@ -50,7 +50,7 @@
 
 <script>
 import { FlagOptions } from "./const";
-import { getUploads, upload, deleteUpload } from "@/api/upload";
+import { getImages, uploadImage, deleteImage } from "@/api/image";
 export default {
   data() {
     return {
@@ -66,7 +66,7 @@ export default {
   methods: {
     getListData() {
       this.loading = true;
-      getUploads({ object_id: this.$route.params.id, content: 0 })
+      getImages({ object_id: this.$route.params.id, content: 0 })
         .then(res => {
           res.result.unshift({});
           this.listData = res.result;
@@ -77,7 +77,7 @@ export default {
     },
     deleteData(val) {
       this.loading = true;
-      deleteUpload(val.id)
+      deleteImage(val.id)
         .then(res => {
           this.getListData();
         })
@@ -103,7 +103,7 @@ export default {
       formData.append("flag", 3);
       formData.append("object_id", this.$route.params.id);
       this.uploading = true;
-      upload(formData)
+      uploadImage(formData)
         .then(res => {
           this.getListData();
         })

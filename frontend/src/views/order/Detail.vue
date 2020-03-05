@@ -112,7 +112,7 @@
 
 <script>
 import { getOrder } from "@/api/order";
-import { getUploads } from "@/api/upload";
+import { getImages } from "@/api/image";
 import { PageView } from "@/layouts";
 import { STable, DescriptionList } from "@/components";
 const DetailListItem = DescriptionList.Item;
@@ -267,7 +267,7 @@ export default {
   methods: {
     moment,
     getImages() {
-      getUploads({ object_id: this.$route.params.id, content: 1 }).then(res => {
+      getImages({ object_id: this.$route.params.id, content: 1 }).then(res => {
         this.images = res.result;
       });
     },

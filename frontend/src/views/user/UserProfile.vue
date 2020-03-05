@@ -126,7 +126,7 @@
 
 <script>
 import { getUser, updateUser } from "@/api/user";
-import { upload } from "@/api/upload";
+import { uploadImage } from "@/api/image";
 import { RoleOptions } from "./const";
 
 export default {
@@ -178,11 +178,11 @@ export default {
     upload(request) {
       const formData = new FormData();
       formData.append("image", request.file);
-      formData.append("content", 0);
-      formData.append("flag", 0);
+      formData.append("tag", "photo");
+      formData.append("content_type", "user");
       formData.append("object_id", this.$route.params.id);
       this.uploading = true;
-      upload(formData)
+      uploadImage(formData)
         .then(res => {
           this.getUserData();
         })
