@@ -1,6 +1,5 @@
 from django.db import models
 
-from versatileimagefield.fields import VersatileImageField, PPOIField
 from auth.phone.models import PhoneNumberAbstactUser
 
 def photo_file_name(instance, filename):
@@ -18,10 +17,6 @@ class User(PhoneNumberAbstactUser):
         Operator = 3
 
     role = models.IntegerField(blank=True, null=True, choices=Role.choices, default=Role.Customer)
-
-    photo = VersatileImageField(blank=True, null=True, upload_to=photo_file_name, ppoi_field='image_ppoi',)
-    
-    image_ppoi = PPOIField()
 
     class Meta:
         db_table = 'user'
@@ -143,22 +138,3 @@ class WorkTime(models.Model):
     class Meta:
         db_table = 'worktime'
         unique_together = ('week', 'user_id')
-
-def resource_file_name(instance, filename):
-    ext = filename.split('.')[-1]
-    
-    file_path = 'resource/{user_id}/{filename}'.format(user_id=instance.user_id, filename=filename, ext=ext) 
-    return file_path
-
-class Resource(models.Model):
-
-    filename = models.CharField(blank=True, null=True, max_length=64, default='unknow')
-
-    image = VersatileImageField(blank=True, null=True, upload_to=resource_file_name, ppoi_field='image_ppoi',)
-    
-    image_ppoi = PPOIField()
-
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='resource', blank=True, null=True)
-
-    class Meta:
-        db_table = 'resource'

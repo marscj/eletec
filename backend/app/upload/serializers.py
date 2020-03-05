@@ -13,3 +13,9 @@ class UploadImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = UploadImage
         fields = '__all__'
+
+class ImageSerializer(serializers.ModelSerializer):
+
+    image = VersatileImageFieldSerializer(required=False, allow_null=True, sizes='image_size')
+
+    

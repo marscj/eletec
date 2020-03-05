@@ -10,8 +10,8 @@ from rest_framework.authtoken import views
 
 import django_filters
 
-from .models import User, Address, Skill, WorkTime, Resource, Contract
-from .serializers import UserSerializer, GroupSerializer, PermissionSerializer, AddressSerializer, SkillSerializer, WorkTimeSerializer, ResourceSerializer, ContractSerializer
+from .models import User, Address, Skill, WorkTime, Contract
+from .serializers import UserSerializer, GroupSerializer, PermissionSerializer, AddressSerializer, SkillSerializer, WorkTimeSerializer, ContractSerializer
 from middleware.permission import CustomModelPermissions
 
 class UserView(ModelViewSet):
@@ -82,13 +82,3 @@ class WorkTimeView(ModelViewSet):
     queryset = WorkTime.objects.all()
 
     filter_class = WorkTimeFilter
-
-class ResourceFilter(django_filters.FilterSet):
-    user_id = django_filters.NumberFilter('user__id')
-
-class ResourceView(ModelViewSet):
-    serializer_class = ResourceSerializer
-    permission_classes = [IsAuthenticated, CustomModelPermissions]
-    queryset = Resource.objects.all()
-
-    filter_class = ResourceFilter

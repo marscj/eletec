@@ -7,7 +7,7 @@ from versatileimagefield.serializers import VersatileImageFieldSerializer
 
 from django.utils import timezone
 
-from .models import User, Address, Skill, WorkTime, Resource, Contract
+from .models import User, Address, Skill, WorkTime, Contract
 from app.order.models import Order
 from app.upload.models import UploadImage
 from app.upload.serializers import UploadImageSerializer
@@ -158,14 +158,4 @@ class WorkTimeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = WorkTime
-        fields = '__all__'
-
-class ResourceSerializer(serializers.ModelSerializer):
-
-    image = VersatileImageFieldSerializer(required=False, allow_null=True, sizes='image_size')
-    
-    user_id = serializers.IntegerField()
-    
-    class Meta:
-        model = Resource
         fields = '__all__'

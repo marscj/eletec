@@ -38,6 +38,8 @@ def file_path_name(instance, filename):
 
 class Image(models.Model):
 
+    tag = models.SlugField(blank=True, null=True)
+
     image = VersatileImageField(blank=True, null=True, upload_to=file_path_name, ppoi_field='image_ppoi',)
     
     image_ppoi = PPOIField()
