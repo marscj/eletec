@@ -13,7 +13,8 @@
     "enquire.js": "^2.1.6",
     "vee-validate": "^3.2.2",
     "vue-ls": "^3.2.1",
-    "vue-svg-component-runtime": "^1.0.1"
+    "vue-svg-component-runtime": "^1.0.1",
+    "vue2-google-maps": "^0.10.7"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.1.0",

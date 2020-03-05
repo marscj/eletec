@@ -1,68 +1,104 @@
 <template>
   <page-view :title="title">
-    <a-card :bordered="false" :loading="loading">
-      <description-list title="Base Info" v-if="form.category != undefined">
-        <detail-list-item term="Category">
-          {{ CategoryOptions[form.category].label }}</detail-list-item
-        >
-        <detail-list-item
-          term="Main Info"
-          v-if="form.main_info != undefined && form.category != undefined"
-        >
-          {{ MainInfoOptions[form.category][form.main_info] }}
-        </detail-list-item>
-        <detail-list-item
-          term="Sub Info"
-          v-if="
-            form.sub_info != undefined &&
-              form.main_info != undefined &&
-              form.category != undefined
-          "
-          >{{
-            SubInfoOptions[form.category][form.main_info][form.sub_info]
-          }}</detail-list-item
-        >
-        <detail-list-item term="From Date">{{
-          form.from_date | moment("YYYY-MM-DD HH:mm")
-        }}</detail-list-item>
-        <detail-list-item term="To Date">{{
-          form.to_date | moment("YYYY-MM-DD HH:mm")
-        }}</detail-list-item>
-        <detail-list-item term="Create Date">{{
-          form.create_at | moment("YYYY-MM-DD HH:mm")
-        }}</detail-list-item>
-      </description-list>
-      <a-divider style="margin-bottom: 32px" />
+    <a-card :bordered="false">
+      <div>
+        <description-list title="Base Info" v-if="form.category != undefined">
+          <detail-list-item term="Category">
+            {{ CategoryOptions[form.category].label }}</detail-list-item
+          >
+          <detail-list-item
+            term="Main Info"
+            v-if="form.main_info != undefined && form.category != undefined"
+          >
+            {{ MainInfoOptions[form.category][form.main_info] }}
+          </detail-list-item>
+          <detail-list-item
+            term="Sub Info"
+            v-if="
+              form.sub_info != undefined &&
+                form.main_info != undefined &&
+                form.category != undefined
+            "
+            >{{
+              SubInfoOptions[form.category][form.main_info][form.sub_info]
+            }}</detail-list-item
+          >
+          <detail-list-item term="From Date">{{
+            form.from_date | moment("YYYY-MM-DD HH:mm")
+          }}</detail-list-item>
+          <detail-list-item term="To Date">{{
+            form.to_date | moment("YYYY-MM-DD HH:mm")
+          }}</detail-list-item>
+          <detail-list-item term="Create Date">{{
+            form.create_at | moment("YYYY-MM-DD HH:mm")
+          }}</detail-list-item>
+          <detail-list-item term="Address" v-if="form.address">
+            {{ form.address }}
+          </detail-list-item>
+        </description-list>
 
-      <description-list title="Other Info" v-if="form.other_info || form.image">
-        <a-card>
-          <img
-            v-for="data in images"
-            :key="data.id"
-            :src="data.image.medium"
-            alt="image"
-            slot="cover"
+        <a-divider class="mb-10" />
+      </div>
+
+      <div v-if="form.lat && form.lng">
+        <div class="title">Map</div>
+        <gmap-map
+          class="map"
+          :center="{ lat: form.lat, lng: form.lng }"
+          :zoom="16"
+          map-type-id="satellite"
+        >
+          <gmap-marker
+            :key="index"
+            v-for="(m, index) in markers"
+            :position="m.position"
+            :clickable="true"
+            :draggable="true"
+            @click="center = m.position"
           />
+        </gmap-map>
 
-          <a-card-meta :description="form.other_info">
-            <!-- <template slot="description">www.instagram.com</template> -->
-          </a-card-meta>
-        </a-card>
-        <a-divider style="margin-bottom: 32px" />
-      </description-list>
+        <a-divider class="my-12" />
+      </div>
 
-      <description-list title="用户信息">
-        <detail-list-item term="用户姓名">付小小</detail-list-item>
-        <detail-list-item term="联系电话">18100000000</detail-list-item>
-        <detail-list-item term="常用快递">菜鸟仓储</detail-list-item>
-        <detail-list-item term="取货地址"
-          >浙江省杭州市西湖区万塘路18号</detail-list-item
-        >
-        <detail-list-item term="备注"> 无</detail-list-item>
-      </description-list>
-      <a-divider style="margin-bottom: 32px" />
+      <div v-if="form.other_info || form.image">
+        <description-list title="Other Info">
+          <a-card>
+            <img
+              v-for="data in images"
+              :key="data.id"
+              :src="data.image.medium"
+              alt="image"
+              slot="cover"
+              class="pb-2"
+            />
 
-      <div class="title">退货商品</div>
+            <a-card-meta :description="form.other_info"> </a-card-meta>
+          </a-card>
+        </description-list>
+
+        <a-divider class="my-10" />
+      </div>
+
+      <div v-if="form.user">
+        <description-list title="User Info">
+          <detail-list-item term="Name">
+            {{ form.user.name }}
+          </detail-list-item>
+
+          <detail-list-item term="Phone">
+            {{ form.user.phone_number }}
+          </detail-list-item>
+
+          <detail-list-item term="Email">
+            {{ form.user.email }}
+          </detail-list-item>
+        </description-list>
+
+        <a-divider class="mb-10" />
+      </div>
+
+      <div class="title">Job</div>
       <s-table
         style="margin-bottom: 24px"
         row-key="id"
@@ -105,6 +141,7 @@ export default {
       SubInfoOptions,
       form: {},
       images: [],
+      markers: [],
       goodsColumns: [
         {
           title: "商品编号",
@@ -204,8 +241,28 @@ export default {
       return this.$route.meta.title;
     }
   },
+  watch: {
+    form(val) {
+      if (val) {
+        this.markers.push({
+          id: this.lastId,
+          position: {
+            lat: val.lat,
+            lng: val.lng
+          },
+          opacity: 1,
+          draggable: true,
+          enabled: true,
+          clicked: 0,
+          rightClicked: 0,
+          dragended: 0,
+          ifw: false
+        });
+      }
+    }
+  },
   mounted() {
-    this.getUserData();
+    this.getOrderData();
   },
   methods: {
     moment,
@@ -214,7 +271,7 @@ export default {
         this.images = res.result;
       });
     },
-    getUserData() {
+    getOrderData() {
       this.loading = true;
       getOrder(this.$route.params.id)
         .then(res => {
@@ -236,5 +293,11 @@ export default {
   font-size: 16px;
   font-weight: 500;
   margin-bottom: 16px;
+}
+
+.map {
+  width: 100%;
+  height: 600px;
+  display: block;
 }
 </style>

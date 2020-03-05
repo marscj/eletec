@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
 
 from versatileimagefield.fields import VersatileImageField, PPOIField
 
@@ -29,3 +31,22 @@ class UploadImage(models.Model):
 
     class Meta:
         db_table = 'upload'
+
+def file_path_name(instance, filename):
+    file_path = 'resource/{tag}/{filename}'.format(user_id=instance.tag, filename=filename) 
+    return file_path
+
+class Image(models.Model):
+
+    image = VersatileImageField(blank=True, null=True, upload_to=file_path_name, ppoi_field='image_ppoi',)
+    
+    image_ppoi = PPOIField()
+    
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+
+    object_id = models.PositiveIntegerField()
+
+    content_object = GenericForeignKey('content_type', 'object_id')
+
+    class Meta:
+        db_table = 'image'

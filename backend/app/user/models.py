@@ -92,7 +92,7 @@ class Address(models.Model):
 
     lat = models.FloatField(blank=True, null=True)
 
-    lgt = models.FloatField(blank=True, null=True)
+    lng = models.FloatField(blank=True, null=True)
 
     address = models.CharField(blank=True, null=True, max_length=128)
 

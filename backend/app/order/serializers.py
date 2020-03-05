@@ -3,10 +3,11 @@ from rest_framework import  serializers
 from versatileimagefield.serializers import VersatileImageFieldSerializer
 
 from .models import Order
+from app.user.serializers import UserSerializer
 
 class OrderSerializer(serializers.ModelSerializer):
 
-    user = serializers.StringRelatedField(read_only=True)
+    user = UserSerializer(read_only=True, many=False)
 
     job = serializers.StringRelatedField(read_only=True, many=True)
     

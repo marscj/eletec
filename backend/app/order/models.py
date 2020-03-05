@@ -1,10 +1,31 @@
 from django.db import models
+from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
+from django.contrib.contenttypes.models import ContentType
+
 from django.utils.crypto import get_random_string
 
 from app.user.models import User, Contract
 
 def random_string():
     return get_random_string(length=4)
+
+class Comment(models.Model):
+    
+    comment = models.CharField(blank=True, null=True, max_length=256)
+
+    rating = models.IntegerField(blank=True, null=True, default=3)
+    
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+
+    object_id = models.PositiveIntegerField()
+
+    content_object = GenericForeignKey('content_type', 'object_id')
+
+    def __str__(self):
+        return self.comment
+
+    class Meta:
+        db_table = 'comment'
 
 class Order(models.Model):
 
@@ -47,19 +68,16 @@ class Order(models.Model):
     code = models.CharField(blank=True, null=True, max_length=4, default=random_string)
 
     # 评价
-    eva_info = models.CharField(blank=True, null=True, max_length=256)
-
-    # 评价等级
-    eva_lv = models.IntegerField(blank=True, null=True)
+    comment = GenericRelation(Comment)
 
     # 地址
-    addr = models.CharField(blank=True, null=True, max_length=128)
+    address = models.CharField(blank=True, null=True, max_length=128)
 
     # 坐标
     lat = models.FloatField(blank=True, null=True)
 
     # 坐标
-    lgt = models.FloatField(blank=True, null=True)
+    lng = models.FloatField(blank=True, null=True)
 
     # 创建时间
     create_at = models.DateTimeField(auto_now_add=True)
@@ -82,5 +100,3 @@ class Order(models.Model):
     @property
     def orderID(self):
         return '%d-%s' % (100000 + self.id, self.create_at.strftime("%y%m%d"))
-
-
