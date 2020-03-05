@@ -1,8 +1,8 @@
 from django.apps import AppConfig
 
 
-class UploadConfig(AppConfig):
-    name = 'app.upload'
+class GenericConfig(AppConfig):
+    name = 'app.generic'
 
     def ready(self):
         from .import handle

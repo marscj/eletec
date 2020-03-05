@@ -4,31 +4,6 @@ from django.contrib.contenttypes.models import ContentType
 
 from versatileimagefield.fields import VersatileImageField, PPOIField
 
-class UploadImage(models.Model): 
-
-    class Flag(models.IntegerChoices):
-        Photo = 0
-        Id = 1
-        License = 2
-        Source = 3
-    
-    class Content(models.IntegerChoices):
-        User = 0
-        Order = 1
-
-    content = models.IntegerField(blank=True, null=True, choices=Content.choices, default=Content.User)
-
-    flag = models.IntegerField(blank=True, null=True, choices=Flag.choices, default=Flag.Photo)
-    
-    image = VersatileImageField(blank=True, null=True, upload_to='resource/', ppoi_field='image_ppoi',)
-    
-    image_ppoi = PPOIField()
-    
-    object_id = models.IntegerField()
-
-    class Meta:
-        db_table = 'upload'
-
 def file_path_name(instance, filename):
     file_path = 'resource/{model}/{tag}/{id}/{filename}'.format(model=instance.content_type.model,tag=instance.tag, id=instance.object_id, filename=filename) 
     return file_path

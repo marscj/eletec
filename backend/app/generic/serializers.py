@@ -13,17 +13,6 @@ class ContentTypeField(serializers.Field):
     def to_internal_value(self, data):
         return ContentType.objects.get(model=data)
 
-
-class UploadImageSerializer(serializers.ModelSerializer):
-
-    image = VersatileImageFieldSerializer(required=False, allow_null=True, sizes='image_size')
-    
-    object_id = serializers.IntegerField()
-    
-    class Meta:
-        model = UploadImage
-        fields = '__all__'
-
 class ImageSerializer(serializers.ModelSerializer):
 
     image = VersatileImageFieldSerializer(required=False, allow_null=True, sizes='image_size')
