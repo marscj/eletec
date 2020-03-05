@@ -3,14 +3,14 @@ from django.contrib.auth.models import Group, Permission
 from django.db.models import Count
 
 from rest_framework import  serializers
-from versatileimagefield.serializers import VersatileImageFieldSerializer
 
 from django.utils import timezone
 
+from app.upload.models import Image
+from app.upload.serializers import ImageSerializer
+
 from .models import User, Address, Skill, WorkTime, Contract
-from app.order.models import Order
-from app.upload.models import UploadImage
-from app.upload.serializers import UploadImageSerializer
+
 
 class ContentTypeSerializer(serializers.ModelSerializer):
 
@@ -52,8 +52,6 @@ class UserSerializer(serializers.ModelSerializer):
 
     groups = GroupSerializer(required=False, many=True)
 
-    # photo = VersatileImageFieldSerializer(required=False, allow_null=True, sizes='image_size')
-
     photo = serializers.SerializerMethodField()
 
     groups_id = serializers.PrimaryKeyRelatedField(required=False, write_only=True, many=True, allow_null=True, queryset=Group.objects.all())
@@ -70,9 +68,9 @@ class UserSerializer(serializers.ModelSerializer):
         return obj.name
 
     def get_photo(self, obj):
-        photo = UploadImage.objects.filter(object_id=obj.id, content=0, flag=UploadImage.Flag.Photo).last()
+        photo = obj.images.all().filter(tag='photo').last()
         if photo:
-            serializer = UploadImageSerializer(photo, context=self.context)
+            serializer = ImageSerializer(photo, context=self.context)
             return serializer.data
         
     def update(self, instance, validated_data):
@@ -113,7 +111,7 @@ class ContractSerializer(serializers.ModelSerializer):
         return timezone.now().strftime('%Y-%m-%d') >= obj.issue_date.strftime('%Y-%m-%d') and timezone.now().strftime('%Y-%m-%d') <= obj.expiry_date.strftime('%Y-%m-%d')
 
     def get_visits(self, obj):
-        query = Order.objects.filter(contract=obj).values('category').annotate(count=Count('category'))
+        query = obj.order.all().values('category').annotate(count=Count('category'))
         serializer = VisitSerializer(instance=query, many=True)
         return serializer.data
 

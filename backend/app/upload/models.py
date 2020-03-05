@@ -30,14 +30,14 @@ class UploadImage(models.Model):
         db_table = 'upload'
 
 def file_path_name(instance, filename):
-    file_path = 'resource/{tag}/{filename}'.format(user_id=instance.tag, filename=filename) 
+    file_path = 'resource/{model}/{tag}/{id}/{filename}'.format(model=instance.content_type.model,tag=instance.tag, id=instance.object_id, filename=filename) 
     return file_path
 
 class Image(models.Model):
 
-    tag = models.SlugField(blank=True, null=True)
+    tag = models.SlugField()
 
-    image = VersatileImageField(blank=True, null=True, upload_to=file_path_name, ppoi_field='image_ppoi',)
+    image = VersatileImageField(upload_to=file_path_name, ppoi_field='image_ppoi',)
     
     image_ppoi = PPOIField()
     
