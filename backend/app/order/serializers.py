@@ -3,13 +3,21 @@ from rest_framework import  serializers
 from versatileimagefield.serializers import VersatileImageFieldSerializer
 
 from .models import Order
-from app.user.serializers import UserSerializer
+from app.user.serializers import UserSerializer, ContractSerializer
+from app.job.serializers import JobSerializer
+from app.generic.serializers import ImageSerializer, CommentSerializer
 
 class OrderSerializer(serializers.ModelSerializer):
 
-    user = UserSerializer(read_only=True, many=False)
+    user = UserSerializer(read_only=True)
 
-    job = serializers.StringRelatedField(read_only=True, many=True)
+    job = JobSerializer(read_only=True, many=True)
+
+    contract = ContractSerializer(read_only=True)
+
+    images = ImageSerializer(read_only=True, many=True)
+
+    comments = CommentSerializer(read_only=True, many=True)
     
     user_id = serializers.IntegerField()
 

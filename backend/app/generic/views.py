@@ -16,7 +16,7 @@ class ImageView(ModelViewSet):
     permission_classes = [IsAuthenticated, CustomModelPermissions]
     queryset = Image.objects.all()
 
-    # filter_class = ContentFilter
+    filter_class = ContentFilter
 
 class CommentView(ModelViewSet):
     serializer_class = CommentSerializer

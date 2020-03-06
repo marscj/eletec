@@ -43,44 +43,34 @@
 
         <template slot="info" slot-scope="data">
           <ul style="padding: 0px 20px;">
-            <li v-if="data.category != undefined">
-              Category:
+            <li v-if="data.service != undefined">
+              Service:
               <em class="font-bold text-blue-500">{{
-                CategoryOptions[data.category].label
+                ServiceOptions[data.service].label
               }}</em>
             </li>
-            <li
-              v-if="data.main_info != undefined && data.category != undefined"
-            >
+            <li v-if="data.main_info != undefined && data.service != undefined">
               MainInfo:
               <em class="font-bold text-blue-500">
-                {{ MainInfoOptions[data.category][data.main_info] }}
+                {{ MainInfoOptions[data.service][data.main_info] }}
               </em>
               <ul style="padding: 0px 20px;">
                 <li
                   v-if="
                     data.sub_info != undefined &&
                       data.main_info != undefined &&
-                      data.category != undefined
+                      data.service != undefined
                   "
                 >
                   SubInfo:
                   <em class="font-bold text-blue-500">
                     {{
-                      SubInfoOptions[data.category][data.main_info][
+                      SubInfoOptions[data.service][data.main_info][
                         data.sub_info
                       ]
                     }}
                   </em>
                 </li>
-                <!-- <li v-if="data.other_info">
-                  <span>OtherInfo:</span>
-                  <span class="font-bold text-blue-500 ">
-                    <ellipsis :length="40" tooltip>
-                      {{ data.other_info }}
-                    </ellipsis>
-                  </span>
-                </li> -->
               </ul>
             </li>
 
@@ -102,9 +92,9 @@
 
         <template slot="job" slot-scope="data">
           <ul v-if="data" style="padding: 0px 20px;">
-            <li v-for="job in data" :key="job">
+            <li v-for="job in data" :key="job.id">
               <ellipsis :length="30" tooltip>
-                {{ job }}
+                {{ job.orderID }}
               </ellipsis>
             </li>
           </ul>
@@ -128,7 +118,7 @@ import { STable, Ellipsis } from "@/components";
 import { getOrders } from "@/api/order";
 import {
   StatusOptions,
-  CategoryOptions,
+  ServiceOptions,
   MainInfoOptions,
   SubInfoOptions
 } from "./const";
@@ -143,7 +133,7 @@ export default {
   data() {
     return {
       StatusOptions,
-      CategoryOptions,
+      ServiceOptions,
       MainInfoOptions,
       SubInfoOptions,
       queryParam: {},

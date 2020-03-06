@@ -1,125 +1,154 @@
 <template>
   <page-view :title="title">
-    <a-card :bordered="false">
-      <div>
-        <description-list title="Base Info" v-if="form.category != undefined">
-          <detail-list-item term="Category">
-            {{ CategoryOptions[form.category].label }}</detail-list-item
+    <a-card
+      :bordered="false"
+      :tabList="[
+        {
+          key: 'order',
+          tab: 'Order'
+        },
+        {
+          key: 'job',
+          tab: 'Job'
+        },
+        {
+          key: 'comment',
+          tab: 'Comment'
+        }
+      ]"
+      :activeTabKey="tabKey"
+      @tabChange="onTabChange"
+    >
+      <div v-if="tabKey === 'order'">
+        <a-form :label-col="{ span: 6 }" :wrapper-col="{ span: 12 }">
+          <a-row :gutter="48">
+            <a-col :xs="8" :md="6" :sm="24">
+              <a-form-item label=""> </a-form-item>
+            </a-col>
+          </a-row>
+
+          <description-list title="Base Info" v-if="form.service != undefined">
+            <detail-list-item term="Service">
+              {{ ServiceOptions[form.service].label }}</detail-list-item
+            >
+            <detail-list-item
+              term="Main Info"
+              v-if="form.main_info != undefined && form.service != undefined"
+            >
+              {{ MainInfoOptions[form.service][form.main_info] }}
+            </detail-list-item>
+            <detail-list-item
+              term="Sub Info"
+              v-if="
+                form.sub_info != undefined &&
+                  form.main_info != undefined &&
+                  form.service != undefined
+              "
+              >{{
+                SubInfoOptions[form.service][form.main_info][form.sub_info]
+              }}</detail-list-item
+            >
+            <detail-list-item term="From Date">{{
+              form.from_date | moment("YYYY-MM-DD HH:mm")
+            }}</detail-list-item>
+            <detail-list-item term="To Date">{{
+              form.to_date | moment("YYYY-MM-DD HH:mm")
+            }}</detail-list-item>
+            <detail-list-item term="Create Date">{{
+              form.create_at | moment("YYYY-MM-DD HH:mm")
+            }}</detail-list-item>
+            <detail-list-item term="Address" v-if="form.address">
+              {{ form.address }}
+            </detail-list-item>
+          </description-list>
+
+          <a-divider class="mb-10" />
+        </a-form>
+
+        <div v-if="form.lat && form.lng">
+          <div class="title">Map</div>
+          <gmap-map
+            class="map"
+            :center="{ lat: form.lat, lng: form.lng }"
+            :zoom="16"
+            map-type-id="satellite"
           >
-          <detail-list-item
-            term="Main Info"
-            v-if="form.main_info != undefined && form.category != undefined"
-          >
-            {{ MainInfoOptions[form.category][form.main_info] }}
-          </detail-list-item>
-          <detail-list-item
-            term="Sub Info"
-            v-if="
-              form.sub_info != undefined &&
-                form.main_info != undefined &&
-                form.category != undefined
-            "
-            >{{
-              SubInfoOptions[form.category][form.main_info][form.sub_info]
-            }}</detail-list-item
-          >
-          <detail-list-item term="From Date">{{
-            form.from_date | moment("YYYY-MM-DD HH:mm")
-          }}</detail-list-item>
-          <detail-list-item term="To Date">{{
-            form.to_date | moment("YYYY-MM-DD HH:mm")
-          }}</detail-list-item>
-          <detail-list-item term="Create Date">{{
-            form.create_at | moment("YYYY-MM-DD HH:mm")
-          }}</detail-list-item>
-          <detail-list-item term="Address" v-if="form.address">
-            {{ form.address }}
-          </detail-list-item>
-        </description-list>
-
-        <a-divider class="mb-10" />
-      </div>
-
-      <div v-if="form.lat && form.lng">
-        <div class="title">Map</div>
-        <gmap-map
-          class="map"
-          :center="{ lat: form.lat, lng: form.lng }"
-          :zoom="16"
-          map-type-id="satellite"
-        >
-          <gmap-marker
-            :key="index"
-            v-for="(m, index) in markers"
-            :position="m.position"
-            :clickable="true"
-            :draggable="true"
-            @click="center = m.position"
-          />
-        </gmap-map>
-
-        <a-divider class="my-12" />
-      </div>
-
-      <div v-if="form.other_info || form.image">
-        <description-list title="Other Info">
-          <a-card>
-            <img
-              v-for="data in images"
-              :key="data.id"
-              :src="data.image.medium"
-              alt="image"
-              slot="cover"
-              class="pb-2"
+            <gmap-marker
+              :key="index"
+              v-for="(m, index) in markers"
+              :position="m.position"
+              :clickable="true"
+              :draggable="true"
+              @click="center = m.position"
             />
+          </gmap-map>
 
-            <a-card-meta :description="form.other_info"> </a-card-meta>
-          </a-card>
-        </description-list>
+          <a-divider class="my-12" />
+        </div>
 
-        <a-divider class="my-10" />
+        <div v-if="form.other_info || form.image">
+          <description-list title="Other Info">
+            <a-card>
+              <img
+                v-for="data in form.images"
+                :key="data.id"
+                :src="data.image.medium"
+                alt="image"
+                slot="cover"
+                class="pb-2"
+              />
+
+              <a-card-meta :description="form.other_info"> </a-card-meta>
+            </a-card>
+          </description-list>
+
+          <a-divider class="my-10" />
+        </div>
+
+        <div v-if="form.user">
+          <description-list title="User Info">
+            <detail-list-item term="Name">
+              {{ form.user.name }}
+            </detail-list-item>
+
+            <detail-list-item term="Phone">
+              {{ form.user.phone_number }}
+            </detail-list-item>
+
+            <detail-list-item term="Email">
+              {{ form.user.email }}
+            </detail-list-item>
+          </description-list>
+
+          <a-divider class="mb-10" />
+        </div>
       </div>
 
-      <div v-if="form.user">
-        <description-list title="User Info">
-          <detail-list-item term="Name">
-            {{ form.user.name }}
-          </detail-list-item>
-
-          <detail-list-item term="Phone">
-            {{ form.user.phone_number }}
-          </detail-list-item>
-
-          <detail-list-item term="Email">
-            {{ form.user.email }}
-          </detail-list-item>
-        </description-list>
-
-        <a-divider class="mb-10" />
+      <div v-else-if="tabKey === 'job'">
+        <s-table
+          style="margin-bottom: 24px"
+          row-key="id"
+          :columns="goodsColumns"
+          :data="loadGoodsData"
+        >
+        </s-table>
       </div>
-
-      <div class="title">Job</div>
-      <s-table
-        style="margin-bottom: 24px"
-        row-key="id"
-        :columns="goodsColumns"
-        :data="loadGoodsData"
-      >
-      </s-table>
+      <div v-else>
+        comment
+      </div>
     </a-card>
   </page-view>
 </template>
 
 <script>
 import { getOrder } from "@/api/order";
-import { getImages } from "@/api/image";
 import { PageView } from "@/layouts";
 import { STable, DescriptionList } from "@/components";
 const DetailListItem = DescriptionList.Item;
 
 import {
   StatusOptions,
-  CategoryOptions,
+  ServiceOptions,
   MainInfoOptions,
   SubInfoOptions
 } from "./const";
@@ -136,12 +165,12 @@ export default {
   data() {
     return {
       StatusOptions,
-      CategoryOptions,
+      ServiceOptions,
       MainInfoOptions,
       SubInfoOptions,
       form: {},
-      images: [],
       markers: [],
+      tabKey: "order",
       goodsColumns: [
         {
           title: "商品编号",
@@ -266,22 +295,20 @@ export default {
   },
   methods: {
     moment,
-    getImages() {
-      getImages({ object_id: this.$route.params.id, content: 1 }).then(res => {
-        this.images = res.result;
-      });
-    },
     getOrderData() {
       this.loading = true;
       getOrder(this.$route.params.id)
         .then(res => {
           const { result } = res;
           this.form = result;
-          return this.getImages();
         })
         .finally(() => {
           this.loading = false;
         });
+    },
+    onTabChange(key) {
+      this.tabKey = key;
+      console.log(key, "---");
     }
   }
 };

@@ -64,7 +64,7 @@ export default {
   methods: {
     getListData() {
       this.loading = true;
-      getImages({ object_id: this.$route.params.id, content: 0 })
+      getImages({ object_id: this.$route.params.id, content_type: "user" })
         .then(res => {
           res.result.unshift({});
           this.listData = res.result;

@@ -86,7 +86,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 class VisitSerializer(serializers.Serializer):
 
-    category = serializers.CharField(max_length=16)
+    service = serializers.CharField(max_length=16)
     
     count = serializers.IntegerField()
 
@@ -111,7 +111,7 @@ class ContractSerializer(serializers.ModelSerializer):
         return timezone.now().strftime('%Y-%m-%d') >= obj.issue_date.strftime('%Y-%m-%d') and timezone.now().strftime('%Y-%m-%d') <= obj.expiry_date.strftime('%Y-%m-%d')
 
     def get_visits(self, obj):
-        query = obj.order.all().values('category').annotate(count=Count('category'))
+        query = obj.order.all().values('service').annotate(count=Count('service'))
         serializer = VisitSerializer(instance=query, many=True)
         return serializer.data
 

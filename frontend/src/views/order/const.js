@@ -7,7 +7,7 @@ export const StatusOptions = [
   { value: 5, label: "Delete" }
 ];
 
-export const CategoryOptions = [
+export const ServiceOptions = [
   { value: 0, label: "Air Conditioner" },
   { value: 1, label: "Electrical" },
   { value: 2, label: "Plumbing" },

@@ -20,8 +20,7 @@ const err = error => {
         message: "Forbidden",
         description: data.message
       });
-    }
-    if (error.response.status === 401) {
+    } else if (error.response.status === 401) {
       notification.error({
         message: "Unauthorized",
         description: "Authorization verification failed"

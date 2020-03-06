@@ -20,7 +20,7 @@ class Order(models.Model):
         Cancel = 4
         Delete = 5
 
-    class Category(models.IntegerChoices):
+    class Service(models.IntegerChoices):
         AC =  0 #'Air Conditioner',
         Electrical = 1
         Plumbing = 2
@@ -30,7 +30,7 @@ class Order(models.Model):
     status = models.IntegerField(blank=True, null=True, choices=Status.choices, default=Status.New)
     
     # 订单类型
-    category = models.IntegerField(blank=True, null=True, choices=Category.choices, default=Category.AC)
+    service = models.IntegerField(blank=True, null=True, choices=Service.choices, default=Service.AC)
 
     # 信息
     main_info = models.IntegerField(blank=True, null=True, default=0)
