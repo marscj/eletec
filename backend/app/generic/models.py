@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 
 from versatileimagefield.fields import VersatileImageField, PPOIField
 
@@ -42,3 +44,7 @@ class Comment(models.Model):
 
     class Meta:
         db_table = 'comment'
+
+@receiver(pre_save, sender=Image)
+def image_pre_save(sender, instance, **kwargs):
+    pass

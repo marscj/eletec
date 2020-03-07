@@ -9,23 +9,23 @@
       :loading="loading"
     >
       <a-list-item slot="renderItem" slot-scope="item">
-        <template v-if="!item || item.id === undefined">
+        <!-- <template v-if="!item || item.id === undefined">
           <div align="right" class="table-operator">
             <a-upload
-              name="Id"
+              name="EmiratesID"
               :multiple="false"
               :beforeUpload="beforeUpload"
               :customRequest="upload"
               :showUploadList="false"
               style="padding: 10px 10px;"
             >
-              <a-button type="primary" icon="plus" :loading="uploading">
-                New
+              <a-button type="primary" icon="upload" :loading="uploading">
+                Upload
               </a-button>
             </a-upload>
           </div>
-        </template>
-        <template v-else>
+        </template> -->
+        <template>
           <a-card :hoverable="true">
             <img :src="item.image.large" slot="cover" alt="images" />
 
@@ -66,7 +66,6 @@ export default {
       this.loading = true;
       getImages({ object_id: this.$route.params.id, content_type: "user" })
         .then(res => {
-          res.result.unshift({});
           this.listData = res.result;
         })
         .finally(() => {

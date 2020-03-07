@@ -126,7 +126,7 @@
 
 <script>
 import { getUser, updateUser } from "@/api/user";
-import { uploadImage } from "@/api/image";
+import { uploadImage, updateImage } from "@/api/image";
 import { RoleOptions } from "./const";
 
 export default {

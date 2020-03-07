@@ -15,6 +15,14 @@ export function getImages(parameter) {
   });
 }
 
+export function updateImage(pk, data) {
+  return axios({
+    url: API.Images + `${pk}/`,
+    method: "put",
+    data: data
+  });
+}
+
 export function uploadImage(data) {
   return axios({
     url: API.Images,
