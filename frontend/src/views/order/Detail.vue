@@ -355,7 +355,7 @@ export default {
   },
   computed: {
     title() {
-      return this.$route.meta.title;
+      return this.form.orderID ? "Order: " + this.form.orderID : "Order";
     }
   },
   watch: {
@@ -389,7 +389,6 @@ export default {
         .then(res => {
           const { result } = res;
           this.form = result;
-          console.log(this.form);
         })
         .finally(() => {
           this.loading = false;

@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
-from django.db.models.signals import pre_save
+from django.db.models.signals import pre_delete
 from django.dispatch import receiver
 
 from versatileimagefield.fields import VersatileImageField, PPOIField
@@ -45,6 +45,8 @@ class Comment(models.Model):
     class Meta:
         db_table = 'comment'
 
-@receiver(pre_save, sender=Image)
-def image_pre_save(sender, instance, **kwargs):
-    pass
+@receiver(pre_delete, sender=Image)
+def image_pre_delete(sender, instance, **kwargs):
+    
+    if instance.image is not None: 
+        instance.image.delete()
