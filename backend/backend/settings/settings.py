@@ -110,6 +110,7 @@ CORS_ALLOW_HEADERS = ('*',)
 CORS_ALLOW_METHODS = ('*',)
 
 REST_FRAMEWORK = {
+    'DATETIME_FORMAT': "%Y-%m-%d %H:%M",
     'ORDERING_PARAM': 'sorter',
     # 认证
     'DEFAULT_AUTHENTICATION_CLASSES': (

@@ -8,64 +8,147 @@
           tab: 'Order'
         },
         {
-          key: 'job',
-          tab: 'Job'
+          key: 'contract',
+          tab: 'Contract'
         },
         {
-          key: 'comment',
-          tab: 'Comment'
+          key: 'job',
+          tab: 'Job'
         }
       ]"
       :activeTabKey="tabKey"
       @tabChange="onTabChange"
     >
       <div v-if="tabKey === 'order'">
-        <a-form :label-col="{ span: 6 }" :wrapper-col="{ span: 12 }">
-          <a-row :gutter="48">
-            <a-col :xs="8" :md="6" :sm="24">
-              <a-form-item label=""> </a-form-item>
+        <a-form :form="form">
+          <div class="title">Base Info</div>
+          <a-row :gutter="16">
+            <a-col :span="8">
+              <a-form-item label="Service">
+                <validation-provider vid="service" v-slot="{ errors }">
+                  <a-select v-model="form.service" disabled>
+                    <a-select-option
+                      v-for="data in ServiceOptions"
+                      :key="data.value"
+                      :value="data.value"
+                      >{{ data.label }}</a-select-option
+                    >
+                  </a-select>
+                  <span class="errorText">{{ errors[0] }}</span>
+                </validation-provider>
+              </a-form-item>
+            </a-col>
+
+            <a-col :span="8">
+              <a-form-item label="Main Info">
+                <validation-provider
+                  vid="main_info"
+                  name="main info"
+                  v-slot="{ errors }"
+                >
+                  <a-select
+                    v-model="form.main_info"
+                    v-if="form.service != null"
+                    disabled
+                  >
+                    <a-select-option
+                      v-for="(data, index) in MainInfoOptions[form.service]"
+                      :key="index"
+                      :value="index"
+                      >{{ data }}</a-select-option
+                    >
+                  </a-select>
+                  <span class="errorText">{{ errors[0] }}</span>
+                </validation-provider>
+              </a-form-item>
+            </a-col>
+
+            <a-col :span="8">
+              <a-form-item label="Sub Info">
+                <validation-provider
+                  vid="sub_info"
+                  name="sub info"
+                  v-slot="{ errors }"
+                >
+                  <a-select
+                    v-model="form.sub_info"
+                    v-if="form.service != null && form.main_info != null"
+                    disabled
+                  >
+                    <a-select-option
+                      v-for="(data, index) in SubInfoOptions[form.service][
+                        form.main_info
+                      ]"
+                      :key="index"
+                      :value="index"
+                      >{{ data }}</a-select-option
+                    >
+                  </a-select>
+                  <span class="errorText">{{ errors[0] }}</span>
+                </validation-provider>
+              </a-form-item>
+            </a-col>
+
+            <a-col :span="8">
+              <a-form-item label="From Date">
+                <validation-provider
+                  vid="from_date"
+                  name="from date"
+                  v-slot="{ errors }"
+                >
+                  <a-input v-model="form.from_date" disabled></a-input>
+                  <span class="errorText">{{ errors[0] }}</span>
+                </validation-provider>
+              </a-form-item>
+            </a-col>
+
+            <a-col :span="8">
+              <a-form-item label="To Date">
+                <validation-provider
+                  vid="to_date"
+                  name="to date"
+                  v-slot="{ errors }"
+                >
+                  <a-input v-model="form.to_date" disabled></a-input>
+                  <span class="errorText">{{ errors[0] }}</span>
+                </validation-provider>
+              </a-form-item>
+            </a-col>
+
+            <a-col :span="8">
+              <a-form-item label="Status">
+                <validation-provider vid="status" v-slot="{ errors }">
+                  <a-select v-model="form.status">
+                    <a-select-option
+                      v-for="data in StatusOptions"
+                      :key="data.value"
+                      :value="data.value"
+                      >{{ data.label }}</a-select-option
+                    >
+                  </a-select>
+                  <span class="errorText">{{ errors[0] }}</span>
+                </validation-provider>
+              </a-form-item>
+            </a-col>
+
+            <a-col :span="24">
+              <a-form-item label="Address">
+                <validation-provider vid="address" v-slot="{ errors }">
+                  <a-input v-model="form.address"></a-input>
+                  <span class="errorText">{{ errors[0] }}</span>
+                </validation-provider>
+              </a-form-item>
             </a-col>
           </a-row>
 
-          <description-list title="Base Info" v-if="form.service != undefined">
-            <detail-list-item term="Service">
-              {{ ServiceOptions[form.service].label }}</detail-list-item
-            >
-            <detail-list-item
-              term="Main Info"
-              v-if="form.main_info != undefined && form.service != undefined"
-            >
-              {{ MainInfoOptions[form.service][form.main_info] }}
-            </detail-list-item>
-            <detail-list-item
-              term="Sub Info"
-              v-if="
-                form.sub_info != undefined &&
-                  form.main_info != undefined &&
-                  form.service != undefined
-              "
-              >{{
-                SubInfoOptions[form.service][form.main_info][form.sub_info]
-              }}</detail-list-item
-            >
-            <detail-list-item term="From Date">{{
-              form.from_date | moment("YYYY-MM-DD HH:mm")
-            }}</detail-list-item>
-            <detail-list-item term="To Date">{{
-              form.to_date | moment("YYYY-MM-DD HH:mm")
-            }}</detail-list-item>
-            <detail-list-item term="Create Date">{{
-              form.create_at | moment("YYYY-MM-DD HH:mm")
-            }}</detail-list-item>
-            <detail-list-item term="Address" v-if="form.address">
-              {{ form.address }}
-            </detail-list-item>
-          </description-list>
-
-          <a-divider class="mb-10" />
+          <div align="right">
+            <a-button type="primary">
+              Submit
+            </a-button>
+          </div>
         </a-form>
 
-        <div v-if="form.lat && form.lng">
+        <div v-if="form.lat && form.lng" class="pt-10">
           <div class="title">Map</div>
           <gmap-map
             class="map"
@@ -82,11 +165,9 @@
               @click="center = m.position"
             />
           </gmap-map>
-
-          <a-divider class="my-12" />
         </div>
 
-        <div v-if="form.other_info || form.image">
+        <div v-if="form.other_info || form.image" class="pt-10">
           <description-list title="Other Info">
             <a-card>
               <img
@@ -101,22 +182,26 @@
               <a-card-meta :description="form.other_info"> </a-card-meta>
             </a-card>
           </description-list>
-
-          <a-divider class="my-10" />
         </div>
 
-        <div v-if="form.user">
+        <div v-if="form.user" class="pt-10">
           <description-list title="User Info">
             <detail-list-item term="Name">
-              {{ form.user.name }}
+              <router-link :to="{ name: 'UserProfile', id: this.form.user.id }">
+                {{ form.user.name }}
+              </router-link>
             </detail-list-item>
 
             <detail-list-item term="Phone">
-              {{ form.user.phone_number }}
+              <router-link :to="{ name: 'UserProfile', id: this.form.user.id }">
+                {{ form.user.phone_number }}
+              </router-link>
             </detail-list-item>
 
             <detail-list-item term="Email">
-              {{ form.user.email }}
+              <router-link :to="{ name: 'UserProfile', id: this.form.user.id }">
+                {{ form.user.email }}
+              </router-link>
             </detail-list-item>
           </description-list>
 
@@ -132,6 +217,9 @@
           :data="loadGoodsData"
         >
         </s-table>
+      </div>
+      <div v-else-if="tabKey === 'contract'">
+        contract
       </div>
       <div v-else>
         comment
@@ -301,6 +389,7 @@ export default {
         .then(res => {
           const { result } = res;
           this.form = result;
+          console.log(this.form);
         })
         .finally(() => {
           this.loading = false;
@@ -308,7 +397,6 @@ export default {
     },
     onTabChange(key) {
       this.tabKey = key;
-      console.log(key, "---");
     }
   }
 };

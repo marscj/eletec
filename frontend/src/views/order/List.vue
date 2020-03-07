@@ -75,7 +75,7 @@
             </li>
 
             <li v-if="data.from_date">
-              Form Date:
+              From Date:
               <em class="font-bold text-blue-500">
                 {{ data.from_date | moment("YYYY-MM-DD HH:mm") }}
               </em>

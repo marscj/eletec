@@ -23,7 +23,6 @@ export const MainInfoOptions = [
     "AC controller repair",
     "AC tripping repair",
     "AC leakage repair",
-    "AC tripping repair",
     "AC service",
     "Other custom job e.g new AC unit installation"
   ],
@@ -92,12 +91,6 @@ export const SubInfoOptions = [
       "Kitchen",
       "Living Room",
       "Bath Room",
-      "Other(Provide in Instruction Box / attached photo)"
-    ],
-    [
-      "One room",
-      "More than one room",
-      "Full power shutdown",
       "Other(Provide in Instruction Box / attached photo)"
     ],
     [
