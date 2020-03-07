@@ -4,8 +4,8 @@ from django.contrib.contenttypes.models import ContentType
 
 from django.utils.crypto import get_random_string
 
-from app.user.models import User, Contract
-from app.generic.models import Image, Comment
+from app.user.models import User, Contract, Comment
+from app.generic.models import Image
 
 def random_string():
     return get_random_string(length=4)

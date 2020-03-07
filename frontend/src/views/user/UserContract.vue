@@ -45,7 +45,8 @@
                 <ul style="padding: 0px 20px;">
                   <li v-for="(data, index) in item.visits" :key="index">
                     <p>
-                      {{ data.cagetory }} : <em> {{ data.count }}</em>
+                      {{ ServiceOptions[data.service].label }} :
+                      <em> {{ data.count }}</em>
                     </p>
                   </li>
                 </ul>
@@ -60,7 +61,8 @@
               </li>
               <li>
                 <p>
-                  Remark: <em>{{ item.remark }}</em>
+                  Remark:
+                  <em class="break-all whitespace-normal">{{ item.remark }}</em>
                 </p>
               </li>
             </ul>
@@ -146,6 +148,7 @@
 <script>
 import moment from "moment";
 import { Options } from "./const";
+import { ServiceOptions } from "../order/const";
 
 import {
   getContracts,
@@ -158,6 +161,7 @@ export default {
   data() {
     return {
       Options,
+      ServiceOptions,
       modal: false,
       listData: [],
       loading: false,

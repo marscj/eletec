@@ -3,9 +3,9 @@ from rest_framework import  serializers
 from versatileimagefield.serializers import VersatileImageFieldSerializer
 
 from .models import Order
-from app.user.serializers import UserSerializer, ContractSerializer
+from app.user.serializers import UserSerializer, ContractSerializer, CommentSerializer
 from app.job.serializers import JobSerializer
-from app.generic.serializers import ImageSerializer, CommentSerializer
+from app.generic.serializers import ImageSerializer
 
 class OrderSerializer(serializers.ModelSerializer):
 
@@ -18,6 +18,8 @@ class OrderSerializer(serializers.ModelSerializer):
     images = ImageSerializer(read_only=True, many=True)
 
     comments = CommentSerializer(read_only=True, many=True)
+
+    contract_id = serializers.IntegerField()
     
     user_id = serializers.IntegerField()
 

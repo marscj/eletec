@@ -1,31 +1,52 @@
 <template>
   <page-view :title="title">
-    <a-card
-      :bordered="false"
-      :tabList="[
-        {
-          key: 'order',
-          tab: 'Order'
-        },
-        {
-          key: 'contract',
-          tab: 'Contract'
-        },
-        {
-          key: 'job',
-          tab: 'Job'
-        }
-      ]"
-      :activeTabKey="tabKey"
-      @tabChange="onTabChange"
-    >
-      <div v-if="tabKey === 'order'">
-        <a-form :form="form">
-          <div class="title">Base Info</div>
-          <a-row :gutter="16">
-            <a-col :span="8">
-              <a-form-item label="Service">
-                <validation-provider vid="service" v-slot="{ errors }">
+    <validation-observer ref="observer">
+      <validation-provider vid="non_field_errors" v-slot="{ errors }">
+        <span class="errorText">{{ errors[0] }}</span>
+      </validation-provider>
+
+      <validation-provider vid="address" v-slot="{ errors }">
+        <span class="errorText" v-if="errors.length"
+          >Address: {{ errors[0] }}</span
+        >
+      </validation-provider>
+
+      <validation-provider
+        vid="contract_id"
+        name="contract"
+        v-slot="{ errors }"
+      >
+        <span class="errorText" v-if="errors.length">
+          Contract: {{ errors[0] }}</span
+        >
+      </validation-provider>
+
+      <a-card
+        :bordered="false"
+        :tabList="[
+          {
+            key: 'order',
+            tab: 'Order'
+          },
+          {
+            key: 'job',
+            tab: 'Job'
+          }
+        ]"
+        :activeTabKey="tabKey"
+        @tabChange="
+          key => {
+            tabKey = key;
+          }
+        "
+        :loading="loading"
+      >
+        <div v-if="tabKey === 'order'">
+          <a-form :form="form" :submit="submit">
+            <div class="title">Base Info</div>
+            <a-row :gutter="16">
+              <a-col :span="8">
+                <a-form-item label="Service">
                   <a-select v-model="form.service" disabled>
                     <a-select-option
                       v-for="data in ServiceOptions"
@@ -34,18 +55,11 @@
                       >{{ data.label }}</a-select-option
                     >
                   </a-select>
-                  <span class="errorText">{{ errors[0] }}</span>
-                </validation-provider>
-              </a-form-item>
-            </a-col>
+                </a-form-item>
+              </a-col>
 
-            <a-col :span="8">
-              <a-form-item label="Main Info">
-                <validation-provider
-                  vid="main_info"
-                  name="main info"
-                  v-slot="{ errors }"
-                >
+              <a-col :span="8">
+                <a-form-item label="Main Info">
                   <a-select
                     v-model="form.main_info"
                     v-if="form.service != null"
@@ -58,18 +72,11 @@
                       >{{ data }}</a-select-option
                     >
                   </a-select>
-                  <span class="errorText">{{ errors[0] }}</span>
-                </validation-provider>
-              </a-form-item>
-            </a-col>
+                </a-form-item>
+              </a-col>
 
-            <a-col :span="8">
-              <a-form-item label="Sub Info">
-                <validation-provider
-                  vid="sub_info"
-                  name="sub info"
-                  v-slot="{ errors }"
-                >
+              <a-col :span="8">
+                <a-form-item label="Sub Info">
                   <a-select
                     v-model="form.sub_info"
                     v-if="form.service != null && form.main_info != null"
@@ -84,40 +91,23 @@
                       >{{ data }}</a-select-option
                     >
                   </a-select>
-                  <span class="errorText">{{ errors[0] }}</span>
-                </validation-provider>
-              </a-form-item>
-            </a-col>
+                </a-form-item>
+              </a-col>
 
-            <a-col :span="8">
-              <a-form-item label="From Date">
-                <validation-provider
-                  vid="from_date"
-                  name="from date"
-                  v-slot="{ errors }"
-                >
+              <a-col :span="8">
+                <a-form-item label="From Date">
                   <a-input v-model="form.from_date" disabled></a-input>
-                  <span class="errorText">{{ errors[0] }}</span>
-                </validation-provider>
-              </a-form-item>
-            </a-col>
+                </a-form-item>
+              </a-col>
 
-            <a-col :span="8">
-              <a-form-item label="To Date">
-                <validation-provider
-                  vid="to_date"
-                  name="to date"
-                  v-slot="{ errors }"
-                >
+              <a-col :span="8">
+                <a-form-item label="To Date">
                   <a-input v-model="form.to_date" disabled></a-input>
-                  <span class="errorText">{{ errors[0] }}</span>
-                </validation-provider>
-              </a-form-item>
-            </a-col>
+                </a-form-item>
+              </a-col>
 
-            <a-col :span="8">
-              <a-form-item label="Status">
-                <validation-provider vid="status" v-slot="{ errors }">
+              <a-col :span="8">
+                <a-form-item label="Status">
                   <a-select v-model="form.status">
                     <a-select-option
                       v-for="data in StatusOptions"
@@ -126,113 +116,174 @@
                       >{{ data.label }}</a-select-option
                     >
                   </a-select>
-                  <span class="errorText">{{ errors[0] }}</span>
-                </validation-provider>
-              </a-form-item>
-            </a-col>
+                </a-form-item>
+              </a-col>
 
-            <a-col :span="24">
-              <a-form-item label="Address">
-                <validation-provider vid="address" v-slot="{ errors }">
+              <a-col :span="24">
+                <a-form-item label="Address">
                   <a-input v-model="form.address"></a-input>
-                  <span class="errorText">{{ errors[0] }}</span>
-                </validation-provider>
-              </a-form-item>
-            </a-col>
-          </a-row>
+                </a-form-item>
+              </a-col>
 
-          <div align="right">
-            <a-button type="primary">
-              Submit
-            </a-button>
+              <a-col :span="24">
+                <a-form-item label="Contract">
+                  <a-select v-model="form.contract_id">
+                    <a-select-option
+                      v-for="data in contracts"
+                      :key="data.id"
+                      :value="data.id"
+                    >
+                      <a-popover>
+                        <template slot="content">
+                          <ul class="px-4">
+                            <li>Option: {{ Options[data.option].label }}</li>
+                            <li>Issue: {{ data.issue_date }}</li>
+                            <li>Expiry: {{ data.expiry_date }}</li>
+                            <li v-if="data.visits.length">
+                              <span>Usage Count:</span>
+                              <ul class="px-4">
+                                <li
+                                  v-for="(item, index) in data.visits"
+                                  :key="index"
+                                >
+                                  <span>
+                                    {{ ServiceOptions[item.service].label }} :
+                                    {{ item.count }}
+                                  </span>
+                                </li>
+                              </ul>
+                            </li>
+                            <li v-else>
+                              Usage Count: No data
+                            </li>
+                            <li>Address: {{ data.address }}</li>
+                            <li>Remark: {{ data.remark }}</li>
+                          </ul>
+                        </template>
+                        {{ data.contractID }}
+                      </a-popover>
+                    </a-select-option>
+                  </a-select>
+                </a-form-item>
+              </a-col>
+            </a-row>
+
+            <div align="right">
+              <a-button type="primary" html-type="submit" @click="submit">
+                Submit
+              </a-button>
+            </div>
+          </a-form>
+
+          <div v-if="form.other_info || form.image" class="pt-10">
+            <description-list title="Other Info">
+              <a-card>
+                <img
+                  v-for="data in form.images"
+                  :key="data.id"
+                  :src="data.image.medium"
+                  alt="image"
+                  slot="cover"
+                  class="pb-2"
+                />
+
+                <a-card-meta :description="form.other_info"> </a-card-meta>
+              </a-card>
+            </description-list>
           </div>
-        </a-form>
 
-        <div v-if="form.lat && form.lng" class="pt-10">
-          <div class="title">Map</div>
-          <gmap-map
-            class="map"
-            :center="{ lat: form.lat, lng: form.lng }"
-            :zoom="16"
-            map-type-id="satellite"
-          >
-            <gmap-marker
-              :key="index"
-              v-for="(m, index) in markers"
-              :position="m.position"
-              :clickable="true"
-              :draggable="true"
-              @click="center = m.position"
-            />
-          </gmap-map>
-        </div>
-
-        <div v-if="form.other_info || form.image" class="pt-10">
-          <description-list title="Other Info">
-            <a-card>
-              <img
-                v-for="data in form.images"
-                :key="data.id"
-                :src="data.image.medium"
-                alt="image"
-                slot="cover"
-                class="pb-2"
+          <div v-if="form.lat && form.lng" class="pt-10">
+            <div class="title">Map</div>
+            <gmap-map
+              class="map"
+              :center="{ lat: form.lat, lng: form.lng }"
+              :zoom="16"
+              map-type-id="satellite"
+            >
+              <gmap-marker
+                :key="index"
+                v-for="(m, index) in markers"
+                :position="m.position"
+                :clickable="true"
+                :draggable="true"
+                @click="center = m.position"
               />
+            </gmap-map>
+          </div>
 
-              <a-card-meta :description="form.other_info"> </a-card-meta>
-            </a-card>
-          </description-list>
+          <div v-if="form.user" class="pt-10">
+            <description-list title="User Info">
+              <detail-list-item term="Name">
+                <router-link
+                  :to="{ name: 'UserProfile', id: this.form.user.id }"
+                >
+                  {{ form.user.name }}
+                </router-link>
+              </detail-list-item>
+
+              <detail-list-item term="Phone">
+                <router-link
+                  :to="{ name: 'UserProfile', id: this.form.user.id }"
+                >
+                  {{ form.user.phone_number }}
+                </router-link>
+              </detail-list-item>
+
+              <detail-list-item term="Email">
+                <router-link
+                  :to="{ name: 'UserProfile', id: this.form.user.id }"
+                >
+                  {{ form.user.email }}
+                </router-link>
+              </detail-list-item>
+            </description-list>
+          </div>
+
+          <div v-if="form.comments" class="pt-10">
+            <div class="title">Comments</div>
+            <div>
+              <a-list
+                class="comment-list"
+                itemLayout="horizontal"
+                :dataSource="form.comments"
+              >
+                <a-list-item slot="renderItem" slot-scope="item">
+                  <a-comment :author="item.author" :avatar="item.avatar">
+                    <p slot="content">{{ item.content }}</p>
+                    <a-tooltip
+                      slot="datetime"
+                      :title="item.datetime.format('YYYY-MM-DD HH:mm:ss')"
+                    >
+                      <span>{{ item.datetime.fromNow() }}</span>
+                    </a-tooltip>
+                  </a-comment>
+                </a-list-item>
+              </a-list>
+            </div>
+          </div>
         </div>
 
-        <div v-if="form.user" class="pt-10">
-          <description-list title="User Info">
-            <detail-list-item term="Name">
-              <router-link :to="{ name: 'UserProfile', id: this.form.user.id }">
-                {{ form.user.name }}
-              </router-link>
-            </detail-list-item>
-
-            <detail-list-item term="Phone">
-              <router-link :to="{ name: 'UserProfile', id: this.form.user.id }">
-                {{ form.user.phone_number }}
-              </router-link>
-            </detail-list-item>
-
-            <detail-list-item term="Email">
-              <router-link :to="{ name: 'UserProfile', id: this.form.user.id }">
-                {{ form.user.email }}
-              </router-link>
-            </detail-list-item>
-          </description-list>
-
-          <a-divider class="mb-10" />
+        <div v-else-if="tabKey === 'job'">
+          <s-table
+            style="margin-bottom: 24px"
+            row-key="id"
+            :columns="goodsColumns"
+            :data="loadGoodsData"
+          >
+          </s-table>
         </div>
-      </div>
-
-      <div v-else-if="tabKey === 'job'">
-        <s-table
-          style="margin-bottom: 24px"
-          row-key="id"
-          :columns="goodsColumns"
-          :data="loadGoodsData"
-        >
-        </s-table>
-      </div>
-      <div v-else-if="tabKey === 'contract'">
-        contract
-      </div>
-      <div v-else>
-        comment
-      </div>
-    </a-card>
+      </a-card>
+    </validation-observer>
   </page-view>
 </template>
 
 <script>
-import { getOrder } from "@/api/order";
 import { PageView } from "@/layouts";
 import { STable, DescriptionList } from "@/components";
 const DetailListItem = DescriptionList.Item;
+
+import { getOrder, updateOrder } from "@/api/order";
+import { getContracts } from "@/api/user";
 
 import {
   StatusOptions,
@@ -240,6 +291,8 @@ import {
   MainInfoOptions,
   SubInfoOptions
 } from "./const";
+
+import { Options } from "../user/const";
 
 import moment from "moment";
 
@@ -252,13 +305,16 @@ export default {
   },
   data() {
     return {
+      Options,
       StatusOptions,
       ServiceOptions,
       MainInfoOptions,
       SubInfoOptions,
       form: {},
+      contracts: [],
       markers: [],
       tabKey: "order",
+      loading: false,
       goodsColumns: [
         {
           title: "商品编号",
@@ -389,13 +445,39 @@ export default {
         .then(res => {
           const { result } = res;
           this.form = result;
+
+          return getContracts({ user_id: this.form.user.id }).then(res => {
+            this.contracts = res.result;
+          });
         })
         .finally(() => {
           this.loading = false;
         });
     },
-    onTabChange(key) {
-      this.tabKey = key;
+    submit() {
+      this.loading = true;
+      updateOrder(this.$route.params.id, {
+        status: this.form.status,
+        address: this.form.address,
+        user_id: this.form.user_id,
+        contract_id: this.form.contract_id
+      })
+        .then(res => {
+          const { result } = res;
+          this.form = result;
+
+          return getContracts({ user_id: this.form.user.id }).then(res => {
+            this.contracts = res.result;
+          });
+        })
+        .catch(error => {
+          if (error.response) {
+            this.$refs.observer.setErrors(error.response.data.result);
+          }
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     }
   }
 };

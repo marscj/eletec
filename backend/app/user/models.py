@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.fields import GenericRelation
 
 from auth.phone.models import PhoneNumberAbstactUser
@@ -23,10 +25,6 @@ class User(PhoneNumberAbstactUser):
         if self.name:
             return self.name
         return self.username
-
-    @property
-    def name(self):
-        return self.get_full_name()
         
 class Contract(models.Model):
 
@@ -136,3 +134,23 @@ class WorkTime(models.Model):
     class Meta:
         db_table = 'worktime'
         unique_together = ('week', 'user_id')
+
+class Comment(models.Model):
+    
+    comment = models.CharField(blank=True, null=True, max_length=256)
+
+    rating = models.IntegerField(blank=True, null=True, default=3)
+
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='comment', blank=True, null=True)
+    
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+
+    object_id = models.PositiveIntegerField()
+
+    content_object = GenericForeignKey('content_type', 'object_id')
+
+    def __str__(self):
+        return self.comment
+
+    class Meta:
+        db_table = 'comment'

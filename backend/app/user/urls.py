@@ -11,6 +11,7 @@ router.register(r'address', views.AddressView, basename='address')
 router.register(r'skills', views.SkillView, basename='skill')
 router.register(r'worktimes', views.WorkTimeView, basename='worktime')
 router.register(r'contracts', views.ContractView, basename='contracts')
+router.register(r'comments', views.CommentView, basename='comments')
 
 urlpatterns = [
     url(r'users/info/', views.UserInfoView.as_view(), name='info'),

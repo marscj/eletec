@@ -7,9 +7,9 @@ from rest_framework import  serializers
 from django.utils import timezone
 
 from app.generic.models import Image
-from app.generic.serializers import ImageSerializer
+from app.generic.serializers import ImageSerializer, ContentTypeField
 
-from .models import User, Address, Skill, WorkTime, Contract
+from .models import User, Address, Skill, WorkTime, Contract, Comment
 
 
 class ContentTypeSerializer(serializers.ModelSerializer):
@@ -65,7 +65,7 @@ class UserSerializer(serializers.ModelSerializer):
         )
     
     def get_name(self, obj):
-        return obj.name
+        return obj.get_full_name()
 
     def get_photo(self, obj):
         photo = obj.images.all().filter(tag='photo').last()
@@ -156,4 +156,12 @@ class WorkTimeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = WorkTime
+        fields = '__all__'
+
+class CommentSerializer(serializers.ModelSerializer):
+
+    content_type = ContentTypeField()
+    
+    class Meta:
+        model = Comment
         fields = '__all__'
