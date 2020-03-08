@@ -12,7 +12,7 @@ def file_path_name(instance, filename):
 
 class Image(models.Model):
 
-    tag = models.SlugField()
+    tag = models.SlugField(max_length=128)
 
     image = VersatileImageField(upload_to=file_path_name, ppoi_field='image_ppoi',)
     

@@ -28,20 +28,23 @@
       "
     >
       <base-info v-if="tabKey === 'base'"> </base-info>
-      <div v-else-if="tabKey === 'other'"></div>
-      <div v-else-if="tabKey === 'job'"></div>
-      <div v-else-if="tabKey === 'comment'"></div>
+      <other-info v-else-if="tabKey === 'other'"></other-info>
+      <job v-else-if="tabKey === 'job'"></job>
+      <comment v-else-if="tabKey === 'comment'"></comment>
     </a-card>
   </div>
 </template>
 
 <script>
 import { PageView } from "@/layouts";
-import { BaseInfo } from "./index";
+import { BaseInfo, OtherInfo, Job, Comment } from "./index";
 
 export default {
   components: {
-    BaseInfo
+    BaseInfo,
+    OtherInfo,
+    Job,
+    Comment
   },
   data() {
     return {

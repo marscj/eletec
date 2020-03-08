@@ -1,24 +1,39 @@
 <template>
-  <div>
-    <div v-if="form.other_info || form.image" class="pt-10">
-      <description-list title="Other Info">
-        <a-card>
-          <img
-            v-for="data in form.images"
-            :key="data.id"
-            :src="data.image.medium"
-            alt="image"
-            slot="cover"
-            class="pb-2"
-          />
-
-          <a-card-meta :description="form.other_info"> </a-card-meta>
-        </a-card>
-      </description-list>
-    </div>
-  </div>
+  <a-spin :spinning="loading">
+    <a-card v-for="data in images" :key="data.id">
+      <img :src="data.image.medium" alt="image" slot="cover" class="pb-2" />
+      <a-card-meta :description="data.tag"> </a-card-meta>
+    </a-card>
+  </a-spin>
 </template>
 
 <script>
-export default {};
+import { getImages } from "@/api/image";
+export default {
+  mounted() {
+    this.loading = true;
+    getImages({ object_id: this.$route.params.id, content_type: "order" })
+      .then(res => {
+        this.images = res.result;
+      })
+      .finally(() => {
+        this.loading = false;
+      });
+  },
+  data() {
+    return {
+      loading: false,
+      images: []
+    };
+  }
+};
 </script>
+
+<style lang="less" scoped>
+.title {
+  color: rgba(0, 0, 0, 0.85);
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+</style>

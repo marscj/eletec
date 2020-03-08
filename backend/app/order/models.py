@@ -38,9 +38,6 @@ class Order(models.Model):
     # 副信息
     sub_info = models.IntegerField(blank=True, null=True, default=0)
 
-    # 自定义信息
-    other_info = models.CharField(blank=True, null=True, max_length=256)
-
     # 开始时间
     from_date = models.DateTimeField(blank=True, null=True)
 

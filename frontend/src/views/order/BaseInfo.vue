@@ -233,7 +233,7 @@ export default {
         status: this.form.status,
         address: this.form.address,
         user_id: this.form.user_id,
-        contract_id: this.form.contract_id
+        contract_id: this.form.contract_id ? this.form.contract_id : null
       })
         .then(res => {
           const { result } = res;
