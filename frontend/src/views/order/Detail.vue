@@ -127,7 +127,7 @@
 
               <a-col :span="24">
                 <a-form-item label="Contract">
-                  <a-select v-model="form.contract_id">
+                  <a-select v-model="form.contract_id" allowClear>
                     <a-select-option
                       v-for="data in contracts"
                       :key="data.id"

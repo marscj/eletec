@@ -19,7 +19,7 @@ class OrderSerializer(serializers.ModelSerializer):
 
     comments = CommentSerializer(read_only=True, many=True)
 
-    contract_id = serializers.IntegerField()
+    contract_id = serializers.IntegerField(required=False)
     
     user_id = serializers.IntegerField()
 
@@ -31,3 +31,11 @@ class OrderSerializer(serializers.ModelSerializer):
 
     def get_orderID(self, obj):
         return obj.orderID
+
+    def update(self, instance, validated_data):
+        contract_id = validated_data.get('contract_id', None)
+
+        if contract_id is None:
+            instance.contract_id = None
+
+        return super().update(instance, validated_data)
