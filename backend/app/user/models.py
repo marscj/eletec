@@ -22,8 +22,9 @@ class User(PhoneNumberAbstactUser):
         db_table = 'user'
 
     def __str__(self):
-        if self.name:
-            return self.name
+        if self.get_full_name():
+            return self.get_full_name()
+
         return self.username
         
 class Contract(models.Model):
@@ -140,6 +141,8 @@ class Comment(models.Model):
     comment = models.CharField(blank=True, null=True, max_length=256)
 
     rating = models.IntegerField(blank=True, null=True, default=3)
+
+    create_at = models.DateTimeField(auto_now_add=True)
 
     user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='comment', blank=True, null=True)
     

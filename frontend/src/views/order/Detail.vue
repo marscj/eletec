@@ -1,5 +1,5 @@
 <template>
-  <page-view :title="title">
+  <div :title="title">
     <validation-observer ref="observer">
       <validation-provider vid="non_field_errors" v-slot="{ errors }">
         <span class="errorText">{{ errors[0] }}</span>
@@ -248,14 +248,19 @@
                 :dataSource="form.comments"
               >
                 <a-list-item slot="renderItem" slot-scope="item">
-                  <a-comment :author="item.author" :avatar="item.avatar">
-                    <p slot="content">{{ item.content }}</p>
-                    <a-tooltip
-                      slot="datetime"
-                      :title="item.datetime.format('YYYY-MM-DD HH:mm:ss')"
-                    >
-                      <span>{{ item.datetime.fromNow() }}</span>
-                    </a-tooltip>
+                  <a-comment
+                    :author="
+                      item.user.name ? item.user.name : item.user.username
+                    "
+                    :avatar="
+                      item.user.photo ? item.user.photo.image.thumbnail : null
+                    "
+                  >
+                    <div slot="content">
+                      <p>{{ item.comment }}</p>
+                      <a-rate v-model="item.rating" />
+                    </div>
+                    <span slot="datetime">{{ item.create_at }}</span>
                   </a-comment>
                 </a-list-item>
               </a-list>
@@ -274,7 +279,7 @@
         </div>
       </a-card>
     </validation-observer>
-  </page-view>
+  </div>
 </template>
 
 <script>
@@ -298,7 +303,6 @@ import moment from "moment";
 
 export default {
   components: {
-    PageView,
     DescriptionList,
     DetailListItem,
     STable

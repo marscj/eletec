@@ -161,7 +161,11 @@ class WorkTimeSerializer(serializers.ModelSerializer):
 class CommentSerializer(serializers.ModelSerializer):
 
     content_type = ContentTypeField()
-    
+
+    user = UserSerializer(read_only=True, many=False)
+
+    user_id = serializers.IntegerField()
+
     class Meta:
         model = Comment
         fields = '__all__'
