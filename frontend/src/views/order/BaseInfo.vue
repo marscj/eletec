@@ -5,7 +5,6 @@
         <span class="errorText">{{ errors[0] }}</span>
       </validation-provider>
       <a-form :form="form" :submit="submit">
-        <div class="title">Base Info</div>
         <a-row :gutter="16">
           <a-col :span="8">
             <a-form-item label="Service">
@@ -172,24 +171,24 @@
         </div>
       </a-form>
 
-      <!-- <div v-if="form.lat && form.lng" class="pt-10">
-      <div class="title">Map</div>
-      <gmap-map
-        class="map"
-        :center="{ lat: form.lat, lng: form.lng }"
-        :zoom="16"
-        map-type-id="satellite"
-      >
-        <gmap-marker
-          :key="index"
-          v-for="(m, index) in markers"
-          :position="m.position"
-          :clickable="true"
-          :draggable="true"
-          @click="center = m.position"
-        />
-      </gmap-map>
-    </div> -->
+      <div v-if="form.lat && form.lng" class="pt-10">
+        <div class="title">Map</div>
+        <gmap-map
+          class="map"
+          :center="{ lat: form.lat, lng: form.lng }"
+          :zoom="16"
+          map-type-id="satellite"
+        >
+          <gmap-marker
+            :key="index"
+            v-for="(m, index) in markers"
+            :position="m.position"
+            :clickable="true"
+            :draggable="true"
+            @click="center = m.position"
+          />
+        </gmap-map>
+      </div>
     </validation-observer>
   </div>
 </template>
@@ -284,6 +283,7 @@ export default {
           dragended: 0,
           ifw: false
         });
+        this.$emit("title", val.orderID);
       }
     }
   }

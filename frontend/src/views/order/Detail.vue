@@ -27,7 +27,7 @@
         }
       "
     >
-      <base-info v-if="tabKey === 'base'"> </base-info>
+      <base-info v-if="tabKey === 'base'" @title="setTitle"> </base-info>
       <other-info v-else-if="tabKey === 'other'"></other-info>
       <job v-else-if="tabKey === 'job'"></job>
       <comment v-else-if="tabKey === 'comment'"></comment>
@@ -49,13 +49,14 @@ export default {
   },
   data() {
     return {
+      title: "Order",
       tabKey: "base"
     };
+  },
+  methods: {
+    setTitle(val) {
+      this.title = "Order: " + val;
+    }
   }
-  // computed: {
-  //   title() {
-  //     return this.form.orderID ? "Order: " + this.form.orderID : "Order";
-  //   }
-  // }
 };
 </script>
