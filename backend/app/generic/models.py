@@ -7,14 +7,14 @@ from django.dispatch import receiver
 from versatileimagefield.fields import VersatileImageField, PPOIField
 
 def file_path_name(instance, filename):
-    file_path = 'resource/{model}/{tag}/{id}/{filename}'.format(model=instance.content_type.model,tag=instance.tag, id=instance.object_id, filename=filename) 
+    file_path = 'resource/{model}/{id}/{filename}'.format(model=instance.content_type.model, id=instance.object_id, filename=filename) 
     return file_path
 
 class Image(models.Model):
 
-    tag = models.SlugField(max_length=128)
+    tag = models.CharField(max_length=128)
 
-    image = VersatileImageField(upload_to=file_path_name, ppoi_field='image_ppoi',)
+    image = VersatileImageField(upload_to=file_path_name, ppoi_field='image_ppoi')
     
     image_ppoi = PPOIField()
     

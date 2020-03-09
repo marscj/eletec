@@ -3,6 +3,8 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.fields import GenericRelation
 
+from versatileimagefield.fields import VersatileImageField, PPOIField
+
 from auth.phone.models import PhoneNumberAbstactUser
 from app.generic.models import Image
 
@@ -21,7 +23,8 @@ class User(PhoneNumberAbstactUser):
     class Meta:
         db_table = 'user'
 
-    def __str__(self):
+    @property
+    def name(self):
         if self.get_full_name():
             return self.get_full_name()
 
@@ -136,11 +139,19 @@ class WorkTime(models.Model):
         db_table = 'worktime'
         unique_together = ('week', 'user_id')
 
+def file_path_name(instance, filename):
+    file_path = 'resource/{model}/{filename}'.format(model=instance.content_type.model, filename=filename) 
+    return file_path
+
 class Comment(models.Model):
     
     comment = models.CharField(blank=True, null=True, max_length=256)
 
-    rating = models.IntegerField(blank=True, null=True, default=3)
+    rating = models.IntegerField(blank=True, null=True, default=5)
+
+    image = VersatileImageField(upload_to=file_path_name, ppoi_field='image_ppoi', null=True, blank=True)
+
+    image_ppoi = PPOIField()
 
     create_at = models.DateTimeField(auto_now_add=True)
 

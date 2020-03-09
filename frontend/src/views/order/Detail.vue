@@ -4,19 +4,19 @@
       :bordered="false"
       :tabList="[
         {
-          key: 'base',
-          tab: 'Base'
+          key: 'Base',
+          scopedSlots: { tab: 'tab_base' }
         },
         {
-          key: 'other',
+          key: 'Other',
           tab: 'Other'
         },
         {
-          key: 'job',
+          key: 'Job',
           tab: 'Job'
         },
         {
-          key: 'comment',
+          key: 'Comment',
           tab: 'Comment'
         }
       ]"
@@ -27,10 +27,16 @@
         }
       "
     >
-      <base-info v-if="tabKey === 'base'" @title="setTitle"> </base-info>
-      <other-info v-else-if="tabKey === 'other'"></other-info>
-      <job v-else-if="tabKey === 'job'"></job>
-      <comment v-else-if="tabKey === 'comment'"></comment>
+      <template slot="tab_base" slot-scope="item">
+        <a-badge :dot="null">
+          <span href="#" class="head-example">{{ item.key }}</span>
+        </a-badge>
+      </template>
+
+      <base-info v-if="tabKey === 'Base'" @title="setTitle"> </base-info>
+      <other-info v-else-if="tabKey === 'Other'"></other-info>
+      <job v-else-if="tabKey === 'Job'"></job>
+      <comment v-else-if="tabKey === 'Comment'"></comment>
     </a-card>
   </page-view>
 </template>
@@ -50,7 +56,7 @@ export default {
   data() {
     return {
       title: "Order",
-      tabKey: "base"
+      tabKey: "Base"
     };
   },
   methods: {

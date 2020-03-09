@@ -168,7 +168,6 @@ export default {
           ...filters
         }
       );
-      console.log(this.data, "----");
       const result = this.data(parameter);
       // 对接自己的通用数据接口需要修改下方代码中的 r.pageNo, r.totalCount, r.data
       // eslint-disable-next-line

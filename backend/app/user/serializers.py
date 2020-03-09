@@ -1,10 +1,10 @@
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import Group, Permission
 from django.db.models import Count
+from django.utils import timezone
 
 from rest_framework import  serializers
-
-from django.utils import timezone
+from versatileimagefield.serializers import VersatileImageFieldSerializer
 
 from app.generic.models import Image
 from app.generic.serializers import ImageSerializer, ContentTypeField
@@ -65,7 +65,7 @@ class UserSerializer(serializers.ModelSerializer):
         )
     
     def get_name(self, obj):
-        return obj.get_full_name()
+        return obj.name
 
     def get_photo(self, obj):
         photo = obj.images.all().filter(tag='photo').last()
@@ -158,9 +158,11 @@ class WorkTimeSerializer(serializers.ModelSerializer):
         model = WorkTime
         fields = '__all__'
 
-class CommentSerializer(serializers.ModelSerializer):
-
+class SubCommentSerializer(serializers.Serializer):
+    
     content_type = ContentTypeField()
+
+    comment = serializers.CharField()
 
     user = UserSerializer(read_only=True, many=False)
 
@@ -169,3 +171,24 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = '__all__'
+
+class CommentSerializer(serializers.ModelSerializer):
+
+    content_type = ContentTypeField()
+
+    image = VersatileImageFieldSerializer(required=False, allow_null=True, sizes='image_size')
+
+    user = UserSerializer(read_only=True, many=False)
+
+    user_id = serializers.IntegerField()
+
+    child = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Comment
+        fields = '__all__'
+
+    def get_child(self, obj):
+        queryset = Comment.objects.filter(object_id=obj.id, content_type__model='comment')
+        serializers = CommentSerializer(queryset, many=True, context=self.context)
+        return serializers.data

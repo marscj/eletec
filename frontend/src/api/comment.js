@@ -2,8 +2,8 @@ import {
   API,
   deleteSuccess,
   deleteFailed,
-  uploadSuccess,
-  uploadFailed
+  createSuccess,
+  createFailed
 } from "./index";
 import { axios } from "@/utils/request";
 
@@ -29,8 +29,8 @@ export function createComment(data) {
     method: "post",
     data: data
   })
-    .then(uploadSuccess)
-    .catch(uploadFailed);
+    .then(createSuccess)
+    .catch(createFailed);
 }
 
 export function deleteComment(pk) {
