@@ -1,5 +1,5 @@
 <template>
-  <div :title="title">
+  <page-view :title="title">
     <a-card
       :bordered="false"
       :tabList="[
@@ -32,7 +32,7 @@
       <job v-else-if="tabKey === 'job'"></job>
       <comment v-else-if="tabKey === 'comment'"></comment>
     </a-card>
-  </div>
+  </page-view>
 </template>
 
 <script>
@@ -41,6 +41,7 @@ import { BaseInfo, OtherInfo, Job, Comment } from "./index";
 
 export default {
   components: {
+    PageView,
     BaseInfo,
     OtherInfo,
     Job,
