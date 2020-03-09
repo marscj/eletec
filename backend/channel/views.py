@@ -22,10 +22,9 @@ class MessageConsumer(AsyncJsonWebsocketConsumer):
         await self.accept()
 
         await self.channel_layer.group_add("chat", self.channel_name)
-        # print(self.channel_name, '-----')
 
     async def disconnect(self, close_code):
-        self.channel_layer.group_discard("chat", self.channel_name)
+        await self.channel_layer.group_discard("chat", self.channel_name)
 
     async def chat_message(self, event):
         print(event)
