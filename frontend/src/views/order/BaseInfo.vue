@@ -231,7 +231,6 @@ export default {
         .then(res => {
           const { result } = res;
           this.form = result;
-          console.log(this.form, "----");
           return getContracts({ user_id: this.form.user.id }).then(res => {
             this.contracts = res.result;
           });
@@ -283,7 +282,7 @@ export default {
           dragended: 0,
           ifw: false
         });
-        this.$emit("title", val.orderID);
+        this.$emit("data", val);
       }
     }
   }

@@ -149,6 +149,8 @@ class Comment(models.Model):
 
     rating = models.IntegerField(blank=True, null=True, default=5)
 
+    read = models.BooleanField(blank=True, null=True, default=False)
+
     image = VersatileImageField(upload_to=file_path_name, ppoi_field='image_ppoi', null=True, blank=True)
 
     image_ppoi = PPOIField()

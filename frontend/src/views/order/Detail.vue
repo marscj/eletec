@@ -9,15 +9,15 @@
         },
         {
           key: 'Other',
-          tab: 'Other'
+          scopedSlots: { tab: 'tab_other' }
         },
         {
           key: 'Job',
-          tab: 'Job'
+          scopedSlots: { tab: 'tab_job' }
         },
         {
           key: 'Comment',
-          tab: 'Comment'
+          scopedSlots: { tab: 'tab_comment' }
         }
       ]"
       :activeTabKey="tabKey"
@@ -28,12 +28,28 @@
       "
     >
       <template slot="tab_base" slot-scope="item">
-        <a-badge :dot="null">
-          <span href="#" class="head-example">{{ item.key }}</span>
+        <span>{{ item.key }}</span>
+      </template>
+
+      <template slot="tab_other" slot-scope="item">
+        <a-badge :count="data.image_count">
+          <span>{{ item.key }}</span>
         </a-badge>
       </template>
 
-      <base-info v-if="tabKey === 'Base'" @title="setTitle"> </base-info>
+      <template slot="tab_job" slot-scope="item">
+        <a-badge :count="data.job_count">
+          <span>{{ item.key }}</span>
+        </a-badge>
+      </template>
+
+      <template slot="tab_comment" slot-scope="item">
+        <a-badge :count="data.comment_count">
+          <span>{{ item.key }}</span>
+        </a-badge>
+      </template>
+
+      <base-info v-if="tabKey === 'Base'" @data="setData"> </base-info>
       <other-info v-else-if="tabKey === 'Other'"></other-info>
       <job v-else-if="tabKey === 'Job'"></job>
       <comment v-else-if="tabKey === 'Comment'"></comment>
@@ -55,13 +71,15 @@ export default {
   },
   data() {
     return {
+      data: {},
       title: "Order",
       tabKey: "Base"
     };
   },
   methods: {
-    setTitle(val) {
-      this.title = "Order: " + val;
+    setData(val) {
+      this.data = val;
+      this.title = "Order: " + val.orderID;
     }
   }
 };
