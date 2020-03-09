@@ -1,7 +1,7 @@
 from django.urls import path
 
-from . import views
+from . import consumer
 
 websocket_urlpatterns = [
-    path('', views.MessageConsumer)
+    path('', consumer.MessageConsumer)
 ]

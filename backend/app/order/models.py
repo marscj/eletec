@@ -94,8 +94,13 @@ def order_post_save(sender, instance, created, **kwargs):
     
     if created:
         channel_layer = get_channel_layer()
-       
-        async_to_sync(channel_layer.group_send)('chat', {
-            "type": "chat.message",
-            "message": "Hello there!",
+        async_to_sync(channel_layer.group_send)('message', {
+            "type": "send.message",
+            "message": "You have a new Order",
+        })
+    else:
+        channel_layer = get_channel_layer()
+        async_to_sync(channel_layer.group_send)('message', {
+            "type": "send.message",
+            "message": "Order have change",
         })
