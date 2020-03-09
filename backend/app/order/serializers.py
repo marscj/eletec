@@ -8,9 +8,6 @@ from app.user.serializers import UserSerializer, ContractSerializer, CommentSeri
 from app.job.serializers import JobSerializer
 from app.generic.serializers import ImageSerializer
 
-from channels.layers import get_channel_layer
-from asgiref.sync import async_to_sync
-
 class OrderSerializer(serializers.ModelSerializer):
 
     user = UserSerializer(read_only=True)
@@ -43,17 +40,4 @@ class OrderSerializer(serializers.ModelSerializer):
         return obj.orderID
 
     def get_comment_count(self, obj):
-
-        channel_layer = get_channel_layer()
-        # channel_layer.group_send('chat', {
-        #     "type": "chat.message",
-        #     "message": "Hello there!",
-        # })
-
-        async_to_sync(channel_layer.group_send)('chat', {
-            "type": "chat.message",
-            "message": "Hello there!",
-        })
-
-        print( '=========')
         return Comment.objects.filter(object_id=obj.id, content_type__model='order').count()

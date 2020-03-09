@@ -5,12 +5,6 @@ from channels.generic.websocket import WebsocketConsumer, AsyncJsonWebsocketCons
 from asgiref.sync import async_to_sync
 import json
 
-class MessageView(views.APIView):
-
-    def get(self, request, format=None): 
-
-        return response.Response({message: 'ok'})
-
 class MessageConsumer(AsyncJsonWebsocketConsumer):
 
     async def connect(self):

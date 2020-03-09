@@ -1,6 +1,11 @@
 from django.db import models
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
 
 from django.utils.crypto import get_random_string
 
@@ -83,3 +88,14 @@ class Order(models.Model):
     @property
     def orderID(self):
         return '%d-%s' % (100000 + self.id, self.create_at.strftime("%y%m%d"))
+
+@receiver(post_save, sender=Order)
+def order_post_save(sender, instance, created, **kwargs):
+    
+    if created:
+        channel_layer = get_channel_layer()
+       
+        async_to_sync(channel_layer.group_send)('chat', {
+            "type": "chat.message",
+            "message": "Hello there!",
+        })
