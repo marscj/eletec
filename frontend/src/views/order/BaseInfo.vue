@@ -92,7 +92,6 @@
               </a-form-item>
             </a-col>
           </div>
-
           <a-col :span="8">
             <a-form-item label="Address">
               <validation-provider name="address" v-slot="{ errors }">
@@ -240,29 +239,30 @@ export default {
         });
     },
     submit() {
-      this.loading = true;
-      updateOrder(this.$route.params.id, {
-        status: this.form.status,
-        address: this.form.address,
-        user_id: this.form.user_id,
-        contract_id: this.form.contract_id ? this.form.contract_id : null
-      })
-        .then(res => {
-          const { result } = res;
-          this.form = result;
+      this.$socket.send("some data");
+      //   this.loading = true;
+      //   updateOrder(this.$route.params.id, {
+      //     status: this.form.status,
+      //     address: this.form.address,
+      //     user_id: this.form.user_id,
+      //     contract_id: this.form.contract_id ? this.form.contract_id : null
+      //   })
+      //     .then(res => {
+      //       const { result } = res;
+      //       this.form = result;
 
-          return getContracts({ user_id: this.form.user.id }).then(res => {
-            this.contracts = res.result;
-          });
-        })
-        .catch(error => {
-          if (error.response) {
-            this.$refs.observer.setErrors(error.response.data.result);
-          }
-        })
-        .finally(() => {
-          this.loading = false;
-        });
+      //       return getContracts({ user_id: this.form.user.id }).then(res => {
+      //         this.contracts = res.result;
+      //       });
+      //     })
+      //     .catch(error => {
+      //       if (error.response) {
+      //         this.$refs.observer.setErrors(error.response.data.result);
+      //       }
+      //     })
+      //     .finally(() => {
+      //       this.loading = false;
+      //     });
     }
   },
   watch: {

@@ -32,19 +32,19 @@
       </template>
 
       <template slot="tab_other" slot-scope="item">
-        <a-badge :count="data.image_count">
+        <a-badge :dot="data.image_count">
           <span>{{ item.key }}</span>
         </a-badge>
       </template>
 
       <template slot="tab_job" slot-scope="item">
-        <a-badge :count="data.job_count">
+        <a-badge :dot="data.job_count">
           <span>{{ item.key }}</span>
         </a-badge>
       </template>
 
       <template slot="tab_comment" slot-scope="item">
-        <a-badge :count="data.comment_count">
+        <a-badge :dot="data.comment_count">
           <span>{{ item.key }}</span>
         </a-badge>
       </template>

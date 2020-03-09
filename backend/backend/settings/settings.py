@@ -16,12 +16,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
 
+    'channels',
     'corsheaders',
-    'versatileimagefield',
 
     'rest_framework',
     'rest_framework.authtoken',
     'phonenumber_field',
+    'versatileimagefield',
 
     'auth.phone',
     'app.user',
@@ -48,6 +49,8 @@ ROOT_URLCONF = 'backend.urls'
 AUTH_USER_MODEL = 'user.User'
 
 WSGI_APPLICATION = 'backend.wsgi.application'
+
+ASGI_APPLICATION = 'backend.routing.application'
 
 TEMPLATES = [
     {
@@ -109,6 +112,14 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_HEADERS = ('*',)
 CORS_ALLOW_METHODS = ('*',)
 
+# channel for websocket 
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}
+
+#rest socket
 REST_FRAMEWORK = {
     'DATETIME_FORMAT': "%Y-%m-%d %H:%M",
     'ORDERING_PARAM': 'sorter',

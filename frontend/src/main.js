@@ -8,14 +8,20 @@ import bootstrap from "./core/bootstrap";
 import "./utils/action";
 
 import PermissionHelper from "@/utils/permission";
-Vue.use(PermissionHelper);
 
 import "./core/";
 
 import "@/assets/css/tailwind.css";
 
 import _ from "lodash";
+
+import VueNativeSock from "vue-native-websocket";
+
+Vue.use(PermissionHelper);
+
 Object.defineProperty(Vue.prototype, "$_", { value: _ });
+
+Vue.use(VueNativeSock, "ws://127.0.0.1:8000", { store: store, format: "json" });
 
 Vue.config.productionTip = false;
 
