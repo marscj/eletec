@@ -4,6 +4,21 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
+#Channels
+redis_host = os.environ.get('REDIS_HOST', 'localhost')
+
+# Channel layer definitions
+# http://channels.readthedocs.io/en/latest/topics/channel_layers.html
+CHANNEL_LAYERS = {
+    "default": {
+        # This example app uses the Redis channel layer implementation channels_redis
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [(redis_host, 6379)],
+        },
+    },
+}
+
 # Twilio
 SENDSMS_URL = "https://api.twilio.com/2010-04-01/Accounts/ACda91c280b2cd6511484f79ec3f3e03cd/Messages.json"
 SENDSMS_ACCOUNT_SID = 'ACda91c280b2cd6511484f79ec3f3e03cd'
