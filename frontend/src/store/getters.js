@@ -11,6 +11,8 @@ const getters = {
   groups: state => state.user.groups,
   has_info: state => state.user.has_info,
 
+  message: state => state.message.message,
+
   addRouters: state => state.permission.addRouters,
   multiTab: state => state.app.multiTab,
   lang: state => state.i18n.lang

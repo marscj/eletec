@@ -52,6 +52,7 @@ const user = {
           .then(response => {
             const result = response.result;
             Vue.ls.set(ACCESS_TOKEN, result.token);
+            console.log(result, "+++++");
             commit("SET_TOKEN", result.token);
             commit("SET_ID", result.id);
             commit("SET_HAS_INFO", false);
@@ -69,7 +70,7 @@ const user = {
         getInfo()
           .then(res => {
             const { result } = res;
-
+            console.log(result, "-----");
             commit("SET_ID", result.id);
             commit("SET_GROUPS", result.groups);
             commit("SET_NAME", result.phone_number);
@@ -81,6 +82,7 @@ const user = {
             commit("SET_HAS_INFO", true);
             if (result.is_superuser) {
               store.dispatch("openMessage");
+              commit("INIT_MESSAGE", Vue.ls.get("message"));
             }
             resolve(res);
           })
@@ -109,6 +111,7 @@ const user = {
             commit("SET_HAS_INFO", false);
             store.dispatch("closeMessage");
             Vue.ls.remove(ACCESS_TOKEN);
+            Vue.ls.remove("message");
           });
       });
     }

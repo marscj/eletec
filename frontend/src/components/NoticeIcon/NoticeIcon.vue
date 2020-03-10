@@ -12,36 +12,52 @@
     <template slot="content">
       <a-spin :spinning="loading">
         <a-tabs>
-          <a-tab-pane tab="通知" key="1">
-            <a-list>
-              <a-list-item>
-                <a-list-item-meta title="你收到了 14 份新周报" description="一年前">
-                  <a-avatar style="background-color: white" slot="avatar" src="https://gw.alipayobjects.com/zos/rmsportal/ThXAXghbEsBCCSDihZxY.png"/>
+          <a-tab-pane tab="order" key="1">
+            <a-list :dataSource="unreadData">
+              <a-list-item slot="renderItem" slot-scope="item">
+                <a-list-item-meta
+                  :title="item.message"
+                  :description="item.date | moment('YYYY-MM-DD HH:mm')"
+                >
                 </a-list-item-meta>
+                <a-icon type="message" @click="readMessage(item)"></a-icon>
               </a-list-item>
-              <a-list-item>
-                <a-list-item-meta title="你推荐的 曲妮妮 已通过第三轮面试" description="一年前">
-                  <a-avatar style="background-color: white" slot="avatar" src="https://gw.alipayobjects.com/zos/rmsportal/OKJXDXrmkNshAMvwtvhu.png"/>
-                </a-list-item-meta>
-              </a-list-item>
-              <a-list-item>
-                <a-list-item-meta title="这种模板可以区分多种通知类型" description="一年前">
-                  <a-avatar style="background-color: white" slot="avatar" src="https://gw.alipayobjects.com/zos/rmsportal/kISTdvpyTAhtGxpovNWd.png"/>
+            </a-list>
+          </a-tab-pane>
+          <a-tab-pane tab="job" key="2">
+            <a-list :dataSource="readData">
+              <a-list-item slot="renderItem" slot-scope="item">
+                <a-icon type="delete" @click="removeMessage(item)"></a-icon>
+                <a-list-item-meta
+                  :title="item.message"
+                  :description="item.date | moment('YYYY-MM-DD HH:mm')"
+                >
                 </a-list-item-meta>
               </a-list-item>
             </a-list>
           </a-tab-pane>
-          <a-tab-pane tab="消息" key="2">
-            123
-          </a-tab-pane>
-          <a-tab-pane tab="待办" key="3">
-            123
+          <a-tab-pane tab="comment" key="2">
+            <a-list :dataSource="readData">
+              <a-list-item slot="renderItem" slot-scope="item">
+                <a-icon type="delete" @click="removeMessage(item)"></a-icon>
+                <a-list-item-meta
+                  :title="item.message"
+                  :description="item.date | moment('YYYY-MM-DD HH:mm')"
+                >
+                </a-list-item-meta>
+              </a-list-item>
+            </a-list>
           </a-tab-pane>
         </a-tabs>
       </a-spin>
     </template>
-    <span @click="fetchNotice" class="header-notice" ref="noticeRef" style="padding: 0 18px">
-      <a-badge count="12">
+    <span
+      @click="fetchNotice"
+      class="header-notice"
+      ref="noticeRef"
+      style="padding: 0 18px"
+    >
+      <a-badge :count="count">
         <a-icon style="font-size: 16px; padding: 4px" type="bell" />
       </a-badge>
     </span>
@@ -50,41 +66,50 @@
 
 <script>
 export default {
-  name: 'HeaderNotice',
-  data () {
+  name: "HeaderNotice",
+  data() {
     return {
       loading: false,
       visible: false
+    };
+  },
+  computed: {
+    count() {
+      return this.$store.getters.message.filter(f => !f.read).length;
+    },
+    unreadData() {
+      return this.$store.getters.message.filter(f => !f.read);
+    },
+    readData() {
+      return this.$store.getters.message.filter(f => f.read);
     }
   },
   methods: {
-    fetchNotice () {
-      if (!this.visible) {
-        this.loading = true
-        setTimeout(() => {
-          this.loading = false
-        }, 2000)
-      } else {
-        this.loading = false
-      }
-      this.visible = !this.visible
+    fetchNotice() {
+      this.visible = !this.visible;
+    },
+    readMessage(item) {
+      this.$store.dispatch("readMessage", item);
+    },
+    removeMessage(item) {
+      this.$store.dispatch("removeMessage", item);
     }
   }
-}
+};
 </script>
 
 <style lang="css">
-  .header-notice-wrapper {
-    top: 50px !important;
-  }
+.header-notice-wrapper {
+  top: 50px !important;
+}
 </style>
 <style lang="less" scoped>
-  .header-notice{
-    display: inline-block;
-    transition: all 0.3s;
+.header-notice {
+  display: inline-block;
+  transition: all 0.3s;
 
-    span {
-      vertical-align: initial;
-    }
+  span {
+    vertical-align: initial;
   }
+}
 </style>

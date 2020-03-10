@@ -97,10 +97,12 @@ def order_post_save(sender, instance, created, **kwargs):
         async_to_sync(channel_layer.group_send)('message', {
             "type": "send.message",
             "message": "You have a new Order",
+            "objectID": instance.orderID
         })
     else:
         channel_layer = get_channel_layer()
         async_to_sync(channel_layer.group_send)('message', {
             "type": "send.message",
             "message": "Order have change",
+            "objectID": instance.orderID
         })

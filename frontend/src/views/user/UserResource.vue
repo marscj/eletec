@@ -9,22 +9,6 @@
       :loading="loading"
     >
       <a-list-item slot="renderItem" slot-scope="item">
-        <!-- <template v-if="!item || item.id === undefined">
-          <div align="right" class="table-operator">
-            <a-upload
-              name="EmiratesID"
-              :multiple="false"
-              :beforeUpload="beforeUpload"
-              :customRequest="upload"
-              :showUploadList="false"
-              style="padding: 10px 10px;"
-            >
-              <a-button type="primary" icon="upload" :loading="uploading">
-                Upload
-              </a-button>
-            </a-upload>
-          </div>
-        </template> -->
         <template>
           <a-card :hoverable="true">
             <img :src="item.image.large" slot="cover" alt="images" />
