@@ -92,10 +92,11 @@
               </a-form-item>
             </a-col>
           </div>
+
           <a-col :span="8">
-            <a-form-item label="Address">
-              <validation-provider name="address" v-slot="{ errors }">
-                <a-input v-model="form.address"></a-input>
+            <a-form-item label="Service Code">
+              <validation-provider name="code" v-slot="{ errors }">
+                <a-input v-model="form.code"></a-input>
                 <span class="errorText">{{ errors[0] }}</span>
               </validation-provider>
             </a-form-item>
@@ -157,6 +158,15 @@
                     >{{ data.label }}</a-select-option
                   >
                 </a-select>
+                <span class="errorText">{{ errors[0] }}</span>
+              </validation-provider>
+            </a-form-item>
+          </a-col>
+
+          <a-col :span="24">
+            <a-form-item label="Address">
+              <validation-provider name="address" v-slot="{ errors }">
+                <a-input v-model="form.address"></a-input>
                 <span class="errorText">{{ errors[0] }}</span>
               </validation-provider>
             </a-form-item>

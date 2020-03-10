@@ -22,24 +22,24 @@ class MessageConsumer(AsyncJsonWebsocketConsumer):
         command = content.get('command', None)
         try:
             if command == 'order':
-                await self.channel_layer.group_send('message', {'type': 'order.message', 'message': content['message'], 'objectID': content['objectID'], 'pk': content['pk']})
+                await self.channel_layer.group_send('message', {'type': 'order.message', 'message': content['message'], 'pk': content['pk']})
             elif command == 'job':
-                await self.channel_layer.group_send('message', {'type': 'job.message', 'message': content['message'], 'objectID': content['objectID'], 'pk': content['pk']})
+                await self.channel_layer.group_send('message', {'type': 'job.message', 'message': content['message'], 'pk': content['pk']})
             elif command == 'comment':
-                await self.channel_layer.group_send('message', {'type': 'comment.message', 'message': content['message'], 'objectID': content['objectID'], 'pk': content['pk']})
+                await self.channel_layer.group_send('message', {'type': 'comment.message', 'message': content['message'], 'pk': content['pk']})
 
         except ClientError as e:
             # Catch any errors and send it back
             await self.send_json({'error': e.code})
 
     async def order_message(self, event):
-        await self.send_json({'msg_type': 0, 'messageID': str(uuid.uuid1()), 'message': event['message'], 'objectID':event['objectID'], 'pk': event['pk'], 'date': str(timezone.localtime())})
+        await self.send_json({'msg_type': 0, 'messageID': str(uuid.uuid1()), 'message': event['message'], 'pk': event['pk'], 'date': str(timezone.localtime())})
 
     async def job_message(self, event):
-        await self.send_json({'msg_type': 1, 'messageID': str(uuid.uuid1()), 'message': event['message'], 'objectID':event['objectID'], 'pk': event['pk'], 'date': str(timezone.localtime())})
+        await self.send_json({'msg_type': 1, 'messageID': str(uuid.uuid1()), 'message': event['message'], 'pk': event['pk'], 'date': str(timezone.localtime())})
 
     async def comment_message(self, event):
-        await self.send_json({'msg_type': 2, 'messageID': str(uuid.uuid1()), 'message': event['message'], 'objectID':event['objectID'], 'pk': event['pk'], 'date': str(timezone.localtime())})
+        await self.send_json({'msg_type': 2, 'messageID': str(uuid.uuid1()), 'message': event['message'], 'pk': event['pk'], 'date': str(timezone.localtime())})
 
 
         

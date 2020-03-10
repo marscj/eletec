@@ -28,7 +28,7 @@
                       query: { tab: 'base' }
                     }"
                   >
-                    {{ item.message }} {{ item.objectID }}
+                    {{ item.message }}
                   </router-link>
                 </template>
               </a-list-item-meta>
@@ -57,7 +57,7 @@
                       query: { tab: 'job' }
                     }"
                   >
-                    {{ item.message }} {{ item.objectID }}
+                    {{ item.message }}
                   </router-link>
                 </template>
               </a-list-item-meta>
@@ -86,7 +86,7 @@
                       query: { tab: 'comment' }
                     }"
                   >
-                    {{ item.message }} {{ item.objectID }}
+                    {{ item.message }}
                   </router-link>
                 </template>
               </a-list-item-meta>
