@@ -102,7 +102,13 @@
 
         <template slot="action" slot-scope="data">
           <template>
-            <router-link :to="{ name: 'Order', params: { id: data.id } }">
+            <router-link
+              :to="{
+                name: 'Order',
+                params: { id: data.id },
+                query: { tab: 'base' }
+              }"
+            >
               <span>Edit</span>
             </router-link>
           </template>

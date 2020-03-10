@@ -1,6 +1,6 @@
-import BaseInfo from "./BaseInfo";
+import BaseInfo from "./Base";
 import Comment from "./Comment";
 import Job from "./Job";
-import OtherInfo from "./OtherInfo";
+import Addition from "./Addition";
 
-export { BaseInfo, Comment, Job, OtherInfo };
+export { BaseInfo, Comment, Job, Addition };

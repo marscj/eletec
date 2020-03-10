@@ -4,82 +4,91 @@
       :bordered="false"
       :tabList="[
         {
-          key: 'Base',
+          key: 'base',
           scopedSlots: { tab: 'tab_base' }
         },
         {
-          key: 'Other',
-          scopedSlots: { tab: 'tab_other' }
+          key: 'addition',
+          scopedSlots: { tab: 'tab_addition' }
         },
         {
-          key: 'Job',
+          key: 'job',
           scopedSlots: { tab: 'tab_job' }
         },
         {
-          key: 'Comment',
+          key: 'comment',
           scopedSlots: { tab: 'tab_comment' }
         }
       ]"
-      :activeTabKey="tabKey"
-      @tabChange="
-        key => {
-          tabKey = key;
-        }
-      "
+      :activeTabKey="$route.query.tab"
+      @tabChange="tabChange"
     >
-      <template slot="tab_base" slot-scope="item">
-        <span>{{ item.key }}</span>
+      <template slot="tab_base">
+        <span class="text-lg">Base</span>
       </template>
 
-      <template slot="tab_other" slot-scope="item">
+      <template slot="tab_addition">
         <a-badge :count="data.image_count" :offset="[12]">
-          <span class="text-lg">{{ item.key }}</span>
+          <span class="text-lg">Addition</span>
         </a-badge>
       </template>
 
-      <template slot="tab_job" slot-scope="item">
+      <template slot="tab_job">
         <a-badge :count="data.job_count" :offset="[12]">
-          <span class="text-lg">{{ item.key }}</span>
+          <span class="text-lg">Job</span>
         </a-badge>
       </template>
 
-      <template slot="tab_comment" slot-scope="item">
+      <template slot="tab_comment">
         <a-badge :count="data.comment_count" :offset="[12]">
-          <span class="text-lg">{{ item.key }}</span>
+          <span class="text-lg">Comment</span>
         </a-badge>
       </template>
 
-      <base-info v-if="tabKey === 'Base'" @data="setData"> </base-info>
-      <other-info v-else-if="tabKey === 'Other'"></other-info>
-      <job v-else-if="tabKey === 'Job'"></job>
-      <comment v-else-if="tabKey === 'Comment'"></comment>
+      <base-info v-if="tab === 'base'" @data="setData"></base-info>
+      <addition v-else-if="tab === 'addition'"></addition>
+      <job v-else-if="tab === 'job'"></job>
+      <comment v-else-if="tab === 'comment'"></comment>
     </a-card>
   </page-view>
 </template>
 
 <script>
 import { PageView } from "@/layouts";
-import { BaseInfo, OtherInfo, Job, Comment } from "./index";
+import { BaseInfo, Addition, Job, Comment } from "./index";
 
 export default {
   components: {
     PageView,
     BaseInfo,
-    OtherInfo,
+    Addition,
     Job,
     Comment
   },
   data() {
     return {
       data: {},
-      title: "Order",
-      tabKey: "Base"
+      title: "Order"
     };
+  },
+  computed: {
+    tab() {
+      return this.$route.query.tab ? this.$route.query.tab : "base";
+    }
   },
   methods: {
     setData(val) {
       this.data = val;
       this.title = "Order: " + val.orderID;
+    },
+    tabChange(val) {
+      this.$router.push({
+        ...this.$route,
+        name: this.$route.name,
+        query: Object.assign({}, this.$route.query, {
+          tab: val
+        })
+      });
     }
   }
 };

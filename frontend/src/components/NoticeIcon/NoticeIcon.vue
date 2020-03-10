@@ -5,7 +5,7 @@
     :getPopupContainer="() => $refs.noticeRef.parentElement"
     :autoAdjustOverflow="true"
     :arrowPointAtCenter="true"
-    :overlayStyle="{ width: '400px', top: '50px' }"
+    :overlayStyle="{ width: '350px', top: '50px' }"
   >
     <template slot="content">
       <a-tabs>
@@ -21,7 +21,13 @@
                 :description="item.date | moment('YYYY-MM-DD HH:mm')"
               >
                 <template slot="title">
-                  <router-link :to="{ name: 'Order', params: { id: item.pk } }">
+                  <router-link
+                    :to="{
+                      name: 'Order',
+                      params: { id: item.pk },
+                      query: { tab: 'base' }
+                    }"
+                  >
                     {{ item.message }} {{ item.objectID }}
                   </router-link>
                 </template>
@@ -44,7 +50,13 @@
                 :description="item.date | moment('YYYY-MM-DD HH:mm')"
               >
                 <template slot="title">
-                  <router-link :to="{ name: 'Order', params: { id: item.pk } }">
+                  <router-link
+                    :to="{
+                      name: 'Order',
+                      params: { id: item.pk },
+                      query: { tab: 'job' }
+                    }"
+                  >
                     {{ item.message }} {{ item.objectID }}
                   </router-link>
                 </template>
@@ -67,7 +79,13 @@
                 :description="item.date | moment('YYYY-MM-DD HH:mm')"
               >
                 <template slot="title">
-                  <router-link :to="{ name: 'Order', params: { id: item.pk } }">
+                  <router-link
+                    :to="{
+                      name: 'Order',
+                      params: { id: item.pk },
+                      query: { tab: 'comment' }
+                    }"
+                  >
                     {{ item.message }} {{ item.objectID }}
                   </router-link>
                 </template>
