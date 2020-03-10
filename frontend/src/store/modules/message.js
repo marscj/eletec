@@ -20,18 +20,6 @@ const message = {
       }
     },
 
-    READ_MESSAGE: (state, message) => {
-      if (message) {
-        state.message = state.message.map(f => {
-          if (f.messageID == message.messageID) {
-            f.read = true;
-          }
-          return f;
-        });
-        Vue.ls.set("message", state.message);
-      }
-    },
-
     REMOVE_MESSAGE: (state, message) => {
       if (message) {
         state.message = state.message.filter(
@@ -48,12 +36,6 @@ const message = {
         notification.success({
           message: message.message
         });
-      }
-    },
-
-    readMessage({ commit }, message) {
-      if (message) {
-        commit("READ_MESSAGE", message);
       }
     },
 

@@ -2,54 +2,83 @@
   <a-popover
     v-model="visible"
     trigger="click"
-    placement="bottomRight"
-    overlayClassName="header-notice-wrapper"
     :getPopupContainer="() => $refs.noticeRef.parentElement"
     :autoAdjustOverflow="true"
     :arrowPointAtCenter="true"
-    :overlayStyle="{ width: '300px', top: '50px' }"
+    :overlayStyle="{ width: '400px', top: '50px' }"
   >
     <template slot="content">
-      <a-spin :spinning="loading">
-        <a-tabs>
-          <a-tab-pane tab="order" key="1">
-            <a-list :dataSource="unreadData">
-              <a-list-item slot="renderItem" slot-scope="item">
-                <a-list-item-meta
-                  :title="item.message"
-                  :description="item.date | moment('YYYY-MM-DD HH:mm')"
-                >
-                </a-list-item-meta>
-                <a-icon type="message" @click="readMessage(item)"></a-icon>
-              </a-list-item>
-            </a-list>
-          </a-tab-pane>
-          <a-tab-pane tab="job" key="2">
-            <a-list :dataSource="readData">
-              <a-list-item slot="renderItem" slot-scope="item">
-                <a-icon type="delete" @click="removeMessage(item)"></a-icon>
-                <a-list-item-meta
-                  :title="item.message"
-                  :description="item.date | moment('YYYY-MM-DD HH:mm')"
-                >
-                </a-list-item-meta>
-              </a-list-item>
-            </a-list>
-          </a-tab-pane>
-          <a-tab-pane tab="comment" key="2">
-            <a-list :dataSource="readData">
-              <a-list-item slot="renderItem" slot-scope="item">
-                <a-icon type="delete" @click="removeMessage(item)"></a-icon>
-                <a-list-item-meta
-                  :title="item.message"
-                  :description="item.date | moment('YYYY-MM-DD HH:mm')"
-                >
-                </a-list-item-meta>
-              </a-list-item>
-            </a-list>
-          </a-tab-pane>
-        </a-tabs>
-      </a-spin>
+      <a-tabs>
+        <a-tab-pane key="1">
+          <template slot="tab">
+            <a-badge :count="order_count" :offset="[12]">
+              Order
+            </a-badge>
+          </template>
+          <a-list :dataSource="orderData" itemLayout="vertical">
+            <a-list-item slot="renderItem" slot-scope="item">
+              <a-list-item-meta
+                :description="item.date | moment('YYYY-MM-DD HH:mm')"
+              >
+                <template slot="title">
+                  <router-link :to="{ name: 'Order', params: { id: item.pk } }">
+                    {{ item.message }} {{ item.objectID }}
+                  </router-link>
+                </template>
+              </a-list-item-meta>
+              <template slot="extra">
+                <a-icon type="delete" @click="removeMessage(item)" />
+              </template>
+            </a-list-item>
+          </a-list>
+        </a-tab-pane>
+        <a-tab-pane key="2">
+          <template slot="tab">
+            <a-badge :count="job_count" :offset="[12]">
+              Job
+            </a-badge>
+          </template>
+          <a-list :dataSource="jobData" itemLayout="vertical">
+            <a-list-item slot="renderItem" slot-scope="item">
+              <a-list-item-meta
+                :description="item.date | moment('YYYY-MM-DD HH:mm')"
+              >
+                <template slot="title">
+                  <router-link :to="{ name: 'Order', params: { id: item.pk } }">
+                    {{ item.message }} {{ item.objectID }}
+                  </router-link>
+                </template>
+              </a-list-item-meta>
+              <template slot="extra">
+                <a-icon type="delete" @click="removeMessage(item)" />
+              </template>
+            </a-list-item>
+          </a-list>
+        </a-tab-pane>
+        <a-tab-pane key="3">
+          <template slot="tab">
+            <a-badge :count="comment_count" :offset="[12]">
+              Comment
+            </a-badge>
+          </template>
+          <a-list :dataSource="commentData" itemLayout="vertical">
+            <a-list-item slot="renderItem" slot-scope="item">
+              <a-list-item-meta
+                :description="item.date | moment('YYYY-MM-DD HH:mm')"
+              >
+                <template slot="title">
+                  <router-link :to="{ name: 'Order', params: { id: item.pk } }">
+                    {{ item.message }} {{ item.objectID }}
+                  </router-link>
+                </template>
+              </a-list-item-meta>
+              <template slot="extra">
+                <a-icon type="delete" @click="removeMessage(item)" />
+              </template>
+            </a-list-item>
+          </a-list>
+        </a-tab-pane>
+      </a-tabs>
     </template>
     <span
       @click="fetchNotice"
@@ -69,27 +98,35 @@ export default {
   name: "HeaderNotice",
   data() {
     return {
-      loading: false,
       visible: false
     };
   },
   computed: {
     count() {
-      return this.$store.getters.message.filter(f => !f.read).length;
+      return this.$store.getters.message.length;
     },
-    unreadData() {
-      return this.$store.getters.message.filter(f => !f.read);
+    order_count() {
+      return this.$store.getters.message.filter(f => f.msg_type == 0).length;
     },
-    readData() {
-      return this.$store.getters.message.filter(f => f.read);
+    job_count() {
+      return this.$store.getters.message.filter(f => f.msg_type == 1).length;
+    },
+    comment_count() {
+      return this.$store.getters.message.filter(f => f.msg_type == 2).length;
+    },
+    orderData() {
+      return this.$store.getters.message.filter(f => f.msg_type == 0);
+    },
+    jobData() {
+      return this.$store.getters.message.filter(f => f.msg_type == 1);
+    },
+    commentData() {
+      return this.$store.getters.message.filter(f => f.msg_type == 2);
     }
   },
   methods: {
     fetchNotice() {
       this.visible = !this.visible;
-    },
-    readMessage(item) {
-      this.$store.dispatch("readMessage", item);
     },
     removeMessage(item) {
       this.$store.dispatch("removeMessage", item);

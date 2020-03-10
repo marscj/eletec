@@ -87,7 +87,7 @@ class Order(models.Model):
 
     @property
     def orderID(self):
-        return '%d-%s' % (100000 + self.id, self.create_at.strftime("%y%m%d"))
+        return '%d-%s' % (100000 + self.id, self.create_at.strftime('%y%m%d'))
 
 @receiver(post_save, sender=Order)
 def order_post_save(sender, instance, created, **kwargs):
@@ -95,14 +95,16 @@ def order_post_save(sender, instance, created, **kwargs):
     if created:
         channel_layer = get_channel_layer()
         async_to_sync(channel_layer.group_send)('message', {
-            "type": "send.message",
-            "message": "You have a new Order",
-            "objectID": instance.orderID
+            'type': 'order.message',
+            'message': 'You have a new Order',
+            'pk': instance.id,
+            'objectID': instance.orderID
         })
     else:
         channel_layer = get_channel_layer()
         async_to_sync(channel_layer.group_send)('message', {
-            "type": "send.message",
-            "message": "Order have change",
-            "objectID": instance.orderID
+            'type': 'order.message',
+            'message': 'Order have change',
+            'pk': instance.id,
+            'objectID': instance.orderID
         })
