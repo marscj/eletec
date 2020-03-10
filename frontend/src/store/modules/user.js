@@ -1,4 +1,5 @@
 import Vue from "vue";
+import store from "@/store";
 import { phoneValidate, getInfo, logout } from "@/api/auth";
 import { ACCESS_TOKEN } from "@/store/mutation-types";
 
@@ -78,6 +79,9 @@ const user = {
             );
             commit("SET_SUPERUSER", result.is_superuser);
             commit("SET_HAS_INFO", true);
+            if (result.is_superuser) {
+              store.dispatch("openMessage");
+            }
             resolve(res);
           })
           .catch(error => {
@@ -103,6 +107,7 @@ const user = {
             commit("SET_PHOTO", "");
             commit("SET_SUPERUSER", false);
             commit("SET_HAS_INFO", false);
+            store.dispatch("closeMessage");
             Vue.ls.remove(ACCESS_TOKEN);
           });
       });
