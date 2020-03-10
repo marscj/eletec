@@ -5,6 +5,7 @@ import app from "./modules/app";
 import user from "./modules/user";
 import permission from "./modules/permission";
 import getters from "./getters";
+import Messages from "ant-design-vue/es/message";
 
 Vue.use(Vuex);
 
@@ -36,6 +37,7 @@ export default new Vuex.Store({
     },
     SOCKET_ONMESSAGE(state, message) {
       state.socket.message = message;
+      Messages.info(message.message);
     },
     SOCKET_RECONNECT(state, count) {
       console.info(state, count);
