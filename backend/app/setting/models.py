@@ -11,7 +11,7 @@ class Faq(models.Model):
 
     title = models.CharField(blank=True, null=True, max_length=128)
 
-    content = models.CharField(blank=True, null=True, max_length=256)
+    content = models.TextField(blank=True, null=True)
 
     class Meta:
         db_table = 'faq'

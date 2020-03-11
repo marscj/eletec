@@ -9,9 +9,9 @@
           v-for="data in listData"
           :key="data.id"
           :header="data.title"
-          class="bg-gray-400 rounded mb-10 border-none overflow-hidden"
+          style="background: #f7f7f7; border-radius: 4px; margin-bottom: 14px; border: 0; overflow: hidden"
         >
-          <p>{{ data.content }}</p>
+          <p class="whitespace-pre-line">{{ data.content }}</p>
         </a-collapse-panel>
       </a-collapse>
     </div>
@@ -56,19 +56,3 @@ export default {
   }
 };
 </script>
-
-<style>
-.avatar-uploader > .ant-upload {
-  width: 128px;
-  height: 128px;
-}
-.ant-upload-select-picture-card i {
-  font-size: 32px;
-  color: #999;
-}
-
-.ant-upload-select-picture-card .ant-upload-text {
-  margin-top: 8px;
-  color: #666;
-}
-</style>

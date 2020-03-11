@@ -1,9 +1,12 @@
 <template>
   <a-spin :spinning="loading">
-    <a-card v-for="data in images" :key="data.id">
-      <img :src="data.image.medium" alt="image" slot="cover" class="pb-2" />
-      <a-card-meta :description="data.tag"> </a-card-meta>
-    </a-card>
+    <div v-if="images.length">
+      <a-card v-for="data in images" :key="data.id">
+        <img :src="data.image.medium" alt="image" slot="cover" class="pb-2" />
+        <a-card-meta :description="data.tag"> </a-card-meta>
+      </a-card>
+    </div>
+    <a-empty v-else />
   </a-spin>
 </template>
 
