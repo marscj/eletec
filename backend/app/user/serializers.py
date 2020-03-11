@@ -52,7 +52,8 @@ class UserSerializer(serializers.ModelSerializer):
 
     groups = GroupSerializer(required=False, many=True)
 
-    photo = serializers.SerializerMethodField()
+    # photo = serializers.SerializerMethodField()
+    photo = VersatileImageFieldSerializer(required=False, allow_null=True, sizes='image_size')
 
     groups_id = serializers.PrimaryKeyRelatedField(required=False, write_only=True, many=True, allow_null=True, queryset=Group.objects.all())
 
@@ -67,11 +68,11 @@ class UserSerializer(serializers.ModelSerializer):
     def get_name(self, obj):
         return obj.name
 
-    def get_photo(self, obj):
-        photo = obj.images.all().filter(tag='photo').last()
-        if photo:
-            serializer = ImageSerializer(photo, context=self.context)
-            return serializer.data
+    # def get_photo(self, obj):
+    #     photo = obj.images.all().filter(tag='photo').last()
+    #     if photo:
+    #         serializer = ImageSerializer(photo, context=self.context)
+    #         return serializer.data
         
     def update(self, instance, validated_data):
         groups_id = validated_data.pop('groups_id', None)

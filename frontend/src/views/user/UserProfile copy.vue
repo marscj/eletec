@@ -15,10 +15,9 @@
           <a-upload
             name="Photo"
             :multiple="false"
-            :fileList="fileList"
             :beforeUpload="beforeUpload"
-            :disabled="fileList.length > 0"
-            :remove="handleRemove"
+            :customRequest="upload"
+            :showUploadList="false"
             class="avatar-uploader"
             listType="picture-card"
           >
@@ -136,18 +135,12 @@ export default {
       RoleOptions,
       loading: false,
       uploading: false,
-      form: {},
-      fileList: []
+      form: {}
       // groupOption: []
     };
   },
   mounted() {
     this.getUserData();
-  },
-  computed: {
-    photo() {
-      return this.fileList[0];
-    }
   },
   methods: {
     getUserData() {
@@ -176,44 +169,29 @@ export default {
       if (!isIMG) {
         this.$message.error("You can only upload JPG or PNG file!");
       }
-
       const isLt2M = file.size / 1024 / 1024 < 2;
       if (!isLt2M) {
         this.$message.error("Image must smaller than 2MB!");
       }
-
-      if (isIMG && isLt2M) {
-        this.fileList = [...this.fileList, file];
-      }
-      return false;
+      return isIMG && isLt2M;
     },
-    handleRemove(file) {
-      const index = this.fileList.indexOf(file);
-      const newFileList = this.fileList.slice();
-      newFileList.splice(index, 1);
-      this.fileList = newFileList;
-    },
-    upload() {
+    upload(request) {
       const formData = new FormData();
-      formData.append("image", this.fileList[0]);
+      formData.append("image", request.file);
       formData.append("tag", "photo");
       formData.append("content_type", "user");
       formData.append("object_id", this.$route.params.id);
-      // this.uploading = true;
-      // uploadImage(formData)
-      //   .then(res => {
-      //     this.getUserData();
-      //   })
-      //   .finally(() => {
-      //     this.uploading = false;
-      //   });
+      this.uploading = true;
+      uploadImage(formData)
+        .then(res => {
+          this.getUserData();
+        })
+        .finally(() => {
+          this.uploading = false;
+        });
     },
     submit() {
       this.loading = true;
-      const formData = new FormData();
-
-      formData.append("photo", this.fileList[0]);
-
       updateUser(this.$route.params.id, {
         username: this.form.username,
         phone_number: this.form.phone_number,
