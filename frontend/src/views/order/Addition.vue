@@ -4,6 +4,16 @@
       <a-card v-for="data in images" :key="data.id">
         <img :src="data.image.medium" alt="image" slot="cover" class="pb-2" />
         <a-card-meta :description="data.tag"> </a-card-meta>
+        <template class="ant-card-actions" slot="actions">
+          <a-popconfirm
+            title="Are you sure delete this data?"
+            @confirm="deleteData(item)"
+            okText="Yes"
+            cancelText="No"
+          >
+            <a href="#">Delete</a>
+          </a-popconfirm>
+        </template>
       </a-card>
     </div>
     <a-empty v-else />

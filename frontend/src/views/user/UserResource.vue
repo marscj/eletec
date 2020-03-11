@@ -1,5 +1,10 @@
 <template>
   <div>
+    <div align="right" class="table-operator">
+      <a-button type="primary" icon="upload" @click="openModal()">
+        New
+      </a-button>
+    </div>
     <a-list
       ref="list"
       size="default"
@@ -29,6 +34,45 @@
         </template>
       </a-list-item>
     </a-list>
+    <a-modal
+      v-model="modal"
+      :title="this.form.id === undefined ? 'Create' : 'Edit'"
+      @ok="upload"
+    >
+      <validation-observer ref="observer">
+        <validation-provider name="non_field_errors" v-slot="{ errors }">
+          <span class="errorText">{{ errors[0] }}</span>
+        </validation-provider>
+
+        <a-form
+          :form="form"
+          :submit="upload"
+          :label-col="{ span: 4 }"
+          :wrapper-col="{ span: 16 }"
+        >
+          <a-form-item label="Image">
+            <validation-provider vid="image" v-slot="{ errors }">
+              <a-upload
+                :multiple="false"
+                :fileList="fileList"
+                :beforeUpload="beforeUpload"
+                :disabled="fileList.length > 0"
+                :remove="handleRemove"
+              >
+                <a-button> <a-icon type="upload" /> Select File </a-button>
+              </a-upload>
+              <span class="errorText">{{ errors[0] }}</span>
+            </validation-provider>
+          </a-form-item>
+          <a-form-item label="Tag">
+            <validation-provider vid="tab" v-slot="{ errors }">
+              <a-input v-model="form.tag"></a-input>
+              <span class="errorText">{{ errors[0] }}</span>
+            </validation-provider>
+          </a-form-item>
+        </a-form>
+      </validation-observer>
+    </a-modal>
   </div>
 </template>
 
@@ -39,7 +83,10 @@ export default {
     return {
       loading: false,
       uploading: false,
-      listData: undefined
+      listData: undefined,
+      modal: false,
+      form: {},
+      fileList: []
     };
   },
   mounted() {
@@ -71,43 +118,49 @@ export default {
       if (!isIMG) {
         this.$message.error("You can only upload JPG or PNG file!");
       }
+
       const isLt2M = file.size / 1024 / 1024 < 2;
       if (!isLt2M) {
         this.$message.error("Image must smaller than 2MB!");
       }
-      return isIMG && isLt2M;
+
+      if (isIMG && isLt2M) {
+        this.fileList = [...this.fileList, file];
+      }
+      return false;
     },
-    upload(request) {
+    handleRemove(file) {
+      const index = this.fileList.indexOf(file);
+      const newFileList = this.fileList.slice();
+      newFileList.splice(index, 1);
+      this.fileList = newFileList;
+    },
+    upload() {
       const formData = new FormData();
-      formData.append("image", request.file);
-      formData.append("tag", "resource");
+      formData.append("image", this.fileList[0]);
+      formData.append("tag", this.form.tag);
       formData.append("content_type", "user");
       formData.append("object_id", this.$route.params.id);
+
       this.uploading = true;
       uploadImage(formData)
         .then(res => {
           this.getListData();
+          this.modal = false;
         })
         .finally(() => {
           this.uploading = false;
+        })
+        .catch(error => {
+          if (error.response) {
+            this.$refs.observer.setErrors(error.response.data.result);
+          }
         });
+    },
+    openModal(val) {
+      this.modal = true;
+      this.form = {};
     }
   }
 };
 </script>
-
-<style>
-.avatar-uploader > .ant-upload {
-  width: 128px;
-  height: 128px;
-}
-.ant-upload-select-picture-card i {
-  font-size: 32px;
-  color: #999;
-}
-
-.ant-upload-select-picture-card .ant-upload-text {
-  margin-top: 8px;
-  color: #666;
-}
-</style>
