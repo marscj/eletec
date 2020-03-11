@@ -31,11 +31,6 @@
           </a-menu>
         </div>
         <div class="account-settings-info-right">
-          <!-- <div class="account-settings-info-title">
-            <span>{{ $route.meta.title }}</span>
-          </div>
-
-          <a-divider></a-divider> -->
           <route-view></route-view>
         </div>
       </div>

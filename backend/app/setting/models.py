@@ -3,11 +3,11 @@ from django.db import models
 # Create your models here.
 class Faq(models.Model):
 
-    class Language(models.TextChoices):
+    class Language(models.CharField):
         en = 'en',
         ar = 'ar',
 
-    language = models.CharField(blank=True, null=True, choices=Language.choices, default=Language.en, max_length=4)
+    language = models.CharField(blank=True, null=True, default=Language.en, max_length=2)
 
     title = models.CharField(blank=True, null=True, max_length=128)
 
