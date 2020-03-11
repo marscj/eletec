@@ -18,7 +18,7 @@ class User(PhoneNumberAbstactUser):
 
     role = models.IntegerField(blank=True, null=True, choices=Role.choices, default=Role.Customer)
 
-    image = VersatileImageField(upload_to='resource/user/photo/', ppoi_field='image_ppoi', null=True, blank=True)
+    photo = VersatileImageField(upload_to='resource/user/photo/', ppoi_field='image_ppoi', null=True, blank=True)
 
     image_ppoi = PPOIField()
 

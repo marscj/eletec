@@ -21,15 +21,17 @@
             :remove="handleRemove"
             listType="text"
           >
-            <img
-              v-if="form && form.photo && form.photo.image.thumbnail"
-              alt="images"
-              :src="form.photo.image.thumbnail"
-            />
+            <div v-if="fileList.length == 0">
+              <img
+                v-if="form && form.photo && form.photo.thumbnail"
+                alt="images"
+                :src="form.photo.thumbnail"
+              />
 
-            <div v-else>
-              <a-icon :type="uploading ? 'loading' : 'plus'" />
-              <div class="ant-upload-text">Upload</div>
+              <div v-else class="">
+                <a-icon :type="uploading ? 'loading' : 'plus'" />
+                <div class="ant-upload-text">Upload</div>
+              </div>
             </div>
           </a-upload>
         </a-form-item>
@@ -141,6 +143,7 @@ export default {
       getUser(this.$route.params.id).then(res => {
         const { result } = res;
         this.form = result;
+        this.fileList = [];
       });
     },
     beforeUpload(file) {
@@ -171,7 +174,6 @@ export default {
 
       if (this.photo) {
         formData.append("photo", this.photo);
-        console.log(this.photo);
       }
 
       formData.append("username", this.form.username);
@@ -184,6 +186,9 @@ export default {
       formData.append("is_superuser", this.form.is_superuser);
 
       updateUser(this.$route.params.id, formData)
+        .then(res => {
+          this.getUserData();
+        })
         .catch(error => {
           if (error.response) {
             this.$refs.observer.setErrors(error.response.data.result);
