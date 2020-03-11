@@ -99,7 +99,7 @@ export default {
     return {
       WeekOptions,
       modal: false,
-      listData: [],
+      listData: undefined,
       loading: false,
       form: {}
     };

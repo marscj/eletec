@@ -1,18 +1,22 @@
 <template>
-  <div>
-    <a-collapse :bordered="false">
-      <template v-slot:expandIcon="props">
-        <a-icon type="caret-right" :rotate="props.isActive ? 90 : 0" />
-      </template>
-      <a-collapse-panel
-        header="This is panel header 1"
-        key="1"
-        :style="customStyle"
-      >
-        <p>{{ text }}</p>
-      </a-collapse-panel>
-    </a-collapse>
-  </div>
+  <a-spin :spinning="loading">
+    <div v-if="listData.length">
+      <a-collapse :bordered="false">
+        <template v-slot:expandIcon="props">
+          <a-icon type="caret-right" :rotate="props.isActive ? 90 : 0" />
+        </template>
+        <a-collapse-panel
+          v-for="data in listData"
+          :key="data.id"
+          :header="data.title"
+          class="bg-gray-400 rounded mb-10 border-none overflow-hidden"
+        >
+          <p>{{ data.content }}</p>
+        </a-collapse-panel>
+      </a-collapse>
+    </div>
+    <a-empty v-else />
+  </a-spin>
 </template>
 
 <script>

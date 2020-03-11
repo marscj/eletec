@@ -86,7 +86,7 @@ export default {
     return {
       SkillOptions,
       modal: false,
-      listData: [],
+      listData: undefined,
       loading: false,
       form: {}
     };

@@ -163,7 +163,7 @@ export default {
       Options,
       ServiceOptions,
       modal: false,
-      listData: [],
+      listData: undefined,
       loading: false,
       form: {}
     };

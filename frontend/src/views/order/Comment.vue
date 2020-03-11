@@ -69,7 +69,7 @@ export default {
       modal: false,
       form: {},
       loading: false,
-      comments: []
+      comments: undefined
     };
   },
   mounted() {

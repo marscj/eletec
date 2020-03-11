@@ -154,7 +154,7 @@ export default {
       ModelOptions,
       StyleOptions,
       modal: false,
-      listData: [],
+      listData: undefined,
       loading: false,
       form: {}
     };

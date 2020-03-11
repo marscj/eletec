@@ -39,7 +39,7 @@ export default {
     return {
       loading: false,
       uploading: false,
-      listData: []
+      listData: undefined
     };
   },
   mounted() {
