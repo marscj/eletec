@@ -19,8 +19,7 @@
             :beforeUpload="beforeUpload"
             :disabled="fileList.length > 0"
             :remove="handleRemove"
-            class="avatar-uploader"
-            listType="picture-card"
+            listType="text"
           >
             <img
               v-if="form && form.photo && form.photo.image.thumbnail"
@@ -90,17 +89,6 @@
           </a-select>
         </a-form-item>
 
-        <!-- <a-form-item label="Group">
-          <a-select mode="multiple" v-model="form.groups_id">
-            <a-select-option
-              v-for="data in groupOption"
-              :key="data.id"
-              :value="data.id"
-              >{{ data.name }}</a-select-option
-            >
-          </a-select>
-        </a-form-item> -->
-
         <a-form-item label="Active" help="Whether the account is available">
           <a-checkbox v-model="form.is_active" />
         </a-form-item>
@@ -138,7 +126,6 @@ export default {
       uploading: false,
       form: {},
       fileList: []
-      // groupOption: []
     };
   },
   mounted() {
@@ -153,24 +140,9 @@ export default {
     getUserData() {
       getUser(this.$route.params.id).then(res => {
         const { result } = res;
-        // this.form = Object.assign(result, {
-        //   groups_id: result.groups.map(f => f.id)
-        // });
         this.form = result;
       });
     },
-    // getGroupData() {
-    //   this.loading = true;
-    //   getGroups()
-    //     .then(res => {
-    //       const { result } = res;
-    //       this.groupOption = result;
-    //       return this.getUserData();
-    //     })
-    //     .finally(() => {
-    //       this.loading = false;
-    //     });
-    // },
     beforeUpload(file) {
       const isIMG = file.type === "image/jpeg" || file.type === "image/png";
       if (!isIMG) {
@@ -193,38 +165,25 @@ export default {
       newFileList.splice(index, 1);
       this.fileList = newFileList;
     },
-    upload() {
-      const formData = new FormData();
-      formData.append("image", this.fileList[0]);
-      formData.append("tag", "photo");
-      formData.append("content_type", "user");
-      formData.append("object_id", this.$route.params.id);
-      // this.uploading = true;
-      // uploadImage(formData)
-      //   .then(res => {
-      //     this.getUserData();
-      //   })
-      //   .finally(() => {
-      //     this.uploading = false;
-      //   });
-    },
     submit() {
       this.loading = true;
       const formData = new FormData();
 
-      formData.append("photo", this.fileList[0]);
+      if (this.photo) {
+        formData.append("photo", this.photo);
+        console.log(this.photo);
+      }
 
-      updateUser(this.$route.params.id, {
-        username: this.form.username,
-        phone_number: this.form.phone_number,
-        email: this.form.email,
-        first_name: this.form.first_name,
-        last_name: this.form.last_name,
-        role: this.form.role,
-        is_active: this.form.is_active,
-        is_superuser: this.form.is_superuser
-        // groups_id: this.form.groups_id
-      })
+      formData.append("username", this.form.username);
+      formData.append("phone_number", this.form.phone_number);
+      formData.append("email", this.form.email);
+      formData.append("first_name", this.form.first_name);
+      formData.append("last_name", this.form.last_name);
+      formData.append("role", this.form.role);
+      formData.append("is_active", this.form.is_active);
+      formData.append("is_superuser", this.form.is_superuser);
+
+      updateUser(this.$route.params.id, formData)
         .catch(error => {
           if (error.response) {
             this.$refs.observer.setErrors(error.response.data.result);

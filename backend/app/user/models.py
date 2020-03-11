@@ -8,10 +8,6 @@ from versatileimagefield.fields import VersatileImageField, PPOIField
 from auth.phone.models import PhoneNumberAbstactUser
 from app.generic.models import Image
 
-def photo_path_name(instance, filename):
-    file_path = 'resource/{model}/photo/{filename}'.format(model=instance.content_type.model, filename=filename) 
-    return file_path
-
 class User(PhoneNumberAbstactUser):
     
     class Role(models.IntegerChoices):
@@ -22,7 +18,7 @@ class User(PhoneNumberAbstactUser):
 
     role = models.IntegerField(blank=True, null=True, choices=Role.choices, default=Role.Customer)
 
-    image = VersatileImageField(upload_to=photo_path_name, ppoi_field='image_ppoi', null=True, blank=True)
+    image = VersatileImageField(upload_to='resource/user/photo/', ppoi_field='image_ppoi', null=True, blank=True)
 
     image_ppoi = PPOIField()
 
