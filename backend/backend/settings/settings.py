@@ -28,7 +28,7 @@ INSTALLED_APPS = [
     'app.user',
     'app.order',
     'app.job',
-    'app.faq',
+    'app.setting',
     'app.generic'
 ]
 
