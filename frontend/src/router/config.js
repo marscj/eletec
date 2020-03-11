@@ -156,7 +156,7 @@ export const asyncRouterMap = [
         path: "/admin/faqs",
         name: "FAQS",
         hideChildrenInMenu: true,
-        component: () => import("@/views/setting/faq/List.vue"),
+        component: () => import("@/views/faq/List.vue"),
         meta: {
           title: "FAQS",
           icon: "bars",
@@ -164,18 +164,9 @@ export const asyncRouterMap = [
         }
       },
       {
-        path: "/admin/faqs/:id",
-        name: "FAQ",
-        hidden: true,
-        component: () => import("@/views/setting/faq/List.vue"),
-        meta: {
-          permission: ["faq"]
-        }
-      },
-      {
         path: "/admin/app",
         name: "AppSetting",
-        component: () => import("@/views/setting/app/List.vue"),
+        component: () => import("@/views/app/List.vue"),
         meta: {
           title: "App",
           icon: "mobile",
