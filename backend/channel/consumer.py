@@ -31,9 +31,8 @@ class MessageConsumer(AsyncJsonWebsocketConsumer):
         except ClientError as e:
             # Catch any errors and send it back
             await self.send_json({'error': e.code})
-
+    
     async def order_message(self, event):
-        print('order message')
         await self.send_json({'msg_type': 0, 'messageID': str(uuid.uuid1()), 'message': event['message'], 'pk': event['pk'], 'date': str(timezone.localtime())})
 
     async def job_message(self, event):
