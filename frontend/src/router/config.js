@@ -153,15 +153,34 @@ export const asyncRouterMap = [
       //   }
       // },
       {
-        path: "/admin/faqs",
-        name: "FAQS",
+        path: "/admin/faqs/",
+        name: "Faqs",
         hideChildrenInMenu: true,
-        component: () => import("@/views/faq/List.vue"),
+        component: () => import("@/views/faq/Index"),
+        redirect: "/admin/faqs/english",
         meta: {
-          title: "FAQS",
+          title: "Faqs",
           icon: "bars",
-          permission: ["faq"]
-        }
+          permission: ["faqs"]
+        },
+        children: [
+          {
+            path: "/admin/faqs/english",
+            name: "FaqEnglish",
+            component: () => import("@/views/faq/English.vue"),
+            meta: {
+              title: "English"
+            }
+          },
+          {
+            path: "/admin/faqs/arabic",
+            name: "FaqArabic",
+            component: () => import("@/views/faq/Arabic.vue"),
+            meta: {
+              title: "Arabic"
+            }
+          }
+        ]
       },
       {
         path: "/admin/app",
