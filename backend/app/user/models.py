@@ -20,8 +20,6 @@ class User(PhoneNumberAbstactUser):
 
     photo = VersatileImageField(upload_to='resource/user/photo/', ppoi_field='image_ppoi', null=True, blank=True)
 
-    apply = models.BooleanField(blank=True, null=True, default=False)
-
     image_ppoi = PPOIField()
 
     images = GenericRelation(Image, related_query_name='user')
@@ -176,3 +174,12 @@ class Comment(models.Model):
 
     class Meta:
         db_table = 'comment'
+
+# apply for freelance 
+class Application(models.Model):
+
+    apply = models.BooleanField(blank=True, null=True, default=False)
+    
+    create_at = models.DateTimeField(auto_now_add=True)
+
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='application', blank=True, null=True)

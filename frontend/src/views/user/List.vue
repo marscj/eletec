@@ -1,7 +1,7 @@
 <template>
   <page-view>
     <a-card>
-      <div class="table-page-search-wrapper">
+      <!-- <div class="table-page-search-wrapper">
         <a-form layout="inline">
           <a-row :gutter="48">
             <a-col :md="8" :sm="24">
@@ -11,7 +11,7 @@
             </a-col>
           </a-row>
         </a-form>
-      </div>
+      </div> -->
 
       <div class="table-operator">
         <a-button type="primary" icon="plus" @click="$refs.createModal.add()"
@@ -33,7 +33,7 @@
           <a-checkbox :checked="data" disabled />
         </template>
 
-        <template slot="apply" slot-scope="data">
+        <template slot="admin" slot-scope="data">
           <a-checkbox :checked="data" disabled />
         </template>
 
@@ -85,10 +85,10 @@ export default {
           }
         },
         {
-          title: "APPLY",
-          dataIndex: "apply",
+          title: "ADMIN",
+          dataIndex: "is_superuser",
           width: "80px",
-          scopedSlots: { customRender: "apply" }
+          scopedSlots: { customRender: "admin" }
         },
         {
           title: "ACTIVE",
