@@ -28,9 +28,10 @@
                 :src="form.photo.thumbnail"
               />
 
-              <div v-else class="">
-                <a-icon :type="uploading ? 'loading' : 'plus'" />
-                <div class="ant-upload-text">Upload</div>
+              <div v-else>
+                <a-button v-if="fileList.length == 0">
+                  <a-icon type="upload" /> Select File
+                </a-button>
               </div>
             </div>
           </a-upload>
@@ -125,7 +126,7 @@ export default {
     return {
       RoleOptions,
       loading: false,
-      uploading: false,
+      updateing: false,
       form: {},
       fileList: []
     };
@@ -140,11 +141,16 @@ export default {
   },
   methods: {
     getUserData() {
-      getUser(this.$route.params.id).then(res => {
-        const { result } = res;
-        this.form = result;
-        this.fileList = [];
-      });
+      this.loading = true;
+      getUser(this.$route.params.id)
+        .then(res => {
+          const { result } = res;
+          this.form = result;
+          this.fileList = [];
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     },
     beforeUpload(file) {
       const isIMG = file.type === "image/jpeg" || file.type === "image/png";
@@ -169,7 +175,7 @@ export default {
       this.fileList = newFileList;
     },
     submit() {
-      this.loading = true;
+      this.updateing = true;
       const formData = new FormData();
 
       if (this.photo) {
@@ -195,7 +201,7 @@ export default {
           }
         })
         .finally(() => {
-          this.loading = false;
+          this.updateing = false;
         });
     }
   }

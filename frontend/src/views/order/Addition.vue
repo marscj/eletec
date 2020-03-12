@@ -1,52 +1,15 @@
 <template>
-  <a-spin :spinning="loading">
-    <div v-if="images.length">
-      <a-card v-for="data in images" :key="data.id">
-        <img :src="data.image.medium" alt="image" slot="cover" class="pb-2" />
-        <a-card-meta :description="data.tag"> </a-card-meta>
-        <template class="ant-card-actions" slot="actions">
-          <a-popconfirm
-            title="Are you sure delete this data?"
-            @confirm="deleteData(item)"
-            okText="Yes"
-            cancelText="No"
-          >
-            <a href="#">Delete</a>
-          </a-popconfirm>
-        </template>
-      </a-card>
-    </div>
-    <a-empty v-else />
-  </a-spin>
+  <div>
+    <image-list content_type="order" :object_id="$route.params.id">
+    </image-list>
+  </div>
 </template>
 
 <script>
-import { getImages } from "@/api/image";
+import ImageList from "../common/ImageList";
 export default {
-  mounted() {
-    this.loading = true;
-    getImages({ object_id: this.$route.params.id, content_type: "order" })
-      .then(res => {
-        this.images = res.result;
-      })
-      .finally(() => {
-        this.loading = false;
-      });
-  },
-  data() {
-    return {
-      loading: false,
-      images: []
-    };
+  components: {
+    ImageList
   }
 };
 </script>
-
-<style lang="less" scoped>
-.title {
-  color: rgba(0, 0, 0, 0.85);
-  font-size: 16px;
-  font-weight: 500;
-  margin-bottom: 16px;
-}
-</style>

@@ -16,7 +16,7 @@
       <a-list-item slot="renderItem" slot-scope="item">
         <template>
           <a-card :hoverable="true">
-            <img :src="item.image.large" slot="cover" alt="images" />
+            <img :src="item.image.full_size" slot="cover" alt="images" />
 
             <a-card-meta :title="item.tag"></a-card-meta>
 
@@ -68,7 +68,7 @@
           </a-form-item>
           <a-form-item label="Tag">
             <validation-provider vid="tag" v-slot="{ errors }">
-              <a-select v-model="form.tag">
+              <a-select v-model="form.tag" v-if="options">
                 <a-select-option
                   v-for="data in options"
                   :key="data.value"
@@ -76,6 +76,7 @@
                   >{{ data.label }}</a-select-option
                 >
               </a-select>
+              <a-textarea v-model="form.tag" />
               <span class="errorText">{{ errors[0] }}</span>
             </validation-provider>
           </a-form-item>

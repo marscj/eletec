@@ -56,7 +56,14 @@
           :label-col="{ span: 4 }"
           :wrapper-col="{ span: 16 }"
         >
-          <a-form-item label="Image">
+          <a-form-item
+            label="Image"
+            :help="
+              form.tag == 0
+                ? 'picture size is better 1280x720'
+                : 'picture size is better  854x480'
+            "
+          >
             <validation-provider vid="image" v-slot="{ errors }">
               <a-upload
                 :multiple="false"

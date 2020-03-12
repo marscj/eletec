@@ -10,7 +10,7 @@
         <a-comment
           v-if="item.user"
           :author="item.user.name"
-          :avatar="item.user.photo ? item.user.photo.image.thumbnail : null"
+          :avatar="item.user.photo ? item.user.photo.thumbnail : null"
         >
           <div slot="content">
             <p>{{ item.comment }}</p>
@@ -23,9 +23,7 @@
             <a-comment
               v-if="child.user"
               :author="child.user.username"
-              :avatar="
-                child.user.photo ? child.user.photo.image.thumbnail : null
-              "
+              :avatar="child.user.photo ? child.user.photo.thumbnail : null"
             >
               <div slot="content">
                 <img
