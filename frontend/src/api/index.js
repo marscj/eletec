@@ -16,7 +16,8 @@ export const API = {
   Images: "images/",
   Orders: "orders/",
   Comments: "comments/",
-  Faqs: "faqs/"
+  Faqs: "faqs/",
+  Apps: "apps/"
 };
 
 export function updateSuccess(res) {

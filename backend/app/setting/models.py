@@ -23,10 +23,16 @@ class App(models.Model):
         Advertising = 0,
         Banner = 1
 
+    sorter = models.IntegerField(null=True, blank=True)
+
     tag = models.IntegerField(null=True, blank=True, choices=Tag.choices, default=Tag.Advertising)
 
-    image = VersatileImageField(upload_to='resource/app/', ppoi_field='app')
+    image = VersatileImageField(upload_to='resource/app/', ppoi_field='app_size')
     
-    image_ppoi = PPOIField()
+    app_size = PPOIField()
 
     create_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = 'app'
+        unique_together = ['sorter', 'tag']

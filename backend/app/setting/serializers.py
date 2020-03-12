@@ -12,7 +12,7 @@ class FaqSerializer(serializers.ModelSerializer):
 
 class AppSerializer(serializers.ModelSerializer):
 
-    image = VersatileImageFieldSerializer(sizes='app')
+    image = VersatileImageFieldSerializer(sizes='app_size')
 
     class Meta:
         model = App
