@@ -2,27 +2,26 @@
   <validation-observer ref="observer">
     <a-form :form="form" @submit="handleSubmit">
       <a-row :gutter="16">
-        <a-col :span="6">
-          <a-input size="large" type="text" placeholder="+971" disabled />
-        </a-col>
-        <a-col :span="18">
+        <a-col :span="24">
           <a-form-item>
             <validation-provider
               vid="phone_number"
               name="phone number"
               v-slot="{ errors }"
             >
-              <a-input
-                size="large"
-                type="text"
-                placeholder="Phone Number"
-                v-model="from.phone_number"
-              >
+              <a-input placeholder="Phone Number" v-model="from.phone_number">
                 <a-icon
                   slot="prefix"
                   type="mobile"
                   :style="{ color: 'rgba(0,0,0,.25)' }"
                 />
+                <a-select
+                  slot="addonBefore"
+                  defaultValue="+971"
+                  style="width:80px"
+                >
+                  <a-select-option value="+971">+971</a-select-option>
+                </a-select>
               </a-input>
               <span class="errorText">{{ errors[0] }}</span>
             </validation-provider>
@@ -30,31 +29,31 @@
         </a-col>
       </a-row>
 
-      <a-row :gutter="16">
-        <a-col :span="16">
+      <a-row>
+        <a-col :span="24">
           <a-form-item>
-            <validation-provider
-              vid="otp"
-              name="verify code"
-              v-slot="{ errors }"
-            >
-              <a-input
-                size="large"
-                type="text"
-                placeholder="Verify Code"
-                v-model="from.otp"
-              >
-                <a-icon
-                  slot="prefix"
-                  type="mail"
-                  :style="{ color: 'rgba(0,0,0,.25)' }"
-                />
-              </a-input>
+            <validation-provider vid="otp" name="captcha" v-slot="{ errors }">
+              <!-- <a-input placeholder="Verify Code" v-model="from.otp">
+                <a-icon slot="prefix" type="mail" />
+              </a-input> -->
+              <a-row :gutter="4">
+                <a-col :span="20">
+                  <a-input v-model="from.otp" placeholder="Captcha" />
+                </a-col>
+                <a-col :span="4">
+                  <a-button
+                    class="w-full"
+                    :disabled="state.smsSendBtn"
+                    @click.stop.prevent="generate"
+                    v-text="(!state.smsSendBtn && 'Send') || state.time + ' s'"
+                  ></a-button>
+                </a-col>
+              </a-row>
               <span class="errorText">{{ errors[0] }}</span>
             </validation-provider>
           </a-form-item>
         </a-col>
-        <a-col :span="8">
+        <!-- <a-col :span="8">
           <a-button
             style="display: block; width: 100%; height: 40px;"
             :disabled="state.smsSendBtn"
@@ -63,7 +62,7 @@
             ghost
             v-text="(!state.smsSendBtn && 'Send') || state.time + ' s'"
           ></a-button>
-        </a-col>
+        </a-col> -->
       </a-row>
       <a-row type="flex" justify="center" align="middle">
         <a-button
