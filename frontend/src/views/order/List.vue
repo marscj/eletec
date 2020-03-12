@@ -36,6 +36,7 @@
                 <a-button
                   type="primary"
                   html-type="submit"
+                  icon="search"
                   @click="() => $refs.table.refresh()"
                 >
                   Search
@@ -340,8 +341,12 @@ export default {
         newQuestion != undefined &&
         newQuestion.length > 0
       ) {
-        this.queryParam.start = newQuestion[0].format("YYYY-MM-DD 00:00:00");
-        this.queryParam.end = newQuestion[1].format("YYYY-MM-DD 23:59:59");
+        this.queryParam.from_date__gte = newQuestion[0].format(
+          "YYYY-MM-DD 00:00:00"
+        );
+        this.queryParam.from_date__lte = newQuestion[1].format(
+          "YYYY-MM-DD 23:59:59"
+        );
       } else {
         this.queryParam.start = undefined;
         this.queryParam.end = undefined;

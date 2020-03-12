@@ -27,6 +27,7 @@
                 <a-button
                   type="primary"
                   html-type="submit"
+                  icon="search"
                   @click="() => $refs.table.refresh()"
                 >
                   Search
@@ -115,6 +116,10 @@ export default {
         role: null
       },
       columns: [
+        {
+          title: "ID",
+          dataIndex: "id"
+        },
         {
           title: "NAME",
           dataIndex: "name"

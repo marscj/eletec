@@ -10,8 +10,19 @@ from middleware.permission import CustomModelPermissions
 class OrderFilter(django_filters.FilterSet):
     user_id = django_filters.NumberFilter('user__id')
     status = django_filters.NumberFilter('status')
-    start = django_filters.DateTimeFilter('from_date', lookup_expr='gte')
-    end = django_filters.DateTimeFilter('from_date', lookup_expr='lte')
+    from_date__gte = django_filters.DateTimeFilter('from_date', lookup_expr='gte')
+    from_date__lte = django_filters.DateTimeFilter('from_date', lookup_expr='lte')
+
+    @property
+    def qs(self):
+        parent = super().qs
+        user = getattr(self.request, 'user', None)
+
+        if not user.is_superuser:
+            return parent
+        else:
+            return parent.filter(user__id=user.id)
+        
     
 class OrderView(ModelViewSet):
     serializer_class = OrderSerializer

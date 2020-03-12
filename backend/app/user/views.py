@@ -17,6 +17,16 @@ from middleware.permission import CustomModelPermissions
 class UserFilter(django_filters.FilterSet):
     role = django_filters.NumberFilter('role')
 
+    @property
+    def qs(self):
+        parent = super().qs
+        user = getattr(self.request, 'user', None)
+
+        if not user.is_superuser:
+            return parent
+        else:
+            return parent.filter(id=user.id)
+
 class UserView(ModelViewSet):
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated, CustomModelPermissions]
@@ -52,6 +62,16 @@ class PermissionView(ModelViewSet):
 class ContractFilter(django_filters.FilterSet):
     user_id = django_filters.NumberFilter('user__id')
 
+    @property
+    def qs(self):
+        parent = super().qs
+        user = getattr(self.request, 'user', None)
+
+        if not user.is_superuser:
+            return parent
+        else:
+            return parent.filter(user__id=user.id)
+
 class ContractView(ModelViewSet):
     serializer_class = ContractSerializer
     permission_classes = [IsAuthenticated, CustomModelPermissions]
@@ -61,6 +81,16 @@ class ContractView(ModelViewSet):
 
 class AddressFilter(django_filters.FilterSet):
     user_id = django_filters.NumberFilter('user__id')
+
+    @property
+    def qs(self):
+        parent = super().qs
+        user = getattr(self.request, 'user', None)
+
+        if not user.is_superuser:
+            return parent
+        else:
+            return parent.filter(user__id=user.id)
 
 class AddressView(ModelViewSet):
     serializer_class = AddressSerializer
@@ -72,6 +102,16 @@ class AddressView(ModelViewSet):
 class SkillFilter(django_filters.FilterSet):
     user_id = django_filters.NumberFilter('user__id')
 
+    @property
+    def qs(self):
+        parent = super().qs
+        user = getattr(self.request, 'user', None)
+
+        if not user.is_superuser:
+            return parent
+        else:
+            return parent.filter(user__id=user.id)
+
 class SkillView(ModelViewSet):
     serializer_class = SkillSerializer
     permission_classes = [IsAuthenticated, CustomModelPermissions]
@@ -82,6 +122,16 @@ class SkillView(ModelViewSet):
 class WorkTimeFilter(django_filters.FilterSet):
     user_id = django_filters.NumberFilter('user__id')
 
+    @property
+    def qs(self):
+        parent = super().qs
+        user = getattr(self.request, 'user', None)
+
+        if not user.is_superuser:
+            return parent
+        else:
+            return parent.filter(user__id=user.id)
+
 class WorkTimeView(ModelViewSet):
     serializer_class = WorkTimeSerializer
     permission_classes = [IsAuthenticated, CustomModelPermissions]
@@ -89,7 +139,7 @@ class WorkTimeView(ModelViewSet):
 
     filter_class = WorkTimeFilter
 
-class ContentFilter(django_filters.FilterSet):
+class CommentFilter(django_filters.FilterSet):
     object_id = django_filters.NumberFilter('object_id')
     content_type = django_filters.CharFilter('content_type__model')
 
@@ -98,9 +148,25 @@ class CommentView(ModelViewSet):
     permission_classes = [IsAuthenticated, CustomModelPermissions]
     queryset = Comment.objects.all()
 
-    filter_class = ContentFilter
+    filter_class = CommentFilter
 
+class ApplicationFilter(django_filters.FilterSet):
+
+    @property
+    def qs(self):
+        parent = super().qs
+        user = getattr(self.request, 'user', None)
+
+        if not user.is_superuser:
+            return parent.filter(apply=False)
+        else:
+            return parent.filter(user__id=user.id, apply=False)
+            
 class ApplicationView(ModelViewSet):
     serializer_class = ApplicationSerializer
     permission_classes = [IsAuthenticated, CustomModelPermissions]
-    queryset = Application.objects.filter(apply=False)
+    queryset = Application.objects.all()
+
+    filter_class = ApplicationFilter
+
+    
