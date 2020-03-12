@@ -2,7 +2,7 @@
   <page-view>
     <a-card>
       <div class="table-page-search-wrapper">
-        <a-form layout="inline">
+        <a-form layout="inline" :form="form">
           <a-row :gutter="24">
             <a-col :md="8" :sm="24">
               <a-form-item label="Search">
