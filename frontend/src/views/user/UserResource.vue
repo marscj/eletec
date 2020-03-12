@@ -4,12 +4,13 @@
       content_type="user"
       :options="options"
       :object_id="$route.params.id"
-    />
+    >
+    </image-list>
   </div>
 </template>
 
 <script>
-import { ImageList } from "../common/ImageList";
+import ImageList from "../common/ImageList";
 export default {
   components: {
     ImageList

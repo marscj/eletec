@@ -88,6 +88,7 @@
 <script>
 import { getImages, uploadImage, deleteImage } from "@/api/image";
 export default {
+  name: "ImageList",
   props: {
     content_type: {
       type: String,
