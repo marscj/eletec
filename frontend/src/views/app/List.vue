@@ -1,11 +1,6 @@
 <template>
-  <page-view>
-    <image-list
-      content_type="user"
-      :options="options"
-      :object_id="$route.params.id"
-    >
-    </image-list>
+  <page-view class="bg-white">
+    <image-list content_type="image" :options="options"> </image-list>
   </page-view>
 </template>
 
@@ -20,8 +15,8 @@ export default {
   data() {
     return {
       options: [
-        { value: "EmiratesID", label: "EmiratesID" },
-        { value: "Driver License", label: "Driver License" }
+        { value: "Advertising", label: "Advertising" },
+        { value: "Banner", label: "Banner" }
       ]
     };
   }

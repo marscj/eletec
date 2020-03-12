@@ -1,6 +1,7 @@
 from django.db import models
 
-# Create your models here.
+from versatileimagefield.fields import VersatileImageField, PPOIField
+
 class Faq(models.Model):
 
     class Language(models.CharField):
@@ -15,3 +16,17 @@ class Faq(models.Model):
 
     class Meta:
         db_table = 'faq'
+
+class App(models.Model):
+
+    class Tag(models.IntegerChoices):
+        Advertising = 0,
+        Banner = 1
+
+    tag = models.IntegerField(null=True, blank=True, choices=Tag.choices, default=Tag.Advertising)
+
+    image = VersatileImageField(upload_to='resource/app/', ppoi_field='app')
+    
+    image_ppoi = PPOIField()
+
+    create_at = models.DateTimeField(auto_now_add=True)

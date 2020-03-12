@@ -15,7 +15,7 @@ class ContentTypeField(serializers.Field):
 
 class ImageSerializer(serializers.ModelSerializer):
 
-    image = VersatileImageFieldSerializer(required=False, allow_null=True, sizes='image_size')
+    image = VersatileImageFieldSerializer(sizes='image_size')
 
     content_type = ContentTypeField()
     

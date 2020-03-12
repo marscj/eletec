@@ -194,5 +194,9 @@ VERSATILEIMAGEFIELD_RENDITION_KEY_SETS = {
         ('samll', 'crop__640x360'),
         ('medium', 'crop__854x480'),
         ('large', 'crop__1280x720'),
+    ],
+    'app': [
+        ('banner', 'crop__854x480'),
+        ('advertising', 'crop__1280x720'),
     ]
 }

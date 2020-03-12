@@ -17,6 +17,8 @@ class Image(models.Model):
     image = VersatileImageField(upload_to=file_path_name, ppoi_field='image_ppoi')
     
     image_ppoi = PPOIField()
+
+    create_at = models.DateTimeField(auto_now_add=True)
     
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
 

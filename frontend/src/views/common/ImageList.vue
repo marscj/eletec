@@ -91,17 +91,13 @@ export default {
   name: "ImageList",
   props: {
     content_type: {
-      type: String,
-      default: "order"
+      type: String
     },
     options: {
-      type: Array,
-      default: () => [{ value: "order", label: "order" }],
-      required: true
+      type: Array
     },
     object_id: {
-      type: Number,
-      default: 1
+      type: Number
     }
   },
   data() {
