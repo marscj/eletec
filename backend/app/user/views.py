@@ -10,8 +10,8 @@ from rest_framework.authtoken import views
 
 import django_filters
 
-from .models import User, Address, Skill, WorkTime, Contract, Comment
-from .serializers import UserSerializer, GroupSerializer, PermissionSerializer, AddressSerializer, SkillSerializer, WorkTimeSerializer, ContractSerializer, CommentSerializer
+from .models import User, Address, Skill, WorkTime, Contract, Comment, Application
+from .serializers import UserSerializer, GroupSerializer, PermissionSerializer, AddressSerializer, SkillSerializer, WorkTimeSerializer, ContractSerializer, CommentSerializer, ApplicationSerializer
 from middleware.permission import CustomModelPermissions
 
 class UserView(ModelViewSet):
@@ -93,3 +93,8 @@ class CommentView(ModelViewSet):
     queryset = Comment.objects.all()
 
     filter_class = ContentFilter
+
+class ApplicationView(ModelViewSet):
+    serializer_class = ApplicationSerializer
+    permission_classes = [IsAuthenticated, CustomModelPermissions]
+    queryset = Application.objects.filter(apply=False)

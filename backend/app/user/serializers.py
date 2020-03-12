@@ -9,7 +9,7 @@ from versatileimagefield.serializers import VersatileImageFieldSerializer
 from app.generic.models import Image
 from app.generic.serializers import ImageSerializer, ContentTypeField
 
-from .models import User, Address, Skill, WorkTime, Contract, Comment
+from .models import User, Address, Skill, WorkTime, Contract, Comment, Application
 
 
 class ContentTypeSerializer(serializers.ModelSerializer):
@@ -193,3 +193,11 @@ class CommentSerializer(serializers.ModelSerializer):
         queryset = Comment.objects.filter(object_id=obj.id, content_type__model='comment')
         serializers = CommentSerializer(queryset, many=True, context=self.context)
         return serializers.data
+
+class ApplicationSerializer(serializers.ModelSerializer):
+
+    user_id = serializers.IntegerField()
+
+    class Meta:
+        model = Application
+        fields = '__all__'
