@@ -40,7 +40,7 @@
         <template slot="action" slot-scope="data">
           <template>
             <router-link :to="{ name: 'User', params: { id: data.id } }">
-              <span>Edit</span>
+              <span>Detail</span>
             </router-link>
           </template>
         </template>

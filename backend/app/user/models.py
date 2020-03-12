@@ -2,7 +2,11 @@ from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.fields import GenericRelation
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
 from versatileimagefield.fields import VersatileImageField, PPOIField
 
 from auth.phone.models import PhoneNumberAbstactUser
@@ -183,3 +187,21 @@ class Application(models.Model):
     create_at = models.DateTimeField(auto_now_add=True)
 
     user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='application', blank=True, null=True)
+
+    class Meta:
+        db_table = 'application'
+
+@receiver(post_save, sender=Application)
+def application_post_save(sender, instance, created, **kwargs):
+    
+    if created:
+        channel_layer = get_channel_layer()
+        async_to_sync(channel_layer.group_send)('message', {
+            'type': 'application.message',
+            'message': 'You have a new application',
+            'pk': instance.id,
+        })
+    else:
+        if instance.apply:
+            instance.user.role = User.Role.Freelancer
+            instance.user.save()

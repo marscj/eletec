@@ -27,6 +27,8 @@ class MessageConsumer(AsyncJsonWebsocketConsumer):
                 await self.channel_layer.group_send('message', {'type': 'job.message', 'message': content['message'], 'pk': content['pk']})
             elif command == 'comment':
                 await self.channel_layer.group_send('message', {'type': 'comment.message', 'message': content['message'], 'pk': content['pk']})
+            elif command == 'application':
+                await self.channel_layer.group_send('message', {'type': 'application.message', 'message': content['message'], 'pk': content['pk']})
 
         except ClientError as e:
             # Catch any errors and send it back
@@ -39,6 +41,9 @@ class MessageConsumer(AsyncJsonWebsocketConsumer):
         await self.send_json({'msg_type': 1, 'messageID': str(uuid.uuid1()), 'message': event['message'], 'pk': event['pk'], 'date': str(timezone.localtime())})
 
     async def comment_message(self, event):
+        await self.send_json({'msg_type': 2, 'messageID': str(uuid.uuid1()), 'message': event['message'], 'pk': event['pk'], 'date': str(timezone.localtime())})
+
+    async def application_message(self, event):
         await self.send_json({'msg_type': 2, 'messageID': str(uuid.uuid1()), 'message': event['message'], 'pk': event['pk'], 'date': str(timezone.localtime())})
 
 

@@ -50,9 +50,8 @@ class GroupSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
 
-    groups = GroupSerializer(required=False, many=True)
+    # groups = GroupSerializer(required=False, many=True)
 
-    # photo = serializers.SerializerMethodField()
     photo = VersatileImageFieldSerializer(required=False, allow_null=True, sizes='image_size')
 
     groups_id = serializers.PrimaryKeyRelatedField(required=False, write_only=True, many=True, allow_null=True, queryset=Group.objects.all())
@@ -196,6 +195,8 @@ class CommentSerializer(serializers.ModelSerializer):
 
 class ApplicationSerializer(serializers.ModelSerializer):
 
+    user = UserSerializer(read_only=True)
+    
     user_id = serializers.IntegerField()
 
     class Meta:

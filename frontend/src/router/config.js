@@ -191,6 +191,16 @@ export const asyncRouterMap = [
           icon: "mobile",
           permission: ["app"]
         }
+      },
+      {
+        path: "/admin/applications",
+        name: "Applications",
+        component: () => import("@/views/user/Application.vue"),
+        meta: {
+          title: "Freelance Application",
+          icon: "form",
+          permission: ["app"]
+        }
       }
     ]
   },
