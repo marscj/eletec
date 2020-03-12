@@ -9,6 +9,7 @@ from middleware.permission import CustomModelPermissions
 
 class OrderFilter(django_filters.FilterSet):
     user_id = django_filters.NumberFilter('user__id')
+    status = django_filters.NumberFilter('status')
     
 class OrderView(ModelViewSet):
     serializer_class = OrderSerializer

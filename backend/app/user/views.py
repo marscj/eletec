@@ -14,10 +14,15 @@ from .models import User, Address, Skill, WorkTime, Contract, Comment, Applicati
 from .serializers import UserSerializer, GroupSerializer, PermissionSerializer, AddressSerializer, SkillSerializer, WorkTimeSerializer, ContractSerializer, CommentSerializer, ApplicationSerializer
 from middleware.permission import CustomModelPermissions
 
+class UserFilter(django_filters.FilterSet):
+    role = django_filters.NumberFilter('role')
+
 class UserView(ModelViewSet):
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated, CustomModelPermissions]
     queryset = User.objects.all()
+
+    filter_class = UserFilter
             
 class UserInfoView(APIView):
     permission_classes = [IsAuthenticated]

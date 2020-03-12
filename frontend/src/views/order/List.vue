@@ -5,8 +5,23 @@
         <a-form layout="inline">
           <a-row :gutter="48">
             <a-col :md="8" :sm="24">
-              <a-form-item label="">
-                <a-input v-model="queryParam.id" placeholder="" />
+              <a-form-item label="Status">
+                <a-select v-model="queryParam.status">
+                  <a-select-option key="0" :value="null">All</a-select-option>
+                  <a-select-option
+                    v-for="data in StatusOptions"
+                    :key="data.value"
+                    :value="data.value"
+                    >{{ data.label }}</a-select-option
+                  >
+                </a-select>
+              </a-form-item>
+            </a-col>
+            <a-col :md="8" :sm="24">
+              <a-form-item>
+                <a-button type="primary" @click="() => $refs.table.refresh()">
+                  Search
+                </a-button>
               </a-form-item>
             </a-col>
           </a-row>
@@ -147,7 +162,9 @@ export default {
       ServiceOptions,
       MainInfoOptions,
       SubInfoOptions,
-      queryParam: {},
+      queryParam: {
+        status: null
+      },
       columns: [
         {
           title: "#",
