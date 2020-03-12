@@ -187,7 +187,7 @@ export const asyncRouterMap = [
         name: "AppSetting",
         component: () => import("@/views/app/List.vue"),
         meta: {
-          title: "App",
+          title: "AppSetting",
           icon: "mobile",
           permission: ["app"]
         }
