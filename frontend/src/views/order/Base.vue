@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <a-spin :spinning="loading">
     <validation-observer ref="observer">
       <validation-provider name="non_field_errors" v-slot="{ errors }">
         <span class="errorText">{{ errors[0] }}</span>
@@ -199,7 +199,7 @@
         </gmap-map>
       </div>
     </validation-observer>
-  </div>
+  </a-spin>
 </template>
 
 <script>
@@ -231,6 +231,30 @@ export default {
   },
   mounted() {
     this.getOrderData();
+  },
+  watch: {
+    form(val) {
+      if (val) {
+        this.markers.push({
+          id: this.lastId,
+          position: {
+            lat: val.lat,
+            lng: val.lng
+          },
+          opacity: 1,
+          draggable: true,
+          enabled: true,
+          clicked: 0,
+          rightClicked: 0,
+          dragended: 0,
+          ifw: false
+        });
+        this.$emit("data", val);
+      }
+    },
+    "$route.params"(val) {
+      this.getOrderData();
+    }
   },
   methods: {
     moment,
@@ -272,27 +296,6 @@ export default {
         .finally(() => {
           this.loading = false;
         });
-    }
-  },
-  watch: {
-    form(val) {
-      if (val) {
-        this.markers.push({
-          id: this.lastId,
-          position: {
-            lat: val.lat,
-            lng: val.lng
-          },
-          opacity: 1,
-          draggable: true,
-          enabled: true,
-          clicked: 0,
-          rightClicked: 0,
-          dragended: 0,
-          ifw: false
-        });
-        this.$emit("data", val);
-      }
     }
   }
 };
