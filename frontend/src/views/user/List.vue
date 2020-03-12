@@ -5,6 +5,11 @@
         <a-form layout="inline">
           <a-row :gutter="48">
             <a-col :md="8" :sm="24">
+              <a-form-item label="Search">
+                <a-input v-model="queryParam.search"></a-input>
+              </a-form-item>
+            </a-col>
+            <a-col :md="8" :sm="24">
               <a-form-item label="Role">
                 <a-select v-model="queryParam.role">
                   <a-select-option key="0" :value="null">All</a-select-option>

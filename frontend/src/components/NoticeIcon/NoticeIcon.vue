@@ -21,16 +21,9 @@
                 :description="item.date | moment('YYYY-MM-DD HH:mm')"
               >
                 <template slot="title">
-                  <router-link
-                    :to="{
-                      name: 'Order',
-                      params: { id: item.pk },
-                      query: { tab: 'base' }
-                    }"
-                    replace
-                  >
+                  <a @click="next(item, 'base')">
                     {{ item.message }}
-                  </router-link>
+                  </a>
                 </template>
               </a-list-item-meta>
               <template slot="extra">
@@ -51,16 +44,9 @@
                 :description="item.date | moment('YYYY-MM-DD HH:mm')"
               >
                 <template slot="title">
-                  <router-link
-                    :to="{
-                      name: 'Order',
-                      params: { id: item.pk },
-                      query: { tab: 'job' }
-                    }"
-                    replace
-                  >
+                  <a @click="next(item, 'job')">
                     {{ item.message }}
-                  </router-link>
+                  </a>
                 </template>
               </a-list-item-meta>
               <template slot="extra">
@@ -81,16 +67,9 @@
                 :description="item.date | moment('YYYY-MM-DD HH:mm')"
               >
                 <template slot="title">
-                  <router-link
-                    :to="{
-                      name: 'Order',
-                      params: { id: item.pk },
-                      query: { tab: 'comment' }
-                    }"
-                    replace
-                  >
+                  <a @click="next(item, 'comment')">
                     {{ item.message }}
-                  </router-link>
+                  </a>
                 </template>
               </a-list-item-meta>
               <template slot="extra">
@@ -151,6 +130,17 @@ export default {
     },
     removeMessage(item) {
       this.$store.dispatch("removeMessage", item);
+    },
+    next(item, tab) {
+      this.fetchNotice();
+      this.removeMessage(item);
+      this.$router
+        .replace({
+          name: "Order",
+          params: { id: item.pk },
+          query: { tab: tab }
+        })
+        .catch(err => {});
     }
   }
 };

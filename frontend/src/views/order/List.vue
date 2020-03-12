@@ -3,7 +3,21 @@
     <a-card>
       <div class="table-page-search-wrapper">
         <a-form layout="inline">
-          <a-row :gutter="48">
+          <a-row :gutter="24">
+            <a-col :md="8" :sm="24">
+              <a-form-item label="Search">
+                <a-input v-model="queryParam.search"></a-input>
+              </a-form-item>
+            </a-col>
+            <a-col :md="8" :sm="24">
+              <a-form-item label="From Date">
+                <a-range-picker
+                  :value="rangeDay"
+                  @change="value => (rangeDay = value)"
+                />
+              </a-form-item>
+            </a-col>
+
             <a-col :md="8" :sm="24">
               <a-form-item label="Status">
                 <a-select v-model="queryParam.status">
@@ -17,7 +31,7 @@
                 </a-select>
               </a-form-item>
             </a-col>
-            <a-col :md="8" :sm="24">
+            <a-col :md="12" :sm="24">
               <a-form-item>
                 <a-button type="primary" @click="() => $refs.table.refresh()">
                   Search
@@ -259,6 +273,7 @@ export default {
       queryParam: {
         status: null
       },
+      rangeDay: undefined,
       columns: [
         {
           title: "#",
@@ -314,6 +329,21 @@ export default {
       form: {}
     };
   },
+  watch: {
+    rangeDay(newQuestion, oldQuestion) {
+      if (
+        newQuestion != null &&
+        newQuestion != undefined &&
+        newQuestion.length > 0
+      ) {
+        this.queryParam.start = newQuestion[0].format("YYYY-MM-DD 00:00:00");
+        this.queryParam.end = newQuestion[1].format("YYYY-MM-DD 23:59:59");
+      } else {
+        this.queryParam.start = undefined;
+        this.queryParam.end = undefined;
+      }
+    }
+  },
   methods: {
     moment,
     openModal() {
@@ -325,7 +355,6 @@ export default {
       };
     },
     submit() {
-      console.log(this.from, "----", this.to, "===");
       createOrder(
         Object.assign(this.form, {
           from_date: this.from.format("YYYY-MM-DD HH:mm:ss"),

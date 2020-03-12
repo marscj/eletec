@@ -23,6 +23,7 @@ class UserView(ModelViewSet):
     queryset = User.objects.all()
 
     filter_class = UserFilter
+    search_fields = ['username', 'phone_number', 'email', 'first_name', 'last_name']
             
 class UserInfoView(APIView):
     permission_classes = [IsAuthenticated]
