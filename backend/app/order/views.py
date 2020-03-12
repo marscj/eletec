@@ -18,7 +18,7 @@ class OrderFilter(django_filters.FilterSet):
         parent = super().qs
         user = getattr(self.request, 'user', None)
 
-        if not user.is_superuser:
+        if user.is_superuser:
             return parent
         else:
             return parent.filter(user__id=user.id)

@@ -9,7 +9,7 @@
               name="phone number"
               v-slot="{ errors }"
             >
-              <a-input placeholder="Phone Number" v-model="from.phone_number">
+              <a-input placeholder="Phone Number" v-model="form.phone_number">
                 <a-icon
                   slot="prefix"
                   type="mobile"
@@ -33,12 +33,9 @@
         <a-col :span="24">
           <a-form-item>
             <validation-provider vid="otp" name="captcha" v-slot="{ errors }">
-              <!-- <a-input placeholder="Verify Code" v-model="from.otp">
-                <a-icon slot="prefix" type="mail" />
-              </a-input> -->
               <a-row :gutter="4">
                 <a-col :span="20">
-                  <a-input v-model="from.otp" placeholder="Captcha" />
+                  <a-input v-model="form.otp" placeholder="Captcha" />
                 </a-col>
                 <a-col :span="4">
                   <a-button
@@ -53,16 +50,6 @@
             </validation-provider>
           </a-form-item>
         </a-col>
-        <!-- <a-col :span="8">
-          <a-button
-            style="display: block; width: 100%; height: 40px;"
-            :disabled="state.smsSendBtn"
-            @click.stop.prevent="generate"
-            type="primary"
-            ghost
-            v-text="(!state.smsSendBtn && 'Send') || state.time + ' s'"
-          ></a-button>
-        </a-col> -->
       </a-row>
       <a-row type="flex" justify="center" align="middle">
         <a-button
@@ -102,7 +89,7 @@ export default {
   },
   computed: {
     phone_number() {
-      return "+971" + this.from.phone_number;
+      return "+971" + this.form.phone_number;
     }
   },
   methods: {
@@ -152,7 +139,7 @@ export default {
 
       Login({
         phone_number: this.phone_number,
-        otp: this.from.otp
+        otp: this.form.otp
       })
         .then(res => {
           this.loginSuccess();

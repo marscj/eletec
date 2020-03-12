@@ -81,13 +81,26 @@
             :label-col="{ span: 6 }"
             :wrapper-col="{ span: 12 }"
           >
-            <a-form-item label="phone_number">
+            <a-form-item label="Phone Number">
               <validation-provider
                 vid="phone_number"
                 name="phone number"
                 v-slot="{ errors }"
               >
-                <a-input v-model="form.phone_number"></a-input>
+                <a-input v-model="form.phone_number">
+                  <a-icon
+                    slot="prefix"
+                    type="mobile"
+                    :style="{ color: 'rgba(0,0,0,.25)' }"
+                  />
+                  <a-select
+                    slot="addonBefore"
+                    defaultValue="+971"
+                    style="width:80px"
+                  >
+                    <a-select-option value="+971">+971</a-select-option>
+                  </a-select>
+                </a-input>
                 <span class="errorText">{{ errors[0] }}</span>
               </validation-provider>
             </a-form-item>
@@ -173,8 +186,8 @@ export default {
     },
     submit() {
       createUser({
-        username: this.form.phone_number,
-        phone_number: this.form.phone_number
+        username: "+971" + this.form.phone_number,
+        phone_number: "+971" + this.form.phone_number
       })
         .then(res => {
           this.modal = false;

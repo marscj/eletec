@@ -22,7 +22,7 @@ class UserFilter(django_filters.FilterSet):
         parent = super().qs
         user = getattr(self.request, 'user', None)
 
-        if not user.is_superuser:
+        if user.is_superuser:
             return parent
         else:
             return parent.filter(id=user.id)
@@ -67,7 +67,7 @@ class ContractFilter(django_filters.FilterSet):
         parent = super().qs
         user = getattr(self.request, 'user', None)
 
-        if not user.is_superuser:
+        if user.is_superuser:
             return parent
         else:
             return parent.filter(user__id=user.id)
@@ -87,7 +87,7 @@ class AddressFilter(django_filters.FilterSet):
         parent = super().qs
         user = getattr(self.request, 'user', None)
 
-        if not user.is_superuser:
+        if user.is_superuser:
             return parent
         else:
             return parent.filter(user__id=user.id)
@@ -107,7 +107,7 @@ class SkillFilter(django_filters.FilterSet):
         parent = super().qs
         user = getattr(self.request, 'user', None)
 
-        if not user.is_superuser:
+        if user.is_superuser:
             return parent
         else:
             return parent.filter(user__id=user.id)
@@ -127,7 +127,7 @@ class WorkTimeFilter(django_filters.FilterSet):
         parent = super().qs
         user = getattr(self.request, 'user', None)
 
-        if not user.is_superuser:
+        if user.is_superuser:
             return parent
         else:
             return parent.filter(user__id=user.id)
@@ -157,7 +157,7 @@ class ApplicationFilter(django_filters.FilterSet):
         parent = super().qs
         user = getattr(self.request, 'user', None)
 
-        if not user.is_superuser:
+        if user.is_superuser:
             return parent.filter(apply=False)
         else:
             return parent.filter(user__id=user.id, apply=False)
