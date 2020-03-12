@@ -29,23 +29,14 @@
         showPagination="auto"
         bordered
       >
-        <!-- <template slot="date_joined" slot-scope="text">
-          <span>
-            {{ text | moment("YYYY-MM-DD") }}
-          </span>
-        </template> -->
         <template slot="active" slot-scope="data">
           <a-checkbox :checked="data" disabled />
         </template>
 
-        <!-- <template slot="groups" slot-scope="data">
-          <span>{{
-            $_.join(
-              data.map(f => f.name),
-              ", "
-            )
-          }}</span>
-        </template> -->
+        <template slot="apply" slot-scope="data">
+          <a-checkbox :checked="data" disabled />
+        </template>
+
         <template slot="action" slot-scope="data">
           <template>
             <router-link :to="{ name: 'User', params: { id: data.id } }">
@@ -75,11 +66,6 @@ export default {
       queryParam: {},
       columns: [
         {
-          title: "#",
-          dataIndex: "id",
-          width: "80px"
-        },
-        {
           title: "NAME",
           dataIndex: "name"
         },
@@ -98,11 +84,12 @@ export default {
             return <span>{RoleOptions[text].label}</span>;
           }
         },
-        // {
-        //   title: "GROUP",
-        //   dataIndex: "groups",
-        //   scopedSlots: { customRender: "groups" }
-        // },
+        {
+          title: "APPLY",
+          dataIndex: "apply",
+          width: "80px",
+          scopedSlots: { customRender: "apply" }
+        },
         {
           title: "ACTIVE",
           dataIndex: "is_active",

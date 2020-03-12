@@ -100,6 +100,11 @@
           </ul>
         </template>
 
+        <template slot="user" slot-scope="data">
+          <p>{{ data.name }}</p>
+          <p>{{ data.phone_number }}</p>
+        </template>
+
         <template slot="action" slot-scope="data">
           <template>
             <router-link
@@ -162,7 +167,8 @@ export default {
         {
           title: "USER",
           dataIndex: "user",
-          width: "120px"
+          width: "120px",
+          scopedSlots: { customRender: "user" }
         },
         {
           title: "CREATE",

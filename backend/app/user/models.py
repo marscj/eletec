@@ -20,6 +20,8 @@ class User(PhoneNumberAbstactUser):
 
     photo = VersatileImageField(upload_to='resource/user/photo/', ppoi_field='image_ppoi', null=True, blank=True)
 
+    apply = models.BooleanField(blank=True, null=True, default=False)
+
     image_ppoi = PPOIField()
 
     images = GenericRelation(Image, related_query_name='user')
