@@ -22,3 +22,5 @@ class AppView(ModelViewSet):
     serializer_class = AppSerializer
     permission_classes = [IsAuthenticated, CustomModelPermissions]
     queryset = App.objects.all()
+
+    ordering = ['sorter']
