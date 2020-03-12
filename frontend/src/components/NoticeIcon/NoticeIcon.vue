@@ -27,6 +27,7 @@
                       params: { id: item.pk },
                       query: { tab: 'base' }
                     }"
+                    replace
                   >
                     {{ item.message }}
                   </router-link>
@@ -56,6 +57,7 @@
                       params: { id: item.pk },
                       query: { tab: 'job' }
                     }"
+                    replace
                   >
                     {{ item.message }}
                   </router-link>
@@ -85,6 +87,7 @@
                       params: { id: item.pk },
                       query: { tab: 'comment' }
                     }"
+                    replace
                   >
                     {{ item.message }}
                   </router-link>

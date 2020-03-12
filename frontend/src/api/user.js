@@ -26,6 +26,16 @@ export function getUser(pk) {
   });
 }
 
+export function createUser(data) {
+  return axios({
+    url: API.Users,
+    method: "post",
+    data: data
+  })
+    .then(createSuccess)
+    .catch(createFailed);
+}
+
 export function updateUser(pk, data) {
   return axios({
     url: API.Users + `${pk}/`,

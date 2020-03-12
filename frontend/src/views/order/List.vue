@@ -29,9 +29,7 @@
       </div>
 
       <div class="table-operator">
-        <a-button type="primary" icon="plus" @click="$refs.createModal.add()"
-          >New</a-button
-        >
+        <a-button type="primary" icon="plus" @click="openModal">New</a-button>
       </div>
 
       <s-table
@@ -134,6 +132,102 @@
           </template>
         </template>
       </s-table>
+
+      <a-modal v-model="modal" title="Create User" @ok="submit">
+        <validation-observer ref="observer">
+          <validation-provider name="non_field_errors" v-slot="{ errors }">
+            <span class="errorText">{{ errors[0] }}</span>
+          </validation-provider>
+          <a-form :form="form" :submit="submit">
+            <a-row :gutter="16">
+              <a-col :span="12">
+                <a-form-item label="Service">
+                  <a-select v-model="form.service">
+                    <a-select-option
+                      v-for="data in ServiceOptions"
+                      :key="data.value"
+                      :value="data.value"
+                      >{{ data.label }}</a-select-option
+                    >
+                  </a-select>
+                </a-form-item>
+              </a-col>
+
+              <a-col :span="12">
+                <a-form-item label="User ID">
+                  <validation-provider vid="user_id" v-slot="{ errors }">
+                    <a-input v-model="form.user_id"> </a-input>
+                    <span class="errorText">{{ errors[0] }}</span>
+                  </validation-provider>
+                </a-form-item>
+              </a-col>
+
+              <a-col :span="12">
+                <a-form-item label="Main Info">
+                  <a-select
+                    v-model="form.main_info"
+                    v-if="form.service != null"
+                  >
+                    <a-select-option
+                      v-for="(data, index) in MainInfoOptions[form.service]"
+                      :key="index"
+                      :value="index"
+                      >{{ data }}</a-select-option
+                    >
+                  </a-select>
+                </a-form-item>
+              </a-col>
+
+              <a-col :span="12">
+                <a-form-item label="Sub Info">
+                  <a-select
+                    v-model="form.sub_info"
+                    v-if="form.service != null && form.main_info != null"
+                  >
+                    <a-select-option
+                      v-for="(data, index) in SubInfoOptions[form.service][
+                        form.main_info
+                      ]"
+                      :key="index"
+                      :value="index"
+                      >{{ data }}</a-select-option
+                    >
+                  </a-select>
+                </a-form-item>
+              </a-col>
+
+              <a-col :span="12">
+                <a-form-item label="From Date">
+                  <a-date-picker
+                    v-model="from"
+                    format="YYYY-MM-DD HH:mm"
+                    class="w-full"
+                  ></a-date-picker>
+                </a-form-item>
+              </a-col>
+
+              <a-col :span="12">
+                <a-form-item label="To Date">
+                  <a-date-picker
+                    v-model="to"
+                    format="YYYY-MM-DD HH:mm"
+                    class="w-full"
+                  ></a-date-picker>
+                </a-form-item>
+              </a-col>
+
+              <a-col :span="24">
+                <a-form-item label="Address">
+                  <validation-provider name="address" v-slot="{ errors }">
+                    <a-input v-model="form.address"></a-input>
+                    <span class="errorText">{{ errors[0] }}</span>
+                  </validation-provider>
+                </a-form-item>
+              </a-col>
+            </a-row>
+          </a-form>
+        </validation-observer>
+      </a-modal>
     </a-card>
   </page-view>
 </template>
@@ -141,7 +235,7 @@
 <script>
 import { PageView, RouteView } from "@/layouts";
 import { STable, Ellipsis } from "@/components";
-import { getOrders } from "@/api/order";
+import { getOrders, createOrder } from "@/api/order";
 import {
   StatusOptions,
   ServiceOptions,
@@ -213,11 +307,41 @@ export default {
             return res.result;
           }
         );
-      }
+      },
+      modal: false,
+      from: moment(new Date()),
+      to: moment(new Date()),
+      form: {}
     };
   },
   methods: {
-    moment
+    moment,
+    openModal() {
+      this.modal = true;
+      this.form = {
+        service: 0,
+        main_info: 0,
+        sub_info: 0
+      };
+    },
+    submit() {
+      console.log(this.from, "----", this.to, "===");
+      createOrder(
+        Object.assign(this.form, {
+          from_date: this.from.format("YYYY-MM-DD HH:mm:ss"),
+          to_date: this.to.format("YYYY-MM-DD HH:mm:ss")
+        })
+      )
+        .then(res => {
+          this.modal = false;
+          this.$refs.table.refresh();
+        })
+        .catch(error => {
+          if (error.response) {
+            this.$refs.observer.setErrors(error.response.data.result);
+          }
+        });
+    }
   }
 };
 </script>

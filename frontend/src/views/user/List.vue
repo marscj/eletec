@@ -29,9 +29,7 @@
       </div>
 
       <div class="table-operator">
-        <a-button type="primary" icon="plus" @click="$refs.createModal.add()"
-          >New</a-button
-        >
+        <a-button type="primary" icon="plus" @click="openModal">New</a-button>
       </div>
 
       <s-table
@@ -60,6 +58,32 @@
           </template>
         </template>
       </s-table>
+
+      <a-modal v-model="modal" title="Create User" @ok="submit">
+        <validation-observer ref="observer">
+          <validation-provider name="non_field_errors" v-slot="{ errors }">
+            <span class="errorText">{{ errors[0] }}</span>
+          </validation-provider>
+
+          <a-form
+            :form="form"
+            :submit="submit"
+            :label-col="{ span: 6 }"
+            :wrapper-col="{ span: 12 }"
+          >
+            <a-form-item label="phone_number">
+              <validation-provider
+                vid="phone_number"
+                name="phone number"
+                v-slot="{ errors }"
+              >
+                <a-input v-model="form.phone_number"></a-input>
+                <span class="errorText">{{ errors[0] }}</span>
+              </validation-provider>
+            </a-form-item>
+          </a-form>
+        </validation-observer>
+      </a-modal>
     </a-card>
   </page-view>
 </template>
@@ -67,7 +91,7 @@
 <script>
 import { PageView, RouteView } from "@/layouts";
 import { STable, Ellipsis } from "@/components";
-import { getUsers } from "@/api/user";
+import { getUsers, createUser } from "@/api/user";
 import { RoleOptions } from "./const";
 
 export default {
@@ -123,8 +147,31 @@ export default {
         return getUsers(Object.assign(parameter, this.queryParam)).then(res => {
           return res.result;
         });
-      }
+      },
+      modal: false,
+      form: {}
     };
+  },
+  methods: {
+    openModal() {
+      this.modal = true;
+      this.form = {};
+    },
+    submit() {
+      createUser({
+        username: this.form.phone_number,
+        phone_number: this.form.phone_number
+      })
+        .then(res => {
+          this.modal = false;
+          this.$refs.table.refresh();
+        })
+        .catch(error => {
+          if (error.response) {
+            this.$refs.observer.setErrors(error.response.data.result);
+          }
+        });
+    }
   }
 };
 </script>
