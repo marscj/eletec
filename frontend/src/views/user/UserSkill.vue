@@ -65,7 +65,7 @@
             </validation-provider>
           </a-form-item>
 
-          <a-form-item v-if="form.skill === 'Other'" label="Remark">
+          <a-form-item v-if="form.skill == 5" label="Remark">
             <validation-provider vid="remark" v-slot="{ errors }">
               <a-textarea v-model="form.remark"> </a-textarea>
               <span class="errorText">{{ errors[0] }}</span>

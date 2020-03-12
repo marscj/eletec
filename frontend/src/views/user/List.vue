@@ -24,7 +24,11 @@
             </a-col>
             <a-col :md="8" :sm="24">
               <a-form-item>
-                <a-button type="primary" @click="() => $refs.table.refresh()">
+                <a-button
+                  type="primary"
+                  html-type="submit"
+                  @click="() => $refs.table.refresh()"
+                >
                   Search
                 </a-button>
               </a-form-item>
