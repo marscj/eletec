@@ -27,7 +27,7 @@ class GenerateOTP(views.APIView):
         
         if token.is_valid():
             otp = get_random_string(4, '0123456789')
-            email = token.data.get('email')
+            email = token.validated_data.get('email')
             from_phone = settings.DEFAULT_FROM_EMAIL
 
             try: 
@@ -35,7 +35,8 @@ class GenerateOTP(views.APIView):
                 email_token.otp = otp
                 email_token.save()
             except EmailAddress.DoesNotExist:
-                EmailAddress.objects.create(email=email, otp=otp)
+                token.validated_data['otp'] = otp
+                EmailAddress.objects.create(**token.validated_data)
 
             message = render_mail(
                 'verify_email.html',

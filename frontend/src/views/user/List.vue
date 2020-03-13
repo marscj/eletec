@@ -143,7 +143,7 @@ export default {
         },
         {
           title: "EMAIL",
-          dataIndex: "email"
+          dataIndex: "email.email"
         },
         {
           title: "ROLE",
