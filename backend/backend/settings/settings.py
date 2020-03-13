@@ -172,13 +172,13 @@ AUTHENTICATION_BACKENDS = [
 
 SENDSMS_BACKEND = 'service.sms.backends.twilio.SmsBackend'
 
-# Twilio
+# SMS Twilio
 SENDSMS_URL = "https://api.twilio.com/2010-04-01/Accounts/ACda91c280b2cd6511484f79ec3f3e03cd/Messages.json"
 SENDSMS_ACCOUNT_SID = 'ACda91c280b2cd6511484f79ec3f3e03cd'
 SENDSMS_AUTH_TOKEN = '6f00b28a9cdf341c31481a6f549b40da'
 SENDSMS_FROM_NUMBER = '+15804564076'
 
-# SMS
+# EMAIL
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'mail.eletec.ae'
 EMAIL_USE_TLS = True
