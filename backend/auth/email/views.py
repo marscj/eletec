@@ -3,24 +3,21 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.utils.crypto import get_random_string
 from django.conf import settings
 
+from smtplib import SMTPException
+
 from rest_framework.response import Response
 from rest_framework import views, generics
 from rest_framework import throttling
 from rest_framework import status
 
-from service.sms.message import SmsMessage
-
-from .models import EmailToken
-from .serializers import EmailTokenSerializer, EmailTokenValidateSerializer
-
-from .utils import user_detail
+from .models import EmailAddress
+from .serializers import EmailAddressSerializer, EmailAddressValidateSerializer
+from service.email.utils import render_mail
 
 class GenerateOTP(generics.CreateAPIView):
     
-    queryset = EmailToken.objects.all()
-    
-    serializer_class = EmailTokenSerializer
-    
+    queryset = EmailAddress.objects.all()
+    serializer_class = EmailAddressSerializer
     throttle_classes = [throttling.UserRateThrottle]
 
     def post(self, request, format=None):
@@ -31,50 +28,42 @@ class GenerateOTP(generics.CreateAPIView):
             email = token.data.get('email')
 
             try: 
-                email_token = EmailToken.objects.get(email=email)
+                email_token = EmailAddress.objects.get(email=email)
                 email_token.otp = otp
                 email_token.save()
-            except EmailToken.DoesNotExist:
-                EmailToken.objects.create(email=email, otp=otp)
+            except EmailAddress.DoesNotExist:
+                EmailAddress.objects.create(email=email, otp=otp)
 
-            from_phone = getattr(settings, 'SENDSMS_FROM_NUMBER')
+            message = render_mail(
+                'verify_email.html',
+                'Please Confirm Your E-mail Address',
+                from_email,
+                email,
+                {'otp': otp}
+            )
 
-            message = SmsMessage(
-                body='[Eletec] Your verification code is %s' % otp,
-                from_phone=from_phone,
-                to=email
-            ).send()
-            
-            if message.ok:
+            try:
+                message.send()
                 return Response(token.data)
-            else:
+            except SMTPException as e:
                 return Response({'error': 'failed to send'}, status=status.HTTP_400_BAD_REQUEST)
 
         return Response(token.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ValidateOTP(generics.CreateAPIView):
-    queryset = EmailToken.objects.all()
-    serializer_class = PhoneTokenValidateSerializer
+
+    queryset = EmailAddress.objects.all()
+    serializer_class = EmailAddressValidateSerializer
     throttle_classes = [throttling.UserRateThrottle]
 
     def post(self, request, format=None):
+        
         token = self.serializer_class(data=request.data, context={'request': request})
+        
         if token.is_valid():
+            token.verified = True
+            token.save()
 
-            email = token.data.get("email")
-            otp = token.data.get("otp")
-            
-            user = authenticate(request, email=email, otp=otp)
-
-            if user:
-                last_login = user.last_login
-                login(request, user)
-                response = user_detail(user, last_login)
-                return Response(response, status=status.HTTP_200_OK)
+            return(token.data)
 
         return Response(token.errors, status=status.HTTP_400_BAD_REQUEST)
-        
-# Create your views here.
-# send_mail('Subject here', 'Here is the message.', 'mobileapp@eletec.ae', ['mars.jinxing@gmail.com'], fail_silently=False)
-# from django.core.mail import send_mail, BadHeaderError
-

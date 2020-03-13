@@ -1,23 +1,25 @@
 from rest_framework import serializers
 
-from .models import EmailToken
+from .models import EmailAddress
 
-class EmailTokenSerializer(serializers.ModelSerializer):
+class EmailAddressSerializer(serializers.ModelSerializer):
 
     email = serializers.EmailField()
 
+    user_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(serializers.CurrentUserDefault().id))
+
     class Meta:
-        model = EmailToken
+        model = EmailAddress
         fields = '__all__'
 
-class EmailTokenValidateSerializer(serializers.ModelSerializer):
+class EmailAddressValidateSerializer(serializers.ModelSerializer):
 
     email = serializers.EmailField(required=True)
 
     otp = serializers.CharField(required=True, max_length=6)
 
     class Meta:
-        model = PhoneToken
+        model = EmailAddress
         fields = '__all__'
 
     def validate(self, validate_data):
@@ -25,8 +27,8 @@ class EmailTokenValidateSerializer(serializers.ModelSerializer):
         otp = validate_data.get("otp")
         
         try:
-            EmailToken.objects.get(email=email, otp=otp)    
-        except EmailToken.DoesNotExist:
+            EmailAddress.objects.get(email=email, otp=otp)    
+        except EmailAddress.DoesNotExist:
             raise serializers.ValidationError({'otp': 'Verification code error'})
             
         return validate_data
