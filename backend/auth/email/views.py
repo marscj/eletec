@@ -6,6 +6,7 @@ from django.conf import settings
 from smtplib import SMTPException
 
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import views, generics
 from rest_framework import throttling
 from rest_framework import status
@@ -19,6 +20,7 @@ class GenerateOTP(generics.CreateAPIView):
     queryset = EmailAddress.objects.all()
     serializer_class = EmailAddressSerializer
     throttle_classes = [throttling.UserRateThrottle]
+    permission_classes = [IsAuthenticated]
 
     def post(self, request, format=None):
         token = self.serializer_class(data=request.data, context={'request': request})
@@ -26,6 +28,7 @@ class GenerateOTP(generics.CreateAPIView):
         if token.is_valid():
             otp = get_random_string(4, '0123456789')
             email = token.data.get('email')
+            from_phone = settings.DEFAULT_FROM_EMAIL
 
             try: 
                 email_token = EmailAddress.objects.get(email=email)
@@ -37,7 +40,7 @@ class GenerateOTP(generics.CreateAPIView):
             message = render_mail(
                 'verify_email.html',
                 'Please Confirm Your E-mail Address',
-                from_email,
+                from_phone,
                 email,
                 {'otp': otp}
             )
@@ -55,6 +58,7 @@ class ValidateOTP(generics.CreateAPIView):
     queryset = EmailAddress.objects.all()
     serializer_class = EmailAddressValidateSerializer
     throttle_classes = [throttling.UserRateThrottle]
+    permission_classes = [IsAuthenticated]
 
     def post(self, request, format=None):
         
