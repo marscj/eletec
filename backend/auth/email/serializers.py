@@ -13,19 +13,11 @@ class EmailAddressSerializer(serializers.ModelSerializer):
         model = EmailAddress
         fields = '__all__'
 
-class EmailAddressValidateSerializer(serializers.ModelSerializer):
+class EmailAddressValidateSerializer(serializers.Serializer):
 
     email = serializers.EmailField(required=True)
 
     otp = serializers.CharField(required=True, max_length=6)
-
-    verified = serializers.BooleanField(read_only=True)
-
-    class Meta:
-        model = EmailAddress
-        fields = (
-            'email', 'otp', 'verified'
-        )
 
     def validate(self, validate_data):
         email = validate_data.get("email")
