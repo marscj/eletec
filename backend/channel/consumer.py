@@ -44,7 +44,7 @@ class MessageConsumer(AsyncJsonWebsocketConsumer):
         await self.send_json({'msg_type': 2, 'messageID': str(uuid.uuid1()), 'message': event['message'], 'pk': event['pk'], 'date': str(timezone.localtime())})
 
     async def application_message(self, event):
-        await self.send_json({'msg_type': 2, 'messageID': str(uuid.uuid1()), 'message': event['message'], 'pk': event['pk'], 'date': str(timezone.localtime())})
+        await self.send_json({'msg_type': 3, 'messageID': str(uuid.uuid1()), 'message': event['message'], 'pk': event['pk'], 'date': str(timezone.localtime())})
 
 
         

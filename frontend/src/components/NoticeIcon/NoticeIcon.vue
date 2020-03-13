@@ -32,7 +32,7 @@
             </a-list-item>
           </a-list>
         </a-tab-pane>
-        <a-tab-pane key="2">
+        <!-- <a-tab-pane key="2">
           <template slot="tab">
             <a-badge :count="job_count" :offset="[12]">
               Job
@@ -54,7 +54,7 @@
               </template>
             </a-list-item>
           </a-list>
-        </a-tab-pane>
+        </a-tab-pane> -->
         <a-tab-pane key="3">
           <template slot="tab">
             <a-badge :count="comment_count" :offset="[12]">
@@ -62,6 +62,29 @@
             </a-badge>
           </template>
           <a-list :dataSource="commentData" itemLayout="vertical">
+            <a-list-item slot="renderItem" slot-scope="item">
+              <a-list-item-meta
+                :description="item.date | moment('YYYY-MM-DD HH:mm')"
+              >
+                <template slot="title">
+                  <a @click="next(item, 'comment')">
+                    {{ item.message }}
+                  </a>
+                </template>
+              </a-list-item-meta>
+              <template slot="extra">
+                <a-icon type="delete" @click="removeMessage(item)" />
+              </template>
+            </a-list-item>
+          </a-list>
+        </a-tab-pane>
+        <a-tab-pane key="4">
+          <template slot="tab">
+            <a-badge :count="application_count" :offset="[12]">
+              Application
+            </a-badge>
+          </template>
+          <a-list :dataSource="applicationData" itemLayout="vertical">
             <a-list-item slot="renderItem" slot-scope="item">
               <a-list-item-meta
                 :description="item.date | moment('YYYY-MM-DD HH:mm')"
@@ -114,6 +137,9 @@ export default {
     comment_count() {
       return this.$store.getters.message.filter(f => f.msg_type == 2).length;
     },
+    application_count() {
+      return this.$store.getters.message.filter(f => f.msg_type == 3).length;
+    },
     orderData() {
       return this.$store.getters.message.filter(f => f.msg_type == 0);
     },
@@ -122,6 +148,9 @@ export default {
     },
     commentData() {
       return this.$store.getters.message.filter(f => f.msg_type == 2);
+    },
+    applicationData() {
+      return this.$store.getters.message.filter(f => f.msg_type == 3);
     }
   },
   methods: {

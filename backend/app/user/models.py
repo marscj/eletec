@@ -179,6 +179,19 @@ class Comment(models.Model):
     class Meta:
         db_table = 'comment'
 
+@receiver(post_save, sender=Comment)
+def comment_post_save(sender, instance, created, **kwargs):
+    
+    if created:
+        channel_layer = get_channel_layer()
+        
+        if instance.content_type.model == 'order':
+            async_to_sync(channel_layer.group_send)('message', {
+                'type': 'comment.message',
+                'message': 'You have a new comment',
+                'pk': instance.id,
+            })
+
 # apply for freelance 
 class Application(models.Model):
 
