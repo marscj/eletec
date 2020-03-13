@@ -1,12 +1,13 @@
 from rest_framework import serializers
 
 from .models import EmailAddress
+from middleware.user import CurrentUserDefault
 
 class EmailAddressSerializer(serializers.ModelSerializer):
 
     email = serializers.EmailField()
 
-    user_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(serializers.CurrentUserDefault().id))
+    user_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(CurrentUserDefault()))
 
     class Meta:
         model = EmailAddress
