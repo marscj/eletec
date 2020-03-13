@@ -19,16 +19,22 @@ class EmailAddressValidateSerializer(serializers.ModelSerializer):
 
     otp = serializers.CharField(required=True, max_length=6)
 
+    verified = serializers.BooleanField(read_only=True)
+
     class Meta:
         model = EmailAddress
-        fields = '__all__'
+        fields = (
+            'email', 'otp', 'verified'
+        )
 
     def validate(self, validate_data):
         email = validate_data.get("email")
         otp = validate_data.get("otp")
         
         try:
-            EmailAddress.objects.get(email=email, otp=otp)    
+            email_address = EmailAddress.objects.get(email=email, otp=otp)
+            email_address.verified = True
+            email_address.save()
         except EmailAddress.DoesNotExist:
             raise serializers.ValidationError({'otp': 'Verification code error'})
             

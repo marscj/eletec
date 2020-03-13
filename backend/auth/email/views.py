@@ -15,7 +15,7 @@ from .models import EmailAddress
 from .serializers import EmailAddressSerializer, EmailAddressValidateSerializer
 from service.email.utils import render_mail
 
-class GenerateOTP(generics.CreateAPIView):
+class GenerateOTP(views.APIView):
     
     queryset = EmailAddress.objects.all()
     serializer_class = EmailAddressSerializer
@@ -53,7 +53,7 @@ class GenerateOTP(generics.CreateAPIView):
 
         return Response(token.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class ValidateOTP(generics.CreateAPIView):
+class ValidateOTP(views.APIView):
 
     queryset = EmailAddress.objects.all()
     serializer_class = EmailAddressValidateSerializer
@@ -65,9 +65,6 @@ class ValidateOTP(generics.CreateAPIView):
         token = self.serializer_class(data=request.data, context={'request': request})
         
         if token.is_valid():
-            token.verified = True
-            token.save()
-
-            return(token.data)
+            return Response(token.data)
 
         return Response(token.errors, status=status.HTTP_400_BAD_REQUEST)
