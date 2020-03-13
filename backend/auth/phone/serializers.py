@@ -24,8 +24,10 @@ class PhoneTokenUser(serializers.ModelSerializer):
         fields = '__all__'
 
 class PhoneTokenValidateSerializer(serializers.ModelSerializer):
+    
     phone_number = PhoneNumberField(required=True)
-    otp = serializers.CharField(required=True, max_length=4)
+    
+    otp = serializers.CharField(required=True, max_length=6)
 
     class Meta:
         model = PhoneToken

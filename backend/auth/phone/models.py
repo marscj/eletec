@@ -47,7 +47,6 @@ class PhoneNumberAbstactUser(AbstractUser):
 class PhoneToken(models.Model):
     phone_number = PhoneNumberField(blank=True, null=True, unique=True)
     otp = models.CharField(blank=True, null=True, max_length=6)
-    used = models.BooleanField(default=False)
 
     class Meta:
         db_table = 'phone_token'
