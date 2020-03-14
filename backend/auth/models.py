@@ -1,44 +1,32 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.core import signing
+from django.contrib.auth.models import UserManager
 
 from phonenumber_field.modelfields import PhoneNumberField
 
-class UserManager(BaseUserManager):
-    use_in_migrations = True
+from .adapter import AuthAdapter
 
-    def _create_user(self, username, phone_number, email, password, **extra_fields):
-        if not username:
-            raise ValueError('The given username must be set')
-        email = self.normalize_email(email)
-        username = self.model.normalize_username(username)
-        user = self.model(username=username, email=email, phone_number=phone_number, **extra_fields)
-        user.set_password(password)
-        user.save(using=self._db)
-        return user
-
-    def create_user(self, username, phone_number, email=None, password=None, **extra_fields):
+class AuthUserManager(UserManager):
+    
+    def create_phone_user(self, phone_number, **extra_fields):
         extra_fields.setdefault('is_staff', False)
         extra_fields.setdefault('is_superuser', False)
-        return self._create_user(username, phone_number, email, password, **extra_fields)
+        extra_fields.setdefault('phone_number', phone_number)
 
-    def create_superuser(self, username, email, password, **extra_fields):
+        return self._create_user(phone_number, **extra_fields)
+
+    def create_superuser(self, username, email=None, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
+        extra_fields.setdefault('phone_number', username)
 
-        if extra_fields.get('is_staff') is not True:
-            raise ValueError('Superuser must have is_staff=True.')
-        if extra_fields.get('is_superuser') is not True:
-            raise ValueError('Superuser must have is_superuser=True.')
+        return self._create_user(username, email, password, **extra_fields)
 
-        return self._create_user(username, username, email, password, **extra_fields)
-
-class User(AbstractUser):
-    
-    email_verified = models.BooleanField(default=False)
+class AuthUser(AbstractUser):
 
     phone_number = PhoneNumberField(unique=True, blank=True, null=True)
 
-    objects = UserManager()
+    objects = AuthUserManager()
 
     class Meta:
         abstract = True
@@ -55,6 +43,18 @@ class User(AbstractUser):
         confirmation = self.phone_confirmation.all().last()
         if confirmation:
             return confirmation.otp == otp and not confirmation.expired()
+
+class EmailAddress(models.Model):
+
+    email = models.EmailField(unique=True, max_length=128)
+                              
+    verified = models.BooleanField(default=False)
+
+    user = models.ForeignKey(User, related_name='email_address', on_delete=models.SET_NULL, blank=True, null=True)
+
+    class Meta:
+        db_table = 'email_confirmation'
+        
 
 class PhoneConfirmation(models.Model):
 
@@ -73,35 +73,31 @@ class PhoneConfirmation(models.Model):
 
 class EmailConfirmationHMAC:
 
-    def __init__(self, user):
-        self.user = user
+    def __init__(self, email_address):
+        self.email_address = email_address
 
     @property
     def key(self):
-        return signing.dumps(
-            obj=self.user.pk,
-            salt= '~28cUebFxB!FUiei')
+        return signing.dumps(obj=self.email_address.pk, salt='~28cUebFxB!FUiei')
 
     @classmethod
     def from_key(cls, key):
         try:
-            max_age = (
-                60 * 60 * 24 * app_settings.EMAIL_CONFIRMATION_EXPIRE_DAYS)
-            pk = signing.loads(
-                key,
-                max_age=max_age,
-                salt=app_settings.SALT)
-            ret = EmailConfirmationHMAC(EmailAddress.objects.get(pk=pk))
-        except (signing.SignatureExpired,
-                signing.BadSignature,
-                EmailAddress.DoesNotExist):
-            ret = None
-        return ret
+            max_age = (60 * 60 * 24 * 1)
+            pk = signing.loads(key, max_age=max_age, salt='~28cUebFxB!FUiei')
+            return EmailConfirmationHMAC(EmailAddress.objects.get(pk=pk))
+
+        except (signing.SignatureExpired, signing.BadSignature, EmailAddress.DoesNotExist):
+            return None
 
     def confirm(self, request):
-        if not self.user.email_verified:
-           self.user.email_verified = True
-           self.user.save()
+        if not self.email_address.verified:
+            email_address = self.email_address
+            
+            email_address.verified = True
+            email_address.save()
 
-    def send(self, request=None, signup=False):
-        get_adapter(request).send_confirmation_mail(request, self, signup)
+            return email_address
+
+    def send(self, request=None):
+        AuthAdapter(request).send_confirmation_mail(request, self)
