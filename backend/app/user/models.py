@@ -9,11 +9,11 @@ from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 from versatileimagefield.fields import VersatileImageField, PPOIField
 
-from auth.phone.models import PhoneNumberAbstactUser
-from auth.email.models import EmailAddress
+from auth.phone.models import PhoneNumberUser
+from auth.email.models import EmailMixin
 from app.generic.models import Image
 
-class User(AbstractUser, PhoneNumberAbstactUser, EmailAddress):
+class User(AbstractUser, PhoneNumberUser, EmailMixin):
     
     class Role(models.IntegerChoices):
         Customer = 0

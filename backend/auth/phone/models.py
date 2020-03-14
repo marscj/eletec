@@ -36,7 +36,7 @@ class PhoneNumberUserManager(BaseUserManager):
 
         return self._create_user(username, username, email, password, **extra_fields)
 
-class PhoneNumberAbstactUser(models.Model):
+class PhoneNumberUser(models.Model):
     phone_number = PhoneNumberField(unique=True, blank=True, null=True)
     objects = PhoneNumberUserManager()
 

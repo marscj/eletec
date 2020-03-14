@@ -10,7 +10,6 @@ from app.generic.models import Image
 from app.generic.serializers import ImageSerializer, ContentTypeField
 
 from .models import User, Address, Skill, WorkTime, Contract, Comment, Application
-from auth.email.serializers import EmailAddressSerializer
 
 class ContentTypeSerializer(serializers.ModelSerializer):
 
@@ -58,7 +57,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     name = serializers.SerializerMethodField()
 
-    email = serializers.SerializerMethodField()
+    # email = serializers.SerializerMethodField()
 
     class Meta:
         model = User
@@ -69,11 +68,11 @@ class UserSerializer(serializers.ModelSerializer):
     def get_name(self, obj):
         return obj.name
 
-    def get_email(self, obj):
-        email_address = obj.email_address.all().last()
-        if email_address:
-            serializers = EmailAddressSerializer(email_address, context=self.context)
-            return serializers.data
+    # def get_email(self, obj):
+    #     email_address = obj.email_address.all().last()
+    #     if email_address:
+    #         serializers = EmailAddressSerializer(email_address, context=self.context)
+    #         return serializers.data
 
     # def get_photo(self, obj):
     #     photo = obj.images.all().filter(tag='photo').last()

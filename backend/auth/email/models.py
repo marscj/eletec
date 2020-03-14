@@ -7,7 +7,7 @@ from django.conf import settings
 
 from .managers import EmailAddressManager, EmailConfirmationManager
 
-class EmailAddress(models.Model):
+class EmailMixin(models.Model):
 
     # email = models.EmailField(blank=True, null=True)
 
@@ -15,7 +15,7 @@ class EmailAddress(models.Model):
 
     # user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='email_address', blank=True, null=True)
 
-    objects = EmailAddressManager()
+    # objects = EmailAddressManager()
 
     class Meta:
         # db_table = 'email_address'
