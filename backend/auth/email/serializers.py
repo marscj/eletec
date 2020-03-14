@@ -24,6 +24,16 @@ class EmailAddressValidateSerializer(serializers.Serializer):
         email = validate_data.get("email")
         otp = validate_data.get("otp")
         
+        email_address = EmailAddress.objects.filter(email=email).last()
+
+        if email_address and email_address.otp not otp:
+            raise serializers.ValidationError({'otp': 'Verification code error'})
+        else:
+            raise serializers.ValidationError({'otp': 'Verification code error'})
+
+        email_address.verified = True
+        email_address.save()
+        
         try:
             email_address = EmailAddress.objects.get(email=email, otp=otp)
             email_address.verified = True

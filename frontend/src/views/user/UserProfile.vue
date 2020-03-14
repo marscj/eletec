@@ -41,6 +41,20 @@
           <a-input v-model="form.username" disabled> </a-input>
         </a-form-item>
 
+        <a-form-item label="Email">
+          <validation-provider vid="email" v-slot="{ errors }">
+            <a-input
+              v-if="form.email"
+              v-model="form.email.email"
+              disabled
+              :suffix="form.email.verified ? 'verified' : 'unverified'"
+            >
+            </a-input>
+            <a-input v-else disabled></a-input>
+            <span class="errorText">{{ errors[0] }}</span>
+          </validation-provider>
+        </a-form-item>
+
         <a-form-item label="Phone Number" required>
           <validation-provider
             vid="phone_number"
@@ -48,13 +62,6 @@
             v-slot="{ errors }"
           >
             <a-input v-model="form.phone_number"> </a-input>
-            <span class="errorText">{{ errors[0] }}</span>
-          </validation-provider>
-        </a-form-item>
-
-        <a-form-item label="Email">
-          <validation-provider vid="email" v-slot="{ errors }">
-            <a-input v-model="form.email"> </a-input>
             <span class="errorText">{{ errors[0] }}</span>
           </validation-provider>
         </a-form-item>
@@ -184,7 +191,7 @@ export default {
 
       formData.append("username", this.form.username);
       formData.append("phone_number", this.form.phone_number);
-      formData.append("email", this.form.email);
+      // formData.append("email", this.form.email);
       formData.append("first_name", this.form.first_name);
       formData.append("last_name", this.form.last_name);
       formData.append("role", this.form.role);

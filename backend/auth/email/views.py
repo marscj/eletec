@@ -1,7 +1,5 @@
 from django.contrib.auth import authenticate, login
 from django.core.exceptions import ObjectDoesNotExist
-from django.utils.crypto import get_random_string
-from django.conf import settings
 
 from smtplib import SMTPException
 
@@ -28,7 +26,7 @@ class GenerateOTP(views.APIView):
         if token.is_valid():
             otp = get_random_string(4, '0123456789')
             email = token.validated_data.get('email')
-            from_phone = settings.DEFAULT_FROM_EMAIL
+            
 
             try: 
                 email_token = EmailAddress.objects.get(email=email)
