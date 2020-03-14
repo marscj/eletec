@@ -1,6 +1,7 @@
 from django.db import models
 from django.core import signing
 from django.contrib.auth.models import AbstractUser, UserManager
+from django.conf import settings
 
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -50,7 +51,7 @@ class EmailAddress(models.Model):
                               
     verified = models.BooleanField(default=False)
 
-    user = models.ForeignKey(AuthUser, related_name='email_address', on_delete=models.SET_NULL, blank=True, null=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='email_address', on_delete=models.SET_NULL, blank=True, null=True)
 
     class Meta:
         db_table = 'email_confirmation'

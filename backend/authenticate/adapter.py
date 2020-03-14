@@ -39,8 +39,8 @@ class AuthAdapter(object):
     def send_sms(self, template_name, to_number, context):
         msg = render_sms(template_name, to_number, context)
 
-    def send_confirmation_mail(self, request, emailconfirmation):
-        activate_url = request.build_absolute_uri('/auth/confirmation_mail?key=' + emailconfirmation.key)
+    def send_confirmation_mail(self, emailconfirmation):
+        activate_url = self.request.build_absolute_uri('/auth/confirmation_mail?key=' + emailconfirmation.key)
         
         ctx = {'activate_url': activate_url}
 
@@ -48,7 +48,7 @@ class AuthAdapter(object):
 
         self.send_mail(email_template, emailconfirmation.email_address.email, ctx)
 
-    def send_confirmation_sms(self, request, phoneconfirmation):
+    def send_confirmation_sms(self, phoneconfirmation):
 
         email_template = 'phone_confirmation_message.txt'
 
