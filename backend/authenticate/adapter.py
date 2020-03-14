@@ -29,7 +29,7 @@ class AuthAdapter(object):
         return SmsMessage(
             body=body,
             from_phone=from_phone,
-            to=to_number
+            to=[to_number]
         )
 
     def send_mail(self, template_prefix, subject, to_email, context):

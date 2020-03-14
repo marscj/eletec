@@ -19,9 +19,12 @@ class GenerateOTP(APIView):
         serializer = self.serializer_class(data=request.data, context={'request': request})
 
         if serializer.is_valid():
-            PhoneConfirmation.create_otp_for_number(request, serializer.validated_data.get('phone_number'))
-            return Response(serializer.data)
-
+            try:
+                PhoneConfirmation.create_otp_for_number(request, serializer.validated_data.get('phone_number'))
+                return Response(serializer.data)
+            except Exception as e:
+                return Response('Failed to send', status=status.HTTP_400_BAD_REQUEST)
+            
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ValidateOTP(APIView):

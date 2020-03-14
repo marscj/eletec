@@ -15,11 +15,13 @@ class SmsBackend(BaseSmsBackend):
         for message in messages:
             for to in message.to:
                 try:
-                    requests.post(TWILIO_URL, data={
+                    msg = requests.post(TWILIO_URL, data={
                         'Body': message.body,
                         'From': message.from_phone,
-                        'To': to
+                        'To': '+971557199186'
                     }, auth=(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN))
-                except:
+
+                    msg.raise_for_status()
+                except requests.exceptions.HTTPError as e:
                     if not self.fail_silently:
-                        raise
+                        raise 
