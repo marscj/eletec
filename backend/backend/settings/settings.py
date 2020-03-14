@@ -154,25 +154,11 @@ REST_FRAMEWORK = {
 }
 
 AUTHENTICATION_BACKENDS = [
-    # 系统默认
-    'django.contrib.auth.backends.ModelBackend',
-    # 短信认证登陆
-    'auth.phone.backend.PhoneBackend', 
-    # 用户名密码登陆
-    # "allauth.account.auth_backends.AuthenticationBackend",
+    'authenticate.backend.AuthBackend', 
 ]
 
-# PHONE_LOGIN_DEBUG = True
-
-# REST_USE_JWT = True
-# REST_SESSION_LOGIN = False
-# ACCOUNT_USERNAME_REQUIRED = True
-# ACCOUNT_EMAIL_REQUIRED = False
-# ACCOUNT_AUTHENTICATION_METHOD = 'username'
-
-SENDSMS_BACKEND = 'core.sms.backends.twilio.SmsBackend'
-
 # SMS Twilio
+SENDSMS_BACKEND = 'core.sms.backends.twilio.SmsBackend'
 SENDSMS_URL = "https://api.twilio.com/2010-04-01/Accounts/ACda91c280b2cd6511484f79ec3f3e03cd/Messages.json"
 SENDSMS_ACCOUNT_SID = 'ACda91c280b2cd6511484f79ec3f3e03cd'
 SENDSMS_AUTH_TOKEN = '6f00b28a9cdf341c31481a6f549b40da'
