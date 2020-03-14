@@ -1,7 +1,11 @@
 from django.db import models
 from django.core import signing
 from django.contrib.auth.models import AbstractUser, UserManager
+from django.utils.crypto import get_random_string
 from django.conf import settings
+from django.utils import timezone
+
+import datetime
 
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -41,7 +45,7 @@ class AuthUser(AbstractUser):
         pass
 
     def check_otp(self, phone_number, otp):
-        confirmation = self.phone_confirmation.all().last()
+        confirmation = PhoneConfirmation.objects.get(phone_number=phone_number)
         if confirmation:
             return confirmation.otp == otp and not confirmation.expired()
 
@@ -56,7 +60,6 @@ class EmailAddress(models.Model):
     class Meta:
         db_table = 'email_confirmation'
         
-
 class PhoneConfirmation(models.Model):
 
     otp = models.CharField(blank=True, null=True, max_length=4)
@@ -71,6 +74,20 @@ class PhoneConfirmation(models.Model):
     def expired(self):
         expiration_date = self.created + datetime.timedelta(days=1)
         return expiration_date <= timezone.now()
+
+    @classmethod
+    def create_otp_for_number(self, request, phone_number):
+        otp = get_random_string(4, '0123456789')
+
+        try:
+            confirmation = self.objects.get(phone_number=phone_number)
+        except PhoneConfirmation.DoesNotExist:
+            confirmation = PhoneConfirmation(phone_number=phone_number)
+        
+        confirmation.otp = otp
+        confirmation.save()
+    
+        AuthAdapter(request).send_confirmation_sms(confirmation)
 
 class EmailConfirmationHMAC:
 

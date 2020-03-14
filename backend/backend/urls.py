@@ -4,6 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
+    url(r'^api/', include('authenticate.urls')),
     url(r'^api/', include('app.user.urls')),
     url(r'^api/', include('app.order.urls')),
     url(r'^api/', include('app.setting.urls')),
