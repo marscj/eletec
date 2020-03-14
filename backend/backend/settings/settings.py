@@ -171,7 +171,7 @@ AUTHENTICATION_BACKENDS = [
 # ACCOUNT_EMAIL_REQUIRED = False
 # ACCOUNT_AUTHENTICATION_METHOD = 'username'
 
-SENDSMS_BACKEND = 'service.sms.backends.twilio.SmsBackend'
+SENDSMS_BACKEND = 'core.sms.backends.twilio.SmsBackend'
 
 # SMS Twilio
 SENDSMS_URL = "https://api.twilio.com/2010-04-01/Accounts/ACda91c280b2cd6511484f79ec3f3e03cd/Messages.json"
