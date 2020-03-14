@@ -37,7 +37,7 @@ class AuthUser(AbstractUser):
         return confirmation
 
     def send_phone_confirmation(self, request):
-        
+        pass
 
     def check_otp(self, phone_number, otp):
         confirmation = self.phone_confirmation.all().last()

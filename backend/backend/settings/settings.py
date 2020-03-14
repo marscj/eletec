@@ -24,7 +24,7 @@ INSTALLED_APPS = [
     'phonenumber_field',
     'versatileimagefield',
 
-    'app.auth',
+    'authenticate',
     'app.user',
     'app.order',
     'app.job',
