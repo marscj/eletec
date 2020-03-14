@@ -15,7 +15,7 @@ class EmailMixin(models.Model):
 
     # user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='email_address', blank=True, null=True)
 
-    # objects = EmailAddressManager()
+    objects = EmailAddressManager()
 
     class Meta:
         # db_table = 'email_address'
