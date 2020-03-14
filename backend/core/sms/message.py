@@ -4,7 +4,6 @@ from django.conf import settings
 from .api import get_connection
 from .signals import sms_post_send
 
-
 class SmsMessage(object):
     """
     A sms message
