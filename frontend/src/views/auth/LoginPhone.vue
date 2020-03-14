@@ -34,10 +34,10 @@
           <a-form-item>
             <validation-provider vid="otp" name="captcha" v-slot="{ errors }">
               <a-row :gutter="4">
-                <a-col :span="20">
+                <a-col :span="18">
                   <a-input v-model="form.otp" placeholder="Captcha" />
                 </a-col>
-                <a-col :span="4">
+                <a-col :span="6">
                   <a-button
                     class="w-full"
                     :disabled="state.smsSendBtn"
@@ -84,7 +84,7 @@ export default {
         loginType: 0,
         smsSendBtn: false
       },
-      from: {}
+      form: {}
     };
   },
   computed: {

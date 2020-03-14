@@ -26,7 +26,7 @@ class EmailAddressValidateSerializer(serializers.Serializer):
         
         email_address = EmailAddress.objects.filter(email=email).last()
 
-        if email_address and email_address.otp not otp:
+        if email_address and email_address.otp != otp:
             raise serializers.ValidationError({'otp': 'Verification code error'})
         else:
             raise serializers.ValidationError({'otp': 'Verification code error'})
@@ -34,11 +34,11 @@ class EmailAddressValidateSerializer(serializers.Serializer):
         email_address.verified = True
         email_address.save()
         
-        try:
-            email_address = EmailAddress.objects.get(email=email, otp=otp)
-            email_address.verified = True
-            email_address.save()
-        except EmailAddress.DoesNotExist:
-            raise serializers.ValidationError({'otp': 'Verification code error'})
+        # try:
+        #     email_address = EmailAddress.objects.get(email=email, otp=otp)
+        #     email_address.verified = True
+        #     email_address.save()
+        # except EmailAddress.DoesNotExist:
+        #     raise serializers.ValidationError({'otp': 'Verification code error'})
             
         return validate_data

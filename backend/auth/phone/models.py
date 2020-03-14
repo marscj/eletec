@@ -4,7 +4,6 @@ import os
 
 from django.conf import settings
 from django.contrib.auth.base_user import BaseUserManager
-from django.contrib.auth.models import AbstractUser
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -37,7 +36,7 @@ class PhoneNumberUserManager(BaseUserManager):
 
         return self._create_user(username, username, email, password, **extra_fields)
 
-class PhoneNumberAbstactUser(AbstractUser):
+class PhoneNumberAbstactUser(models.Model):
     phone_number = PhoneNumberField(unique=True, blank=True, null=True)
     objects = PhoneNumberUserManager()
 
