@@ -1,1 +1,1 @@
-Eletec] Your verification code is {{otp}}
+[Eletec] Your verification code is {{otp}}
