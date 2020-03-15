@@ -1,8 +1,9 @@
 from django.conf.urls import url
 
-from .views import GenerateOTP, ValidateOTP
+from . import views
 
 urlpatterns = [
-    url(r'^auth/phone/generate/$', GenerateOTP.as_view(), name="generate"),
-    url(r'^auth/phone/validate/$', ValidateOTP.as_view(), name="validate"),
+    url(r'^auth/phone/generate/$', views.GeneratePhone.as_view(), name="generate_phone"),
+    url(r'^auth/phone/validate/$', views.ValidatePhone.as_view(), name="validate_phone"),
+    url(r'^auth/email/generate/$', views.GenerateEmail.as_view(), name="generate_email"),
 ]

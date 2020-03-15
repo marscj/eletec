@@ -36,14 +36,6 @@ class AuthUser(AbstractUser):
     class Meta:
         abstract = True
 
-    def send_email_confirmation(self, request):
-        confirmation = EmailConfirmationHMAC(self)
-        confirmation.send(request)
-        return confirmation
-
-    def send_phone_confirmation(self, request):
-        pass
-
     def check_otp(self, phone_number, otp):
         confirmation = PhoneConfirmation.objects.get(phone_number=phone_number)
         if confirmation:
@@ -59,6 +51,13 @@ class EmailAddress(models.Model):
 
     class Meta:
         db_table = 'email_confirmation'
+
+    @classmethod
+    def send_confirmation(self, request):
+        confirmation = EmailConfirmationHMAC(self)
+        confirmation.send(request)
+        
+        AuthAdapter(request).send_confirmation_mail(request, self)
         
 class PhoneConfirmation(models.Model):
 
@@ -118,4 +117,4 @@ class EmailConfirmationHMAC:
             return email_address
 
     def send(self, request=None):
-        AuthAdapter(request).send_confirmation_mail(request, self)
+        AuthAdapter(request).send_confirmation_mail(self)

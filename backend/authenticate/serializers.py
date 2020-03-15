@@ -3,15 +3,7 @@ from django.contrib.auth import authenticate
 from rest_framework import serializers
 from phonenumber_field.serializerfields import PhoneNumberField
 
-from .models import AuthUser, PhoneConfirmation
-
-class AuthUserSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = AuthUser
-        exclude = (
-            'password',
-        )
+from .models import AuthUser, PhoneConfirmation, EmailAddress, EmailConfirmationHMAC
 
 class PhoneSerializer(serializers.Serializer):
 
@@ -33,5 +25,20 @@ class PhoneValidateSerializer(serializers.Serializer):
             raise serializers.ValidationError("Please enter the correct phone number and code for a account. Note that both fields may be case-sensitive.")
             
         validate_data['user'] = user
-
         return validate_data
+
+class EmailSerializer(serializers.Serializer):
+
+    email = serializers.EmailField()
+
+    # user_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(serializers.CurrentUserDefault()))
+
+    # def validate(self, validate_data):
+
+    #     confirmation = ConfirmationHMAC.from_key(key)
+
+    #     if not confirmation:
+    #         raise serializers.ValidationError('verification failed')
+
+    #     validate_data['confirmation'] = confirmation
+    #     return validate_data

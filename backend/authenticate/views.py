@@ -1,16 +1,18 @@
 from django.contrib.auth import authenticate, login
 
 from rest_framework.views import APIView
+from rest_framework.generics import CreateAPIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import throttling
 from rest_framework.authtoken import views
 from rest_framework.authtoken.models import Token
+from rest_framework.permissions import IsAuthenticated
 
-from .models import PhoneConfirmation
-from .serializers import PhoneSerializer, PhoneValidateSerializer
+from .models import PhoneConfirmation, EmailAddress
+from .serializers import PhoneSerializer, PhoneValidateSerializer, EmailSerializer
 
-class GenerateOTP(APIView):
+class GeneratePhone(APIView):
     queryset = PhoneConfirmation.objects.all()
     serializer_class = PhoneSerializer
     throttle_classes = [throttling.UserRateThrottle]
@@ -27,7 +29,7 @@ class GenerateOTP(APIView):
             
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class ValidateOTP(APIView):
+class ValidatePhone(APIView):
     queryset = PhoneConfirmation.objects.all()
     serializer_class = PhoneValidateSerializer
     throttle_classes = [throttling.UserRateThrottle]
@@ -49,4 +51,21 @@ class ValidateOTP(APIView):
 
             return Response(user_json)
 
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class GenerateEmail(APIView):
+    serializer_class = EmailSerializer
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, format=None):
+        serializer = self.serializer_class(data=request.data, context={'request': request})
+
+        if serializer.is_valid():
+            email_address, created = EmailAddress.objects.get_or_create(email=serializer.validated_data.get('email'), user=request.user)
+            
+            if created:
+                email_address.send_confirmation(request)
+            
+            return Response(serializer.data)
+            
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
