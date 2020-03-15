@@ -17,7 +17,7 @@
             >
               <a-col :span="12">
                 <img
-                  src="@/assets/images/register.png"
+                  src="@/assets/images/register.jpg"
                   alt="register"
                   style="display: block; margin: auto;"
                 />
@@ -26,9 +26,6 @@
                 <div
                   style="background-color: white; padding: 25px 20px; height: 100%;"
                 >
-                  <div>
-                    <h2 style="text-align: center;">Login</h2>
-                  </div>
                   <div class="items-center">
                     <h3>Verification succeeded</h3>
                   </div>

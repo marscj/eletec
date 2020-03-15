@@ -239,9 +239,17 @@ export const constantRouterMap = [
     ]
   },
   {
-    path: "/auth/confirmation_mail/*",
+    path: "/auth",
     component: UserLayout,
-    hidden: true
+    redirect: "/auth/confirmation_mail",
+    hidden: true,
+    children: [
+      {
+        path: "/auth/confirmation_mail/*",
+        name: "login",
+        component: () => import("@/views/auth/Login")
+      }
+    ]
   },
   {
     path: "/404",
