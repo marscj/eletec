@@ -48,13 +48,14 @@ class EmailAddress(models.Model):
     @classmethod
     def send_confirmation(self, request, email):
         try:
+            print('111111')
             email_address = self.objects.get(email=email)
         except EmailAddress.DoesNotExist:
-            email_address = EmailAddress(email=email)
+            print('22222')
+            email_address = self.objects.create(email=email)
+            print(email_address)
             
-        confirmation = EmailConfirmationHMAC(email_address)
-
-        confirmation.send(request)
+        EmailConfirmationHMAC(email_address).send(request)
         
 class PhoneConfirmation(models.Model):
 
@@ -92,13 +93,17 @@ class EmailConfirmationHMAC:
 
     @property
     def key(self):
-        return signing.dumps(obj=self.email_address.pk, salt='~28cUebFxB!FUiei')
+        print(self.email_address, self.email_address.email, self.email_address.id, self.email_address.pk)
+        scrite = signing.dumps(obj=self.email_address.pk, salt='~28cUebFxB!FUiei')
+        print(scrite, self.email_address.pk)
+        return scrite
 
     @classmethod
     def from_key(cls, key):
         try:
             max_age = (60 * 60 * 24 * 1)
             pk = signing.loads(key, max_age=max_age, salt='~28cUebFxB!FUiei')
+            print(pk)
             return EmailConfirmationHMAC(EmailAddress.objects.get(pk=pk))
 
         except (signing.SignatureExpired, signing.BadSignature, EmailAddress.DoesNotExist):

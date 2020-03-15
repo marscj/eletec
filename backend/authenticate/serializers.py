@@ -31,14 +31,14 @@ class EmailSerializer(serializers.Serializer):
 
     email = serializers.EmailField()
 
-    # user_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(serializers.CurrentUserDefault()))
+    user_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(serializers.CurrentUserDefault()))
 
-    # def validate(self, validate_data):
+    def validate(self, validate_data):
 
-    #     confirmation = ConfirmationHMAC.from_key(key)
+        confirmation = ConfirmationHMAC.from_key(key)
 
-    #     if not confirmation:
-    #         raise serializers.ValidationError('verification failed')
+        if not confirmation:
+            raise serializers.ValidationError('verification failed')
 
-    #     validate_data['confirmation'] = confirmation
-    #     return validate_data
+        validate_data['confirmation'] = confirmation
+        return validate_data

@@ -8,10 +8,11 @@ from rest_framework import throttling
 from rest_framework.authtoken import views
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.exceptions import NotFound, ValidationError
 
 import logging
 
-from .models import PhoneConfirmation, EmailAddress
+from .models import PhoneConfirmation, EmailAddress, EmailConfirmationHMAC
 from .serializers import PhoneSerializer, PhoneValidateSerializer, EmailSerializer
 
 logger = logging.getLogger(__name__)
@@ -66,13 +67,32 @@ class GenerateEmail(APIView):
         serializer = self.serializer_class(data=request.data, context={'request': request})
 
         if serializer.is_valid():
-            EmailAddress.send_confirmation(request, serializer.validated_data.get('email'))
-            return Response(serializer.data)
-            # try:
-            #     EmailAddress.send_confirmation(request, email)
-            #     return Response(serializer.data)
-            # except BaseException as e:
-            #     logger.error(e)
-            #     return Response('Failed to send', status=status.HTTP_400_BAD_REQUEST)
+            try:
+                EmailAddress.send_confirmation(request, serializer.validated_data.get('email'))
+                return Response(serializer.data)
+            except BaseException as e:
+                logger.error(e)
+                return Response('Failed to send', status=status.HTTP_400_BAD_REQUEST)
             
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class ValidateEmail(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request, format=None):
+        self.object = confirmation = self.get_object()
+        confirmation.confirm(self.request)
+        return Response('Verification succeeded!')
+
+    def get_object(self):
+        key = self.request.query_params.get('key')
+        
+        if key is None:
+            raise NotFound
+
+        emailconfirmation = EmailConfirmationHMAC.from_key(key)
+        
+        if not emailconfirmation:
+            raise ValidationError
+        
+        return emailconfirmation

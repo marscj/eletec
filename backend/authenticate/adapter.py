@@ -45,6 +45,8 @@ class AuthAdapter(object):
         
         ctx = {'action_url': action_url}
 
+        print(action_url)
+
         self.send_mail('email_confirmation', email_confirmation.email_address.email, ctx)
 
     def send_confirmation_sms(self, phone_confirmation):
