@@ -239,6 +239,11 @@ export const constantRouterMap = [
     ]
   },
   {
+    path: "/auth/confirmation_mail/*",
+    component: UserLayout,
+    hidden: true
+  },
+  {
     path: "/404",
     component: () => import("@/views/error/404"),
     children: [
