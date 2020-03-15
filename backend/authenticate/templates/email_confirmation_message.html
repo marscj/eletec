@@ -135,15 +135,12 @@
       .button {
         display: inline-block;
         width: 200px;
-        background-color: #414ef9;
         border-radius: 3px;
-        color: #ffffff;
-        font-size: 24px;
+        color: white;
+        font-size: 15px;
         line-height: 45px;
         text-align: center;
         text-decoration: none;
-        letter-spacing: 6px;
-
         -webkit-text-size-adjust: none;
         mso-hide: all;
       }
@@ -202,8 +199,9 @@
                     <td class="content-cell">
                       <h1>Verify your email address</h1>
                       <p>
-                        Thanks for using for Eletec App! welcome to join us.
-                        please check your verification code
+                        Thanks you for using Eletec App! welcome to join us.
+                        please click the button below to verify your email
+                        address.
                       </p>
                       <!-- Action -->
                       <table
@@ -217,8 +215,9 @@
                           <td align="center">
                             <div>
                               <a
-                                href="{{ activate_url }}"
+                                href="{{action_url}}"
                                 class="button button--blue"
+                                style="color:white;"
                               >
                                 Verify Email
                               </a>

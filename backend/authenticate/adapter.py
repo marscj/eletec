@@ -41,9 +41,9 @@ class AuthAdapter(object):
         msg.send()
 
     def send_confirmation_mail(self, email_confirmation):
-        activate_url = self.request.build_absolute_uri('/auth/confirmation_mail/?key=' + email_confirmation.key)
+        action_url = self.request.build_absolute_uri('/auth/confirmation_mail/?key=' + email_confirmation.key)
         
-        ctx = {'activate_url': activate_url}
+        ctx = {'action_url': action_url}
 
         self.send_mail('email_confirmation', email_confirmation.email_address.email, ctx)
 
