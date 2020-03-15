@@ -1,49 +1,21 @@
 <template>
-  <user-layout>
-    <div style="height:100%;">
-      <a-row
-        type="flex"
-        justify="space-around"
-        align="middle"
-        style="height:100%;"
-      >
-        <div style="background-color:#eff2f7; width:60%; height: 350px;">
-          <a-col :span="24" style="height: 100%;">
-            <a-row
-              type="flex"
-              justify="space-around"
-              align="middle"
-              style="height: 100%;"
-            >
-              <a-col :span="12">
-                <img
-                  src="@/assets/images/register.jpg"
-                  alt="register"
-                  style="display: block; margin: auto;"
-                />
-              </a-col>
-              <a-col :span="12" style="height: 100%;">
-                <div
-                  style="background-color: white; padding: 25px 20px; height: 100%;"
-                >
-                  <div class="items-center">
-                    <h3>Verification succeeded</h3>
-                  </div>
-                </div>
-              </a-col>
-            </a-row>
-          </a-col>
+  <div class="flex items-center h-full justify-center">
+    <div class="max-w-sm rounded overflow-hidden shadow-lg bg-white p-10">
+      <img
+        class="w-full"
+        src="@/assets/images/register.jpg"
+        alt="Sunset in the mountains"
+      />
+      <div class="px-6 py-4">
+        <div class="font-bold text-xl mb-2 text-center py-10">
+          Email verification successful
         </div>
-      </a-row>
+        <p class="text-gray-700 text-base"></p>
+      </div>
     </div>
-  </user-layout>
+  </div>
 </template>
 
 <script>
-import { UserLayout } from "@/layouts";
-export default {
-  components: {
-    UserLayout
-  }
-};
+export default {};
 </script>
