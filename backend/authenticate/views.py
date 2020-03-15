@@ -9,8 +9,12 @@ from rest_framework.authtoken import views
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
 
+import logging
+
 from .models import PhoneConfirmation, EmailAddress
 from .serializers import PhoneSerializer, PhoneValidateSerializer, EmailSerializer
+
+logger = logging.getLogger(__name__)
 
 class GeneratePhone(APIView):
     queryset = PhoneConfirmation.objects.all()
@@ -25,6 +29,7 @@ class GeneratePhone(APIView):
                 PhoneConfirmation.create_otp_for_number(request, serializer.validated_data.get('phone_number'))
                 return Response(serializer.data)
             except Exception as e:
+                logger.error(e)
                 return Response('Failed to send', status=status.HTTP_400_BAD_REQUEST)
             
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -61,11 +66,13 @@ class GenerateEmail(APIView):
         serializer = self.serializer_class(data=request.data, context={'request': request})
 
         if serializer.is_valid():
-            email_address, created = EmailAddress.objects.get_or_create(email=serializer.validated_data.get('email'), user=request.user)
-            
-            if created:
-                email_address.send_confirmation(request)
-            
+            EmailAddress.send_confirmation(request, serializer.validated_data.get('email'))
             return Response(serializer.data)
+            # try:
+            #     EmailAddress.send_confirmation(request, email)
+            #     return Response(serializer.data)
+            # except BaseException as e:
+            #     logger.error(e)
+            #     return Response('Failed to send', status=status.HTTP_400_BAD_REQUEST)
             
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

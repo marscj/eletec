@@ -13,13 +13,6 @@ from .adapter import AuthAdapter
 
 class AuthUserManager(UserManager):
     
-    def create_phone_user(self, phone_number, **extra_fields):
-        extra_fields.setdefault('is_staff', False)
-        extra_fields.setdefault('is_superuser', False)
-        extra_fields.setdefault('phone_number', phone_number)
-
-        return self._create_user(phone_number, **extra_fields)
-
     def create_superuser(self, username, email=None, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
@@ -50,14 +43,18 @@ class EmailAddress(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='email_address', on_delete=models.SET_NULL, blank=True, null=True)
 
     class Meta:
-        db_table = 'email_confirmation'
+        db_table = 'email_address'
 
     @classmethod
-    def send_confirmation(self, request):
-        confirmation = EmailConfirmationHMAC(self)
+    def send_confirmation(self, request, email):
+        try:
+            email_address = self.objects.get(email=email)
+        except EmailAddress.DoesNotExist:
+            email_address = EmailAddress(email=email)
+            
+        confirmation = EmailConfirmationHMAC(email_address)
+
         confirmation.send(request)
-        
-        AuthAdapter(request).send_confirmation_mail(request, self)
         
 class PhoneConfirmation(models.Model):
 
