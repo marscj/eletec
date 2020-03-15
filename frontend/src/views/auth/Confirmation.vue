@@ -18,7 +18,7 @@
               <a-col :span="12">
                 <img
                   src="@/assets/images/register.png"
-                  alt="login"
+                  alt="register"
                   style="display: block; margin: auto;"
                 />
               </a-col>
