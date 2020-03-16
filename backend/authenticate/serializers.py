@@ -27,6 +27,9 @@ class PhoneValidateSerializer(serializers.Serializer):
         validate_data['user'] = user
         return validate_data
 
-class EmailSerializer(serializers.Serializer):
+class EmailKeySerliazer(serializers.Serializer):
+    key = serializers.CharField(max_length=64)
+
+class EmailAddressSerializer(serializers.Serializer):
 
     email = serializers.EmailField()

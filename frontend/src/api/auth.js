@@ -1,19 +1,27 @@
 import { API } from "./index";
 import { axios } from "@/utils/request";
 
-export function phoneGenerate(parameter) {
+export function phoneGenerate(data) {
   return axios({
     url: API.Generate,
     method: "post",
-    data: parameter
+    data: data
   });
 }
 
-export function phoneValidate(parameter) {
+export function phoneValidate(data) {
   return axios({
     url: API.Validate,
     method: "post",
-    data: parameter
+    data: data
+  });
+}
+
+export function emailValidate(data) {
+  return axios({
+    url: API.EmailValidate,
+    method: "post",
+    data: data
   });
 }
 

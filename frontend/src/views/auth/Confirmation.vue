@@ -8,14 +8,53 @@
       />
       <div class="px-6 py-4">
         <div class="font-bold text-xl mb-2 text-center py-10">
-          Email verification successful
+          <div v-if="!loading">
+            <p v-if="validate">
+              Email verification successful
+            </p>
+            <p v-else>
+              Email verification faile
+            </p>
+          </div>
         </div>
-        <p class="text-gray-700 text-base"></p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+import { emailValidate } from "@/api/auth";
+export default {
+  data() {
+    return {
+      loading: false,
+      validate: undefined
+    };
+  },
+  computed: {
+    emailKey: () => {
+      return this.$route.query.key;
+    }
+  },
+  mounted() {
+    this.validateEmail();
+  },
+  methods: {
+    validateEmail() {
+      this.loading = true;
+      emailValidate({
+        key: this.$route.query.key
+      })
+        .then(res => {
+          this.validate = true;
+        })
+        .catch(error => {
+          this.validate = false;
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    }
+  }
+};
 </script>

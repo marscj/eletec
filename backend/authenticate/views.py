@@ -13,7 +13,7 @@ from rest_framework.exceptions import NotFound, ValidationError
 import logging
 
 from .models import PhoneConfirmation, EmailAddress, EmailConfirmationHMAC
-from .serializers import PhoneSerializer, PhoneValidateSerializer, EmailSerializer
+from .serializers import PhoneSerializer, PhoneValidateSerializer, EmailAddressSerializer, EmailKeySerliazer
 
 logger = logging.getLogger(__name__)
 
@@ -60,7 +60,7 @@ class ValidatePhone(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class GenerateEmail(APIView):
-    serializer_class = EmailSerializer
+    serializer_class = EmailAddressSerializer
     permission_classes = [IsAuthenticated]
 
     def post(self, request, format=None):
@@ -77,19 +77,20 @@ class GenerateEmail(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ValidateEmail(APIView):
+    serializer_class = EmailKeySerliazer
     permission_classes = [IsAuthenticated]
-    
-    def get(self, request, format=None):
-        self.object = confirmation = self.get_object()
-        confirmation.confirm(self.request)
-        return Response('Verification succeeded!')
 
-    def get_object(self):
-        key = self.request.query_params.get('key')
+    def post(self, request, format=None):
+        serializer = self.serializer_class(data=request.data, context={'request': request})
+
+        if serializer.is_valid():
+            self.object = confirmation = self.get_object(serializer.validated_data.get('key'))
+            confirmation.confirm(self.request)
+            return Response('Verification succeeded!')
         
-        if key is None:
-            raise NotFound
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    def get_object(self, key):
         emailconfirmation = EmailConfirmationHMAC.from_key(key)
         
         if not emailconfirmation:

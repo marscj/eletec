@@ -4,6 +4,7 @@ import message from "ant-design-vue/es/message";
 export const API = {
   Generate: "auth/phone/generate/",
   Validate: "auth/phone/validate/",
+  EmailValidate: "auth/email/validate/",
   Info: "users/info/",
   Logout: "users/logout/",
   Users: "users/",
