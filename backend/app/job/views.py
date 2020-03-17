@@ -8,7 +8,7 @@ from .serializers import JobSerializer
 from middleware.permission import CustomModelPermissions
 
 class OrderFilter(django_filters.FilterSet):
-    work_id = django_filters.NumberFilter('work_id')
+    worker_id = django_filters.NumberFilter('worker_id')
 
     @property
     def qs(self):
@@ -18,7 +18,7 @@ class OrderFilter(django_filters.FilterSet):
         if user.is_superuser:
             return parent
         else:
-            return parent.filter(work_id=user.id)
+            return parent.filter(worker_id=user.id)
         
     
 class JobView(ModelViewSet):
