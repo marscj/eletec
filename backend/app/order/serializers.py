@@ -8,11 +8,13 @@ from app.user.serializers import UserSerializer, ContractSerializer, CommentSeri
 from app.job.serializers import JobSerializer
 from app.generic.serializers import ImageSerializer
 
+from middleware.user import CurrentUserDefault
+
 class OrderSerializer(serializers.ModelSerializer):
 
     user = UserSerializer(read_only=True)
 
-    user_id = serializers.IntegerField()
+    user_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(CurrentUserDefault()))
 
     contract = ContractSerializer(read_only=True)
 

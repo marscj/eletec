@@ -88,7 +88,13 @@
 
             <a-col :span="8">
               <a-form-item label="Email">
-                <a-input v-model="form.user.email" disabled> </a-input>
+                <a-input
+                  v-if="form.user.email"
+                  v-model="form.user.email.email"
+                  disabled
+                >
+                </a-input>
+                <a-input v-else disabled></a-input>
               </a-form-item>
             </a-col>
           </div>
