@@ -138,17 +138,15 @@
         </template>
 
         <template slot="action" slot-scope="data">
-          <template>
-            <router-link
-              :to="{
-                name: 'Order',
-                params: { id: data.id },
-                query: { tab: 'base' }
-              }"
-            >
-              <span>Edit</span>
-            </router-link>
-          </template>
+          <router-link
+            :to="{
+              name: 'Order',
+              params: { id: data.id },
+              query: { tab: 'base' }
+            }"
+          >
+            <span>Edit</span>
+          </router-link>
         </template>
       </s-table>
 
@@ -281,9 +279,10 @@ export default {
       rangeDay: undefined,
       columns: [
         {
-          title: "#",
+          title: "ORDERID",
           dataIndex: "orderID",
-          width: "140px"
+          width: "140px",
+          align: "center"
         },
         {
           title: "INFO",
@@ -293,19 +292,22 @@ export default {
           title: "JOB",
           dataIndex: "job",
           width: "172px",
-          scopedSlots: { customRender: "job" }
+          scopedSlots: { customRender: "job" },
+          align: "center"
         },
         {
           title: "USER",
           dataIndex: "user",
           width: "120px",
-          scopedSlots: { customRender: "user" }
+          scopedSlots: { customRender: "user" },
+          align: "center"
         },
         {
           title: "CREATE",
           dataIndex: "create_at",
           width: "80px",
-          scopedSlots: { customRender: "date" }
+          scopedSlots: { customRender: "date" },
+          align: "center"
         },
         {
           title: "STATUS",
@@ -313,12 +315,14 @@ export default {
           width: "100px",
           customRender: (text, index, row) => {
             return <span>{StatusOptions[text].label}</span>;
-          }
+          },
+          align: "center"
         },
         {
           title: "ACTION",
           width: "80px",
-          scopedSlots: { customRender: "action" }
+          scopedSlots: { customRender: "action" },
+          align: "center"
         }
       ],
       loadData: parameter => {

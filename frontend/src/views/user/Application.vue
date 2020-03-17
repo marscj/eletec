@@ -18,13 +18,11 @@
         </template>
 
         <template slot="action" slot-scope="data">
-          <template>
-            <a href="#" @click="apply(data)">Apply</a>
-            <a-divider type="vertical"></a-divider>
-            <router-link :to="{ name: 'User', params: { id: data.id } }">
-              <span>Detail</span>
-            </router-link>
-          </template>
+          <a href="#" @click="apply(data)">Apply</a>
+          <a-divider type="vertical"></a-divider>
+          <router-link :to="{ name: 'User', params: { id: data.id } }">
+            <span>Detail</span>
+          </router-link>
         </template>
       </s-table>
     </a-card>
@@ -49,26 +47,31 @@ export default {
       columns: [
         {
           title: "NAME",
-          dataIndex: "user.name"
+          dataIndex: "user.name",
+          align: "center"
         },
         {
           title: "PHONE",
-          dataIndex: "user.phone_number"
+          dataIndex: "user.phone_number",
+          align: "center"
         },
         {
           title: "EMAIL",
-          dataIndex: "user.email"
+          dataIndex: "user.email",
+          align: "center"
         },
         {
           title: "CREATE",
           dataIndex: "create_at",
           width: "160px",
-          scopedSlots: { customRender: "datetime" }
+          scopedSlots: { customRender: "datetime" },
+          align: "center"
         },
         {
           title: "ACTION",
           width: "140px",
-          scopedSlots: { customRender: "action" }
+          scopedSlots: { customRender: "action" },
+          align: "center"
         }
       ],
       loadData: parameter => {

@@ -1,17 +1,100 @@
 <template>
   <div>
+    <div align="right" class="table-operator">
+      <a-button type="primary" icon="plus" @click="openModal()">
+        New
+      </a-button>
+    </div>
+
     <s-table
-      style="margin-bottom: 24px"
-      row-key="id"
-      :columns="goodsColumns"
-      :data="loadGoodsData"
+      ref="table"
+      :rowKey="record => record.id"
+      :columns="columns"
+      :data="loadData"
     >
+      <template slot="action" slot-scope="data">
+        <a href="#" @click="openModal(data)">Edit</a>
+        <a-divider type="vertical"></a-divider>
+        <a-popconfirm
+          title="Are you sure delete this data?"
+          @confirm="deleteData(data)"
+          okText="Yes"
+          cancelText="No"
+        >
+          <a href="#">Delete</a>
+        </a-popconfirm>
+      </template>
     </s-table>
+
+    <a-modal
+      v-model="modal"
+      :title="this.form.id === undefined ? 'Create' : 'Edit'"
+      @ok="submit"
+    >
+      <validation-observer ref="observer">
+        <validation-provider name="non_field_errors" v-slot="{ errors }">
+          <span class="errorText">{{ errors[0] }}</span>
+        </validation-provider>
+
+        <a-form
+          :form="form"
+          :submit="submit"
+          :label-col="{ span: 6 }"
+          :wrapper-col="{ span: 12 }"
+        >
+          <a-form-item label="Action Date">
+            <validation-provider
+              vid="date"
+              name="action date"
+              v-slot="{ errors }"
+            >
+              <a-date-picker
+                v-model="date"
+                format="YYYY-MM-DD HH:mm"
+                :showTime="{ defaultValue: moment('00:00:00', 'HH:mm') }"
+                class="w-full"
+              />
+              <span class="errorText">{{ errors[0] }}</span>
+            </validation-provider>
+          </a-form-item>
+
+          <a-form-item label="Card">
+            <validation-provider vid="card" v-slot="{ errors }">
+              <a-input v-model="form.card" class="w-full" />
+              <span class="errorText">{{ errors[0] }}</span>
+            </validation-provider>
+          </a-form-item>
+
+          <a-form-item label="Unit">
+            <validation-provider vid="unit" v-slot="{ errors }">
+              <a-input-number v-model="form.unit" class="w-full" />
+              <span class="errorText">{{ errors[0] }}</span>
+            </validation-provider>
+          </a-form-item>
+
+          <a-form-item label="Worker ID">
+            <validation-provider vid="worker_id" v-slot="{ errors }">
+              <a-input-number v-model="form.worker_id" class="w-full" />
+              <span class="errorText">{{ errors[0] }}</span>
+            </validation-provider>
+          </a-form-item>
+
+          <a-form-item label="Remark">
+            <validation-provider vid="remark" v-slot="{ errors }">
+              <a-textarea v-model="form.remark" />
+              <span class="errorText">{{ errors[0] }}</span>
+            </validation-provider>
+          </a-form-item>
+        </a-form>
+      </validation-observer>
+    </a-modal>
   </div>
 </template>
 
 <script>
 import { STable } from "@/components";
+import { getJobs, updateJob, createJob, deleteJob } from "@/api/job";
+import moment from "moment";
 
 export default {
   components: {
@@ -19,89 +102,92 @@ export default {
   },
   data() {
     return {
-      goodsColumns: [
+      queryParam: {},
+      columns: [
         {
-          title: "商品编号",
-          dataIndex: "id",
-          key: "id"
+          title: "JOBID",
+          dataIndex: "jobID",
+          align: "center"
         },
         {
-          title: "商品名称",
-          dataIndex: "name",
-          key: "name"
+          title: "ACTION DATE",
+          dataIndex: "date",
+          align: "center"
         },
         {
-          title: "商品条码",
-          dataIndex: "barcode",
-          key: "barcode"
+          title: "CARD",
+          dataIndex: "card",
+          align: "center"
         },
         {
-          title: "单价",
-          dataIndex: "price",
-          key: "price",
-          align: "right"
+          title: "WORKER",
+          dataIndex: "worker.name",
+          align: "center"
         },
         {
-          title: "数量（件）",
-          dataIndex: "num",
-          key: "num",
-          align: "right"
-        },
-        {
-          title: "金额",
-          dataIndex: "amount",
-          key: "amount",
-          align: "right"
+          title: "ACTION",
+          width: "140px",
+          scopedSlots: { customRender: "action" },
+          align: "center"
         }
       ],
-      // 加载数据方法 必须为 Promise 对象
-      loadGoodsData: () => {
-        return new Promise(resolve => {
-          resolve({
-            data: [
-              {
-                id: "1234561",
-                name: "矿泉水 550ml",
-                barcode: "12421432143214321",
-                price: "2.00",
-                num: "1",
-                amount: "2.00"
-              },
-              {
-                id: "1234562",
-                name: "凉茶 300ml",
-                barcode: "12421432143214322",
-                price: "3.00",
-                num: "2",
-                amount: "6.00"
-              },
-              {
-                id: "1234563",
-                name: "好吃的薯片",
-                barcode: "12421432143214323",
-                price: "7.00",
-                num: "4",
-                amount: "28.00"
-              },
-              {
-                id: "1234564",
-                name: "特别好吃的蛋卷",
-                barcode: "12421432143214324",
-                price: "8.50",
-                num: "3",
-                amount: "25.50"
-              }
-            ],
-            pageSize: 10,
-            pageNo: 1,
-            totalPage: 1,
-            totalCount: 10
-          });
-        }).then(res => {
-          return res;
+      loadData: parameter => {
+        return getJobs(Object.assign(parameter, this.queryParam)).then(res => {
+          return res.result;
         });
-      }
+      },
+      modal: false,
+      form: {},
+      date: moment(new Date())
     };
+  },
+  methods: {
+    moment,
+    openModal(val) {
+      this.modal = true;
+      this.form = Object.assign({}, val);
+      this.date = moment(new Date());
+    },
+    submit() {
+      if (this.form.id === undefined) {
+        createJob(
+          Object.assign(this.form, {
+            date: this.date.format("YYYY-MM-DD HH:mm:ss"),
+            order_id: this.$route.params.id
+          })
+        )
+          .then(res => {
+            this.modal = false;
+            this.$refs.table.refresh();
+          })
+          .catch(error => {
+            if (error.response) {
+              this.$refs.observer.setErrors(error.response.data.result);
+            }
+          });
+      } else {
+        updateJob(
+          this.form.id,
+          Object.assign(this.form, {
+            date: this.date.format("YYYY-MM-DD HH:mm:ss")
+          })
+        )
+          .then(res => {
+            this.modal = false;
+            this.$refs.table.refresh();
+          })
+          .catch(error => {
+            if (error.response) {
+              this.$refs.observer.setErrors(error.response.data.result);
+            }
+          });
+      }
+    },
+    deleteData(val) {
+      deleteJob(val.id).then(res => {
+        this.$refs.table.refresh();
+      });
+    }
   }
 };
 </script>

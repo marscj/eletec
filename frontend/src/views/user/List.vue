@@ -131,43 +131,51 @@ export default {
       columns: [
         {
           title: "ID",
-          dataIndex: "id"
+          dataIndex: "id",
+          align: "center"
         },
         {
           title: "NAME",
-          dataIndex: "name"
+          dataIndex: "name",
+          align: "center"
         },
         {
           title: "PHONE",
-          dataIndex: "phone_number"
+          dataIndex: "phone_number",
+          align: "center"
         },
         {
           title: "EMAIL",
-          dataIndex: "email.email"
+          dataIndex: "email.email",
+          align: "center"
         },
         {
           title: "ROLE",
           dataIndex: "role",
           customRender: (text, index, row) => {
             return <span>{RoleOptions[text].label}</span>;
-          }
+          },
+          align: "center"
         },
         {
           title: "ADMIN",
           dataIndex: "is_superuser",
           width: "80px",
-          scopedSlots: { customRender: "admin" }
+          scopedSlots: { customRender: "admin" },
+          align: "center"
         },
         {
           title: "ACTIVE",
           dataIndex: "is_active",
           width: "80px",
-          scopedSlots: { customRender: "active" }
+          scopedSlots: { customRender: "active" },
+          align: "center"
         },
         {
           title: "ACTION",
           width: "80px",
-          scopedSlots: { customRender: "action" }
+          scopedSlots: { customRender: "action" },
+          align: "center"
         }
       ],
       loadData: parameter => {
