@@ -56,7 +56,7 @@
             name="phone number"
             v-slot="{ errors }"
           >
-            <a-input v-model="form.phone_number"> </a-input>
+            <a-input v-model="form.phone_number" disabled> </a-input>
             <span class="errorText">{{ errors[0] }}</span>
           </validation-provider>
         </a-form-item>
