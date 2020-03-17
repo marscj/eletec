@@ -19,7 +19,8 @@ export const API = {
   Comments: "comments/",
   Faqs: "faqs/",
   Apps: "apps/",
-  Applications: "applications/"
+  Applications: "applications/",
+  Jobs: "jobs/"
 };
 
 export function updateSuccess(res) {
