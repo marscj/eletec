@@ -43,7 +43,9 @@
 
         <a-form-item label="Email">
           <validation-provider vid="email" v-slot="{ errors }">
-            <a-input v-model="form.email" disabled> </a-input>
+            <a-input v-if="form.email" v-model="form.email.email" disabled>
+            </a-input>
+            <a-input v-else disabled> </a-input>
             <span class="errorText">{{ errors[0] }}</span>
           </validation-provider>
         </a-form-item>
