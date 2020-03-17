@@ -9,6 +9,7 @@ from middleware.permission import CustomModelPermissions
 
 class OrderFilter(django_filters.FilterSet):
     worker_id = django_filters.NumberFilter('worker_id')
+    order_id = django_filters.NumberFilter('order__id')
 
     @property
     def qs(self):
@@ -19,8 +20,7 @@ class OrderFilter(django_filters.FilterSet):
             return parent
         else:
             return parent.filter(worker_id=user.id)
-        
-    
+           
 class JobView(ModelViewSet):
     serializer_class = JobSerializer
     permission_classes = [IsAuthenticated, CustomModelPermissions]
