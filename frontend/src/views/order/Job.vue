@@ -132,7 +132,11 @@ export default {
         }
       ],
       loadData: parameter => {
-        return getJobs(Object.assign(parameter, this.queryParam)).then(res => {
+        return getJobs(
+          Object.assign(parameter, this.queryParam, {
+            order_id: this.$route.params.id
+          })
+        ).then(res => {
           return res.result;
         });
       },

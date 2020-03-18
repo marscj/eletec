@@ -10,6 +10,8 @@ class JobSerializer(serializers.ModelSerializer):
 
     worker_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(CurrentUserDefault()))
 
+    order_id = serializers.IntegerField()
+
     jobID = serializers.SerializerMethodField()
 
     class Meta:

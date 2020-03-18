@@ -13,7 +13,7 @@ from app.user.models import User, Contract, Comment
 from app.generic.models import Image
 
 def random_string():
-    return get_random_string(length=4)
+    return get_random_string(4, '0123456789')
 
 class Order(models.Model):
 
