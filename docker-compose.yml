@@ -26,7 +26,7 @@ services:
       - media_volume:/backend/media
     depends_on:
       - wsgi
-      # - asgi
+      - asgi
 
   wsgi:
     build: ./backend
@@ -43,21 +43,21 @@ services:
       - db
       - redis
 
-  # asgi:
-  #   build: ./backend
-  #   working_dir: /backend/
-  #   command: daphne -b 0.0.0.0 -p 9000 backend.asgi:application
-  #   restart: always
-  #   volumes:
-  #     - .:/backend
-  #     - static_volume:/backend/static
-  #     - media_volume:/backend/media
-  #   links:
-  #     - db
-  #     - redis
-  #   depends_on:
-  #     - db
-  #     - redis
+  asgi:
+    build: ./backend
+    working_dir: /backend/backend
+    command: daphne -b 0.0.0.0 -p 9000 backend.asgi:application
+    restart: always
+    volumes:
+      - .:/backend
+      - static_volume:/backend/static
+      - media_volume:/backend/media
+    links:
+      - db
+      - redis
+    depends_on:
+      - db
+      - redis
 
 volumes:
   pgdata:

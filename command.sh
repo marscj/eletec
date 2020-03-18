@@ -1,0 +1,1 @@
+cd /backend && exec daphne -b 0.0.0.0 -p 9000 backend.asgi:application
