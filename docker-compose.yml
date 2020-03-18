@@ -30,7 +30,8 @@ services:
 
   wsgi:
     build: ./backend
-    command: "gunicorn --chdir backend --bind :8000 backend.wsgi:application"
+    working_dir: /backend/backend
+    command: "gunicorn --bind :8000 backend.wsgi:application"
     restart: always
     volumes:
       - .:/backend
