@@ -7,8 +7,6 @@ ALLOWED_HOSTS = ['*']
 #Channels
 redis_host = os.environ.get('REDIS_HOST', 'localhost')
 
-# Channel layer definitions
-# http://channels.readthedocs.io/en/latest/topics/channel_layers.html
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
