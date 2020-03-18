@@ -114,13 +114,6 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_HEADERS = ('*',)
 CORS_ALLOW_METHODS = ('*',)
 
-# channel for websocket 
-CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels.layers.InMemoryChannelLayer"
-    }
-}
-
 #rest socket
 REST_FRAMEWORK = {
     'DATETIME_FORMAT': "%Y-%m-%d %H:%M",
