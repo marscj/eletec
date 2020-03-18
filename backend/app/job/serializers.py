@@ -8,7 +8,7 @@ class JobSerializer(serializers.ModelSerializer):
 
     worker = UserSerializer(read_only=True)
 
-    worker_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(CurrentUserDefault()))
+    staff_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(CurrentUserDefault()))
 
     order_id = serializers.IntegerField()
 

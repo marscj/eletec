@@ -72,9 +72,16 @@
             </validation-provider>
           </a-form-item>
 
-          <a-form-item label="Worker ID">
-            <validation-provider vid="worker_id" v-slot="{ errors }">
-              <a-input-number v-model="form.worker_id" class="w-full" />
+          <a-form-item
+            label="Staff ID"
+            help="Staff ID is user ID, user list check ID"
+          >
+            <validation-provider
+              vid="staff_id"
+              name="staff id"
+              v-slot="{ errors }"
+            >
+              <a-input-number v-model="form.staff_id" class="w-full" />
               <span class="errorText">{{ errors[0] }}</span>
             </validation-provider>
           </a-form-item>
@@ -120,7 +127,7 @@ export default {
           align: "center"
         },
         {
-          title: "WORKER",
+          title: "STAFF",
           dataIndex: "worker.name",
           align: "center"
         },

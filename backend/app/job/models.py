@@ -13,7 +13,7 @@ class Job(models.Model):
 
     remark = models.CharField(blank=True, null=True, max_length=256)
 
-    worker = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='job', blank=True, null=True)
+    staff = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='job', blank=True, null=True)
 
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, related_name='job', blank=True, null=True)
 
