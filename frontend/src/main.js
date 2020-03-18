@@ -21,7 +21,7 @@ Vue.use(PermissionHelper);
 
 Object.defineProperty(Vue.prototype, "$_", { value: _ });
 
-Vue.use(VueNativeSock, "ws://127.0.0.1:9000/notify/", {
+Vue.use(VueNativeSock, "ws://127.0.0.1:8000/notify/", {
   connectManually: true,
   store: store,
   format: "json"
