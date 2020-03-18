@@ -45,7 +45,7 @@ services:
 
   asgi:
     build: ./backend
-    command: daphne -b 0.0.0.0 -p 8001 backend.backend.asgi:application
+    command: daphne --root-path=/backend -b 0.0.0.0 -p 9000 asgi:application
     restart: always
     volumes:
       - .:/backend
