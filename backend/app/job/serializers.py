@@ -6,7 +6,7 @@ from app.user.serializers import UserSerializer
 
 class JobSerializer(serializers.ModelSerializer):
 
-    worker = UserSerializer(read_only=True)
+    staff = UserSerializer(read_only=True)
 
     staff_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(CurrentUserDefault()))
 

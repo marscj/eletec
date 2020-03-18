@@ -128,7 +128,7 @@ export default {
         },
         {
           title: "STAFF",
-          dataIndex: "worker.name",
+          dataIndex: "staff.name",
           align: "center"
         },
         {
