@@ -78,7 +78,6 @@ class GenerateEmail(APIView):
 
 class ValidateEmail(APIView):
     serializer_class = EmailKeySerliazer
-    permission_classes = [IsAuthenticated]
 
     def post(self, request, format=None):
         serializer = self.serializer_class(data=request.data, context={'request': request})
