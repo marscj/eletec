@@ -6,6 +6,7 @@ from .models import Order
 from app.user.models import Comment
 from app.user.serializers import UserSerializer, ContractSerializer, CommentSerializer
 from app.job.serializers import JobSerializer
+from app.job.models import Job
 from app.generic.serializers import ImageSerializer
 
 from middleware.user import CurrentUserDefault
@@ -13,6 +14,8 @@ from middleware.user import CurrentUserDefault
 class OrderSerializer(serializers.ModelSerializer):
 
     user = UserSerializer(read_only=True)
+
+    job = serializers.StringRelatedField(read_only=True, many=True)
 
     user_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(CurrentUserDefault()))
 

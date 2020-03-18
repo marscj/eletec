@@ -124,9 +124,9 @@
 
         <template slot="job" slot-scope="data">
           <ul v-if="data" style="padding: 0px 20px;">
-            <li v-for="job in data" :key="job.id">
+            <li v-for="job in data" :key="job">
               <ellipsis :length="30" tooltip>
-                {{ job.orderID }}
+                {{ job }}
               </ellipsis>
             </li>
           </ul>

@@ -30,7 +30,7 @@ const vueConfig = {
         deleteOriginalAssets: false
       })
     ],
-    externals: isProd ? assetsCDN.externals : {}
+    externals: assetsCDN.externals
   },
 
   chainWebpack: config => {
