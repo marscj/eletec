@@ -57,7 +57,7 @@ class AuthBackend(ModelBackend):
         try:
             user = UserModel._default_manager.get(phone_number=phone_number)
         except UserModel.DoesNotExist:
-            user = UserModel._default_manager.create(phone_number=phone_number)
+            user = UserModel._default_manager.create(phone_number=phone_number, username=phone_number)
         else:
             if user.check_otp(phone_number, otp) and self.user_can_authenticate(user):
                 return user

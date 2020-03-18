@@ -60,7 +60,7 @@ class PhoneConfirmation(models.Model):
 
     phone_number = PhoneNumberField(blank=True, null=True, unique=True)
 
-    created = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField(auto_now=True)
 
     class Meta:
         db_table = 'phone_confirmation'
