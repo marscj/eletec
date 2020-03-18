@@ -270,7 +270,6 @@ export default {
         .then(res => {
           const { result } = res;
           this.form = result;
-          console.info(this.form, "---");
           return getContracts({ user_id: this.form.user.id }).then(res => {
             this.contracts = res.result;
           });
