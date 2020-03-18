@@ -25,11 +25,27 @@ services:
       - static_volume:/backend/static
       - media_volume:/backend/media
     depends_on:
-      - backend
+      - wsgi
+      - asgi
 
-  backend:
+  wsgi:
     build: ./backend
-    # command: "gunicorn --chdir backend --bind :8000 backend.wsgi:application"
+    command: "gunicorn --chdir backend --bind :8000 backend.wsgi:application"
+    # command: daphne -b 0.0.0.0 -p 8001 backend.backend.asgi:application
+    restart: always
+    volumes:
+      - .:/backend
+      - static_volume:/backend/static
+      - media_volume:/backend/media
+    links:
+      - db
+      - redis
+    depends_on:
+      - db
+      - redis
+
+  asgi:
+    build: ./backend
     command: daphne -b 0.0.0.0 -p 8001 backend.backend.asgi:application
     restart: always
     volumes:
