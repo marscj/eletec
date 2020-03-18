@@ -53,7 +53,7 @@ AUTH_USER_MODEL = 'user.User'
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
-ASGI_APPLICATION = 'backend.asgi.application'
+ASGI_APPLICATION = 'backend.routing.application'
 
 TEMPLATES = [
     {

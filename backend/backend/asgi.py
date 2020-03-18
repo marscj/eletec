@@ -1,10 +1,8 @@
-from channels.auth import AuthMiddlewareStack
-from channels.routing import ProtocolTypeRouter, URLRouter
+import os
+import django
 
-from core.channel.routing import websocket_urlpatterns
+from channels.routing import get_default_application
 
-application = ProtocolTypeRouter({
-    'websocket': AuthMiddlewareStack(
-        URLRouter(websocket_urlpatterns)
-    ),
-})
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "backend.settings.prod")
+django.setup()
+application = get_default_application()
