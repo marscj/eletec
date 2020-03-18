@@ -7,6 +7,7 @@ django-versatileimagefield
 django-phonenumber-field[phonenumbers]
 django-cors-headers
 psycopg2
+requests
 pyyaml
 gunicorn
 Pillow
