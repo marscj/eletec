@@ -3,10 +3,6 @@ import 'package:eletec/api/api.dart';
 
 void main() {
   runApp(MyApp());
-
-  new ApiService().phoneGenerate({
-    '+9710557199186'
-  });
 } 
 
 class MyApp extends StatelessWidget {
@@ -105,6 +101,11 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.display1,
             ),
+            new FlatButton(onPressed: () {
+              new ApiService().phoneGenerate({
+                '+9710557199186'
+              });
+            }, child: new Text('caonima'))
           ],
         ),
       ),

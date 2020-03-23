@@ -15,7 +15,13 @@ class Token {
 
   Future<bool> setToken(token) async {
     return SharedPreferences.getInstance().then((sp) {
-      return sp.setString('token', token);
+      return sp.setString('token', 'token ' + token);
+    });
+  }
+
+  Future<bool> clear() async {
+    return SharedPreferences.getInstance().then((sp) {
+      return sp.remove('token');
     });
   }
 }

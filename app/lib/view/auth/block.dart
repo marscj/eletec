@@ -16,8 +16,8 @@ class Bloc {
   Sink<Model> get otpSink => otpController.sink;
   Sink<Model> get loginSink => otpController.sink;
   Sink<bool> get resendOtpSink => otpResendController.sink;
-  Stream<Response> get apiResult => apiController.stream;
   Stream<bool> get otpResult => otpResultController.stream;
+  Stream<Response> get apiResult => apiController.stream;
 
   Bloc () {
     otpController.stream.listen(call);

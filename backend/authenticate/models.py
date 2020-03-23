@@ -30,6 +30,9 @@ class AuthUser(AbstractUser):
         abstract = True
 
     def check_otp(self, phone_number, otp):
+        if settings.DEBUG:
+            return True
+            
         confirmation = PhoneConfirmation.objects.get(phone_number=phone_number)
         if confirmation:
             return confirmation.otp == otp and not confirmation.expired()

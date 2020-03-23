@@ -7,7 +7,7 @@ from rest_framework import status
 from rest_framework import throttling
 from rest_framework.authtoken import views
 from rest_framework.authtoken.models import Token
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.exceptions import NotFound, ValidationError
 
 import logging
@@ -20,6 +20,7 @@ logger = logging.getLogger(__name__)
 class GeneratePhone(APIView):
     queryset = PhoneConfirmation.objects.all()
     serializer_class = PhoneSerializer
+    permission_classes = [AllowAny]
     throttle_classes = [throttling.UserRateThrottle]
 
     def post(self, request, format=None):

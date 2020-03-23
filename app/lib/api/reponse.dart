@@ -1,5 +1,3 @@
-
-
 class Response<T> {
   T result;
 
