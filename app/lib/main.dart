@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:eletec/api/api.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(MyApp());
+
+  new ApiService().phoneGenerate({
+    '+9710557199186'
+  });
+} 
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
