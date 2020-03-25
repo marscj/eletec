@@ -43,6 +43,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.4.0"
+  bloc:
+    dependency: transitive
+    description:
+      name: bloc
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.0"
   boolean_selector:
     dependency: transitive
     description:
@@ -107,7 +114,7 @@ packages:
     source: hosted
     version: "3.0.9"
   equatable:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: equatable
       url: "https://pub.dartlang.org"
@@ -118,6 +125,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_bloc:
+    dependency: "direct main"
+    description:
+      name: flutter_bloc
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.2.0"
   flutter_localizations:
     dependency: transitive
     description: flutter
@@ -308,15 +322,8 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.1"
-  provide:
-    dependency: "direct main"
-    description:
-      name: provide
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.2"
   provider:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: provider
       url: "https://pub.dartlang.org"

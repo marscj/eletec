@@ -4,8 +4,7 @@ import 'package:eletec/api/reponse.dart';
 import 'package:eletec/api/request.dart';
 import 'package:eletec/cache/token.dart';
 
-class ApiService {
-
+class AuthService {
   Future<Response> phoneGenerate(playload) {
     return ApiRequest.instance.dio.post('auth/phone/generate/', data: {'phone_number': '+9710557199186'}).then((res) {
       print(res);
@@ -21,7 +20,7 @@ class ApiService {
   }
 
   Future<Response> userInfo(playload) {
-    return ApiRequest.instance.dio.get('/').then((res) {
+    return ApiRequest.instance.dio.get('users/info/').then((res) {
       return null;
     });
   }
