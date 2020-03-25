@@ -2,11 +2,10 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:eletec/repository/token.dart';
 
-import 'authentication.dart';
+import 'store.dart';
 
-class AuthenticationBloc
-    extends Bloc<AuthenticationEvent, AuthenticationState> {
-  AuthenticationBloc();
+class StoreBloc extends Bloc<AuthenticationEvent, AuthenticationState> {
+  StoreBloc();
 
   @override
   AuthenticationState get initialState => AuthenticationUninitialized();
