@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:eletec/repository/repository.dart';
+import 'package:eletec/repository/token.dart';
 
 class ApiRequest {
   Dio dio;
@@ -12,19 +12,18 @@ class ApiRequest {
       receiveTimeout: 3000,
     );
 
-    dio = new Dio(options)..interceptors.add(new InterceptorsWrapper(
-      onRequest: (Options options) async {
-        var token = await AuthRepository().getToken();
-        options.headers['Authorization'] = token ?? 'unknow';
+    dio = new Dio(options)
+      ..interceptors
+          .add(new InterceptorsWrapper(onRequest: (Options options) async {
+        var token = await TokenRepository().getToken();
+        options.headers['Authorization'] = token;
         return options;
-      },
-      onError: (DioError e) async {
-        if(e?.response?.statusCode == 401) {
-          AuthRepository().clearToken();
+      }, onError: (DioError e) async {
+        if (e?.response?.statusCode == 401) {
+          TokenRepository().clearToken();
         }
         return e;
-      }
-    ));
+      }));
   }
 
   static ApiRequest instance = new ApiRequest._();

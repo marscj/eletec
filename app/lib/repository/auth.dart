@@ -17,24 +17,6 @@ class AuthRepository {
     });
   }
 
-  Future<String> getToken() async {
-    return SharedPreferences.getInstance().then((sp){
-      return sp.getString('token');
-    });
-  }
-
-  Future<bool> setToken(token) async {
-    return SharedPreferences.getInstance().then((sp) {
-      return sp.setString('token', 'token ' + token);
-    });
-  }
-
-  Future<bool> clearToken() async {
-    return SharedPreferences.getInstance().then((sp) {
-      return sp.remove('token');
-    });
-  }
-
   Future<Response> userInfo(playload) {
     return ApiRequest.instance.dio.get('users/info/').then((res) {
       return null;
