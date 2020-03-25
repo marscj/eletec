@@ -13,16 +13,16 @@ class ApiService {
     });
   }
 
-  Future<String> phoneValidate(playload) {
+  Future<Response> phoneValidate(playload) {
     return ApiRequest.instance.dio.post('auth/phone/validate/').then((res) {
       print(res);
       return null;
     });
   }
 
-  Future<UserInfo> userInfo(playload) {
+  Future<Response> userInfo(playload) {
     return ApiRequest.instance.dio.get('/').then((res) {
-      return new UserInfo();
+      return null;
     });
   }
 }

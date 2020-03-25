@@ -1,44 +1,47 @@
 
 
 import 'dart:async';
-import 'package:rxdart/subjects.dart';
+import 'package:eletec/api/api.dart';
+import 'package:eletec/view/common/state.dart';
+import 'package:rxdart/rxdart.dart';
 
 import 'package:eletec/api/reponse.dart';
 import 'package:eletec/view/auth/model.dart';
 
 class Bloc {
-  final otpController = StreamController<Model>();
-  final loginController = StreamController<Model>();
-  final apiController = BehaviorSubject<Response>();
-  final otpResendController = StreamController<bool>();
-  final otpResultController = BehaviorSubject<bool>();
+  final Stream<BaseState> state;
+  final Sink<Model> reqCtl;
 
-  Sink<Model> get otpSink => otpController.sink;
-  Sink<Model> get loginSink => otpController.sink;
-  Sink<bool> get resendOtpSink => otpResendController.sink;
-  Stream<bool> get otpResult => otpResultController.stream;
-  Stream<Response> get apiResult => apiController.stream;
+  factory Bloc() {
+    final reqCtl = BehaviorSubject<Model>();
 
-  Bloc () {
-    otpController.stream.listen(call);
-    otpResendController.stream.listen(resendOtp);
-    loginController.stream.listen(call);
+    final state = reqCtl
+        .debounceTime(const Duration(milliseconds: 100))
+        .switchMap<BaseState>((Model model) => _call(model))
+        .startWith(LoadingState());
+
+    return Bloc._(reqCtl, state);
   }
 
-  void call(Model payload) async {
+  Bloc._(this.reqCtl, this.state);
 
+  static Stream<BaseState> _call(Model model) async * {
+    yield LoadingState();
+
+    try {
+      final result = await new ApiService().phoneValidate(model);
+      yield SuccessState(result);
+    } catch (e) {
+      yield ErrorState();
+    }
   }
 
   void resendOtp(bool flag) {
-    otpResultController.add(false);
+
   }
 
   void dispose() {
-    otpController.close();
-    otpResendController.close();
-    apiController.close();
-    otpResultController.close();
-    loginController.close();
+    reqCtl.close();
   }
 }
 
