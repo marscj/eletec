@@ -27,12 +27,10 @@ class SimpleBlocDelegate extends BlocDelegate {
 void main() {
   BlocSupervisor.delegate = SimpleBlocDelegate();
 
-  runApp(MultiBlocProvider(
-    providers: [
-      BlocProvider<AuthenticationBloc>(create: (_) {
-        return AuthenticationBloc()..add(AppStarted());
-      })
-    ],
+  runApp(BlocProvider(
+    create: (_) {
+      return AuthenticationBloc()..add(AppStarted());
+    },
     child: EletecApp(),
   ));
 }
