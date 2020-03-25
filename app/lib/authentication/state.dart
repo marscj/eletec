@@ -1,4 +1,4 @@
-import 'package:equatable/equatable.dart';
+part of 'authentication.dart';
 
 abstract class AuthenticationState extends Equatable {
   @override

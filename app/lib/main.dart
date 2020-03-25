@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'app.dart';
+import 'authentication/authentication.dart';
 
 class SimpleBlocDelegate extends BlocDelegate {
   @override
@@ -26,5 +27,12 @@ class SimpleBlocDelegate extends BlocDelegate {
 void main() {
   BlocSupervisor.delegate = SimpleBlocDelegate();
 
-  runApp(EletecApp());
+  runApp(MultiBlocProvider(
+    providers: [
+      BlocProvider<AuthenticationBloc>(create: (_) {
+        return AuthenticationBloc()..add(AppStarted());
+      })
+    ],
+    child: EletecApp(),
+  ));
 }
