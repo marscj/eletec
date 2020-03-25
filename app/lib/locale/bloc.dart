@@ -1,14 +1,27 @@
 part of 'locale.dart';
 
 class LocaleBloc extends Bloc<LocaleEvent, LocaleState> {
+  final String locale;
+
+  LocaleBloc(this.locale);
+
   @override
-  LocaleState get initialState => LocaleState(Locale('en', ''));
+  LocaleState get initialState => LocaleState(Locale(this.locale, ''));
 
   @override
   Stream<LocaleState> mapEventToState(LocaleEvent event) async* {
     if (event is LocaleInit) {
-      Locale locale = Locale(await LanguageRepository().getLanguage(), '');
+      var lan = await LanguageRepository().getLanguage();
+      Locale locale = Locale(lan, '');
       yield LocaleState(locale);
+    }
+
+    if (event is LocaleUpdate) {
+      Locale _locale = event.locale;
+
+      await LanguageRepository().setLanguage(event.locale.languageCode);
+
+      yield LocaleState(_locale);
     }
   }
 }

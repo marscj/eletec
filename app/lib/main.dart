@@ -1,3 +1,4 @@
+import 'package:eletec/locale/locale.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -27,9 +28,9 @@ class SimpleBlocDelegate extends BlocDelegate {
 void main() {
   BlocSupervisor.delegate = SimpleBlocDelegate();
 
-  runApp(BlocProvider<AuthenticationBloc>(
+  runApp(BlocProvider<LocaleBloc>(
     create: (_) {
-      return AuthenticationBloc()..add(AppStarted());
+      return LocaleBloc('en')..add(LocaleInit());
     },
     child: EletecApp(),
   ));
