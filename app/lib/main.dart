@@ -27,7 +27,7 @@ class SimpleBlocDelegate extends BlocDelegate {
 void main() {
   BlocSupervisor.delegate = SimpleBlocDelegate();
 
-  runApp(BlocProvider(
+  runApp(BlocProvider<AuthenticationBloc>(
     create: (_) {
       return AuthenticationBloc()..add(AppStarted());
     },
