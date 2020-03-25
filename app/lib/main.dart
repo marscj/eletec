@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:eletec/api/api.dart';
+
+import 'app.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(EletecApp());
 }

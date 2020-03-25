@@ -1,28 +1,26 @@
 import 'package:dio/dio.dart';
-import 'package:eletec/cache/token.dart';
+import 'package:eletec/repository/repository.dart';
 
 class ApiRequest {
-
   Dio dio;
 
-  BaseOptions options = new BaseOptions(
-    // baseUrl: 'http://eletecapp.com/api/',
-    baseUrl: 'http://127.0.0.1:8000/api/',
-    connectTimeout: 5000,
-    receiveTimeout: 3000,
-  );
-
   ApiRequest._() {
+    BaseOptions options = new BaseOptions(
+      // baseUrl: 'http://eletecapp.com/api/',
+      baseUrl: 'http://127.0.0.1:8000/api/',
+      connectTimeout: 5000,
+      receiveTimeout: 3000,
+    );
+
     dio = new Dio(options)..interceptors.add(new InterceptorsWrapper(
       onRequest: (Options options) async {
-        var token = await Token.instance.getToken();
+        var token = await AuthRepository().getToken();
         options.headers['Authorization'] = token ?? 'unknow';
-        print(options.headers);
         return options;
       },
       onError: (DioError e) async {
         if(e?.response?.statusCode == 401) {
-          Token.instance.clear();
+          AuthRepository().clearToken();
         }
         return e;
       }
