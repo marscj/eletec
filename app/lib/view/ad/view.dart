@@ -6,10 +6,22 @@ class AdPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<AdBloc>(
-        create: (_) => AdBloc(),
+        create: (_) => AdBloc()..add(AdStart(5)),
         child: BlocBuilder<AdBloc, AdState>(builder: (context, state) {
           return Material(
-            child: Center(child: Text('${state.timer}')),
+            child: Center(
+              child: Row(
+                children: <Widget>[
+                  Text('${state.timer}'),
+                  RaisedButton(
+                    onPressed: () {
+                      BlocProvider.of<AdBloc>(context).add(AdStart(5));
+                    },
+                    child: Text('button'),
+                  )
+                ],
+              ),
+            ),
           );
         }));
   }

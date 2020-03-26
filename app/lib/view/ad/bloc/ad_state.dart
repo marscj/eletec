@@ -16,3 +16,7 @@ class AdInitial extends AdState {
 class AdRunning extends AdState {
   AdRunning(int timer) : super(timer);
 }
+
+class AdEnd extends AdState {
+  AdEnd(int timer) : super(timer);
+}

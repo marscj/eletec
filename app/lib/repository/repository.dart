@@ -7,8 +7,8 @@ abstract class Repository {
 
   Repository(this.path);
 
-  Future<Response> list() {
-    return ApiRequest.instance.dio.get(path);
+  Future<Response> list({Map<String, dynamic> params}) {
+    return ApiRequest.instance.dio.get(path, queryParameters: params);
   }
 
   Future<Response> get(int pk) {

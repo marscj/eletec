@@ -7,9 +7,13 @@ abstract class AdEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class AdStart extends AdEvent {}
+class AdStart extends AdEvent {
+  final int timer;
 
-class AdEnd extends AdEvent {}
+  AdStart(this.timer);
+}
+
+class AdFinish extends AdEvent {}
 
 class AdTimer extends AdEvent {
   final int timer;
