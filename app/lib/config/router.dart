@@ -17,17 +17,6 @@ class Routes {
   }
 }
 
-// class Router {
-//   fluro.Router router;
-
-//   static Router get instance => Router._();
-
-//   Router._() {
-//     router = fluro.Router();
-//     Routes.configureRoutes(router);
-//   }
-// }
-
 class Router extends fluro.Router {
   static Router get instance => Router._();
 
