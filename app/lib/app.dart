@@ -41,7 +41,7 @@ class EletecApp extends StatelessWidget {
                   if (state is AuthenticationUnauthenticated) {
                     // return LoginPage(userRepository: userRepository);
                   }
-                  return null;
+                  return new Container();
                 },
               ),
             ));
