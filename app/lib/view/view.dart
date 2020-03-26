@@ -1,3 +1,3 @@
-export 'ad/view.dart';
-export 'home/view.dart';
+export 'ad/ad.dart';
+export 'home/home.dart';
 export 'login/widget.dart';

@@ -1,3 +1,4 @@
+import 'package:eletec/view/ad/bloc/ad_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -27,10 +28,12 @@ class SimpleBlocDelegate extends BlocDelegate {
 void main() {
   BlocSupervisor.delegate = SimpleBlocDelegate();
 
-  runApp(BlocProvider<LocaleBloc>(
-    create: (_) {
-      return LocaleBloc()..add(LocaleInit());
-    },
-    child: EletecApp(),
-  ));
+  runApp(MultiBlocProvider(providers: [
+    BlocProvider<LocaleBloc>(
+      create: (_) => LocaleBloc()..add(LocaleInit()),
+    ),
+    BlocProvider<AdBloc>(
+      create: (_) => AdBloc()..add(AdStart(5)),
+    )
+  ], child: EletecApp()));
 }
