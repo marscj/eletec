@@ -2,6 +2,7 @@ import 'package:eletec/view/ad/view.dart';
 import 'package:fluro/fluro.dart' as fluro;
 
 import 'package:eletec/view/view.dart';
+import 'package:flutter/material.dart';
 
 class Routes {
   static String root = '/';
@@ -16,13 +17,36 @@ class Routes {
   }
 }
 
-class Router {
-  fluro.Router router;
+// class Router {
+//   fluro.Router router;
 
+//   static Router get instance => Router._();
+
+//   Router._() {
+//     router = fluro.Router();
+//     Routes.configureRoutes(router);
+//   }
+// }
+
+class Router extends fluro.Router {
   static Router get instance => Router._();
 
   Router._() {
-    router = fluro.Router();
-    Routes.configureRoutes(router);
+    Routes.configureRoutes(this);
+  }
+
+  @override
+  Future navigateTo(BuildContext context, String path,
+      {bool replace = false,
+      bool clearStack = false,
+      fluro.TransitionType transition,
+      Duration transitionDuration = const Duration(milliseconds: 250),
+      RouteTransitionsBuilder transitionBuilder}) {
+    return super.navigateTo(context, path,
+        replace: replace,
+        clearStack: clearStack,
+        transition: transition ?? fluro.TransitionType.inFromLeft,
+        transitionDuration: transitionDuration,
+        transitionBuilder: transitionBuilder);
   }
 }

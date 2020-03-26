@@ -16,39 +16,25 @@ class EletecApp extends StatelessWidget {
     return BlocBuilder<LocaleBloc, LocaleState>(
       builder: (context, state) {
         return MaterialApp(
-            title: 'Eletec',
-            locale: state.locale,
-            localizationsDelegates: const [
-              location_picker.S.delegate,
-              Localization.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            supportedLocales: const <Locale>[
-              Locale('en', ''),
-              Locale('ar', ''),
-            ],
-            theme: ThemeData(
-              primaryColor: Colors.blue,
-            ),
-            routes: <String, WidgetBuilder>{'/': (_) => AdPage()}
-            // onGenerateRoute: Router.instance.router.generator,
-            // home: BlocProvider<AuthenticationBloc>(
-            //   create: (_) => AuthenticationBloc()..add(AppStarted()),
-            //   child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
-            //     builder: (context, state) {
-            //       if (state is AuthenticationAuthenticated) {
-            //         return HomePage();
-            //       }
-            //       if (state is AuthenticationUnauthenticated) {
-            //         // return LoginPage(userRepository: userRepository);
-            //       }
-            //       return new Container();
-            //     },
-            //   ),
-            // )
-            );
+          title: 'Eletec',
+          locale: state.locale,
+          localizationsDelegates: const [
+            location_picker.S.delegate,
+            Localization.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: const <Locale>[
+            Locale('en', ''),
+            Locale('ar', ''),
+          ],
+          theme: ThemeData(
+            primaryColor: Colors.blue,
+          ),
+          // routes: <String, WidgetBuilder>{'/': (_) => AdPage()}
+          onGenerateRoute: Router.instance.generator,
+        );
       },
     );
   }

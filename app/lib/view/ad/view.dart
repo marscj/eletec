@@ -8,7 +8,7 @@ class AdPage extends StatelessWidget {
   Widget build(BuildContext context) =>
       BlocListener<AdBloc, AdState>(listener: (context, state) {
         if (state is AdEnd) {
-          Router.instance.router.navigateTo(context, '/home', replace: true);
+          Router.instance.navigateTo(context, '/home', replace: true);
         }
       }, child: BlocBuilder<AdBloc, AdState>(builder: (context, state) {
         return Container();
