@@ -1,4 +1,10 @@
-part of 'authentication.dart';
+import 'package:bloc/bloc.dart';
+import 'package:eletec/repository/token.dart';
+import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
+
+part 'authentication_event.dart';
+part 'authentication_state.dart';
 
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
@@ -12,7 +18,7 @@ class AuthenticationBloc
     AuthenticationEvent event,
   ) async* {
     if (event is AppStarted) {
-      final String token = await TokenRepository().getToken();
+      final String token = await TokenRepository().get();
 
       if (token != 'unknow') {
         yield AuthenticationAuthenticated();
@@ -23,13 +29,13 @@ class AuthenticationBloc
 
     if (event is LoggedIn) {
       yield AuthenticationLoading();
-      await TokenRepository().setToken(event.token);
+      await TokenRepository().set(event.token);
       yield AuthenticationAuthenticated();
     }
 
     if (event is LoggedOut) {
       yield AuthenticationLoading();
-      await TokenRepository().clearToken();
+      await TokenRepository().clear();
       yield AuthenticationUnauthenticated();
     }
   }

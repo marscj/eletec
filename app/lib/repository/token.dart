@@ -1,19 +1,19 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TokenRepository {
-  Future<String> getToken() async {
+  Future<String> get() async {
     return SharedPreferences.getInstance().then((sp) {
       return sp.getString('token') ?? 'unknow';
     });
   }
 
-  Future<bool> setToken(token) async {
+  Future<bool> set(token) async {
     return SharedPreferences.getInstance().then((sp) {
       return sp.setString('token', 'token ' + token);
     });
   }
 
-  Future<bool> clearToken() async {
+  Future<bool> clear() async {
     return SharedPreferences.getInstance().then((sp) {
       return sp.remove('token');
     });

@@ -1,10 +1,10 @@
 import 'package:eletec/repository/reponse.dart';
 import 'package:eletec/repository/request.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthRepository {
   Future<Response> phoneGenerate(playload) {
-    return ApiRequest.instance.dio.post('auth/phone/generate/', data: {'phone_number': '+9710557199186'}).then((res) {
+    return ApiRequest.instance.dio.post('auth/phone/generate/',
+        data: {'phone_number': '+9710557199186'}).then((res) {
       print(res);
       return null;
     });
@@ -24,6 +24,4 @@ class AuthRepository {
   }
 }
 
-class UserRepository {
-
-}
+class UserRepository {}
