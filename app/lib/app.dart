@@ -6,6 +6,7 @@ import 'package:google_map_location_picker/generated/i18n.dart'
     as location_picker;
 
 import 'I18n/i18n.dart';
+import 'config/router.dart';
 import 'locale/locale_bloc.dart';
 import 'view/home/view.dart';
 
@@ -31,10 +32,7 @@ class EletecApp extends StatelessWidget {
           theme: ThemeData(
             primaryColor: Colors.blue,
           ),
-          routes: <String, WidgetBuilder>{
-            '/': (_) => AdPage(),
-            '/home': (_) => HomePage()
-          },
+          onGenerateRoute: Router.instance.router.generator,
           // home: BlocProvider<AuthenticationBloc>(
           //   create: (_) => AuthenticationBloc()..add(AppStarted()),
           //   child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
