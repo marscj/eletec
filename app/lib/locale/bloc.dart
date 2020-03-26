@@ -11,7 +11,7 @@ class LocaleBloc extends Bloc<LocaleEvent, LocaleState> {
   @override
   Stream<LocaleState> mapEventToState(LocaleEvent event) async* {
     if (event is LocaleInit) {
-      var lan = await LanguageRepository().getLanguage();
+      var lan = await LanguageRepository().get();
       Locale locale = Locale(lan, '');
       yield LocaleState(locale);
     }
@@ -19,7 +19,7 @@ class LocaleBloc extends Bloc<LocaleEvent, LocaleState> {
     if (event is LocaleUpdate) {
       Locale _locale = event.locale;
 
-      await LanguageRepository().setLanguage(event.locale.languageCode);
+      await LanguageRepository().set(event.locale.languageCode);
 
       yield LocaleState(_locale);
     }

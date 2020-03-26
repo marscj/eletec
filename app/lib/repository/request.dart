@@ -15,12 +15,12 @@ class ApiRequest {
     dio = new Dio(options)
       ..interceptors
           .add(new InterceptorsWrapper(onRequest: (Options options) async {
-        var token = await TokenRepository().getToken();
+        var token = await TokenRepository().get();
         options.headers['Authorization'] = token;
         return options;
       }, onError: (DioError e) async {
         if (e?.response?.statusCode == 401) {
-          TokenRepository().clearToken();
+          TokenRepository().clear();
         }
         return e;
       }));

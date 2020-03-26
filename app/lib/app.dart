@@ -6,7 +6,7 @@ import 'package:google_map_location_picker/generated/i18n.dart'
     as location_picker;
 
 import 'I18n/i18n.dart';
-import 'authentication/authentication.dart';
+import 'authentication/authentication_bloc.dart';
 import 'view/home/view.dart';
 
 class EletecApp extends StatelessWidget {
