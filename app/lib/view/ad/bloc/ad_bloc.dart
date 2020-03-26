@@ -18,9 +18,6 @@ class AdBloc extends Bloc<AdEvent, AdState> {
   Stream<AdState> mapEventToState(
     AdEvent event,
   ) async* {
-    print(state);
-    print(state.timer);
-    print(event);
     if (event is AdStart) {
       yield AdRunning(event.timer);
       timerController = RangeStream(event.timer, 0)
