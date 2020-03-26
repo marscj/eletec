@@ -19,8 +19,7 @@ class LocaleBloc extends Bloc<LocaleEvent, LocaleState> {
     LocaleEvent event,
   ) async* {
     if (event is LocaleInit) {
-      var lan = await languageRepository.get();
-      Locale locale = Locale(lan, '');
+      Locale locale = Locale(await languageRepository.get(), '');
       yield LocaleState(locale);
     }
 
