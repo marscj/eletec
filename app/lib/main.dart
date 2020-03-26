@@ -1,3 +1,4 @@
+import 'package:eletec/authentication/authentication_bloc.dart';
 import 'package:eletec/view/ad/bloc/ad_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,6 +30,9 @@ void main() {
   BlocSupervisor.delegate = SimpleBlocDelegate();
 
   runApp(MultiBlocProvider(providers: [
+    BlocProvider<AuthenticationBloc>(
+      create: (_) => AuthenticationBloc()..add(AppStarted()),
+    ),
     BlocProvider<LocaleBloc>(
       create: (_) => LocaleBloc()..add(LocaleInit()),
     ),
