@@ -10,6 +10,8 @@ class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
   AuthenticationBloc();
 
+  final TokenRepository tokenRepository = TokenRepository();
+
   @override
   AuthenticationState get initialState => AuthenticationUninitialized();
 
@@ -18,7 +20,7 @@ class AuthenticationBloc
     AuthenticationEvent event,
   ) async* {
     if (event is AppStarted) {
-      final String token = await TokenRepository().get();
+      final String token = await tokenRepository.get();
 
       if (token != 'unknow') {
         yield AuthenticationAuthenticated();
@@ -29,13 +31,13 @@ class AuthenticationBloc
 
     if (event is LoggedIn) {
       yield AuthenticationLoading();
-      await TokenRepository().set(event.token);
+      await tokenRepository.set(event.token);
       yield AuthenticationAuthenticated();
     }
 
     if (event is LoggedOut) {
       yield AuthenticationLoading();
-      await TokenRepository().clear();
+      await tokenRepository.clear();
       yield AuthenticationUnauthenticated();
     }
   }
