@@ -37,7 +37,7 @@ void main() {
       create: (_) => LocaleBloc()..add(LocaleInit()),
     ),
     BlocProvider<AdBloc>(
-      create: (_) => AdBloc()..add(AdStart(5)),
+      create: (_) => AdBloc()..add(AdEvent(5)),
     )
   ], child: EletecApp()));
 }

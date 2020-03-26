@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:eletec/config/router.dart';
 import 'package:eletec/view/ad/bloc/ad_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,7 +7,7 @@ class AdPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
       BlocListener<AdBloc, AdState>(listener: (context, state) {
-        if (state is AdEnd) {
+        if (state.timer == 0) {
           // Router.instance.navigateTo(context, '/home', replace: true);
         }
       }, child: BlocBuilder<AdBloc, AdState>(builder: (context, state) {
@@ -19,15 +18,12 @@ class AdPage extends StatelessWidget {
               Center(
                   child: CachedNetworkImage(
                       imageUrl: 'caonima',
+                      fadeOutDuration: Duration.zero,
+                      fadeInDuration: Duration.zero,
                       imageBuilder: (context, imageProvider) => Container(
-                            decoration: BoxDecoration(
+                          decoration: BoxDecoration(
                               image: DecorationImage(
-                                  image: imageProvider,
-                                  fit: BoxFit.cover,
-                                  colorFilter: ColorFilter.mode(
-                                      Colors.white, BlendMode.colorBurn)),
-                            ),
-                          ),
+                                  image: imageProvider, fit: BoxFit.cover))),
                       placeholder: (_, __) =>
                           Image.asset('assets/ad.jpg', fit: BoxFit.cover))),
               Container(

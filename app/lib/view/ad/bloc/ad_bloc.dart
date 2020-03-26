@@ -12,28 +12,17 @@ class AdBloc extends Bloc<AdEvent, AdState> {
   var timerController;
 
   @override
-  AdState get initialState => AdInitial(5);
+  AdState get initialState => AdState(5);
 
   @override
   Stream<AdState> mapEventToState(
     AdEvent event,
   ) async* {
-    if (event is AdStart) {
-      yield AdRunning(event.timer);
-      timerController = RangeStream(event.timer, 0)
-          .delay(Duration(milliseconds: 200))
-          .interval(Duration(seconds: 1))
-          .doOnDone(() => add(AdFinish()))
-          .listen((i) => add(AdTimer(i)));
-    }
-
-    if (event is AdTimer) {
-      yield AdRunning(event.timer);
-    }
-
-    if (event is AdFinish) {
-      yield AdEnd(0);
-    }
+    yield AdState(event.timer);
+    timerController = RangeStream(4, 0)
+        .delay(Duration(seconds: 1))
+        .interval(Duration(seconds: 1))
+        .listen((i) => add(AdEvent(i)));
   }
 
   @override
