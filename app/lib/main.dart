@@ -1,8 +1,8 @@
-import 'package:eletec/locale/locale.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'app.dart';
+import 'locale/locale_bloc.dart';
 
 class SimpleBlocDelegate extends BlocDelegate {
   @override
@@ -29,7 +29,7 @@ void main() {
 
   runApp(BlocProvider<LocaleBloc>(
     create: (_) {
-      return LocaleBloc('en')..add(LocaleInit());
+      return LocaleBloc()..add(LocaleInit());
     },
     child: EletecApp(),
   ));

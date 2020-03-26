@@ -1,4 +1,3 @@
-import 'package:eletec/locale/locale.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -7,6 +6,7 @@ import 'package:google_map_location_picker/generated/i18n.dart'
 
 import 'I18n/i18n.dart';
 import 'authentication/authentication_bloc.dart';
+import 'locale/locale_bloc.dart';
 import 'view/home/view.dart';
 
 class EletecApp extends StatelessWidget {
