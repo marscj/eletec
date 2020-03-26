@@ -1,3 +1,4 @@
+import 'package:eletec/view/ad/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -15,36 +16,41 @@ class EletecApp extends StatelessWidget {
     return BlocBuilder<LocaleBloc, LocaleState>(
       builder: (context, state) {
         return MaterialApp(
-            title: 'Eletec',
-            locale: state.locale,
-            localizationsDelegates: const [
-              location_picker.S.delegate,
-              Localization.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            supportedLocales: const <Locale>[
-              Locale('en', ''),
-              Locale('ar', ''),
-            ],
-            theme: ThemeData(
-              primaryColor: Colors.blue,
-            ),
-            home: BlocProvider<AuthenticationBloc>(
-              create: (_) => AuthenticationBloc()..add(AppStarted()),
-              child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
-                builder: (context, state) {
-                  if (state is AuthenticationAuthenticated) {
-                    return HomePage();
-                  }
-                  if (state is AuthenticationUnauthenticated) {
-                    // return LoginPage(userRepository: userRepository);
-                  }
-                  return new Container();
-                },
-              ),
-            ));
+          title: 'Eletec',
+          locale: state.locale,
+          localizationsDelegates: const [
+            location_picker.S.delegate,
+            Localization.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: const <Locale>[
+            Locale('en', ''),
+            Locale('ar', ''),
+          ],
+          theme: ThemeData(
+            primaryColor: Colors.blue,
+          ),
+          routes: <String, WidgetBuilder>{
+            '/': (_) => AdPage(),
+            '/home': (_) => HomePage()
+          },
+          // home: BlocProvider<AuthenticationBloc>(
+          //   create: (_) => AuthenticationBloc()..add(AppStarted()),
+          //   child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+          //     builder: (context, state) {
+          //       if (state is AuthenticationAuthenticated) {
+          //         return HomePage();
+          //       }
+          //       if (state is AuthenticationUnauthenticated) {
+          //         // return LoginPage(userRepository: userRepository);
+          //       }
+          //       return new Container();
+          //     },
+          //   ),
+          // )
+        );
       },
     );
   }
