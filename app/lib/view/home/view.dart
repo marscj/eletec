@@ -1,28 +1,27 @@
-import 'package:eletec/I18n/i18n.dart';
-import 'package:eletec/locale/locale_bloc.dart';
+import 'package:eletec/authentication/authentication_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../view.dart';
+
 class HomePage extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    void onPressed() {
-      if (BlocProvider.of<LocaleBloc>(context).state.locale.languageCode ==
-          'en') {
-        BlocProvider.of<LocaleBloc>(context)
-            .add(LocaleUpdate(Locale('ar', '')));
-      } else {
-        BlocProvider.of<LocaleBloc>(context)
-            .add(LocaleUpdate(Locale('en', '')));
-      }
-    }
-
-    return Scaffold(
-      body: Center(
-          child: new RaisedButton(
-        onPressed: onPressed,
-        child: Text(Localization.of(context).button),
-      )),
-    );
-  }
+  Widget build(BuildContext context) =>
+      BlocListener<AuthenticationBloc, AuthenticationState>(
+          listener: (context, state) {},
+          child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+            builder: (context, state) {
+              if (state is AuthenticationAuthenticated) {
+                return Container(
+                  child: Text('home'),
+                );
+              }
+              if (state is AuthenticationUnauthenticated) {
+                return LoginPage();
+              }
+              return Container(
+                child: Text('data'),
+              );
+            },
+          ));
 }
