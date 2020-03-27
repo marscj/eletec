@@ -1,5 +1,5 @@
 abstract class Repository<T> {
-  Future<T> list({Map<String, dynamic> params});
+  Future<T> list(Map<String, dynamic> params);
 
   Future<T> get(int pk);
 

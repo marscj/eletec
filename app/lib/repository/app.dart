@@ -6,11 +6,12 @@ class AppRepository implements Repository<List<App>> {
   final path = 'apps/';
 
   @override
-  Future<List<App>> list({Map<String, dynamic> params}) {
+  Future<List<App>> list(Map<String, dynamic> params) {
     return ApiRequest.instance.dio
         .get(path, queryParameters: params)
         .then((res) {
-      return null;
+      print(res);
+      return;
     });
   }
 
