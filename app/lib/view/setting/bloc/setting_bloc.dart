@@ -13,7 +13,5 @@ class SettingBloc extends Bloc<SettingEvent, SettingState> {
   @override
   Stream<SettingState> mapEventToState(
     SettingEvent event,
-  ) async* {
-    // TODO: implement mapEventToState
-  }
+  ) async* {}
 }

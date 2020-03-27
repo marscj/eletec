@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -85,7 +84,7 @@ class CacheService {
   }
 }
 
-@RestApi()
+@RestApi(baseUrl: 'http://127.0.0.1:8000/api')
 abstract class RestService {
   // factory RestClient(Dio dio, {String baseUrl}) = _RestClient;
 
