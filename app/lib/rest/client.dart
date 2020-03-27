@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:logger/logger.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:retrofit/retrofit.dart';
@@ -113,6 +114,9 @@ class RestServiceExtra {
         CacheService.instance.setAdvertising(_data);
         return _data;
       })
-    ]);
+    ])
+      ..listen((onData) {
+        Logger().i(onData);
+      });
   }
 }

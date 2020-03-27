@@ -1,12 +1,9 @@
-import 'package:dio/dio.dart';
-import 'package:eletec/repository/app.dart';
+import 'package:eletec/rest/client.dart';
 import 'package:eletec/view/ad/bloc/ad_bloc.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:eletec/repository/repository.dart';
-import 'package:logger/logger.dart';
 
 class AdPage extends StatelessWidget {
   @override
@@ -20,7 +17,7 @@ class AdPage extends StatelessWidget {
             body: Stack(children: <Widget>[
               Center(
                   child: StreamBuilder<String>(
-                stream: AppRepository().getAdvertising(),
+                stream: RestServiceExtra.instance.getAdvertising(),
                 builder:
                     (BuildContext context, AsyncSnapshot<String> snapshot) {
                   if (snapshot.hasData)
@@ -59,12 +56,7 @@ class AdPage extends StatelessWidget {
             ]),
             floatingActionButton: RaisedButton(
                 onPressed: () {
-                  AppRepository().list({'tag': 0});
-                  BlocProvider.of<AdBloc>(context).add(AdEvent(5));
-                  AppRepository().getAdvertising();
-                  final dio = Dio();
-                  final client = RestClient(dio);
-                  client.getTasks().then((it) => Logger().i(it));
+                  RestServiceExtra.instance.getAdvertising();
                 },
                 child: Text('button'))));
   }
