@@ -1,17 +1,15 @@
-import 'package:dio/dio.dart';
-import 'package:eletec/repository/reponse.dart';
 import 'package:eletec/repository/repository.dart';
 import 'package:eletec/repository/request.dart';
+import 'package:eletec/model/model.dart';
 
-class AppRepository<Result> implements Repository {
+class AppRepository implements Repository<List<App>> {
   final path = 'apps/';
 
   @override
-  Future<Result> list({Map<String, dynamic> params}) {
+  Future<List<App>> list({Map<String, dynamic> params}) {
     return ApiRequest.instance.dio
         .get(path, queryParameters: params)
         .then((res) {
-      print(res);
       return null;
     });
   }
