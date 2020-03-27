@@ -34,7 +34,7 @@ class Router extends fluro.Router {
     return super.navigateTo(context, path,
         replace: replace,
         clearStack: clearStack,
-        transition: transition ?? fluro.TransitionType.inFromLeft,
+        transition: transition ?? fluro.TransitionType.cupertino,
         transitionDuration: transitionDuration,
         transitionBuilder: transitionBuilder);
   }

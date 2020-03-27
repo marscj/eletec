@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:eletec/config/router.dart';
 import 'package:eletec/model/model.dart';
 import 'package:eletec/repository/app.dart';
 import 'package:eletec/view/ad/bloc/ad_bloc.dart';
@@ -11,20 +12,23 @@ class AdPage extends StatelessWidget {
           body: SafeArea(
               child: Stack(children: <Widget>[
         Center(
-            child: FutureBuilder<List<App>>(
-          future: AppRepository().list({'tag': 0}),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            child: FutureBuilder<App>(
+          future: AppRepository().list({'tag': 0}).then((f) => f.last),
+          builder: (BuildContext context, AsyncSnapshot<App> snapshot) {
             print(snapshot.data);
-            return CachedNetworkImage(
-                imageUrl: 'caonima',
-                fadeOutDuration: Duration.zero,
-                fadeInDuration: Duration.zero,
-                imageBuilder: (context, imageProvider) => Container(
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: imageProvider, fit: BoxFit.cover))),
-                placeholder: (_, __) =>
-                    Image.asset('assets/ad.jpg', fit: BoxFit.cover));
+            if (snapshot.hasData)
+              return CachedNetworkImage(
+                  imageUrl: snapshot.data.image.advertising,
+                  fadeOutDuration: Duration.zero,
+                  fadeInDuration: Duration.zero,
+                  imageBuilder: (context, imageProvider) => Container(
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: imageProvider, fit: BoxFit.cover))),
+                  placeholder: (_, __) =>
+                      Image.asset('assets/ad.jpg', fit: BoxFit.cover));
+
+            return Image.asset('assets/ad.jpg', fit: BoxFit.cover);
           },
         )),
         Container(
@@ -52,6 +56,7 @@ class AdPage extends StatelessWidget {
           onPressed: () {
             AppRepository().list({'tag': 0});
             BlocProvider.of<AdBloc>(context).add(AdEvent(5));
+            AppRepository().getAdvertising();
           },
           child: Text('button'),
         )
