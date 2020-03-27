@@ -70,7 +70,7 @@ class _RestService implements RestService {
     queryParameters.addAll(query ?? <String, dynamic>{});
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request('/apps/',
+    final Response<List<dynamic>> _result = await _dio.request('/apps/',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -78,7 +78,9 @@ class _RestService implements RestService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = Result<List<App>>.fromJson(_result.data);
+    var value = _result.data
+        .map((dynamic i) => App.fromJson(i as Map<String, dynamic>))
+        .toList();
     return Future.value(value);
   }
 
@@ -89,8 +91,7 @@ class _RestService implements RestService {
     queryParameters.addAll(query ?? <String, dynamic>{});
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
-        '/orders/',
+    final Response<List<dynamic>> _result = await _dio.request('/orders/',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -98,7 +99,9 @@ class _RestService implements RestService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = Result<List<App>>.fromJson(_result.data);
+    var value = _result.data
+        .map((dynamic i) => Order.fromJson(i as Map<String, dynamic>))
+        .toList();
     return Future.value(value);
   }
 
@@ -117,7 +120,7 @@ class _RestService implements RestService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = Result<Order>.fromJson(_result.data);
+    final value = Order.fromJson(_result.data);
     return Future.value(value);
   }
 }

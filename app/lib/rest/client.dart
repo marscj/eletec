@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
-import 'package:logger/logger.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -8,34 +8,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 part 'app.dart';
 part 'order.dart';
 part 'client.g.dart';
-
-class DioService {
-  Dio dio;
-
-  DioService._() {
-    BaseOptions options = new BaseOptions(
-      // baseUrl: 'http://eletecapp.com/api/',
-      baseUrl: 'http://127.0.0.1:8000/api/',
-      connectTimeout: 5000,
-      receiveTimeout: 3000,
-    );
-
-    dio = new Dio(options)
-      ..interceptors
-          .add(new InterceptorsWrapper(onRequest: (Options options) async {
-        var token = await CacheService.instance.getToken();
-        options.headers['Authorization'] = token;
-        return options;
-      }, onError: (DioError e) async {
-        if (e?.response?.statusCode == 401) {
-          CacheService.instance.clearToken();
-        }
-        return e;
-      }));
-  }
-
-  static DioService instance = new DioService._();
-}
 
 class CacheService {
   static CacheService get instance => CacheService._();
@@ -85,20 +57,37 @@ class CacheService {
   }
 }
 
+//@RestApi(baseUrl: 'http://eletecapp.com/api')
 @RestApi(baseUrl: 'http://127.0.0.1:8000/api')
 abstract class RestService {
-  // factory RestClient(Dio dio, {String baseUrl}) = _RestClient;
-
-  static RestService get instance => _RestService(DioService.instance.dio);
+  static RestService get instance => _RestService(Dio(BaseOptions(
+        connectTimeout: 5000,
+        receiveTimeout: 3000,
+      ))
+        ..interceptors
+            .add(new InterceptorsWrapper(onRequest: (Options options) async {
+          var token = await CacheService.instance.getToken();
+          options.headers['Authorization'] = token;
+          return options;
+        }, onResponse: (Response response) {
+          response.data = response.data['result'];
+          print(response);
+          return response;
+        }, onError: (DioError e) async {
+          if (e?.response?.statusCode == 401) {
+            CacheService.instance.clearToken();
+          }
+          return e;
+        })));
 
   @GET("/apps/")
-  Future<Result<List<App>>> getApps({@Queries() Map<String, dynamic> query});
+  Future<List<App>> getApps({@Queries() Map<String, dynamic> query});
 
   @GET("/orders/")
-  Future<Result<List<App>>> getOrders({@Queries() Map<String, dynamic> query});
+  Future<List<Order>> getOrders({@Queries() Map<String, dynamic> query});
 
   @GET("/orders/{id}/")
-  Future<Result<Order>> getTask(@Path("id") String id);
+  Future<Order> getTask(@Path("id") String id);
 }
 
 class RestServiceExtra {
@@ -107,18 +96,13 @@ class RestServiceExtra {
   RestServiceExtra._();
 
   Stream<String> getAdvertising() {
-    return Stream.fromFutures([
+    return Stream<String>.fromFutures([
       CacheService.instance.getAdvertising(),
       RestService.instance.getApps(query: {'tag': 0}).then((data) {
-        var _data = data.result.isNotEmpty
-            ? data?.result?.last?.image?.advertising
-            : null;
+        var _data = data.isNotEmpty ? data?.last?.image?.advertising : null;
         CacheService.instance.setAdvertising(_data);
         return _data;
       })
-    ])
-      ..listen((onData) {
-        Logger().i(onData);
-      });
+    ]).distinct();
   }
 }
