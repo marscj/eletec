@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:equatable/equatable.dart';
 import 'package:logger/logger.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:retrofit/retrofit.dart';
@@ -91,13 +92,13 @@ abstract class RestService {
   static RestService get instance => _RestService(DioService.instance.dio);
 
   @GET("/apps/")
-  Future<List<App>> getApps({@Queries() Map<String, dynamic> query});
+  Future<Result<List<App>>> getApps({@Queries() Map<String, dynamic> query});
 
   @GET("/orders/")
-  Future<List<Order>> getOrders({@Queries() Map<String, dynamic> query});
+  Future<Result<List<App>>> getOrders({@Queries() Map<String, dynamic> query});
 
   @GET("/orders/{id}/")
-  Future<Order> getTask(@Path("id") String id);
+  Future<Result<Order>> getTask(@Path("id") String id);
 }
 
 class RestServiceExtra {
@@ -109,7 +110,9 @@ class RestServiceExtra {
     return Stream.fromFutures([
       CacheService.instance.getAdvertising(),
       RestService.instance.getApps(query: {'tag': 0}).then((data) {
-        var _data = data.isNotEmpty ? data?.last?.image?.advertising : null;
+        var _data = data.result.isNotEmpty
+            ? data?.result?.last?.image?.advertising
+            : null;
         CacheService.instance.setAdvertising(_data);
         return _data;
       })
