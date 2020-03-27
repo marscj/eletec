@@ -71,7 +71,6 @@ abstract class RestService {
           return options;
         }, onResponse: (Response response) {
           response.data = response.data['result'];
-          print(response);
           return response;
         }, onError: (DioError e) async {
           if (e?.response?.statusCode == 401) {
