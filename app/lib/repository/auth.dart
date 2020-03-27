@@ -3,9 +3,7 @@ import 'package:eletec/repository/repository.dart';
 import 'package:eletec/repository/request.dart';
 
 class AuthRepository extends Repository {
-  AuthRepository(String path) : super(path);
-
-  Future<Response> phoneGenerate(playload) {
+  Future<Result> phoneGenerate(playload) {
     return ApiRequest.instance.dio.post('auth/phone/generate/',
         data: {'phone_number': '+9710557199186'}).then((res) {
       print(res);
@@ -13,16 +11,18 @@ class AuthRepository extends Repository {
     });
   }
 
-  Future<Response> phoneValidate(playload) {
+  Future<Result> phoneValidate(playload) {
     return ApiRequest.instance.dio.post('auth/phone/validate/').then((res) {
       print(res);
       return null;
     });
   }
 
-  Future<Response> userInfo(playload) {
+  Future<Result> userInfo(playload) {
     return ApiRequest.instance.dio.get('users/info/').then((res) {
       return null;
     });
   }
+
+  noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }

@@ -1,5 +1,5 @@
-class Response<T> {
+class Result<T> {
   T result;
 
-  Response(this.result);
+  Result(this.result);
 }

@@ -1,34 +1,31 @@
-import 'package:dio/dio.dart';
+abstract class Repository<T> {
+  Future<T> list({Map<String, dynamic> params});
 
-import 'request.dart';
-import 'reponse.dart';
+  Future<T> get(int pk);
 
-abstract class Repository {
-  final String path;
+  Future<T> post(Map<String, dynamic> playload);
 
-  Repository(this.path);
+  Future<T> put(int pk, Map<String, dynamic> playload);
 
-  Future<Response> list({Map<String, dynamic> params}) {
-    return ApiRequest.instance.dio
-        .get(path, queryParameters: params)
-        .then((res) {
-      return Response();
-    });
-  }
+  Future<T> del(int pk);
 
-  Future<Response> get(int pk) {
-    return ApiRequest.instance.dio.get(path + '/$pk/');
-  }
+  // Future<T> list({Map<String, dynamic> params}) {
+  //   return ApiRequest.instance.dio.get(path, queryParameters: params);
+  // }
 
-  Future<Response> post(Map<String, dynamic> playload) {
-    return ApiRequest.instance.dio.post(path, data: playload);
-  }
+  // Future<Response> get(int pk) {
+  //   return ApiRequest.instance.dio.get(path + '/$pk/');
+  // }
 
-  Future<Response> put(int pk, Map<String, dynamic> playload) {
-    return ApiRequest.instance.dio.put(path + '/$pk/', data: playload);
-  }
+  // Future<Response> post(Map<String, dynamic> playload) {
+  //   return ApiRequest.instance.dio.post(path, data: playload);
+  // }
 
-  Future<Response> del(int pk) {
-    return ApiRequest.instance.dio.delete(path + '/$pk/');
-  }
+  // Future<Response> put(int pk, Map<String, dynamic> playload) {
+  //   return ApiRequest.instance.dio.put(path + '/$pk/', data: playload);
+  // }
+
+  // Future<Response> del(int pk) {
+  //   return ApiRequest.instance.dio.delete(path + '/$pk/');
+  // }
 }
