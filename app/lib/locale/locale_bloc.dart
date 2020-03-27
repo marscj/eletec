@@ -1,7 +1,6 @@
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
-import 'package:eletec/repository/language.dart';
+import 'package:eletec/rest/client.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
@@ -9,8 +8,6 @@ part 'locale_event.dart';
 part 'locale_state.dart';
 
 class LocaleBloc extends Bloc<LocaleEvent, LocaleState> {
-  final LanguageRepository languageRepository = LanguageRepository();
-
   @override
   LocaleState get initialState => LocaleState(Locale('en', ''));
 
@@ -19,14 +16,14 @@ class LocaleBloc extends Bloc<LocaleEvent, LocaleState> {
     LocaleEvent event,
   ) async* {
     if (event is LocaleInit) {
-      Locale locale = Locale(await languageRepository.get(), '');
+      Locale locale = Locale(await CacheService.instance.getLanguage(), '');
       yield LocaleState(locale);
     }
 
     if (event is LocaleUpdate) {
       Locale _locale = event.locale;
 
-      await languageRepository.set(event.locale.languageCode);
+      await CacheService.instance.setLanguage(event.locale.languageCode);
 
       yield LocaleState(_locale);
     }

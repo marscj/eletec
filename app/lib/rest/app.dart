@@ -1,5 +1,7 @@
 part of 'client.dart';
 
+// ignore_for_file: non_constant_identifier_names
+
 @JsonSerializable()
 class AppImage {
   String banner;

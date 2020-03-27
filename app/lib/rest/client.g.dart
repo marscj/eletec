@@ -53,10 +53,9 @@ Map<String, dynamic> _$OrderToJson(Order instance) => <String, dynamic>{
 // RetrofitGenerator
 // **************************************************************************
 
-class _RestClient implements RestClient {
-  _RestClient(this._dio, {this.baseUrl}) {
+class _RestService implements RestService {
+  _RestService(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
-    this.baseUrl ??= 'http://127.0.0.1:8000/api/';
   }
 
   final Dio _dio;
@@ -64,11 +63,13 @@ class _RestClient implements RestClient {
   String baseUrl;
 
   @override
-  getApps() async {
+  getApps({query}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.addAll(query ?? <String, dynamic>{});
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<List<dynamic>> _result = await _dio.request('/apps',
+    final Response<List<dynamic>> _result = await _dio.request('/apps/',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -83,11 +84,13 @@ class _RestClient implements RestClient {
   }
 
   @override
-  getOrders() async {
+  getOrders({query}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.addAll(query ?? <String, dynamic>{});
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<List<dynamic>> _result = await _dio.request('/orders',
+    final Response<List<dynamic>> _result = await _dio.request('/orders/',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -108,7 +111,7 @@ class _RestClient implements RestClient {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        '/orders/$id',
+        '/orders/$id/',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
