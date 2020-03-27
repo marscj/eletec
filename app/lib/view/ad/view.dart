@@ -15,9 +15,11 @@ class AdPage extends StatelessWidget {
           body: SafeArea(
               child: Stack(
             children: <Widget>[
-              Center(
-                  child: CachedNetworkImage(
-                      imageUrl: 'caonima',
+              Center(child: FutureBuilder(
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  future:
+                  return CachedNetworkImage(
+                      imageUrl: 'http://127.0.0.1:8000/api/apps/?tag=0',
                       fadeOutDuration: Duration.zero,
                       fadeInDuration: Duration.zero,
                       imageBuilder: (context, imageProvider) => Container(
@@ -25,7 +27,9 @@ class AdPage extends StatelessWidget {
                               image: DecorationImage(
                                   image: imageProvider, fit: BoxFit.cover))),
                       placeholder: (_, __) =>
-                          Image.asset('assets/ad.jpg', fit: BoxFit.cover))),
+                          Image.asset('assets/ad.jpg', fit: BoxFit.cover));
+                },
+              )),
               Container(
                   alignment: Alignment.topRight,
                   padding: const EdgeInsets.all(10),
@@ -39,7 +43,13 @@ class AdPage extends StatelessWidget {
                       '${state.timer}',
                       style: TextStyle(color: Colors.white),
                     ),
-                  ))
+                  )),
+              RaisedButton(
+                onPressed: () {
+                  BlocProvider.of<AdBloc>(context).add(AdEvent(5));
+                },
+                child: Text('button'),
+              )
             ],
           )),
         );

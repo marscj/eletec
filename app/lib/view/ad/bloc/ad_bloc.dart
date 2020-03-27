@@ -9,7 +9,7 @@ part 'ad_event.dart';
 part 'ad_state.dart';
 
 class AdBloc extends Bloc<AdEvent, AdState> {
-  var timerController;
+  StreamSubscription<int> timerController;
 
   @override
   AdState get initialState => AdState(5);
@@ -19,7 +19,7 @@ class AdBloc extends Bloc<AdEvent, AdState> {
     AdEvent event,
   ) async* {
     yield AdState(event.timer);
-    timerController = RangeStream(4, 0)
+    timerController ??= RangeStream(4, 0)
         .delay(Duration(seconds: 1))
         .interval(Duration(seconds: 1))
         .listen((i) => add(AdEvent(i)));
@@ -27,7 +27,7 @@ class AdBloc extends Bloc<AdEvent, AdState> {
 
   @override
   Future<void> close() {
-    timerController.close();
+    timerController?.cancel();
     return super.close();
   }
 }

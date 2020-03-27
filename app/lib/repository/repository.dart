@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 
 import 'request.dart';
+import 'reponse.dart';
 
 abstract class Repository {
   final String path;
@@ -8,7 +9,11 @@ abstract class Repository {
   Repository(this.path);
 
   Future<Response> list({Map<String, dynamic> params}) {
-    return ApiRequest.instance.dio.get(path, queryParameters: params);
+    return ApiRequest.instance.dio
+        .get(path, queryParameters: params)
+        .then((res) {
+      return Response();
+    });
   }
 
   Future<Response> get(int pk) {

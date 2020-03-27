@@ -1,6 +1,6 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticated, DjangoModelPermissions
+from rest_framework.permissions import IsAuthenticated, DjangoModelPermissions, AllowAny
 
 import django_filters
 
@@ -20,7 +20,7 @@ class FaqView(ModelViewSet):
     
 class AppView(ModelViewSet):
     serializer_class = AppSerializer
-    permission_classes = [IsAuthenticated, CustomModelPermissions]
+    permission_classes = [AllowAny]
     queryset = App.objects.all()
 
     ordering = ['sorter']
