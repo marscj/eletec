@@ -17,10 +17,15 @@ class FaqView(ModelViewSet):
     queryset = Faq.objects.all()
 
     filter_class = FaqFilter
-    
+
+class AppFilter(django_filters.FilterSet):
+    tag = django_filters.CharFilter('tag')
+
 class AppView(ModelViewSet):
     serializer_class = AppSerializer
     permission_classes = [AllowAny]
     queryset = App.objects.all()
 
     ordering = ['sorter']
+
+    filter_class = AppFilter

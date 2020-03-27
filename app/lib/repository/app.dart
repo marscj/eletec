@@ -4,37 +4,17 @@ import 'package:eletec/repository/repository.dart';
 import 'package:eletec/repository/request.dart';
 
 class AppRepository<Result> implements Repository {
-  @override
-  Future<Response> del(int pk) {
-    // TODO: implement del
-    return null;
-  }
+  final path = 'apps/';
 
   @override
-  Future<Response> get(int pk) {
-    // TODO: implement get
-    return null;
+  Future<Result> list({Map<String, dynamic> params}) {
+    return ApiRequest.instance.dio
+        .get(path, queryParameters: params)
+        .then((res) {
+      print(res);
+      return null;
+    });
   }
 
-  @override
-  Future<Response> list({Map<String, dynamic> params}) {
-    // TODO: implement list
-    return null;
-  }
-
-  @override
-  // TODO: implement path
-  String get path => null;
-
-  @override
-  Future<Response> post(Map<String, dynamic> playload) {
-    // TODO: implement post
-    return null;
-  }
-
-  @override
-  Future<Response> put(int pk, Map<String, dynamic> playload) {
-    // TODO: implement put
-    return null;
-  }
+  noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
