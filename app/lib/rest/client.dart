@@ -102,6 +102,6 @@ class RestServiceExtra {
         CacheService.instance.setAdvertising(_data);
         return _data;
       })
-    ]).distinct();
+    ]).delay(Duration(seconds: 10)).distinct();
   }
 }

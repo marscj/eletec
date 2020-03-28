@@ -21,12 +21,27 @@ class AdPage extends StatelessWidget {
                 builder:
                     (BuildContext context, AsyncSnapshot<String> snapshot) {
                   if (snapshot.hasData)
-                    return ExtendedImage.network(
-                      snapshot.data,
-                      fit: BoxFit.cover,
-                      width: double.infinity,
-                      height: double.infinity,
-                    );
+                    return ExtendedImage.network(snapshot.data,
+                        fit: BoxFit.cover,
+                        loadStateChanged: (ExtendedImageState state) {
+                      switch (state.extendedImageLoadState) {
+                        case LoadState.loading:
+                          return Image.asset(
+                            "assets/ad.jpg",
+                            fit: BoxFit.cover,
+                          );
+                        case LoadState.completed:
+                          return ExtendedRawImage(
+                            image: state.extendedImageInfo?.image,
+                            width: double.infinity,
+                            height: double.infinity,
+                            fit: BoxFit.cover,
+                          );
+                        default:
+                          return null;
+                          break;
+                      }
+                    });
 
                   return Image.asset('assets/ad.jpg', fit: BoxFit.cover);
                 },
