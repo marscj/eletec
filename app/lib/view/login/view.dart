@@ -1,4 +1,5 @@
 import 'package:eletec/view/login/bloc/login_bloc.dart';
+import 'package:eletec/view/widgets/gradient_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
@@ -41,49 +42,72 @@ class LoginCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
-    return BlocProvider<LoginBloc>(
-        create: (_) => LoginBloc(),
-        child: BlocListener<LoginBloc, LoginState>(
-          listener: (context, state) {},
-          child: BlocBuilder<LoginBloc, LoginState>(
-            builder: (context, state) {
-              return SizedBox(
-                  height: deviceSize.height / 2 - 10,
-                  width: deviceSize.width * 0.85,
-                  child: new Card(
-                      color: Colors.white, elevation: 2.0, child: LoginForm()));
-            },
-          ),
-        ));
+    return SizedBox(
+        height: deviceSize.height / 2 - 10,
+        width: deviceSize.width * 0.85,
+        child:
+            new Card(color: Colors.white, elevation: 2.0, child: LoginForm()));
   }
 }
 
 class LoginForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(15),
-      child: Form(
-          child: Column(
-        children: <Widget>[
-          InternationalPhoneNumberInput.withCustomBorder(
-            onInputChanged: (PhoneNumber number) {
-              print(number.phoneNumber);
+    return BlocProvider<LoginBloc>(
+        create: (_) => LoginBloc(),
+        child: BlocListener<LoginBloc, LoginState>(
+          listener: (context, state) {},
+          child: BlocBuilder<LoginBloc, LoginState>(
+            builder: (context, state) {
+              return Container(
+                padding: EdgeInsets.all(15),
+                child: Form(
+                    child: Column(
+                  children: <Widget>[
+                    TextFormField(
+                      keyboardType: TextInputType.phone,
+                      maxLength: 10,
+                      decoration: InputDecoration(
+                          labelText: 'Phone Number', prefixText: '+971  '),
+                    ),
+                    state is LoginOtpState
+                        ? TextFormField(
+                            keyboardType: TextInputType.number,
+                            maxLength: 4,
+                            decoration: InputDecoration(
+                                labelText: 'OTP', helperText: '4 digits'),
+                          )
+                        : Container(),
+                    SizedBox(height: 40),
+                    state is LoginInitState
+                        ? Container(
+                            child: GradientButton(
+                            onPressed: () {
+                              BlocProvider.of<LoginBloc>(context)
+                                  .add(LoginGetOTP('abc'));
+                            },
+                            text: 'Get OTP',
+                          ))
+                        : Container(
+                            child: GradientButton(
+                            onPressed: () {
+                              BlocProvider.of<LoginBloc>(context)
+                                  .add(LoginValidate('abc', 'abc'));
+                            },
+                            text: 'Login',
+                          )),
+                    state is LoginOtpState
+                        ? new FlatButton(
+                            child: Text('Resend OTP'),
+                            onPressed: () => BlocProvider.of<LoginBloc>(context)
+                                .add(LoginResendOTP()))
+                        : new Container()
+                  ],
+                )),
+              );
             },
-            countries: ['AE', 'NG'],
-            isEnabled: true,
-            autoValidate: true,
-            formatInput: true,
-            initialCountry2LetterCode: 'AE',
-            hintText: 'Invalid phone number',
-            inputBorder: UnderlineInputBorder(),
-            onInputValidated: (bool value) {
-              print(value);
-            },
-          )
-        ],
-      )),
-    );
+          ),
+        ));
   }
 }
 
@@ -104,10 +128,7 @@ class LoginBackground extends StatelessWidget {
                   gradient: new LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [
-                  Colors.black,
-                  Colors.blue.shade500,
-                ],
+                colors: [Colors.black87, Theme.of(context).accentColor],
               )),
             ),
             new Center(
