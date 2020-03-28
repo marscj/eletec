@@ -1,4 +1,7 @@
+import 'package:eletec/view/login/bloc/login_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 class LoginPage extends StatelessWidget {
   @override
@@ -6,6 +9,7 @@ class LoginPage extends StatelessWidget {
     return Theme(
         data: ThemeData(
             brightness: Brightness.light,
+            backgroundColor: Colors.white,
             scaffoldBackgroundColor: Colors.white),
         child: Scaffold(
           body: Stack(
@@ -24,9 +28,7 @@ class LoginWidgets extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            SizedBox(
-              height: 100.0,
-            ),
+            SizedBox.fromSize(size: Size.fromHeight(100)),
             LoginCard()
           ],
         ),
@@ -38,8 +40,49 @@ class LoginWidgets extends StatelessWidget {
 class LoginCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final deviceSize = MediaQuery.of(context).size;
+    return BlocProvider<LoginBloc>(
+        create: (_) => LoginBloc(),
+        child: BlocListener<LoginBloc, LoginState>(
+          listener: (context, state) {},
+          child: BlocBuilder<LoginBloc, LoginState>(
+            builder: (context, state) {
+              return SizedBox(
+                  height: deviceSize.height / 2 - 10,
+                  width: deviceSize.width * 0.85,
+                  child: new Card(
+                      color: Colors.white, elevation: 2.0, child: LoginForm()));
+            },
+          ),
+        ));
+  }
+}
+
+class LoginForm extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     return Container(
-      child: Text('data'),
+      padding: EdgeInsets.all(15),
+      child: Form(
+          child: Column(
+        children: <Widget>[
+          InternationalPhoneNumberInput.withCustomBorder(
+            onInputChanged: (PhoneNumber number) {
+              print(number.phoneNumber);
+            },
+            countries: ['AE', 'NG'],
+            isEnabled: true,
+            autoValidate: true,
+            formatInput: true,
+            initialCountry2LetterCode: 'AE',
+            hintText: 'Invalid phone number',
+            inputBorder: UnderlineInputBorder(),
+            onInputValidated: (bool value) {
+              print(value);
+            },
+          )
+        ],
+      )),
     );
   }
 }

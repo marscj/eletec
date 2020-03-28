@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:eletec/constanc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -57,8 +58,7 @@ class CacheService {
   }
 }
 
-//@RestApi(baseUrl: 'http://eletecapp.com/api')
-@RestApi(baseUrl: 'http://127.0.0.1:8000/api')
+@RestApi(baseUrl: Constant.Host)
 abstract class RestService {
   static RestService get instance => _RestService(Dio(BaseOptions(
         connectTimeout: 5000,
