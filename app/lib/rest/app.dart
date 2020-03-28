@@ -36,17 +36,3 @@ class App extends Equatable {
   @override
   List<Object> get props => [id];
 }
-
-class Result<T extends Object> {
-  T result;
-
-  Result({this.result});
-
-  factory Result.fromJson(Map<String, dynamic> json, Function fromJson) {
-    if (json['result'] is List) {
-      return Result(
-          result: json['result'].map<T>((f) => fromJson<App>(f)).toList());
-    }
-    return Result(result: fromJson(json));
-  }
-}

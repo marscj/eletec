@@ -1,44 +1,46 @@
 import 'package:flutter/material.dart';
-// import 'login_card.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends StatelessWidget {
   @override
-  LoginPageState createState() {
-    return LoginPageState();
+  Widget build(BuildContext context) {
+    return Theme(
+        data: ThemeData(
+            brightness: Brightness.light,
+            scaffoldBackgroundColor: Colors.white),
+        child: Scaffold(
+          body: Stack(
+            fit: StackFit.expand,
+            children: <Widget>[LoginBackground(), LoginWidgets()],
+          ),
+        ));
   }
 }
 
-class LoginPageState extends State<LoginPage> {
-  final scaffoldState = GlobalKey<ScaffoldState>();
-  Widget loginScaffold() => Theme(
-      data: ThemeData(
-          brightness: Brightness.light,
-          backgroundColor: Colors.red,
-          scaffoldBackgroundColor: Colors.red),
-      child: Scaffold(
-        key: scaffoldState,
-        backgroundColor: Color(0xffeeeeee),
-        body: Stack(
-          fit: StackFit.expand,
-          children: <Widget>[LoginBackground()],
-        ),
-      ));
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
+class LoginWidgets extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return loginScaffold();
+    return Container(
+      alignment: Alignment.center,
+      child: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            SizedBox(
+              height: 100.0,
+            ),
+            LoginCard()
+          ],
+        ),
+      ),
+    );
   }
 }
 
 class LoginCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return null;
+    return Container(
+      child: Text('data'),
+    );
   }
 }
 
@@ -61,18 +63,15 @@ class LoginBackground extends StatelessWidget {
                 end: Alignment.bottomCenter,
                 colors: [
                   Colors.black,
-                  Colors.blue.shade700,
+                  Colors.blue.shade500,
                 ],
               )),
             ),
             new Center(
-                child: AspectRatio(
-              aspectRatio: 1 / 1,
-              child: Image.asset(
-                'assets/logo.png',
-                fit: BoxFit.none,
-                color: Colors.blue,
-              ),
+                child: Image.asset(
+              'assets/logo.png',
+              fit: BoxFit.none,
+              color: Colors.blue,
             ))
           ],
         ),
