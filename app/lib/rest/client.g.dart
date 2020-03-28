@@ -8,12 +8,14 @@ part of 'client.dart';
 
 AppImage _$AppImageFromJson(Map<String, dynamic> json) {
   return AppImage(
+    full: json['full'] as String,
     banner: json['banner'] as String,
     advertising: json['advertising'] as String,
   );
 }
 
 Map<String, dynamic> _$AppImageToJson(AppImage instance) => <String, dynamic>{
+      'full': instance.full,
       'banner': instance.banner,
       'advertising': instance.advertising,
     };

@@ -1,9 +1,7 @@
 <template>
   <page-view class="bg-white">
     <div align="right" class="table-operator">
-      <a-button type="primary" icon="upload" @click="openModal()">
-        New
-      </a-button>
+      <a-button type="primary" icon="upload" @click="openModal()">New</a-button>
     </div>
     <a-list
       ref="list"
@@ -22,9 +20,7 @@
               alt="images"
             />
 
-            <a-card-meta
-              :title="item.tag == 0 ? 'Advertising' : 'Banner ' + item.sorter"
-            ></a-card-meta>
+            <a-card-meta :title="item.tag == 0 ? 'Advertising' : 'Banner ' + item.sorter"></a-card-meta>
 
             <template class="ant-card-actions" slot="actions">
               <a-popconfirm
@@ -40,27 +36,18 @@
         </template>
       </a-list-item>
     </a-list>
-    <a-modal
-      v-model="modal"
-      :title="this.form.id === undefined ? 'Create' : 'Edit'"
-      @ok="upload"
-    >
+    <a-modal v-model="modal" :title="this.form.id === undefined ? 'Create' : 'Edit'" @ok="upload">
       <validation-observer ref="observer">
         <validation-provider name="non_field_errors" v-slot="{ errors }">
           <span class="errorText">{{ errors[0] }}</span>
         </validation-provider>
 
-        <a-form
-          :form="form"
-          :submit="upload"
-          :label-col="{ span: 4 }"
-          :wrapper-col="{ span: 16 }"
-        >
+        <a-form :form="form" :submit="upload" :label-col="{ span: 4 }" :wrapper-col="{ span: 16 }">
           <a-form-item
             label="Image"
             :help="
               form.tag == 0
-                ? 'picture size is better 1280x720'
+                ? 'picture size is better 1080x1920'
                 : 'picture size is better  854x480'
             "
           >
@@ -73,7 +60,7 @@
                 :remove="handleRemove"
               >
                 <a-button v-if="fileList.length == 0">
-                  <a-icon type="upload" /> Select File
+                  <a-icon type="upload" />Select File
                 </a-button>
               </a-upload>
               <span class="errorText">{{ errors[0] }}</span>
@@ -86,18 +73,14 @@
                   v-for="data in options"
                   :key="data.value"
                   :value="data.value"
-                  >{{ data.label }}</a-select-option
-                >
+                >{{ data.label }}</a-select-option>
               </a-select>
               <span class="errorText">{{ errors[0] }}</span>
             </validation-provider>
           </a-form-item>
           <a-form-item label="Sorter" help="for picture sorting">
             <validation-provider vid="sorter" v-slot="{ errors }">
-              <a-input-number
-                v-model="form.sorter"
-                :disabled="form.tag == 0"
-              ></a-input-number>
+              <a-input-number v-model="form.sorter" :disabled="form.tag == 0"></a-input-number>
               <span class="errorText">{{ errors[0] }}</span>
             </validation-provider>
           </a-form-item>

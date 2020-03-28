@@ -5,10 +5,11 @@ part of 'client.dart';
 
 @JsonSerializable()
 class AppImage extends Equatable {
+  String full;
   String banner;
   String advertising;
 
-  AppImage({this.banner, this.advertising});
+  AppImage({this.full, this.banner, this.advertising});
 
   static AppImage fromJson(Map<String, dynamic> json) =>
       _$AppImageFromJson(json);

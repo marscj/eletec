@@ -178,7 +178,8 @@ VERSATILEIMAGEFIELD_RENDITION_KEY_SETS = {
         ('large', 'crop__1280x720'),
     ],
     'app_size': [
-        ('advertising', 'crop__720x1280'),
+        ('full', 'url'),
+        ('advertising', 'crop__1080x1920'),
         ('banner', 'crop__854x480'),
     ]
 }
