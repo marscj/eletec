@@ -50,7 +50,19 @@ class LoginCard extends StatelessWidget {
   }
 }
 
-class LoginForm extends StatelessWidget {
+class LoginForm extends StatefulWidget {
+  const LoginForm();
+
+  @override
+  State<LoginForm> createState() => LoginFormState();
+}
+
+class LoginFormState extends State<LoginForm> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider<LoginBloc>(
@@ -59,49 +71,57 @@ class LoginForm extends StatelessWidget {
           listener: (context, state) {},
           child: BlocBuilder<LoginBloc, LoginState>(
             builder: (context, state) {
+              _buildPhone() => TextFormField(
+                    onChanged:
+                        BlocProvider.of<LoginBloc>(context).phoneSink.add,
+                    keyboardType: TextInputType.phone,
+                    maxLength: 10,
+                    decoration: InputDecoration(
+                        labelText: 'Phone Number', prefixText: '+971  '),
+                  );
+
+              _buildOtp() => state.step == 1
+                  ? TextFormField(
+                      onChanged:
+                          BlocProvider.of<LoginBloc>(context).otpSink.add,
+                      keyboardType: TextInputType.number,
+                      maxLength: 4,
+                      decoration: InputDecoration(
+                          labelText: 'OTP', helperText: '4 digits'),
+                    )
+                  : Container();
+
+              _buildButton() => state.step == 0
+                  ? GradientButton(
+                      onPressed: () {
+                        BlocProvider.of<LoginBloc>(context)
+                            .add(LoginGetOTP('abc'));
+                      },
+                      text: 'Get OTP',
+                    )
+                  : GradientButton(
+                      onPressed: () {
+                        BlocProvider.of<LoginBloc>(context)
+                            .add(LoginValidate('abc', 'abc'));
+                      },
+                      text: 'Login',
+                    );
+              _buildResend() => state.step == 1
+                  ? new FlatButton(
+                      child: Text('Resend OTP'),
+                      onPressed: () => BlocProvider.of<LoginBloc>(context)
+                          .add(LoginResendOTP()))
+                  : new Container();
               return Container(
                 padding: EdgeInsets.all(15),
                 child: Form(
                     child: Column(
                   children: <Widget>[
-                    TextFormField(
-                      keyboardType: TextInputType.phone,
-                      maxLength: 10,
-                      decoration: InputDecoration(
-                          labelText: 'Phone Number', prefixText: '+971  '),
-                    ),
-                    state is LoginOtpState
-                        ? TextFormField(
-                            keyboardType: TextInputType.number,
-                            maxLength: 4,
-                            decoration: InputDecoration(
-                                labelText: 'OTP', helperText: '4 digits'),
-                          )
-                        : Container(),
+                    _buildPhone(),
+                    _buildOtp(),
                     SizedBox(height: 40),
-                    state is LoginInitState
-                        ? Container(
-                            child: GradientButton(
-                            onPressed: () {
-                              BlocProvider.of<LoginBloc>(context)
-                                  .add(LoginGetOTP('abc'));
-                            },
-                            text: 'Get OTP',
-                          ))
-                        : Container(
-                            child: GradientButton(
-                            onPressed: () {
-                              BlocProvider.of<LoginBloc>(context)
-                                  .add(LoginValidate('abc', 'abc'));
-                            },
-                            text: 'Login',
-                          )),
-                    state is LoginOtpState
-                        ? new FlatButton(
-                            child: Text('Resend OTP'),
-                            onPressed: () => BlocProvider.of<LoginBloc>(context)
-                                .add(LoginResendOTP()))
-                        : new Container()
+                    _buildButton(),
+                    _buildResend()
                   ],
                 )),
               );
