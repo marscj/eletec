@@ -71,21 +71,24 @@ class LoginFormState extends State<LoginForm> {
           listener: (context, state) {},
           child: BlocBuilder<LoginBloc, LoginState>(
             builder: (context, state) {
+              print(state.otp);
               _buildPhone() => TextFormField(
-                    onChanged:
-                        BlocProvider.of<LoginBloc>(context).phoneSink.add,
+                    controller:
+                        BlocProvider.of<LoginBloc>(context).phoneController,
                     keyboardType: TextInputType.phone,
                     maxLength: 10,
+                    // initialValue: state.phone_number,
                     decoration: InputDecoration(
                         labelText: 'Phone Number', prefixText: '+971  '),
                   );
 
               _buildOtp() => state.step == 1
                   ? TextFormField(
-                      onChanged:
-                          BlocProvider.of<LoginBloc>(context).otpSink.add,
+                      controller:
+                          BlocProvider.of<LoginBloc>(context).otpController,
                       keyboardType: TextInputType.number,
                       maxLength: 4,
+                      // initialValue: state.otp,
                       decoration: InputDecoration(
                           labelText: 'OTP', helperText: '4 digits'),
                     )
@@ -94,23 +97,22 @@ class LoginFormState extends State<LoginForm> {
               _buildButton() => state.step == 0
                   ? GradientButton(
                       onPressed: () {
-                        BlocProvider.of<LoginBloc>(context)
-                            .add(LoginGetOTP('abc'));
+                        BlocProvider.of<LoginBloc>(context).add(GetOtp());
                       },
                       text: 'Get OTP',
                     )
                   : GradientButton(
                       onPressed: () {
                         BlocProvider.of<LoginBloc>(context)
-                            .add(LoginValidate('abc', 'abc'));
+                            .add(FormSubmitted());
                       },
                       text: 'Login',
                     );
               _buildResend() => state.step == 1
                   ? new FlatButton(
                       child: Text('Resend OTP'),
-                      onPressed: () => BlocProvider.of<LoginBloc>(context)
-                          .add(LoginResendOTP()))
+                      onPressed: () =>
+                          BlocProvider.of<LoginBloc>(context).add(BackStep()))
                   : new Container();
               return Container(
                 padding: EdgeInsets.all(15),

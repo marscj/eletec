@@ -9,23 +9,27 @@ abstract class LoginEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoginGetOTP extends LoginEvent {
+class GetOtp extends LoginEvent {}
+
+class BackStep extends LoginEvent {}
+
+class FormSubmitted extends LoginEvent {}
+
+class PhoneNumberChange extends LoginEvent {
   final String phone_number;
 
-  LoginGetOTP(this.phone_number);
+  PhoneNumberChange(this.phone_number);
 
   @override
   List<Object> get props => [phone_number];
 }
 
-class LoginResendOTP extends LoginEvent {}
-
-class LoginValidate extends LoginEvent {
+class StateChange extends LoginEvent {
   final String phone_number;
   final String otp;
 
-  LoginValidate(this.phone_number, this.otp);
+  StateChange({this.phone_number, this.otp});
 
   @override
-  List<Object> get props => [phone_number, otp];
+  List<Object> get props => [otp];
 }

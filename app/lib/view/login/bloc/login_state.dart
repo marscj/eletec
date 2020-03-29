@@ -16,7 +16,7 @@ class LoginState extends Equatable {
   });
 
   factory LoginState.initial() {
-    return LoginState(phone_number: '', otp: '', step: 1, successful: false);
+    return LoginState(phone_number: '', otp: '', step: 0, successful: false);
   }
 
   LoginState copyWith({
