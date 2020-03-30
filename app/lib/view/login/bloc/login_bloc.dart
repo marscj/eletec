@@ -17,12 +17,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc() {
     phoneController = TextEditingController()
       ..addListener(() {
-        add(StateChange(phone_number: phoneController.text));
+        add(OnTextChange());
       });
 
     otpController = TextEditingController()
       ..addListener(() {
-        add(StateChange(otp: otpController.text));
+        add(OnTextChange());
       });
 
     // return LoginBloc._(_phoneController, _otpController);
@@ -37,17 +37,26 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   Stream<LoginState> mapEventToState(
     LoginEvent event,
   ) async* {
-    if (event is GetOtp) {
+    if (event is GetOTP) {
+      otpController.clear();
       yield state.copyWith(
         step: 1,
-        // otp: '',
+        otp: '',
       );
     }
 
-    if (event is BackStep) {
+    if (event is ResendOTP) {
+      otpController.clear();
       yield state.copyWith(
         step: 0,
-        // otp: '',
+        otp: '',
+      );
+    }
+
+    if (event is OnTextChange) {
+      yield state.copyWith(
+        phone_number: phoneController.text,
+        otp: otpController.text,
       );
     }
   }

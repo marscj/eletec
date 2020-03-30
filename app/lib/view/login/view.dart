@@ -71,13 +71,11 @@ class LoginFormState extends State<LoginForm> {
           listener: (context, state) {},
           child: BlocBuilder<LoginBloc, LoginState>(
             builder: (context, state) {
-              print(state.otp);
               _buildPhone() => TextFormField(
                     controller:
                         BlocProvider.of<LoginBloc>(context).phoneController,
                     keyboardType: TextInputType.phone,
                     maxLength: 10,
-                    // initialValue: state.phone_number,
                     decoration: InputDecoration(
                         labelText: 'Phone Number', prefixText: '+971  '),
                   );
@@ -88,7 +86,6 @@ class LoginFormState extends State<LoginForm> {
                           BlocProvider.of<LoginBloc>(context).otpController,
                       keyboardType: TextInputType.number,
                       maxLength: 4,
-                      // initialValue: state.otp,
                       decoration: InputDecoration(
                           labelText: 'OTP', helperText: '4 digits'),
                     )
@@ -97,7 +94,7 @@ class LoginFormState extends State<LoginForm> {
               _buildButton() => state.step == 0
                   ? GradientButton(
                       onPressed: () {
-                        BlocProvider.of<LoginBloc>(context).add(GetOtp());
+                        BlocProvider.of<LoginBloc>(context).add(GetOTP());
                       },
                       text: 'Get OTP',
                     )
@@ -112,7 +109,7 @@ class LoginFormState extends State<LoginForm> {
                   ? new FlatButton(
                       child: Text('Resend OTP'),
                       onPressed: () =>
-                          BlocProvider.of<LoginBloc>(context).add(BackStep()))
+                          BlocProvider.of<LoginBloc>(context).add(ResendOTP()))
                   : new Container();
               return Container(
                 padding: EdgeInsets.all(15),
