@@ -50,19 +50,7 @@ class LoginCard extends StatelessWidget {
   }
 }
 
-class LoginForm extends StatefulWidget {
-  const LoginForm();
-
-  @override
-  State<LoginForm> createState() => LoginFormState();
-}
-
-class LoginFormState extends State<LoginForm> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
+class LoginForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<LoginBloc>(
@@ -114,15 +102,16 @@ class LoginFormState extends State<LoginForm> {
               return Container(
                 padding: EdgeInsets.all(15),
                 child: Form(
-                    child: Column(
+                    child: SingleChildScrollView(
+                        child: Column(
                   children: <Widget>[
                     _buildPhone(),
                     _buildOtp(),
-                    SizedBox(height: 40),
+                    SizedBox(height: 30),
                     _buildButton(),
                     _buildResend()
                   ],
-                )),
+                ))),
               );
             },
           ),
