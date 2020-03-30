@@ -58,7 +58,7 @@ Map<String, dynamic> _$OrderToJson(Order instance) => <String, dynamic>{
 class _RestService implements RestService {
   _RestService(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
-    this.baseUrl ??= 'http://127.0.0.1:8000/api';
+    this.baseUrl ??= 'http://eletecapp.com/api';
   }
 
   final Dio _dio;
@@ -123,6 +123,44 @@ class _RestService implements RestService {
             baseUrl: baseUrl),
         data: _data);
     final value = Order.fromJson(_result.data);
+    return Future.value(value);
+  }
+
+  @override
+  phoneGenerate(playload) async {
+    ArgumentError.checkNotNull(playload, 'playload');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(playload ?? <String, dynamic>{});
+    final Response<String> _result = await _dio.request('/auth/phone/generate/',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = _result.data;
+    return Future.value(value);
+  }
+
+  @override
+  phoneValidate(playload) async {
+    ArgumentError.checkNotNull(playload, 'playload');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(playload ?? <String, dynamic>{});
+    final Response<String> _result = await _dio.request('/auth/phone/generate/',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = _result.data;
     return Future.value(value);
   }
 }

@@ -79,14 +79,20 @@ abstract class RestService {
           return e;
         })));
 
-  @GET("/apps/")
+  @GET('/apps/')
   Future<List<App>> getApps({@Queries() Map<String, dynamic> query});
 
-  @GET("/orders/")
+  @GET('/orders/')
   Future<List<Order>> getOrders({@Queries() Map<String, dynamic> query});
 
-  @GET("/orders/{id}/")
+  @GET('/orders/{id}/')
   Future<Order> getTask(@Path("id") String id);
+
+  @POST('/auth/phone/generate/')
+  Future<String> phoneGenerate(@Body() Map<String, dynamic> playload);
+
+  @POST('/auth/phone/generate/')
+  Future<String> phoneValidate(@Body() Map<String, dynamic> playload);
 }
 
 class RestServiceExtra {

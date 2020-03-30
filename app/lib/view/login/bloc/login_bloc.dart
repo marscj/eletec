@@ -3,12 +3,9 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:rxdart/rxdart.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';
-
-//ignore_for_file: close_sinks
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   TextEditingController phoneController;
@@ -24,8 +21,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       ..addListener(() {
         add(OnTextChange());
       });
-
-    // return LoginBloc._(_phoneController, _otpController);
   }
 
   LoginBloc._(this.phoneController, this.otpController);
