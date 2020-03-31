@@ -1,29 +1,16 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:eletec/rest/client.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  TextEditingController phoneController;
-  TextEditingController otpController;
-
-  LoginBloc() {
-    phoneController = TextEditingController()
-      ..addListener(() {
-        add(OnTextChange());
-      });
-
-    otpController = TextEditingController()
-      ..addListener(() {
-        add(OnTextChange());
-      });
-  }
-
-  LoginBloc._(this.phoneController, this.otpController);
+  final GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
 
   @override
   LoginState get initialState => LoginState.initial();
@@ -33,33 +20,39 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     LoginEvent event,
   ) async* {
     if (event is GetOTP) {
-      otpController.clear();
-      yield state.copyWith(
-        step: 1,
-        otp: '',
-      );
+      yield state;
+
+      if (formKey.currentState.saveAndValidate()) {
+        yield state.copyWith(loading: true);
+
+        RestService.instance.phoneGenerate({
+          'phone_number': formKey.currentState.value['phone_number']
+        }).then((res) {
+          print(res);
+        }).catchError((error) {
+          print(error);
+        });
+      }
     }
 
     if (event is ResendOTP) {
-      otpController.clear();
       yield state.copyWith(
         step: 0,
-        otp: '',
       );
     }
 
-    if (event is OnTextChange) {
-      yield state.copyWith(
-        phone_number: phoneController.text,
-        otp: otpController.text,
-      );
+    if (event is FormSubmitted) {
+      if (formKey.currentState.saveAndValidate()) {
+        print(formKey.currentState.value);
+      } else {
+        print(formKey.currentState.value);
+        print("validation failed");
+      }
     }
   }
 
   @override
   Future<void> close() {
-    phoneController.dispose();
-    otpController.dispose();
     return super.close();
   }
 }

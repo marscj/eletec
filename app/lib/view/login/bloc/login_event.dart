@@ -14,5 +14,3 @@ class GetOTP extends LoginEvent {}
 class ResendOTP extends LoginEvent {}
 
 class FormSubmitted extends LoginEvent {}
-
-class OnTextChange extends LoginEvent {}

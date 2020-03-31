@@ -2,6 +2,7 @@ import 'package:eletec/view/login/bloc/login_bloc.dart';
 import 'package:eletec/view/widgets/gradient_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class LoginPage extends StatelessWidget {
   @override
@@ -44,8 +45,10 @@ class LoginCard extends StatelessWidget {
     return SizedBox(
         height: deviceSize.height / 2 - 10,
         width: deviceSize.width * 0.85,
-        child:
-            new Card(color: Colors.white, elevation: 2.0, child: LoginForm()));
+        child: new Card(
+            color: Colors.white.withOpacity(1.0),
+            elevation: 2.0,
+            child: LoginForm()));
   }
 }
 
@@ -58,19 +61,19 @@ class LoginForm extends StatelessWidget {
           listener: (context, state) {},
           child: BlocBuilder<LoginBloc, LoginState>(
             builder: (context, state) {
-              _buildPhone() => TextFormField(
-                    controller:
-                        BlocProvider.of<LoginBloc>(context).phoneController,
+              _buildPhone() => FormBuilderTextField(
+                    attribute: 'phone_number',
                     keyboardType: TextInputType.phone,
                     maxLength: 10,
                     decoration: InputDecoration(
                         labelText: 'Phone Number', prefixText: '+971  '),
+                    valueTransformer: (value) => '+971$value',
+                    validators: [FormBuilderValidators.required()],
                   );
 
               _buildOtp() => state.step == 1
-                  ? TextFormField(
-                      controller:
-                          BlocProvider.of<LoginBloc>(context).otpController,
+                  ? FormBuilderTextField(
+                      attribute: 'otp',
                       keyboardType: TextInputType.number,
                       maxLength: 4,
                       decoration: InputDecoration(
@@ -100,17 +103,19 @@ class LoginForm extends StatelessWidget {
                   : new Container();
               return Container(
                 padding: EdgeInsets.all(15),
-                child: Form(
-                    child: SingleChildScrollView(
+                child: SingleChildScrollView(
+                    child: FormBuilder(
+                        autovalidate: true,
+                        key: BlocProvider.of<LoginBloc>(context).formKey,
                         child: Column(
-                  children: <Widget>[
-                    _buildPhone(),
-                    _buildOtp(),
-                    SizedBox(height: 30),
-                    _buildButton(),
-                    _buildResend()
-                  ],
-                ))),
+                          children: <Widget>[
+                            _buildPhone(),
+                            _buildOtp(),
+                            SizedBox(height: 30),
+                            _buildButton(),
+                            _buildResend()
+                          ],
+                        ))),
               );
             },
           ),

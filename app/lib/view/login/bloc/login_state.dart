@@ -3,35 +3,31 @@ part of 'login_bloc.dart';
 //ignore_for_file: non_constant_identifier_names
 
 class LoginState extends Equatable {
-  final String phone_number;
-  final String otp;
   final int step;
-  final bool successful;
+  final bool loading;
+  final Map<String, dynamic> error;
 
   const LoginState({
-    this.phone_number,
-    this.otp,
+    this.loading = false,
+    this.error,
     this.step,
-    this.successful,
   });
 
   factory LoginState.initial() {
-    return LoginState(phone_number: '', otp: '', step: 0, successful: false);
+    return LoginState(step: 0);
   }
 
   LoginState copyWith({
-    String phone_number,
-    String otp,
     int step,
-    bool successful,
+    bool loading,
+    Map<String, dynamic> error,
   }) {
     return LoginState(
-        phone_number: phone_number ?? this.phone_number,
-        otp: otp ?? this.otp,
         step: step ?? this.step,
-        successful: successful ?? this.successful);
+        loading: loading ?? this.loading,
+        error: error ?? this.error);
   }
 
   @override
-  List<Object> get props => [phone_number, otp, step, successful];
+  List<Object> get props => [step, loading, error];
 }
