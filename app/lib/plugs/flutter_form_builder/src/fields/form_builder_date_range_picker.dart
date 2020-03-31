@@ -5,9 +5,10 @@ import 'package:date_range_picker/date_range_picker.dart' as DateRangePicker;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:flutter_form_builder/src/always_disabled_focus_node.dart';
 import 'package:intl/intl.dart' as intl;
+
+import '../always_disabled_focus_node.dart';
+import '../form_builder.dart';
 
 class FormBuilderDateRangePicker extends StatefulWidget {
   final String attribute;

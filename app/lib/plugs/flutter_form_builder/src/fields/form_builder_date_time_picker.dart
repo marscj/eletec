@@ -4,8 +4,9 @@ import 'dart:ui' as ui;
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
+
+import '../form_builder.dart';
 
 enum InputType { date, time, both }
 

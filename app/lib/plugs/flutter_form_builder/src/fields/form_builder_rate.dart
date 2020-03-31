@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:sy_flutter_widgets/sy_flutter_widgets.dart';
+
+import '../form_builder.dart';
 
 class FormBuilderRate extends StatefulWidget {
   final String attribute;

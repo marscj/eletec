@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:flutter_form_builder/src/always_disabled_focus_node.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
+
+import '../../flutter_form_builder.dart';
+import '../always_disabled_focus_node.dart';
 
 typedef String SelectionToTextTransformer<T>(T suggestion);
 

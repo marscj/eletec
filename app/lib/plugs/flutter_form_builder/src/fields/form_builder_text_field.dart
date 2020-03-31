@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:flutter_form_builder/src/always_disabled_focus_node.dart';
+
+import '../always_disabled_focus_node.dart';
+import '../form_builder.dart';
 
 class FormBuilderTextField extends StatefulWidget {
   final String attribute;
