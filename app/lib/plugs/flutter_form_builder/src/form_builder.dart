@@ -43,7 +43,7 @@ class FormBuilderState extends State<FormBuilder> {
 
   Map<String, dynamic> _error;
 
-   Map<String, dynamic> get error => _error;
+  Map<String, dynamic> get error => _error;
 
   bool get readOnly => widget.readOnly;
 
@@ -89,6 +89,16 @@ class FormBuilderState extends State<FormBuilder> {
 
   void save() {
     _formKey.currentState.save();
+  }
+
+  bool setError() {
+    bool hasError = false;
+    
+    this.fields.forEach((k, v) {
+      hasError = !this.fields[k].currentState.validate() || hasError;
+    });
+      
+    return !hasError;
   }
 
   bool validate() {

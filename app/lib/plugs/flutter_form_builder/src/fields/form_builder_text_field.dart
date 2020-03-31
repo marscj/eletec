@@ -117,6 +117,8 @@ class FormBuilderTextFieldState extends State<FormBuilderTextField> {
     _effectiveController.addListener(() {
       if (widget.onChanged != null) widget.onChanged(_effectiveController.text);
     });
+
+    this.widget.validators.add((value) => FormBuilder.of(context)?.error[this.widget.attribute]);
     super.initState();
   }
 
