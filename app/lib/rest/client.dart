@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:eletec/constanc.dart';
+import 'package:eletec/rest/result.dart';
 import 'package:equatable/equatable.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -7,6 +8,7 @@ import 'package:retrofit/retrofit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'app.dart';
+part 'auth.dart';
 part 'order.dart';
 part 'client.g.dart';
 
@@ -89,7 +91,7 @@ abstract class RestService {
   Future<Order> getTask(@Path("id") String id);
 
   @POST('/auth/phone/generate/')
-  Future<String> phoneGenerate(@Body() Map<String, dynamic> playload);
+  Future<OtpResponse> phoneGenerate(@Body() Map<String, dynamic> playload);
 
   @POST('/auth/phone/generate/')
   Future<String> phoneValidate(@Body() Map<String, dynamic> playload);

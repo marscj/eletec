@@ -11,6 +11,13 @@ abstract class LoginEvent extends Equatable {
 
 class GetOTP extends LoginEvent {}
 
+class ResponseOTP extends LoginEvent {
+  final dynamic result;
+  final bool success;
+
+  ResponseOTP(this.result, this.success);
+}
+
 class ResendOTP extends LoginEvent {}
 
 class FormSubmitted extends LoginEvent {}

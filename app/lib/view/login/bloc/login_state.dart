@@ -5,10 +5,12 @@ part of 'login_bloc.dart';
 class LoginState extends Equatable {
   final int step;
   final bool loading;
-  final Map<String, dynamic> error;
+  final OtpResponse otpResponse;
+  final dynamic error;
 
   const LoginState({
     this.loading = false,
+    this.otpResponse,
     this.error,
     this.step,
   });
@@ -20,11 +22,13 @@ class LoginState extends Equatable {
   LoginState copyWith({
     int step,
     bool loading,
-    Map<String, dynamic> error,
+    OtpResponse otpResponse,
+    dynamic error,
   }) {
     return LoginState(
         step: step ?? this.step,
         loading: loading ?? this.loading,
+        otpResponse: otpResponse ?? this.otpResponse,
         error: error ?? this.error);
   }
 

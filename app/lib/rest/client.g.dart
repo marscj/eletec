@@ -41,6 +41,17 @@ Map<String, dynamic> _$AppToJson(App instance) => <String, dynamic>{
       'create_at': instance.create_at,
     };
 
+OtpResponse _$PhoneGenerateFromJson(Map<String, dynamic> json) {
+  return OtpResponse(
+    json['phone_number'] as String,
+  );
+}
+
+Map<String, dynamic> _$PhoneGenerateToJson(OtpResponse instance) =>
+    <String, dynamic>{
+      'phone_number': instance.phone_number,
+    };
+
 Order _$OrderFromJson(Map<String, dynamic> json) {
   return Order(
     id: json['id'] as int,
@@ -58,7 +69,7 @@ Map<String, dynamic> _$OrderToJson(Order instance) => <String, dynamic>{
 class _RestService implements RestService {
   _RestService(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
-    this.baseUrl ??= 'http://eletecapp.com/api';
+    this.baseUrl ??= 'http://127.0.0.1:8000/api/';
   }
 
   final Dio _dio;
@@ -133,7 +144,8 @@ class _RestService implements RestService {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(playload ?? <String, dynamic>{});
-    final Response<String> _result = await _dio.request('/auth/phone/generate/',
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        '/auth/phone/generate/',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -141,7 +153,7 @@ class _RestService implements RestService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = _result.data;
+    final value = OtpResponse.fromJson(_result.data);
     return Future.value(value);
   }
 

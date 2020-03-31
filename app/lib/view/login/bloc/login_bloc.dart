@@ -28,10 +28,25 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         RestService.instance.phoneGenerate({
           'phone_number': formKey.currentState.value['phone_number']
         }).then((res) {
-          print(res);
+          add(ResponseOTP(res, true));
         }).catchError((error) {
-          print(error);
+          add(ResponseOTP(null, false));
         });
+      }
+    }
+
+    if (event is ResponseOTP) {
+      if (event.success ){
+        yield state.copyWith(
+          step: 1, 
+          loading: false,
+          otpResponse: event.result
+        );
+      } else {
+        yield state.copyWith(
+          loading: false,
+          error: event.result
+        );
       }
     }
 

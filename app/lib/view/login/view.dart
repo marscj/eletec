@@ -68,7 +68,9 @@ class LoginForm extends StatelessWidget {
                     decoration: InputDecoration(
                         labelText: 'Phone Number', prefixText: '+971  '),
                     valueTransformer: (value) => '+971$value',
-                    validators: [FormBuilderValidators.required()],
+                    validators: [
+                      FormBuilderValidators.required(),
+                    ]
                   );
 
               _buildOtp() => state.step == 1
