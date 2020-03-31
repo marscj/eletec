@@ -1,7 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
+
+import 'plugs/flutter_form_builder/flutter_form_builder.dart';
 
 class MyApp extends StatelessWidget {
   @override
@@ -124,12 +125,6 @@ class MyHomePageState extends State<MyHomePage> {
                           );
                         },
                       ),
-                    ),
-                    FormBuilderColorPicker(
-                      attribute: 'color_picker',
-                      // initialValue: Colors.yellow,
-                      colorPickerType: ColorPickerType.SlidePicker,
-                      decoration: InputDecoration(labelText: "Pick Color"),
                     ),
                     FormBuilderChipsInput(
                       decoration: InputDecoration(labelText: "Chips"),
@@ -414,15 +409,6 @@ class MyHomePageState extends State<MyHomePage> {
                       attribute: "accept_terms_switch",
                       initialValue: true,
                       onChanged: _onChanged,
-                    ),
-                    FormBuilderTouchSpin(
-                      decoration: InputDecoration(labelText: "Stepper"),
-                      attribute: "stepper",
-                      initialValue: 10,
-                      step: 1,
-                      iconSize: 48.0,
-                      addIcon: Icon(Icons.arrow_right),
-                      subtractIcon: Icon(Icons.arrow_left),
                     ),
                     FormBuilderRate(
                       decoration: InputDecoration(labelText: "Rate this form"),
