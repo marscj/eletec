@@ -29,7 +29,6 @@ class FormBuilder extends StatefulWidget {
 }
 
 class FormBuilderState extends State<FormBuilder> {
-  //TODO: Find way to assert no duplicates in field attributes
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   Map<String, GlobalKey<FormFieldState>> _fieldKeys;
@@ -42,18 +41,24 @@ class FormBuilderState extends State<FormBuilder> {
 
   Map<String, GlobalKey<FormFieldState>> get fields => _fieldKeys;
 
+  Map<String, dynamic> _error;
+
+   Map<String, dynamic> get error => _error;
+
   bool get readOnly => widget.readOnly;
 
   @override
   void initState() {
     _fieldKeys = {};
     _value = {};
+    _error = {};
     super.initState();
   }
 
   @override
   void dispose() {
     _fieldKeys = null;
+    _error = null;
     super.dispose();
   }
 

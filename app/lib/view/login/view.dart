@@ -1,8 +1,8 @@
+import 'package:eletec/plugs/flutter_form_builder/flutter_form_builder.dart';
 import 'package:eletec/view/login/bloc/login_bloc.dart';
 import 'package:eletec/view/widgets/gradient_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class LoginPage extends StatelessWidget {
   @override

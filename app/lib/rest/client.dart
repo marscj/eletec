@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:eletec/constanc.dart';
-import 'package:eletec/rest/result.dart';
 import 'package:equatable/equatable.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:json_annotation/json_annotation.dart';

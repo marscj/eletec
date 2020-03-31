@@ -97,7 +97,6 @@ class _FormBuilderRateState extends State<FormBuilderRate> {
             total: widget.max,
             icon: widget.icon,
             iconSize: widget.iconSize,
-            //TODO: When disabled change icon color (Probably deep grey)
             onTap: _readOnly
                 ? null
                 : (value) {

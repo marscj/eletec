@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:eletec/plugs/flutter_form_builder/flutter_form_builder.dart';
 import 'package:eletec/rest/client.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';
@@ -51,6 +51,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     }
 
     if (event is ResendOTP) {
+      formKey.currentState.reset();
       yield state.copyWith(
         step: 0,
       );
