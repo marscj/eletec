@@ -30,7 +30,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         }).then((res) {
           add(ResponseOTP(res, true));
         }).catchError((error) {
-          add(ResponseOTP(null, false));
+          add(ResponseOTP(error?.response?.data, false));
         });
       }
     }

@@ -70,6 +70,7 @@ class LoginForm extends StatelessWidget {
                     valueTransformer: (value) => '+971$value',
                     validators: [
                       FormBuilderValidators.required(),
+                      (value) => state.error != null ? state.error['phone_number'] : null
                     ]
                   );
 

@@ -75,7 +75,20 @@ abstract class RestService {
           response.data = response.data['result'];
           return response;
         }, onError: (DioError e) async {
-          if (e?.response?.statusCode == 401) {
+          if (e?.response?.statusCode == 400) {
+            var data = e?.response?.data['result'];
+            if (data != null) {
+              data.forEach((k, v) {
+                if(v is Iterable) {
+                  data[k] = v.join('\n');
+                } else {
+                  data[k] = v;
+                }
+              });
+              e?.response?.data = data;
+            }
+          }
+          else if(e?.response?.statusCode == 401) {
             CacheService.instance.clearToken();
           }
           return e;
