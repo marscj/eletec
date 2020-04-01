@@ -65,12 +65,12 @@ class LoginForm extends StatelessWidget {
                     attribute: 'phone_number',
                     keyboardType: TextInputType.phone,
                     maxLength: 10,
+                    autovalidate: true,
                     decoration: InputDecoration(
                         labelText: 'Phone Number', prefixText: '+971  '),
                     valueTransformer: (value) => '+971$value',
                     validators: [
                       FormBuilderValidators.required(),
-                      (value) => state.error != null ? state.error['phone_number'] : null
                     ]
                   );
 
@@ -108,6 +108,7 @@ class LoginForm extends StatelessWidget {
                 padding: EdgeInsets.all(15),
                 child: SingleChildScrollView(
                     child: FormBuilder(
+                        errors: state.errors,
                         autovalidate: true,
                         key: BlocProvider.of<LoginBloc>(context).formKey,
                         child: Column(

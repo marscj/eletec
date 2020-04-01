@@ -6,12 +6,12 @@ class LoginState extends Equatable {
   final int step;
   final bool loading;
   final OtpResponse otpResponse;
-  final dynamic error;
+  final dynamic errors;
 
   const LoginState({
     this.loading = false,
     this.otpResponse,
-    this.error,
+    this.errors,
     this.step,
   });
 
@@ -23,15 +23,15 @@ class LoginState extends Equatable {
     int step,
     bool loading,
     OtpResponse otpResponse,
-    dynamic error,
+    dynamic errors,
   }) {
     return LoginState(
         step: step ?? this.step,
         loading: loading ?? this.loading,
         otpResponse: otpResponse ?? this.otpResponse,
-        error: error ?? this.error);
+        errors: errors ?? this.errors);
   }
 
   @override
-  List<Object> get props => [step, loading, error];
+  List<Object> get props => [step, loading, errors];
 }
