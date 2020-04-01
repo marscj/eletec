@@ -3,4 +3,6 @@ class Constant {
   static const String ServerHost = 'http://eletecapp.com/api/';
 
   static const String Host = LocalHost;
+
+  static const ApiKey = 'AIzaSyDVkaBmZrvpSkIlUhyQnCyl0hFXvLyVzIk';
 }
