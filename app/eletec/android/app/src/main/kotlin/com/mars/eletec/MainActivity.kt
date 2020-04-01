@@ -1,4 +1,4 @@
-package com.example.app
+package com.mars.eletec
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity
