@@ -95,15 +95,17 @@ class FormBuilderState extends State<FormBuilder> {
   }
 
   bool validate() {
+    setErrors({});
     return _formKey.currentState.validate();
   }
 
   bool saveAndValidate() {
     _formKey.currentState.save();
-    return _formKey.currentState.validate();
+    return validate();
   }
 
   void reset() {
+    setErrors({});
     _formKey.currentState.reset();
   }
 
@@ -116,7 +118,6 @@ class FormBuilderState extends State<FormBuilder> {
         autovalidate: widget.autovalidate,
         onWillPop: widget.onWillPop,
         onChanged: () {
-          setErrors({});
           if (widget.onChanged != null) {
             save();
             widget.onChanged(value);

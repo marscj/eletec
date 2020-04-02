@@ -15,3 +15,13 @@ class OtpResponse extends Equatable {
       _$PhoneGenerateFromJson(json);
   Map<String, dynamic> toJson() => _$PhoneGenerateToJson(this);
 }
+
+class ValidateResponse extends Equatable {
+  final int id;
+  final String last_login:
+  final String token;
+  
+  @override
+  // TODO: implement props
+  List<Object> get props => [];
+}
