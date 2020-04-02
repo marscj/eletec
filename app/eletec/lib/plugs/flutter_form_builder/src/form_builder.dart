@@ -10,7 +10,6 @@ class FormBuilder extends StatefulWidget {
   final bool readOnly;
   final bool autovalidate;
   final Map<String, dynamic> initialValue;
-  final Map<String, dynamic> errors;
 
   const FormBuilder({
     Key key,
@@ -20,7 +19,6 @@ class FormBuilder extends StatefulWidget {
     this.autovalidate = false,
     this.onWillPop,
     this.initialValue = const {},
-    this.errors = const {}
   }) : super(key: key);
 
   static FormBuilderState of(BuildContext context) =>
@@ -43,14 +41,17 @@ class FormBuilderState extends State<FormBuilder> {
 
   Map<String, GlobalKey<FormFieldState>> get fields => _fieldKeys;
 
-  Map<String, dynamic> get errors => widget.errors;
+  Map<String, dynamic> _errors;
+
+  Map<String, dynamic> get errors => _errors;
 
   bool get readOnly => widget.readOnly;
 
   @override
   void initState() {
-    _value ={};
+    _value = {};
     _fieldKeys = {}; 
+    _errors = {};
     super.initState();
   }
 
@@ -89,12 +90,8 @@ class FormBuilderState extends State<FormBuilder> {
     _formKey.currentState.save();
   }
 
-  void setValidators(Map<String, dynamic> errors) {
-    this._fieldKeys.forEach((k, v) {
-      if (errors.containsKey(k)) {
-        
-      }
-    });
+  void setErrors(Map<String, dynamic> errors) {
+    _errors = errors;
   }
 
   bool validate() {
@@ -118,6 +115,7 @@ class FormBuilderState extends State<FormBuilder> {
       autovalidate: widget.autovalidate,
       onWillPop: widget.onWillPop,
       onChanged: () {
+        setErrors({});
         if (widget.onChanged != null) {
           save();
           widget.onChanged(value);

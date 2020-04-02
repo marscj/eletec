@@ -108,7 +108,6 @@ class LoginForm extends StatelessWidget {
                 padding: EdgeInsets.all(15),
                 child: SingleChildScrollView(
                     child: FormBuilder(
-                        errors: state.errors,
                         autovalidate: true,
                         key: BlocProvider.of<LoginBloc>(context).formKey,
                         child: Column(

@@ -73,7 +73,7 @@ class _FormBuilderRateState extends State<FormBuilderRate> {
           if (widget.validators[i](val) != null)
             return widget.validators[i](val);
         }
-        return null;
+        return _formState.errors[widget.attribute];
       },
       onSaved: (val) {
         var transformed;

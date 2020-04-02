@@ -94,7 +94,7 @@ class FormBuilderCustomFieldState<T> extends State<FormBuilderCustomField<T>> {
           }
           if (widget.formField.validator != null)
             return widget.formField.validator(val);
-          return null;
+          return _formState.errors[widget.attribute];
         },
         builder:
             widget.formField.builder ?? (FormField<T> field) => Container(),
