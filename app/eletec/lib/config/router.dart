@@ -1,4 +1,3 @@
-import 'package:eletec/view/ad/view.dart';
 import 'package:fluro/fluro.dart' as fluro;
 
 import 'package:eletec/view/view.dart';

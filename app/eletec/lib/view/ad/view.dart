@@ -81,11 +81,6 @@ class AdPage extends StatelessWidget {
                           );
                         })))))
           ]),
-          // floatingActionButton: RaisedButton(
-          //     onPressed: () {
-          //       RestServiceExtra.instance.getAdvertising();
-          //     },
-          //     child: Text('button'))
         ));
   }
 }

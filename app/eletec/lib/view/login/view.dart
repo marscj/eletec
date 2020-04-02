@@ -7,17 +7,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Theme(
-        data: ThemeData(
-            brightness: Brightness.light,
-            backgroundColor: Colors.white,
-            scaffoldBackgroundColor: Colors.white),
-        child: Scaffold(
-          body: Stack(
-            fit: StackFit.expand,
-            children: <Widget>[LoginBackground(), LoginWidgets()],
-          ),
-        ));
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: Stack(
+        fit: StackFit.expand,
+        children: <Widget>[LoginBackground(), LoginWidgets()],
+      ),
+    );
   }
 }
 

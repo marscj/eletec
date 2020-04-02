@@ -11,17 +11,18 @@ class HomePage extends StatelessWidget {
           listener: (context, state) {},
           child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
             builder: (context, state) {
-              if (state is AuthenticationAuthenticated) {
-                return Container(
-                  child: Text('home'),
-                );
-              }
-              if (state is AuthenticationUnauthenticated) {
-                return LoginPage();
-              }
-              return Container(
-                child: Text('data'),
-              );
+              // if (state is AuthenticationAuthenticated) {
+              //   return Container(
+              //     child: Text('home'),
+              //   );
+              // }
+              // if (state is AuthenticationUnauthenticated) {
+              //   return LoginPage();
+              // }
+              // return Container(
+              //   child: Text('data'),
+              // );
+              return LoginPage();
             },
           ));
 }
