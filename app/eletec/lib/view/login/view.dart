@@ -65,7 +65,6 @@ class LoginForm extends StatelessWidget {
                     attribute: 'phone_number',
                     keyboardType: TextInputType.phone,
                     maxLength: 10,
-                    autovalidate: true,
                     decoration: InputDecoration(
                         labelText: 'Phone Number', prefixText: '+971  '),
                     valueTransformer: (value) => '+971$value',
@@ -105,7 +104,7 @@ class LoginForm extends StatelessWidget {
                           BlocProvider.of<LoginBloc>(context).add(ResendOTP()))
                   : new Container();
               return Container(
-                padding: EdgeInsets.all(15),
+                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                 child: SingleChildScrollView(
                     child: FormBuilder(
                         autovalidate: true,

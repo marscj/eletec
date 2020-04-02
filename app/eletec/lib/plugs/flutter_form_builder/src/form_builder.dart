@@ -91,7 +91,9 @@ class FormBuilderState extends State<FormBuilder> {
   }
 
   void setErrors(Map<String, dynamic> errors) {
-    _errors = errors;
+    setState(() {
+      _errors = errors;
+    });
   }
 
   bool validate() {
@@ -112,24 +114,23 @@ class FormBuilderState extends State<FormBuilder> {
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
+      Container(
+        alignment: Alignment.topLeft,
+        child: _errors['non_field_errors'] != null ? Text(_errors['non_field_errors'], style: Theme.of(context).textTheme.caption.copyWith(color: Theme.of(context).errorColor)) : Container()
+      ),
       Form(
         key: _formKey,
         child: widget.child,
         autovalidate: widget.autovalidate,
         onWillPop: widget.onWillPop,
         onChanged: () {
+          setErrors({});
           if (widget.onChanged != null) {
             save();
             widget.onChanged(value);
           }
-        },
+        }, 
       ),
-      Visibility(
-        visible: _errors['non_field_errors'] != null,
-        child: Expanded(
-          child: Text(_errors['non_field_errors']),
-        )
-      )
     ]);
 
   }
