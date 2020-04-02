@@ -103,10 +103,10 @@ abstract class RestService {
   Future<Order> getTask(@Path("id") String id);
 
   @POST('/auth/phone/generate/')
-  Future<OtpResponse> phoneGenerate(@Body() Map<String, dynamic> playload);
+  Future<Otp> phoneGenerate(@Body() Map<String, dynamic> playload);
 
   @POST('/auth/phone/generate/')
-  Future<String> phoneValidate(@Body() Map<String, dynamic> playload);
+  Future<Token> phoneValidate(@Body() Map<String, dynamic> playload);
 }
 
 class RestServiceExtra {

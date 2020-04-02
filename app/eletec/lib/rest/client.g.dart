@@ -41,15 +41,28 @@ Map<String, dynamic> _$AppToJson(App instance) => <String, dynamic>{
       'create_at': instance.create_at,
     };
 
-OtpResponse _$PhoneGenerateFromJson(Map<String, dynamic> json) {
-  return OtpResponse(
+Otp _$OtpFromJson(Map<String, dynamic> json) {
+  return Otp(
     json['phone_number'] as String,
   );
 }
 
-Map<String, dynamic> _$PhoneGenerateToJson(OtpResponse instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$OtpToJson(Otp instance) => <String, dynamic>{
       'phone_number': instance.phone_number,
+    };
+
+Token _$TokenFromJson(Map<String, dynamic> json) {
+  return Token(
+    json['id'] as int,
+    json['last_login'] as String,
+    json['token'] as String,
+  );
+}
+
+Map<String, dynamic> _$TokenToJson(Token instance) => <String, dynamic>{
+      'id': instance.id,
+      'last_login': instance.last_login,
+      'token': instance.token,
     };
 
 Order _$OrderFromJson(Map<String, dynamic> json) {
@@ -153,7 +166,7 @@ class _RestService implements RestService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = OtpResponse.fromJson(_result.data);
+    final value = Otp.fromJson(_result.data);
     return Future.value(value);
   }
 
@@ -164,7 +177,8 @@ class _RestService implements RestService {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(playload ?? <String, dynamic>{});
-    final Response<String> _result = await _dio.request('/auth/phone/generate/',
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        '/auth/phone/generate/',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -172,7 +186,7 @@ class _RestService implements RestService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = _result.data;
+    final value = Token.fromJson(_result.data);
     return Future.value(value);
   }
 }

@@ -41,7 +41,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         yield state.copyWith(
           step: 1, 
           loading: false,
-          otpResponse: event.result
+          otp: event.result
         );
       } else {
         formKey.currentState.validate();
