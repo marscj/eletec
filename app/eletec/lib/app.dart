@@ -29,6 +29,12 @@ class EletecApp extends StatelessWidget {
           ],
           theme: ThemeData(
             primaryColor: Colors.blue,
+            buttonTheme: ButtonThemeData(
+              buttonColor: Colors.blue,
+              hoverColor: Colors.green,
+              shape: StadiumBorder(),
+              textTheme: ButtonTextTheme.primary
+            )
           ),
           // routes: <String, WidgetBuilder>{'/': (_) => AdPage()}
           onGenerateRoute: Router.instance.generator,
