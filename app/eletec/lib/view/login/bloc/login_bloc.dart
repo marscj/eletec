@@ -31,6 +31,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           add(ResponseOTP(res, true));
         }).catchError((error) {
           add(ResponseOTP(error?.response?.data, false));
+          formKey.currentState.setValidators(error?.response?.data);
         });
       }
     }

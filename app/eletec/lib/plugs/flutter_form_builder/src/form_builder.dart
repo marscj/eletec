@@ -49,7 +49,8 @@ class FormBuilderState extends State<FormBuilder> {
 
   @override
   void initState() {
-    _fieldKeys = {};
+    _value ={};
+    _fieldKeys = {}; 
     super.initState();
   }
 
@@ -88,14 +89,12 @@ class FormBuilderState extends State<FormBuilder> {
     _formKey.currentState.save();
   }
 
-  bool setError() {
-    bool hasError = false;
-    
-    this.fields.forEach((k, v) {
-      hasError = !this.fields[k].currentState.validate() || hasError;
+  void setValidators(Map<String, dynamic> errors) {
+    this._fieldKeys.forEach((k, v) {
+      if (errors.containsKey(k)) {
+        
+      }
     });
-      
-    return !hasError;
   }
 
   bool validate() {
