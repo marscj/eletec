@@ -1,5 +1,6 @@
 
 import 'package:eletec/view/loading/bloc/loading_bloc.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -13,16 +14,19 @@ class LoadingWidget extends StatelessWidget {
    create: (state) => LoadingBloc(),
    child: BlocListener<LoadingBloc, LoadingState>(
      listener: (context, state) {
-
      },
      child: BlocBuilder<LoadingBloc, LoadingState> (
        builder: (context, state) {
-         return Overlay(
-           initialEntries: [
-             OverlayEntry(
-               builder: (context) => child
-             )
-           ],
+         return Directionality(
+          textDirection: TextDirection.ltr,
+          child: Overlay(
+            key: BlocProvider.of<LoadingBloc>(context).overlayKey,
+            initialEntries: [
+              OverlayEntry(
+                builder: (context) => child
+              )
+            ],
+          )
          );
        },
      ),

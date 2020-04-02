@@ -1,5 +1,6 @@
 import 'package:eletec/config/router.dart';
 import 'package:eletec/plugs/flutter_form_builder/flutter_form_builder.dart';
+import 'package:eletec/view/loading/bloc/loading_bloc.dart';
 import 'package:eletec/view/login/bloc/login_bloc.dart';
 import 'package:eletec/view/view.dart';
 import 'package:flutter/cupertino.dart';
@@ -55,9 +56,7 @@ class LoginForm extends StatelessWidget {
         create: (_) => LoginBloc(),
         child: BlocListener<LoginBloc, LoginState>(
           listener: (context, state) {
-            showCupertinoDialog(context: context, builder: (_) {
-              return LoadingWidget();
-            });
+            
           },
           child: BlocBuilder<LoginBloc, LoginState>(
             builder: (context, state) {
@@ -87,7 +86,8 @@ class LoginForm extends StatelessWidget {
                   ? RaisedButton(
                       onPressed: () {
                         FocusScope.of(context).requestFocus(FocusNode());
-                        BlocProvider.of<LoginBloc>(context).add(GetOTP());
+                        // BlocProvider.of<LoginBloc>(context).add(GetOTP());
+                        BlocProvider.of<LoadingBloc>(context).add(ShowDialog());
                       },
                       child: Text('Get OTP'),
                     )

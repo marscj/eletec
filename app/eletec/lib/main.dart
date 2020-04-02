@@ -1,5 +1,6 @@
 import 'package:eletec/authentication/authentication_bloc.dart';
 import 'package:eletec/view/ad/bloc/ad_bloc.dart';
+import 'package:eletec/view/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,5 +18,7 @@ void main() {
     BlocProvider<AdBloc>(
       create: (_) => AdBloc()..add(AdEvent(5)),
     )
-  ], child: EletecApp()));
+  ], child: LoadingWidget(
+    child: EletecApp()
+  )));
 }
