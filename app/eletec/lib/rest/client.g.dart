@@ -82,7 +82,7 @@ Map<String, dynamic> _$OrderToJson(Order instance) => <String, dynamic>{
 class _RestService implements RestService {
   _RestService(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
-    this.baseUrl ??= 'http://127.0.0.1:8000/api/';
+    this.baseUrl ??= 'http://192.168.1.136:8000/api/';
   }
 
   final Dio _dio;
