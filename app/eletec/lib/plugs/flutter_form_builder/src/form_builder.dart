@@ -109,18 +109,27 @@ class FormBuilderState extends State<FormBuilder> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: widget.child,
-      autovalidate: widget.autovalidate,
-      onWillPop: widget.onWillPop,
-      onChanged: () {
-        setErrors({});
-        if (widget.onChanged != null) {
-          save();
-          widget.onChanged(value);
-        }
-      },
-    );
+    return Column(children: <Widget>[
+      Form(
+        key: _formKey,
+        child: widget.child,
+        autovalidate: widget.autovalidate,
+        onWillPop: widget.onWillPop,
+        onChanged: () {
+          setErrors({});
+          if (widget.onChanged != null) {
+            save();
+            widget.onChanged(value);
+          }
+        },
+      ),
+      Visibility(
+        visible: _errors['non_field_errors'] != null,
+        child: Expanded(
+          child: Text(_errors['non_field_errors']),
+        )
+      )
+    ]);
+
   }
 }
