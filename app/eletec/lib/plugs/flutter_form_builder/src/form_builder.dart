@@ -92,7 +92,7 @@ class FormBuilderState extends State<FormBuilder> {
 
   void setErrors(Map<String, dynamic> errors) {
     setState(() {
-      _errors = errors;
+      _errors = errors ?? {};
     });
   }
 

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:eletec/config/router.dart';
 import 'package:eletec/plugs/flutter_form_builder/flutter_form_builder.dart';
 import 'package:eletec/rest/client.dart';
 import 'package:equatable/equatable.dart';
@@ -50,7 +51,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         yield state.copyWith(loading: true);
 
         RestService.instance.phoneValidate(formKey.currentState.value).then((res) {
-          add(ResponseOTP(res));
+          CacheService.instance.setToken(res.token);
         }).catchError((error) {
           formKey.currentState.setErrors(error?.response?.data);
         });
