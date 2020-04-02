@@ -13,9 +13,8 @@ class GetOTP extends LoginEvent {}
 
 class ResponseOTP extends LoginEvent {
   final dynamic result;
-  final bool success;
 
-  ResponseOTP(this.result, this.success);
+  ResponseOTP(this.result);
 }
 
 class ResendOTP extends LoginEvent {}
