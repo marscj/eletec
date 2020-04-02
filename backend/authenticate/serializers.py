@@ -22,7 +22,7 @@ class PhoneValidateSerializer(serializers.Serializer):
         user = authenticate(self.context['request'], phone_number=phone_number, otp=otp)
 
         if not user:
-            raise serializers.ValidationError("Please enter the correct phone number and code for a account. Note that both fields may be case-sensitive.")
+            raise serializers.ValidationError("Please enter the correct phone number and otp for a account. Note that both fields may be case-sensitive.")
             
         validate_data['user'] = user
         return validate_data

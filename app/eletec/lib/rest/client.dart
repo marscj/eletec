@@ -105,7 +105,7 @@ abstract class RestService {
   @POST('/auth/phone/generate/')
   Future<Otp> phoneGenerate(@Body() Map<String, dynamic> playload);
 
-  @POST('/auth/phone/generate/')
+  @POST('/auth/phone/validate/')
   Future<Token> phoneValidate(@Body() Map<String, dynamic> playload);
 }
 

@@ -20,14 +20,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     LoginEvent event,
   ) async* {
     if (event is GetOTP) {
-      yield state;
-
       if (formKey.currentState.saveAndValidate()) {
         yield state.copyWith(loading: true);
 
-        RestService.instance.phoneGenerate({
-          'phone_number': formKey.currentState.value['phone_number']
-        }).then((res) {
+        RestService.instance.phoneGenerate(formKey.currentState.value).then((res) {
           add(ResponseOTP(res));
         }).catchError((error) {
           formKey.currentState.setErrors(error?.response?.data);
@@ -44,18 +40,20 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     }
 
     if (event is ResendOTP) {
-      formKey.currentState.reset();
       yield state.copyWith(
-        step: 0,
+        step: 0
       );
     }
 
     if (event is FormSubmitted) {
       if (formKey.currentState.saveAndValidate()) {
-        print(formKey.currentState.value);
-      } else {
-        print(formKey.currentState.value);
-        print("validation failed");
+        yield state.copyWith(loading: true);
+
+        RestService.instance.phoneValidate(formKey.currentState.value).then((res) {
+          add(ResponseOTP(res));
+        }).catchError((error) {
+          formKey.currentState.setErrors(error?.response?.data);
+        });
       }
     }
   }

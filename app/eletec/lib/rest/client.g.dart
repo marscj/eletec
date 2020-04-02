@@ -178,7 +178,7 @@ class _RestService implements RestService {
     final _data = <String, dynamic>{};
     _data.addAll(playload ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        '/auth/phone/generate/',
+        '/auth/phone/validate/',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
