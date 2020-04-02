@@ -1,9 +1,10 @@
+import 'package:eletec/config/router.dart';
 import 'package:eletec/plugs/flutter_form_builder/flutter_form_builder.dart';
 import 'package:eletec/view/login/bloc/login_bloc.dart';
+import 'package:eletec/view/view.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../view.dart';
 
 class LoginPage extends StatelessWidget {
   @override
@@ -20,13 +21,12 @@ class LoginPage extends StatelessWidget {
 class LoginWidgets extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
+    return Center(
       child: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            SizedBox.fromSize(size: Size.fromHeight(100)),
-            LoginCard(),
+            SizedBox(height: 100),
+            LoginCard()
           ],
         ),
       ),
@@ -37,10 +37,8 @@ class LoginWidgets extends StatelessWidget {
 class LoginCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final deviceSize = MediaQuery.of(context).size;
     return Container(
-      margin: const EdgeInsets.all(20.0), 
-      padding: const EdgeInsets.all(20.0),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: new Card(
         color: Colors.white.withOpacity(1.0),
         elevation: 2.0,
@@ -57,12 +55,9 @@ class LoginForm extends StatelessWidget {
         create: (_) => LoginBloc(),
         child: BlocListener<LoginBloc, LoginState>(
           listener: (context, state) {
-            Scaffold.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('${state.errors}'),
-                  backgroundColor: Colors.red,
-                ),
-            );
+            showCupertinoDialog(context: context, builder: (_) {
+              return LoadingWidget();
+            });
           },
           child: BlocBuilder<LoginBloc, LoginState>(
             builder: (context, state) {
@@ -91,6 +86,7 @@ class LoginForm extends StatelessWidget {
               _buildButton() => state.step == 0
                   ? RaisedButton(
                       onPressed: () {
+                        FocusScope.of(context).requestFocus(FocusNode());
                         BlocProvider.of<LoginBloc>(context).add(GetOTP());
                       },
                       child: Text('Get OTP'),
@@ -110,20 +106,22 @@ class LoginForm extends StatelessWidget {
                   : new Container();
 
               return Container(
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+                padding: const EdgeInsets.all(10),
                 child: SingleChildScrollView(
-                    child: FormBuilder(
-                        autovalidate: true,
-                        key: BlocProvider.of<LoginBloc>(context).formKey,
-                        child: Column(
-                          children: <Widget>[
-                            _buildPhone(),
-                            _buildOtp(),
-                            SizedBox(height: 30),
-                            _buildButton(),
-                            _buildResend()
-                          ],
-                        ))),
+                  child: FormBuilder(
+                    autovalidate: true,
+                    key: BlocProvider.of<LoginBloc>(context).formKey,
+                    child: Column(
+                      children: <Widget>[
+                        _buildPhone(),
+                        _buildOtp(),
+                        SizedBox(height: 30),
+                        _buildButton(),
+                        _buildResend()
+                      ],
+                    )
+                  ) 
+                )
               );
             },
           ),
