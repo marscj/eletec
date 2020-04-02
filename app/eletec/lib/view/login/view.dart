@@ -53,7 +53,7 @@ class LoginForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<LoginBloc>(
-        create: (_) => LoginBloc(),
+        create: (_) => LoginBloc(context),
         child: BlocListener<LoginBloc, LoginState>(
           listener: (context, state) {
             
@@ -85,9 +85,8 @@ class LoginForm extends StatelessWidget {
               _buildButton() => state.step == 0
                   ? RaisedButton(
                       onPressed: () {
-                        FocusScope.of(context).requestFocus(FocusNode());
-                        // BlocProvider.of<LoginBloc>(context).add(GetOTP());
-                        BlocProvider.of<LoadingBloc>(context).add(ShowDialog());
+                        BlocProvider.of<LoginBloc>(context).add(GetOTP());
+                        // BlocProvider.of<LoadingBloc>(context).add(ShowDialog());
                       },
                       child: Text('Get OTP'),
                     )

@@ -4,14 +4,20 @@ import 'package:bloc/bloc.dart';
 import 'package:eletec/config/router.dart';
 import 'package:eletec/plugs/flutter_form_builder/flutter_form_builder.dart';
 import 'package:eletec/rest/client.dart';
+import 'package:eletec/view/loading/bloc/loading_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
+
+  final BuildContext context;
+
+  LoginBloc(this.context);
 
   @override
   LoginState get initialState => LoginState.initial();
@@ -24,10 +30,15 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       if (formKey.currentState.saveAndValidate()) {
         yield state.copyWith(loading: true);
 
+        FocusScope.of(context).requestFocus(FocusNode());
+        BlocProvider.of<LoadingBloc>(context).add(ShowDialog());
+
         RestService.instance.phoneGenerate(formKey.currentState.value).then((res) {
           add(ResponseOTP(res));
         }).catchError((error) {
           formKey.currentState.setErrors(error?.response?.data);
+        }).whenComplete(() {
+          BlocProvider.of<LoadingBloc>(context).add(DismissDialog());
         });
       }
     }
@@ -49,11 +60,15 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     if (event is FormSubmitted) {
       if (formKey.currentState.saveAndValidate()) {
         yield state.copyWith(loading: true);
-
+        
+        FocusScope.of(context).requestFocus(FocusNode());
+        BlocProvider.of<LoadingBloc>(context).add(ShowDialog());
         RestService.instance.phoneValidate(formKey.currentState.value).then((res) {
           CacheService.instance.setToken(res.token);
         }).catchError((error) {
           formKey.currentState.setErrors(error?.response?.data);
+        }).whenComplete(() {
+          BlocProvider.of<LoadingBloc>(context).add(DismissDialog());
         });
       }
     }
