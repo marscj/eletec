@@ -11,7 +11,7 @@ part 'auth.dart';
 part 'order.dart';
 part 'client.g.dart';
 
-class CacheService {
+class CacheService<T> {
   static CacheService get instance => CacheService._();
 
   CacheService._();
