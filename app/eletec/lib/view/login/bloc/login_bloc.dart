@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
@@ -30,6 +31,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     LoginEvent event,
   ) async* {
     if (event is GetOTP) {
+      BlocProvider.of<AppBloc>(context).add(ShowLoading());
       
       // if (formKey.currentState.saveAndValidate()) {
       //   yield state.copyWith(loading: true);
@@ -45,6 +47,40 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       //     BlocProvider.of<LoadingBloc>(context).add(DismissDialog());
       //   });
       // }
+
+      // OverlayEntry overlayEntry = OverlayEntry(
+      //   builder: (_) =>   
+        // GestureDetector(
+        //   behavior: HitTestBehavior.translucent,
+        //   onTap: () {
+        //   },
+        //   child: Container(
+        //     color: Colors.black45, 
+        //     height: 100,
+        //     width: 100,
+        //     child: CupertinoActivityIndicator(radius: 12)
+        //   )
+        // )
+      // Positioned(
+      //   top: MediaQuery.of(context).size.height * 0.5,
+      //   child: Material(
+      //     color: Colors.transparent,
+      //     child: Center(
+      //       child: Container(
+      //         child: Padding(
+      //           padding: EdgeInsets.all(20),
+      //           child: CupertinoActivityIndicator(radius: 12), 
+      //         ),
+      //         color: Colors.black26
+      //       )
+      //     )
+      //   ))
+      // );
+
+      // Overlay.of(context).insert(overlayEntry);
+      // new Future.delayed(Duration(seconds: 2)).then((value) {
+      //   overlayEntry.remove();
+      // });
     }
 
     if (event is ResponseOTP) {

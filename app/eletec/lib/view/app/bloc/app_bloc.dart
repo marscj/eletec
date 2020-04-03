@@ -12,6 +12,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   
   final BuildContext context;
 
+  GlobalKey<OverlayState> overlayKey = GlobalKey();
+
   AppBloc(this.context);
   
   @override
@@ -80,13 +82,13 @@ class AppBloc extends Bloc<AppEvent, AppState> {
                     child: new Text('message'), 
                   ),
                   color: Colors.grey.withAlpha(128),
-                ),
-              ),
-            ),
+                )
+              )
+            )
           ))
       );
 
-      Overlay.of(context).insert(overlayEntry);
+      overlayKey.currentState.insert(overlayEntry);
       new Future.delayed(Duration(seconds: 2)).then((value) {
         overlayEntry.remove();
       });

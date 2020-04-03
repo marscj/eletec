@@ -14,7 +14,7 @@ class EletecApp extends StatefulWidget {
 }
 
 class EletecAppState extends State<EletecApp> {
-  
+
   @override
   Widget build(BuildContext context) => BlocProvider<AppBloc>(
     create: (context) => AppBloc(context)..add(AppInitial()),
@@ -45,7 +45,7 @@ class EletecAppState extends State<EletecApp> {
           ),
           onGenerateRoute: Router.instance.generator,
         );
-      },
+      }
     )
   );
 }
