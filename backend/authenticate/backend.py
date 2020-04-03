@@ -11,7 +11,6 @@ class AuthBackend(ModelBackend):
         username = kwargs.get('username')
         email = kwargs.get('email')
         phone_number = kwargs.get('phone_number')
-        print('$$$$$',username, phone_number)
 
         if username:
             return self._authenticate_by_username(**kwargs)
@@ -51,21 +50,14 @@ class AuthBackend(ModelBackend):
     def _authenticate_by_phone(self, **kwargs):
         phone_number = kwargs.get('phone_number')
         otp = kwargs.get('otp')
-        print('######',phone_number, otp)
+
         if phone_number is None or otp is None:
-            print('######1',phone_number, otp)
             return
 
         try:
             user = UserModel._default_manager.get(phone_number=phone_number)
-            print('######2',phone_number, otp)
         except UserModel.DoesNotExist:
-            print('######3',phone_number, otp)
             user = UserModel._default_manager.create(phone_number=phone_number, username=phone_number)
         finally:
-            print('######4',phone_number, otp)
-            print(user, user.phone_number, otp)
-            print(user.check_otp(phone_number, otp))
-            print(self.user_can_authenticate(user))
             if user.check_otp(phone_number, otp) and self.user_can_authenticate(user):
                 return user
