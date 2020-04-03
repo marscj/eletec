@@ -26,7 +26,6 @@ void main() {
     ], 
     child: BlocBuilder<AppBloc, AppState>(
       builder: (context, state) {
-        print(state.tag);
         return LoadingWidget(
           child: EletecApp()
         );

@@ -21,15 +21,43 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       yield await CacheService.instance.getToken().then((token) {
         if (token == 'unknow') {
           return state.copyWith(
-            hasToken: false,
+            signedIn: false,
           );
         } else {
           return state.copyWith(
-            hasToken: true,
+            signedIn: true,
           );
         }
       });
 
+      yield await CacheService.instance.getLanguage().then((value) {
+        return state.copyWith(
+          locale: Locale(value, '')
+        );
+      });
+
+    }
+
+    if (event is LocaleUpdate) {
+      yield state.copyWith(
+        locale: Locale(event.languageCode, '')
+      );
+
+      CacheService.instance.setLanguage(event.languageCode);
+    }
+
+    if (event is SignedIn) {
+      yield state.copyWith(
+        signedIn: true
+      );
+      CacheService.instance.setToken(event.token);
+    }
+
+    if (event is SignedOut) {
+      yield state.copyWith(
+        signedIn: false
+      );
+      CacheService.instance.clearToken();
     }
   }
 }

@@ -2,28 +2,28 @@ part of 'app_bloc.dart';
 
 class AppState extends Equatable {
 
-  final bool hasToken;
+  final bool signedIn;
 
   final Locale locale;
 
   @override
-  List<Object> get props => [hasToken, locale.languageCode];
+  List<Object> get props => [signedIn, locale.languageCode];
 
   AppState({
-    this.hasToken,
+    this.signedIn,
     this.locale,
   });
 
   factory AppState.initial() => AppState(
-    hasToken: false,
+    signedIn: false,
     locale: Locale('en', ''),
   );
 
   AppState copyWith({
-    bool hasToken,
+    bool signedIn,
     Locale locale,
   }) => AppState(
-    hasToken: hasToken ?? this.hasToken,
+    signedIn: signedIn ?? this.signedIn,
     locale: locale ?? this.locale,
   );
 }
