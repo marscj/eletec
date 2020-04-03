@@ -6,26 +6,24 @@ class AppState extends Equatable {
 
   final Locale locale;
 
-  final String tag;
-
   @override
-  List<Object> get props => [hasToken, locale.languageCode, tag];
+  List<Object> get props => [hasToken, locale.languageCode];
 
   AppState({
     this.hasToken,
     this.locale,
-    this.tag
   });
 
-  factory AppState.initial() => AppState();
+  factory AppState.initial() => AppState(
+    hasToken: false,
+    locale: Locale('en', ''),
+  );
 
   AppState copyWith({
     bool hasToken,
     Locale locale,
-    String tag,
   }) => AppState(
     hasToken: hasToken ?? this.hasToken,
     locale: locale ?? this.locale,
-    tag: tag ?? this.tag
   );
 }

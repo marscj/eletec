@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:eletec/authentication/authentication_bloc.dart';
 import 'package:eletec/view/ad/bloc/ad_bloc.dart';
 import 'package:eletec/view/view.dart';

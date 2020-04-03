@@ -18,21 +18,18 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     AppEvent event,
   ) async* {
     if(event is AppInitial) {
-      yield state.copyWith(tag: 'caonima1');
-      yield state.copyWith(tag: 'caonima2');
-      yield state.copyWith(tag: 'caonima3');
-
       yield await CacheService.instance.getToken().then((token) {
         if (token == 'unknow') {
           return state.copyWith(
-            hasToken: false
+            hasToken: false,
           );
         } else {
           return state.copyWith(
-            hasToken: true
+            hasToken: true,
           );
         }
       });
+
     }
   }
 }
