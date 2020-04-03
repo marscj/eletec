@@ -10,6 +10,10 @@ part 'app_state.dart';
 
 class AppBloc extends Bloc<AppEvent, AppState> {
   
+  final BuildContext context;
+
+  AppBloc(this.context);
+  
   @override
   AppState get initialState => AppState.initial();
 
@@ -58,6 +62,34 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         signedIn: false
       );
       CacheService.instance.clearToken();
+    }
+
+    if (event is ShowLoading) {
+      OverlayEntry overlayEntry = OverlayEntry(
+        builder: (_) =>   Positioned(
+          top: MediaQuery.of(context).size.height * 0.5,
+          child: new Material(
+            child: new Container(
+              color: Colors.transparent,
+              alignment: Alignment.center,
+
+              child: new Center(
+                child: new Container(
+                  child: new Padding(
+                    padding: EdgeInsets.all(20),
+                    child: new Text('message'), 
+                  ),
+                  color: Colors.grey.withAlpha(128),
+                ),
+              ),
+            ),
+          ))
+      );
+
+      Overlay.of(context).insert(overlayEntry);
+      new Future.delayed(Duration(seconds: 2)).then((value) {
+        overlayEntry.remove();
+      });
     }
   }
 }

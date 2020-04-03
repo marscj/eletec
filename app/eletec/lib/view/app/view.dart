@@ -17,7 +17,7 @@ class EletecAppState extends State<EletecApp> {
   
   @override
   Widget build(BuildContext context) => BlocProvider<AppBloc>(
-    create: (context) => AppBloc()..add(AppInitial()),
+    create: (context) => AppBloc(context)..add(AppInitial()),
     child: BlocBuilder<AppBloc, AppState>(
       builder: (context, state) {
         return MaterialApp( 

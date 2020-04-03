@@ -30,43 +30,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     LoginEvent event,
   ) async* {
     if (event is GetOTP) {
-      OverlayEntry overlayEntry = OverlayEntry(
-        builder: (_) =>   Positioned(
-          top: MediaQuery.of(context).size.height * 0.5,
-          child: new Material(
-            child: new Container(
-              color: Colors.transparent,
-              alignment: Alignment.center,
-
-              child: new Center(
-                child: new Container(
-                  child: new Padding(
-                    padding: EdgeInsets.all(20),
-                    child: new Text('message'), 
-                  ),
-                  color: Colors.grey.withAlpha(128),
-                ),
-              ),
-            ),
-          ))
-      );
-
-      // final OverlayEntry overlayEntry = OverlayEntry(
-      //   builder: (_) => GestureDetector(
-      //     behavior: HitTestBehavior.translucent,
-      //     onTap: () {
-      //     },
-      //     child: Container(
-      //       color: Colors.black45, 
-      //       child: CupertinoActivityIndicator(radius: 12)
-      //     )
-      //   )
-      // );
-
-      Overlay.of(context).insert(overlayEntry);
-      new Future.delayed(Duration(seconds: 2)).then((value) {
-        overlayEntry.remove();
-      });
+      
       // if (formKey.currentState.saveAndValidate()) {
       //   yield state.copyWith(loading: true);
 
