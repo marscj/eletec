@@ -1,16 +1,16 @@
 import 'dart:async';
-import 'dart:math';
 
-import 'package:bloc/bloc.dart';
-import 'package:eletec/authentication/authentication_bloc.dart';
-import 'package:eletec/config/router.dart';
-import 'package:eletec/plugs/flutter_form_builder/flutter_form_builder.dart';
-import 'package:eletec/rest/client.dart';
-import 'package:eletec/view/loading/bloc/loading_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
+
+import 'package:eletec/plugs/flutter_form_builder/flutter_form_builder.dart';
+import 'package:eletec/rest/client.dart';
+import 'package:eletec/view/loading/bloc/loading_bloc.dart';
+import 'package:eletec/view/app/app.dart';
+
+import 'package:bloc/bloc.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';
@@ -82,7 +82,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         FocusScope.of(context).requestFocus(FocusNode());
         BlocProvider.of<LoadingBloc>(context).add(ShowDialog());
         RestService.instance.phoneValidate(formKey.currentState.value).then((res) {
-          BlocProvider.of<AuthenticationBloc>(context).add(LoggedIn(token: res.token));
+          BlocProvider.of<AppBloc>(context).add(SignedIn(res.token));
         }).catchError((error) {
           formKey.currentState.setErrors(error?.response?.data);
         }).whenComplete(() {

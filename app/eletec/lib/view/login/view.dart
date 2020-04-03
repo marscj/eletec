@@ -1,9 +1,10 @@
-import 'package:eletec/locale/locale_bloc.dart';
-import 'package:eletec/plugs/flutter_form_builder/flutter_form_builder.dart';
-import 'package:eletec/view/login/bloc/login_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:eletec/plugs/flutter_form_builder/flutter_form_builder.dart';
+import 'package:eletec/view/app/app.dart';
+import 'package:eletec/view/login/bloc/login_bloc.dart';
 
 class LoginPage extends StatelessWidget {
   @override
@@ -18,13 +19,13 @@ class LoginPage extends StatelessWidget {
             alignment: Alignment.bottomCenter,
             child: FlatButton(
               onPressed: () => {
-                if(BlocProvider.of<LocaleBloc>(context).state.locale.languageCode == 'en') {
-                  BlocProvider.of<LocaleBloc>(context).add(LocaleUpdate(Locale('ar', '')))
+                if(BlocProvider.of<AppBloc>(context).state.locale.languageCode == 'en') {
+                  BlocProvider.of<AppBloc>(context).add(LocaleUpdate('ar'))
                 } else {
-                  BlocProvider.of<LocaleBloc>(context).add(LocaleUpdate(Locale('en', '')))
+                  BlocProvider.of<AppBloc>(context).add(LocaleUpdate('en'))
                 }
               },
-              child: Text("${BlocProvider.of<LocaleBloc>(context).state.locale.languageCode == 'en' ? 'English': 'Arabic'}"),
+              child: Text("${BlocProvider.of<AppBloc>(context).state.locale.languageCode == 'en' ? 'English': 'Arabic'}"),
             ),
           )
         ],
