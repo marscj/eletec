@@ -22,14 +22,14 @@ class LoadingBloc extends Bloc<LoadingEvent, LoadingState> {
   Stream<LoadingState> mapEventToState(
     LoadingEvent event,
   ) async* {
-    if (event is ShowDialog) {
+    if (event is ShowLoading) {
       yield LoadingState.showDialog();
 
       overlayEntry ??= OverlayEntry(
         builder: (_) =>  GestureDetector(
           behavior: HitTestBehavior.translucent,
           onTap: () {
-            add(DismissDialog());
+            add(DismissLoading());
           },
           child: Container(
             color: Colors.black45, 
@@ -41,7 +41,7 @@ class LoadingBloc extends Bloc<LoadingEvent, LoadingState> {
       overlayKey.currentState.insert(overlayEntry);
     }
 
-    if (event is DismissDialog) {
+    if (event is DismissLoading) {
       yield LoadingState.dismissDialog();
       overlayEntry?.remove();
       overlayEntry = null;

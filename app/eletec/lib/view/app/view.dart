@@ -9,43 +9,45 @@ import 'bloc/app_bloc.dart';
 
 class EletecApp extends StatefulWidget {
   
+  final AppState state;
+
+  const EletecApp(this.state, {Key key}) : super(key: key);
+  
   @override
-  State<EletecApp> createState() => EletecAppState();
+  State<EletecApp> createState() => EletecAppState(state);
 }
 
 class EletecAppState extends State<EletecApp> {
 
+  final AppState state;
+
+  EletecAppState(this.state);
+
   @override
-  Widget build(BuildContext context) => BlocProvider<AppBloc>(
-    create: (context) => AppBloc(context)..add(AppInitial()),
-    child: BlocBuilder<AppBloc, AppState>(
-      builder: (context, state) {
-        return MaterialApp( 
-          title: 'Eletec',
-          locale: state.locale,
-          localizationsDelegates: const [
-            location_picker.S.delegate,
-            Localization.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: const <Locale>[
-            Locale('en', ''),
-            Locale('ar', ''),
-          ],
-          theme: ThemeData(
-            primaryColor: Colors.blue,
-            buttonTheme: ButtonThemeData(
-              buttonColor: Colors.blue,
-              hoverColor: Colors.green,
-              shape: StadiumBorder(),
-              textTheme: ButtonTextTheme.primary
-            )
-          ),
-          onGenerateRoute: Router.instance.generator,
-        );
-      }
-    )
+  Widget build(BuildContext context) => MaterialApp( 
+    title: 'Eletec',
+    locale: state.locale,
+    localizationsDelegates: const [
+      location_picker.S.delegate,
+      Localization.delegate,
+      GlobalMaterialLocalizations.delegate,
+      GlobalWidgetsLocalizations.delegate,
+      GlobalCupertinoLocalizations.delegate,
+    ],
+    supportedLocales: const <Locale>[
+      Locale('en', ''),
+      Locale('ar', ''),
+    ],
+    theme: ThemeData(
+      primaryColor: Colors.blue,
+      buttonTheme: ButtonThemeData(
+        buttonColor: Colors.blue,
+        hoverColor: Colors.green,
+        shape: StadiumBorder(),
+        textTheme: ButtonTextTheme.primary
+      )
+    ),
+    onGenerateRoute: Router.instance.generator,
   );
+      
 }

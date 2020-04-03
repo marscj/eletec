@@ -28,7 +28,3 @@ class SignedIn extends AppEvent {
 }
 
 class SignedOut extends AppEvent {}
-
-class ShowLoading extends AppEvent {}
-
-class DismissLoading extends AppEvent {}

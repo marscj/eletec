@@ -7,6 +7,6 @@ abstract class LoadingEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class ShowDialog extends LoadingEvent {}
+class ShowLoading extends LoadingEvent {}
 
-class DismissDialog extends LoadingEvent {}
+class DismissLoading extends LoadingEvent {}

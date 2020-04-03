@@ -30,57 +30,22 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   Stream<LoginState> mapEventToState(
     LoginEvent event,
   ) async* {
-    if (event is GetOTP) {
-      BlocProvider.of<AppBloc>(context).add(ShowLoading());
-      
-      // if (formKey.currentState.saveAndValidate()) {
-      //   yield state.copyWith(loading: true);
+    if (event is GetOTP) {  
+      if (formKey.currentState.saveAndValidate()) {
+        yield state.copyWith(loading: true);
 
-      //   FocusScope.of(context).requestFocus(FocusNode());
-      //   BlocProvider.of<LoadingBloc>(context).add(ShowDialog());
+        FocusScope.of(context).requestFocus(FocusNode());
+        
+        BlocProvider.of<LoadingBloc>(context).add(ShowLoading());
 
-      //   RestService.instance.phoneGenerate(formKey.currentState.value).then((res) {
-      //     add(ResponseOTP(res));
-      //   }).catchError((error) {
-      //     formKey.currentState.setErrors(error?.response?.data);
-      //   }).whenComplete(() {
-      //     BlocProvider.of<LoadingBloc>(context).add(DismissDialog());
-      //   });
-      // }
-
-      // OverlayEntry overlayEntry = OverlayEntry(
-      //   builder: (_) =>   
-        // GestureDetector(
-        //   behavior: HitTestBehavior.translucent,
-        //   onTap: () {
-        //   },
-        //   child: Container(
-        //     color: Colors.black45, 
-        //     height: 100,
-        //     width: 100,
-        //     child: CupertinoActivityIndicator(radius: 12)
-        //   )
-        // )
-      // Positioned(
-      //   top: MediaQuery.of(context).size.height * 0.5,
-      //   child: Material(
-      //     color: Colors.transparent,
-      //     child: Center(
-      //       child: Container(
-      //         child: Padding(
-      //           padding: EdgeInsets.all(20),
-      //           child: CupertinoActivityIndicator(radius: 12), 
-      //         ),
-      //         color: Colors.black26
-      //       )
-      //     )
-      //   ))
-      // );
-
-      // Overlay.of(context).insert(overlayEntry);
-      // new Future.delayed(Duration(seconds: 2)).then((value) {
-      //   overlayEntry.remove();
-      // });
+        RestService.instance.phoneGenerate(formKey.currentState.value).then((res) {
+          add(ResponseOTP(res));
+        }).catchError((error) {
+          formKey.currentState.setErrors(error?.response?.data);
+        }).whenComplete(() {
+          BlocProvider.of<LoadingBloc>(context).add(DismissLoading());
+        });
+      }
     }
 
     if (event is ResponseOTP) {
@@ -117,13 +82,13 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         yield state.copyWith(loading: true);
         
         FocusScope.of(context).requestFocus(FocusNode());
-        BlocProvider.of<LoadingBloc>(context).add(ShowDialog());
+        BlocProvider.of<LoadingBloc>(context).add(ShowLoading());
         RestService.instance.phoneValidate(formKey.currentState.value).then((res) {
           BlocProvider.of<AppBloc>(context).add(SignedIn(res.token));
         }).catchError((error) {
           formKey.currentState.setErrors(error?.response?.data);
         }).whenComplete(() {
-          BlocProvider.of<LoadingBloc>(context).add(DismissDialog());
+          BlocProvider.of<LoadingBloc>(context).add(DismissLoading());
         });
       }
     }
