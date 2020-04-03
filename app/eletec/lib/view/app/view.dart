@@ -20,7 +20,7 @@ class EletecAppState extends State<EletecApp> {
     create: (context) => AppBloc()..add(AppInitial()),
     child: BlocBuilder<AppBloc, AppState>(
       builder: (context, state) {
-        return MaterialApp(
+        return MaterialApp( 
           title: 'Eletec',
           locale: state.locale,
           localizationsDelegates: const [
