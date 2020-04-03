@@ -1,22 +1,21 @@
-import 'package:eletec/authentication/authentication_bloc.dart';
+import 'package:eletec/view/app/app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../view.dart';
 
 class HookWidget extends StatelessWidget {
+  
   @override
-  Widget build(BuildContext context) => BlocListener<AuthenticationBloc, AuthenticationState>(
+  Widget build(BuildContext context) => BlocListener<AppBloc, AppState>(
     listener: (context, state) {},
-    child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+    child: BlocBuilder<AppBloc, AppState>(
       builder: (context, state) {
-        if (state is AuthenticationAuthenticated) {
+        if (state.signedIn) {
           return HomePage();
-        }
-        if (state is AuthenticationUnauthenticated) {
+        } else {
           return LoginPage();
         }
-        return Container();
       },
     )
   );
@@ -28,7 +27,7 @@ class HomePage extends StatelessWidget {
     body: Center(
       child: RaisedButton(
         child: Text('LogOUT'),
-        onPressed: () => BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut()),
+        onPressed: () => BlocProvider.of<AppBloc>(context).add(SignedOut()),
       ),
     ),
   );
