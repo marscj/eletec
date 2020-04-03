@@ -11,12 +11,6 @@ abstract class LoginEvent extends Equatable {
 
 class GetOTP extends LoginEvent {}
 
-class ResponseOTP extends LoginEvent {
-  final dynamic result;
-
-  ResponseOTP(this.result);
-}
-
 class Timer extends LoginEvent {
   final int timer;
 

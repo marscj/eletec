@@ -35,35 +35,31 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         yield state.copyWith(loading: true);
 
         FocusScope.of(context).requestFocus(FocusNode());
-        
+
         BlocProvider.of<LoadingBloc>(context).add(ShowLoading());
 
-        RestService.instance.phoneGenerate(formKey.currentState.value).then((res) {
-          add(ResponseOTP(res));
+        yield await RestService.instance.phoneGenerate(formKey.currentState.value).then((res) {
+          Scaffold.of(context)..hideCurrentSnackBar()..showSnackBar(
+            SnackBar(
+              content: Text('SMS sent successfully')
+            ),
+          );
+
+          RangeStream(60, 0)
+            .interval(Duration(seconds: 1))
+            .listen((i) => add(Timer(i)));
+
+          return state.copyWith(
+            step: 1, 
+            loading: false,
+            otp: res
+          );
         }).catchError((error) {
           formKey.currentState.setErrors(error?.response?.data);
         }).whenComplete(() {
           BlocProvider.of<LoadingBloc>(context).add(DismissLoading());
         });
       }
-    }
-
-    if (event is ResponseOTP) {
-      yield state.copyWith(
-        step: 1, 
-        loading: false,
-        otp: event.result
-      );
-
-      Scaffold.of(context)..hideCurrentSnackBar()..showSnackBar(
-        SnackBar(
-          content: Text('SMS sent successfully')
-        ),
-      );
-
-      RangeStream(60, 0)
-        .interval(Duration(seconds: 1))
-        .listen((i) => add(Timer(i)));
     }
 
     if (event is Timer) {
@@ -82,7 +78,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         yield state.copyWith(loading: true);
         
         FocusScope.of(context).requestFocus(FocusNode());
+
         BlocProvider.of<LoadingBloc>(context).add(ShowLoading());
+        
         RestService.instance.phoneValidate(formKey.currentState.value).then((res) {
           BlocProvider.of<AppBloc>(context).add(SignedIn(res.token));
         }).catchError((error) {

@@ -12,25 +12,20 @@ class LoadingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) => BlocProvider<LoadingBloc>(
    create: (state) => LoadingBloc(),
-   child: BlocListener<LoadingBloc, LoadingState>(
-     listener: (context, state) {
-     },
-     child: BlocBuilder<LoadingBloc, LoadingState> (
-       builder: (context, state) {
-         return Directionality(
-          textDirection: TextDirection.ltr,
-          child: Overlay(
-            key: BlocProvider.of<LoadingBloc>(context).overlayKey,
-            initialEntries: [
-              OverlayEntry(
-                builder: (context) => child
-              )
-            ],
-          )
-         );
-       },
-     ),
-   ),
+   child: BlocBuilder<LoadingBloc, LoadingState> (
+    builder: (context, state) {
+        return Directionality(
+        textDirection: TextDirection.ltr,
+        child: Overlay(
+          key: BlocProvider.of<LoadingBloc>(context).overlayKey,
+          initialEntries: [
+            OverlayEntry(
+              builder: (context) => child
+            )
+          ],
+        ));
+      }
+    )
   );
   
 }
