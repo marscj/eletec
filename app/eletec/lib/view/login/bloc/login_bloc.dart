@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:bloc/bloc.dart';
 import 'package:eletec/config/router.dart';
@@ -8,6 +9,7 @@ import 'package:eletec/view/loading/bloc/loading_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rxdart/rxdart.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';
@@ -49,11 +51,26 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         loading: false,
         otp: event.result
       );
+
+      Scaffold.of(context)..hideCurrentSnackBar()..showSnackBar(
+        SnackBar(
+          content: Text('SMS sent successfully')
+        ),
+      );
+
+      RangeStream(60, 0)
+        .interval(Duration(seconds: 1))
+        .listen((i) => add(Timer(i)));
+    }
+
+    if (event is Timer) {
+      yield state.copyWith(timer: event.timer);
     }
 
     if (event is ResendOTP) {
       yield state.copyWith(
-        step: 0
+        step: 0,
+        timer: 60,
       );
     }
 

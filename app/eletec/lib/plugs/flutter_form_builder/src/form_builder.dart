@@ -94,6 +94,7 @@ class FormBuilderState extends State<FormBuilder> {
     setState(() {
       _errors = errors ?? {};
     });
+    _formKey.currentState.validate();
   }
 
   bool validate() {

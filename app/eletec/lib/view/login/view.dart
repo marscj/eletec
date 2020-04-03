@@ -1,8 +1,5 @@
-import 'package:eletec/config/router.dart';
 import 'package:eletec/plugs/flutter_form_builder/flutter_form_builder.dart';
-import 'package:eletec/view/loading/bloc/loading_bloc.dart';
 import 'package:eletec/view/login/bloc/login_bloc.dart';
-import 'package:eletec/view/view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -55,60 +52,57 @@ class LoginForm extends StatelessWidget {
     return BlocProvider<LoginBloc>(
         create: (_) => LoginBloc(context),
         child: BlocListener<LoginBloc, LoginState>(
-          listener: (context, state) {
-            
-          },
+          listener: (context, state) {},
           child: BlocBuilder<LoginBloc, LoginState>(
             builder: (context, state) {
               _buildPhone() => FormBuilderTextField(
-                    attribute: 'phone_number',
-                    keyboardType: TextInputType.phone,
-                    maxLength: 10,
-                    decoration: InputDecoration(
-                        labelText: 'Phone Number', prefixText: '+971  '),
-                    valueTransformer: (value) => '+971$value',
-                    validators: [
-                      FormBuilderValidators.required(),
-                    ]
-                  );
+                attribute: 'phone_number',
+                keyboardType: TextInputType.phone,
+                maxLength: 10,
+                decoration: InputDecoration(
+                    labelText: 'Phone Number', prefixText: '+971  '),
+                valueTransformer: (value) => '+971$value',
+                validators: [
+                  FormBuilderValidators.required(),
+                ]
+              );
 
               _buildOtp() => state.step == 1
-                  ? FormBuilderTextField(
-                      attribute: 'otp',
-                      keyboardType: TextInputType.number,
-                      maxLength: 4,
-                      decoration: InputDecoration(
-                          labelText: 'OTP', helperText: '4 digits'),
-                    )
-                  : Container();
+                ? FormBuilderTextField(
+                    attribute: 'otp',
+                    keyboardType: TextInputType.number,
+                    maxLength: 4,
+                    decoration: InputDecoration(
+                        labelText: 'OTP', helperText: '4 digits'),
+                  )
+                : Container();
 
               _buildButton() => state.step == 0
-                  ? RaisedButton(
-                      onPressed: () {
-                        BlocProvider.of<LoginBloc>(context).add(GetOTP());
-                        // BlocProvider.of<LoadingBloc>(context).add(ShowDialog());
-                      },
-                      child: Text('Get OTP'),
-                    )
-                  : RaisedButton(
-                      onPressed: () {
-                        BlocProvider.of<LoginBloc>(context)
-                            .add(FormSubmitted());
-                      },
-                      child: Text('Login'),
-                    );
-              _buildResend() => state.step == 1
-                  ? new FlatButton(
-                      child: Text('Resend OTP'),
-                      onPressed: () =>
-                          BlocProvider.of<LoginBloc>(context).add(ResendOTP()))
-                  : new Container();
+                ? RaisedButton(
+                    onPressed: () {
+                      BlocProvider.of<LoginBloc>(context).add(GetOTP());
+                    },
+                    child: Text('Get OTP'), 
+                  )
+                : RaisedButton(
+                    onPressed: () {
+                      BlocProvider.of<LoginBloc>(context)
+                          .add(FormSubmitted());
+                    },
+                    child: Text('Login'),
+                  );
+            _buildResend() => state.step == 1
+                ? new FlatButton(
+                    child: state.timer == 0 ? Text('Resend OTP') : Text('Resend OTP ${state.timer}'),
+                    onPressed: state.timer == 0 ? () => BlocProvider.of<LoginBloc>(context).add(ResendOTP()) : null
+                  )
+                : new Container();
 
               return Container(
                 padding: const EdgeInsets.all(10),
                 child: SingleChildScrollView(
                   child: FormBuilder(
-                    autovalidate: true,
+                    autovalidate: false,
                     key: BlocProvider.of<LoginBloc>(context).formKey,
                     child: Column(
                       children: <Widget>[

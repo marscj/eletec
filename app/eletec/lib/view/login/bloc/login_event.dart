@@ -17,6 +17,12 @@ class ResponseOTP extends LoginEvent {
   ResponseOTP(this.result);
 }
 
+class Timer extends LoginEvent {
+  final int timer;
+
+  Timer(this.timer);
+}
+
 class ResendOTP extends LoginEvent {}
 
 class FormSubmitted extends LoginEvent {}
