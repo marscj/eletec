@@ -28,13 +28,13 @@ class AuthenticationBloc
     }
 
     if (event is LoggedIn) {
-      await CacheService.instance.setToken(event.token);
       yield AuthenticationAuthenticated();
+      CacheService.instance.setToken(event.token);
     }
 
     if (event is LoggedOut) {
-      await CacheService.instance.clearToken();
       yield AuthenticationUnauthenticated();
+      CacheService.instance.clearToken();
     }
   }
 }

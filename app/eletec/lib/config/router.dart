@@ -12,7 +12,7 @@ class Routes {
     router.define(root,
         handler: fluro.Handler(handlerFunc: (_, __) => AdPage()));
     router.define(home,
-        handler: fluro.Handler(handlerFunc: (_, __) => HomePage()));
+        handler: fluro.Handler(handlerFunc: (_, __) => HookWidget()));
   }
 }
 
