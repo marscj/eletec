@@ -1,3 +1,4 @@
+import 'package:eletec/locale/locale_bloc.dart';
 import 'package:eletec/plugs/flutter_form_builder/flutter_form_builder.dart';
 import 'package:eletec/view/login/bloc/login_bloc.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,7 +11,23 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       body: Stack(
         fit: StackFit.expand,
-        children: <Widget>[LoginBackground(), LoginWidgets()],
+        children: <Widget>[
+          LoginBackground(), 
+          LoginWidgets(), 
+          Container(
+            alignment: Alignment.bottomCenter,
+            child: FlatButton(
+              onPressed: () => {
+                if(BlocProvider.of<LocaleBloc>(context).state.locale.languageCode == 'en') {
+                  BlocProvider.of<LocaleBloc>(context).add(LocaleUpdate(Locale('ar', '')))
+                } else {
+                  BlocProvider.of<LocaleBloc>(context).add(LocaleUpdate(Locale('en', '')))
+                }
+              },
+              child: Text("${BlocProvider.of<LocaleBloc>(context).state.locale.languageCode == 'en' ? 'English': 'Arabic'}"),
+            ),
+          )
+        ],
       ),
     );
   }

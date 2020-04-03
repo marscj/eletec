@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:bloc/bloc.dart';
+import 'package:eletec/authentication/authentication_bloc.dart';
 import 'package:eletec/config/router.dart';
 import 'package:eletec/plugs/flutter_form_builder/flutter_form_builder.dart';
 import 'package:eletec/rest/client.dart';
@@ -81,7 +82,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         FocusScope.of(context).requestFocus(FocusNode());
         BlocProvider.of<LoadingBloc>(context).add(ShowDialog());
         RestService.instance.phoneValidate(formKey.currentState.value).then((res) {
-          CacheService.instance.setToken(res.token);
+          BlocProvider.of<AuthenticationBloc>(context).add(LoggedIn(token: res.token));
         }).catchError((error) {
           formKey.currentState.setErrors(error?.response?.data);
         }).whenComplete(() {

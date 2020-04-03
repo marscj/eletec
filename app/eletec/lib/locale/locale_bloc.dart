@@ -8,6 +8,7 @@ part 'locale_event.dart';
 part 'locale_state.dart';
 
 class LocaleBloc extends Bloc<LocaleEvent, LocaleState> {
+  
   @override
   LocaleState get initialState => LocaleState(Locale('en', ''));
 
