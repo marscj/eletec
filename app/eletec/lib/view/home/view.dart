@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../view.dart';
 
-class HookWidget extends StatelessWidget {
+class HomeHookPage extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) => BlocListener<AppBloc, AppState>(
