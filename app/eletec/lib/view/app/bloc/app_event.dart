@@ -27,4 +27,4 @@ class SignedIn extends AppEvent {
   List<Object> get props => [token];
 }
 
-class SignedOut extends AppEvent {}
+class SignedOut extends AppEvent{}

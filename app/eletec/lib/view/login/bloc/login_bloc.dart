@@ -9,7 +9,6 @@ import 'package:rxdart/rxdart.dart';
 import 'package:eletec/plugs/flutter_form_builder/flutter_form_builder.dart';
 import 'package:eletec/rest/client.dart';
 import 'package:eletec/view/loading/bloc/loading_bloc.dart';
-import 'package:eletec/view/app/app.dart';
 
 import 'package:bloc/bloc.dart';
 
@@ -33,7 +32,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     if (event is GetOTP) {  
       if (formKey.currentState.saveAndValidate()) {
         yield state.copyWith(loading: true);
-
+ 
         FocusScope.of(context).requestFocus(FocusNode());
 
         BlocProvider.of<LoadingBloc>(context).add(ShowLoading());
@@ -74,21 +73,21 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     }
 
     if (event is FormSubmitted) {
-      if (formKey.currentState.saveAndValidate()) {
-        yield state.copyWith(loading: true);
+      // if (formKey.currentState.saveAndValidate()) {
+      //   yield state.copyWith(loading: true);
         
-        FocusScope.of(context).requestFocus(FocusNode());
+      //   FocusScope.of(context).requestFocus(FocusNode());
 
-        BlocProvider.of<LoadingBloc>(context).add(ShowLoading());
+      //   BlocProvider.of<LoadingBloc>(context).add(ShowLoading());
         
-        RestService.instance.phoneValidate(formKey.currentState.value).then((res) {
-          BlocProvider.of<AppBloc>(context).add(SignedIn(res.token));
-        }).catchError((error) {
-          formKey.currentState.setErrors(error?.response?.data);
-        }).whenComplete(() {
-          BlocProvider.of<LoadingBloc>(context).add(DismissLoading());
-        });
-      }
+      //   RestService.instance.phoneValidate(formKey.currentState.value).then((res) {
+      //     BlocProvider.of<AppBloc>(context).add(SignedIn(res.token));
+      //   }).catchError((error) {
+      //     formKey.currentState.setErrors(error?.response?.data);
+      //   }).whenComplete(() {
+      //     BlocProvider.of<LoadingBloc>(context).add(DismissLoading());
+      //   });
+      // }
     }
   }
 
