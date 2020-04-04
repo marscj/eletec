@@ -1,6 +1,6 @@
+import 'package:eletec/plugs/flutter_login/flutter_login.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:flutter/material.dart';
-import 'package:flutter_login/flutter_login.dart';
 import 'constants.dart';
 import 'custom_route.dart';
 import 'dashboard_screen.dart';
