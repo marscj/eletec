@@ -15,7 +15,7 @@ class AdPage extends StatelessWidget {
       child: Container(
         alignment: Alignment.bottomCenter,
         padding: EdgeInsets.symmetric(vertical: 40),
-        child: Image.asset('assets/logo.png', fit: BoxFit.cover),
+        child: Image.asset('assets/images/title.png', fit: BoxFit.cover),
       )
     );
 
