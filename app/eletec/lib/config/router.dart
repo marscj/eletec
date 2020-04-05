@@ -11,8 +11,8 @@ class Routes {
   static void configureRoutes(fluro.Router router) {
     router.define(root,
         handler: fluro.Handler(handlerFunc: (_, __) => AdPage()));
-    // router.define(home,
-    //     handler: fluro.Handler(handlerFunc: (_, __) => HomeHookPage()));
+    router.define(home,
+        handler: fluro.Handler(handlerFunc: (_, __) => Home()));
   }
 }
 
