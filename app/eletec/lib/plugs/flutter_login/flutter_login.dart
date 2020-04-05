@@ -456,8 +456,6 @@ class _FlutterLoginState extends State<FlutterLogin>
     final buttonTheme = loginTheme.buttonTheme;
     final roundBorderRadius = BorderRadius.circular(100);
 
-    LoginThemeHelper.loginTextStyle = titleStyle;
-
     return theme.copyWith(
       primaryColor: primaryColor,
       primaryColorDark: primaryColorDark,

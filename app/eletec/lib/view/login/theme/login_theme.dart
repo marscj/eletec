@@ -50,56 +50,38 @@ class LoginTheme with ChangeNotifier {
     this.bodyStyle,
     this.textFieldStyle,
     this.buttonStyle,
+    this.loginTextStyle,
     this.beforeHeroFontSize = 48.0,
     this.afterHeroFontSize = 15.0,
   });
 
-  /// The background color of the login page for light gradient; if provided,
-  /// overrides the [primaryColor] for page background
   final Color pageColorLight;
 
-  /// The background color of the login page for dark gradient; if provided,
-  /// overrides the computed primaryColorDark for page background
   final Color pageColorDark;
 
-  /// The background color of major parts of the widget like the login screen
-  /// and buttons
   final Color primaryColor;
 
-  /// The secondary color, used for title text color, loading icon, etc. Should
-  /// be contrast with the [primaryColor]
   final Color accentColor;
 
-  /// The color to use for [TextField] input validation errors
   final Color errorColor;
 
-  /// The colors and styles used to render auth [Card]
   final CardTheme cardTheme;
 
-  /// Defines the appearance of all [TextField]s
   final InputDecorationTheme inputTheme;
 
-  /// A theme for customizing the shape, elevation, and color of the submit
-  /// button
   final LoginButtonTheme buttonTheme;
 
-  /// Text style for the big title
   final TextStyle titleStyle;
 
-  /// Text style for small text like the recover password description
   final TextStyle bodyStyle;
 
-  /// Text style for [TextField] input text
   final TextStyle textFieldStyle;
 
-  /// Text style for button text
   final TextStyle buttonStyle;
 
-  /// Defines the font size of the title in the login screen (before the hero
-  /// transition)
+  final TextStyle loginTextStyle;
+
   final double beforeHeroFontSize;
 
-  /// Defines the font size of the title in the screen after the login screen
-  /// (after the hero transition)
   final double afterHeroFontSize;
 }

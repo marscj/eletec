@@ -11,7 +11,7 @@ dependencies:
 
   dio: ^3.0.9
   # intl: ^0.16.1
-  bloc: ^3.0.0
+  # bloc: ^3.0.0
   fluro: ^1.6.0
   rxdart: ^0.23.1
   animator: ^1.0.0+5
