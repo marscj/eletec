@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'theme/theme.dart';
 
-
+ 
 class LoginPage extends StatelessWidget {
   
   @override
@@ -12,7 +12,7 @@ class LoginPage extends StatelessWidget {
     return LoginView(
       theme: LoginTheme(
         pageColorLight: Theme.of(context).primaryColor,
-        pageColorDark: Theme.of(context).primaryColorDark
+        pageColorDark: Theme.of(context).primaryColorDark,
       ),
     );
   }
@@ -41,7 +41,6 @@ class LoginView extends StatelessWidget {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
-          Text('caonima')
         ],
       )
     );

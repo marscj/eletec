@@ -38,7 +38,8 @@ class EletecAppState extends State<EletecApp> {
       Locale('ar', ''),
     ],
     theme: ThemeData(
-      primaryColor: Colors.blue,
+      // primaryColor: Colors.blue,
+      primarySwatch: Colors.blue,
       buttonTheme: ButtonThemeData(
         buttonColor: Colors.blue,
         hoverColor: Colors.green,
