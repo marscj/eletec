@@ -55,7 +55,7 @@ class AdPage extends StatelessWidget {
             }
           )
         ),
-        SafeArea(
+        SafeArea( 
           child: Container(
             alignment: Alignment.topRight,
             padding: const EdgeInsets.all(10),

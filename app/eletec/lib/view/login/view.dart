@@ -9,36 +9,39 @@ class LoginPage extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return LoginView(
+      theme: LoginTheme(
+        pageColorLight: Theme.of(context).primaryColor,
+        pageColorDark: Theme.of(context).primaryColorDark
+      ),
+    );
   }
 }
 
 class LoginView extends StatelessWidget {
 
-  final LoginTheme loginTheme;
-
-  ThemeData theme;
+  final LoginTheme theme;
 
   LoginView({
     Key key, 
-    this.loginTheme = const LoginTheme(),
+    this.theme = const LoginTheme(),
   }) : super(key: key) ;
   
   @override
   Widget build(BuildContext context) {
-
 
     return Scaffold(
       body: Stack(
         children: <Widget>[
           GradientBox(
             colors: [
-              loginTheme.pageColorLight ?? theme.primaryColor,
-              loginTheme.pageColorDark ?? theme.primaryColorDark,
+              theme.pageColorLight,
+              theme.pageColorDark,
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
+          Text('caonima')
         ],
       )
     );
