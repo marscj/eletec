@@ -285,9 +285,10 @@ class _DashboardScreenState extends State<DashboardScreen>
 
     return WillPopScope(
       onWillPop: () => _goToLogin(context),
-      child: SafeArea(
+      child: 
+      SafeArea(
         child: Scaffold(
-          appBar: _buildAppBar(theme),
+          // appBar: _buildAppBar(theme),
           body: Container(
             width: double.infinity,
             height: double.infinity,
@@ -311,7 +312,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                             end: Alignment.bottomRight,
                             tileMode: TileMode.clamp,
                             colors: <Color>[
-                              Colors.deepPurpleAccent.shade100,
+                              Colors.blueAccent.shade100,
                               Colors.deepPurple.shade100,
                               Colors.deepPurple.shade100,
                               Colors.deepPurple.shade100,

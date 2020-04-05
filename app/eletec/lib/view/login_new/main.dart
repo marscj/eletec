@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       title: 'Login Demo',
       theme: ThemeData(
         // brightness: Brightness.dark,
-        primarySwatch: Colors.deepPurple,
+        primarySwatch: Colors.blue,
         accentColor: Colors.orange,
         cursorColor: Colors.orange,
         // fontFamily: 'SourceSansPro',
