@@ -1,0 +1,14 @@
+# This is a generated file; do not edit or check into version control.
+android_intent=/Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/android_intent-0.3.6+1/
+flutter_plugin_android_lifecycle=/Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_plugin_android_lifecycle-1.0.6/
+geolocator=/Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/geolocator-5.3.1/
+google_api_availability=/Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/google_api_availability-2.0.4/
+google_map_location_picker=/Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/google_map_location_picker-3.2.1+2/
+google_maps_flutter=/Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/google_maps_flutter-0.5.25+3/
+location_permissions=/Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/location_permissions-2.0.5/
+package_info=/Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/package_info-0.4.0+16/
+path_provider=/Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider-1.6.5/
+path_provider_macos=/Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_macos-0.0.4/
+shared_preferences=/Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences-0.5.6+3/
+shared_preferences_macos=/Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_macos-0.0.1+6/
+shared_preferences_web=/Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_web-0.1.2+4/
