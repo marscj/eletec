@@ -17,7 +17,10 @@ class GradientBox extends StatelessWidget {
       child: SizedBox.expand(),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: colors,
+          colors: colors ?? [
+            Theme.of(context).primaryColor,
+            Theme.of(context).primaryColorDark,
+          ],
           begin: begin,
           end: end,
           stops: [0.0, 1.0],
