@@ -1,7 +1,6 @@
 import 'package:eletec/I18n/i18n.dart';
 import 'package:eletec/config/router.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_map_location_picker/generated/i18n.dart' as location_picker;
 
