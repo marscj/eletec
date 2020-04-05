@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:eletec/plugs/flutter_form_builder/flutter_form_builder.dart';
 import 'package:eletec/view/app/app.dart';
-import 'package:eletec/view/login/bloc/login_bloc.dart';
+import 'package:eletec/view/login_old/bloc/login_bloc.dart';
 
 class LoginPage extends StatelessWidget {
   @override
