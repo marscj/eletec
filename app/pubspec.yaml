@@ -1,0 +1,139 @@
+name: eletec
+description: Eletec App
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.6.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  dio: ^3.0.9
+  # intl: ^0.16.1
+  # bloc: ^3.0.0
+  fluro: ^1.6.0
+  rxdart: ^0.23.1
+  animator: ^1.0.0+5
+  # provider: ^4.0.4
+  retrofit: ^1.3.1+1
+  equatable: ^1.1.1
+  # koukicons: ^2.0.2
+  validators: ^2.0.0+1
+  flutter_bloc: ^3.2.0
+  extended_image: ^0.7.2
+  # pull_to_refresh: ^1.5.7
+  json_annotation: ^3.0.1
+  # flutter_typeahead: ^1.8.0 
+  # date_range_picker: ^1.0.6
+  shared_preferences: 0.5.6+3
+  # sy_flutter_widgets: ^0.1.4
+  # flutter_touch_spin: ^1.0.1
+  # flutter_chips_input: ^1.7.0
+  # cached_network_image: ^2.0.0
+  # datetime_picker_formfield: ^1.0.0
+  # google_maps_place_picker: ^0.9.0
+  google_map_location_picker: ^3.2.1+2
+  geolocator: ^5.3.1
+  # flutter_keyboard_visibility: ^0.7.0
+  # flutter_form_builder: ^3.8.2
+  # getflutter: ^1.0.11
+  # flushbar: ^1.10.0
+  font_awesome_flutter: ^8.8.1
+  transformer_page_view: ^0.1.6
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # 'flutter pub run build_runner build'
+  build_runner: ^1.8.0
+  json_serializable: ^3.3.0
+  retrofit_generator: ^1.3.1+9
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/logo.png
+    - assets/images/title.png
+
+    - assets/images/ecorp.png
+    - assets/images/ecorp-lightblue.png
+    - assets/images/ecorp-lightgreen.png
+
+  fonts:
+    - family: OpenSans
+      fonts:
+        - asset: assets/fonts/OpenSans-Light.ttf
+          weight: 300
+        - asset: assets/fonts/OpenSans-LightItalic.ttf
+          weight: 300
+          style: italic
+        - asset: assets/fonts/OpenSans-Regular.ttf
+        - asset: assets/fonts/OpenSans-Italic.ttf
+          style: italic
+        - asset: assets/fonts/OpenSans-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/OpenSans-SemiBoldItalic.ttf
+          weight: 600
+          style: italic
+        - asset: assets/fonts/OpenSans-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/OpenSans-BoldItalic.ttf
+          weight: 700
+          style: italic
+        - asset: assets/fonts/OpenSans-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/OpenSans-ExtraBoldItalic.ttf
+          weight: 800
+          style: italic
+    - family: SourceSansPro
+      fonts:
+        - asset: assets/fonts/SourceSansPro-ExtraLight.ttf
+          weight: 200
+        - asset: assets/fonts/SourceSansPro-ExtraLightItalic.ttf
+          weight: 200
+        - asset: assets/fonts/SourceSansPro-Light.ttf
+          weight: 300
+        - asset: assets/fonts/SourceSansPro-LightItalic.ttf
+          weight: 300
+          style: italic
+        - asset: assets/fonts/SourceSansPro-Regular.ttf
+        - asset: assets/fonts/SourceSansPro-Italic.ttf
+          style: italic
+        - asset: assets/fonts/SourceSansPro-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/SourceSansPro-SemiBoldItalic.ttf
+          weight: 600
+          style: italic
+        - asset: assets/fonts/SourceSansPro-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/SourceSansPro-BoldItalic.ttf
+          weight: 700
+          style: italic
+    - family: NotoSans
+      fonts:
+        - asset: assets/fonts/NotoSans-Regular.ttf
+        - asset: assets/fonts/NotoSans-Italic.ttf
+          style: italic
+        - asset: assets/fonts/NotoSans-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/NotoSans-BoldItalic.ttf
+          weight: 700
+          style: italic
+    - family: Quicksand
+      fonts:
+        - asset: assets/fonts/Quicksand-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Quicksand-Regular.ttf
+        - asset: assets/fonts/Quicksand-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Quicksand-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Quicksand-Bold.ttf
+          weight: 700
+      
+    
+      
