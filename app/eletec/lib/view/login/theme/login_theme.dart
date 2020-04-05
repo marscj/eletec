@@ -34,8 +34,8 @@ class LoginButtonTheme {
   final ShapeBorder shape;
 }
 
-class LoginTheme with ChangeNotifier {
-  LoginTheme({
+class LoginTheme {
+  const LoginTheme({
     this.pageColorLight,
     this.pageColorDark,
     this.primaryColor,
