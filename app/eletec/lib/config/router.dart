@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:eletec/view/view.dart';
 
 class Routes {
-  static String root = '/';
-  static String home = '/home';
+  static String root = '/home';
+  static String home = '/';
   static String login = '/login';
 
   static void configureRoutes(fluro.Router router) {

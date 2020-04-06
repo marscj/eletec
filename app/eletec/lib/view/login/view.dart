@@ -1,11 +1,11 @@
 
 import 'package:eletec/view/widgets/widgets.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'theme/theme.dart';
-import 'widgets/auth_card.dart';
+import 'widgets/widgets.dart';
 
- 
 class LoginPage extends StatelessWidget {
   
   @override
@@ -19,27 +19,43 @@ class LoginPage extends StatelessWidget {
   }
 }
 
-class LoginView extends StatelessWidget {
-
-  final LoginTheme theme;
+class LoginView extends StatefulWidget {
 
   LoginView({
     Key key, 
     this.theme = const LoginTheme(),
   }) : super(key: key) ;
-  
+
+  final LoginTheme theme;
+
+  @override
+  State<LoginView> createState() => _LoginViewState();
+}
+
+class _LoginViewState extends State<LoginView>{
+
   @override
   Widget build(BuildContext context) {
-    final _theme = _mergeTheme(theme: Theme.of(context), loginTheme: theme);
-    
+    final _theme = _mergeTheme(theme: Theme.of(context), loginTheme: widget.theme);
+    final deviceSize = MediaQuery.of(context).size;
+    const headerMargin = 15;
+    const cardInitialHeight = 300;
+    final cardTopPosition = deviceSize.height / 2 - cardInitialHeight / 2;
+    final headerHeight = cardTopPosition - headerMargin;
+
     return Scaffold(
       body: Stack(
         children: <Widget>[
-          GradientBox(
+          AnimatedBackground(
+            duration: Duration(seconds: 10),
             colors: [
-              theme.pageColorLight,
-              theme.pageColorDark
-            ]
+              widget.theme.pageColorLight,
+              widget.theme.pageColorDark
+            ],
+            child: Align(
+              alignment: Alignment.bottomLeft,
+              child: Image.asset('assets/images/background.png'),
+            )
           ),
           SingleChildScrollView(
             child: Theme(
@@ -50,17 +66,25 @@ class LoginView extends StatelessWidget {
                   Positioned(
                     child: AuthCard()
                   ),
-                  // Positioned(
-                  //   top: cardTopPosition - headerHeight - headerMargin,
-                  //   child: _buildHeader(headerHeight, loginTheme),
-                  // ),
-                ],
-              ),
+                  Positioned(
+                    top: cardTopPosition - headerHeight - headerMargin,
+                    child: SafeArea(
+                      child: _buildHeader(headerHeight, widget.theme)
+                    )
+                  )
+                ]
+              )
             )
           )
-          
-        ],
+        ]
       )
+    );
+  }
+
+  Widget _buildHeader(double height, LoginTheme loginTheme) {
+    return Header(
+      height: height,
+      loginTheme: loginTheme,
     );
   }
   
