@@ -22,11 +22,12 @@ class Header extends StatelessWidget {
 
     final Widget logo = Hero(
       tag: 'logo',
-      child: Image.asset('assets/images/title.png', color: Colors.yellowAccent)
+      child: Image.asset('assets/images/title.png', color: Colors.amber)
     );
- 
-    return SizedBox(
+  
+    return Container(
       height: height,
+      alignment: Alignment.topCenter,
       child: FractionalTranslation(
         translation: offset,
         child: Opacity(

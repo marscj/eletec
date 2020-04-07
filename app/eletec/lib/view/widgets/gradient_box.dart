@@ -5,16 +5,18 @@ class GradientBox extends StatelessWidget {
     this.colors,
     this.begin = Alignment.topLeft,
     this.end = Alignment.bottomRight,
+    this.child
   });
 
   final AlignmentGeometry begin;
   final AlignmentGeometry end;
   final List<Color> colors;
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      child: SizedBox.expand(),
+    return Container(
+      child: child ?? SizedBox.expand(),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: colors ?? [

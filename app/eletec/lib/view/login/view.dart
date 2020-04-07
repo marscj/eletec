@@ -16,6 +16,16 @@ class LoginPage extends StatelessWidget {
       theme: LoginTheme(
         pageColorLight: Theme.of(context).primaryColor,
         pageColorDark: Theme.of(context).primaryColorDark,
+        buttonTheme: LoginButtonTheme(
+          splashColor: Colors.purple,
+          backgroundColor: Colors.pinkAccent,
+          highlightColor: Colors.lightGreen,
+          elevation: 9.0,
+          highlightElevation: 6.0,
+          shape: BeveledRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
       ),
     );
   }
@@ -41,30 +51,42 @@ class _LoginViewState extends State<LoginView>{
     final _theme = _mergeTheme(theme: Theme.of(context), loginTheme: widget.theme);
     final deviceSize = MediaQuery.of(context).size;
     const headerMargin = 15;
-    const cardInitialHeight = 300;
+    const cardInitialHeight = 0;
     final cardTopPosition = deviceSize.height / 2 - cardInitialHeight / 2;
-    final headerHeight = cardTopPosition - headerMargin;
-
+    final headerHeight = 220.0;
+ 
     final tween = MultiTrackTween([
-      Track("offset").add(Duration(milliseconds: 400), Tween<Offset>(begin: Offset(0, -0.25), end: Offset(0, 0)), curve: Curves.easeOut),
-      Track("opacity").add(Duration(milliseconds: 400), Tween(begin: 0.0, end: 1.0), curve: Curves.easeOut),
+      Track("offset").add(Duration(milliseconds: 800), Tween<Offset>(begin: Offset(0, 1.0), end: Offset(0, 0)), curve: Curves.easeOut),
+      Track("opacity").add(Duration(milliseconds: 800), Tween(begin: 0.0, end: 1.0), curve: Curves.easeOut),
       Track("angle").add(Duration(milliseconds: 400), Tween(begin: pi / 2.0, end: 0), curve: Curves.easeOut)
     ]);
 
     return Scaffold(
       body: Stack(
         children: <Widget>[
-          AnimatedBackground(
-            duration: Duration(seconds: 10),
-            colors: [ 
-              widget.theme.pageColorLight,
-              widget.theme.pageColorDark
+          GradientBox(
+            colors: [
+              widget.theme.pageColorLight ?? Theme.of(context).primaryColor,
+              widget.theme.pageColorDark ?? Theme.of(context).primaryColorDark,
             ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
             child: Align(
               alignment: Alignment.bottomLeft,
               child: Image.asset('assets/images/background.png'),
             )
           ),
+          // AnimatedBackground(
+          //   duration: Duration(seconds: 5),
+          //   colors: [ 
+          //     widget.theme.pageColorLight,
+          //     widget.theme.pageColorDark
+          //   ],
+          //   child: Align(
+          //     alignment: Alignment.bottomLeft,
+          //     child: Image.asset('assets/images/background.png'),
+          //   )
+          // ),
           SingleChildScrollView(
             child: Theme(
               data: _theme,
@@ -75,23 +97,25 @@ class _LoginViewState extends State<LoginView>{
                 builder: (context, animation) {
                   return Stack( 
                     alignment:Alignment.center,
-                    children: <Widget>[  
+                    children: <Widget>[
                       Positioned(
-                        child: AuthCard(
-                          angle: animation['angle'],
-                        )
+                        child: Header(
+                          height: headerHeight,
+                          loginTheme: widget.theme,
+                          offset: animation['offset'],
+                          opacity: animation['opacity'],
+                        ) 
                       ),
-                      Positioned( 
-                        top: cardTopPosition - headerHeight - headerMargin,
+
+                      Positioned(
                         child: SafeArea(
-                          child: Header(
-                            height: headerHeight,
-                            loginTheme: widget.theme,
-                            offset: animation['offset'],
-                            opacity: animation['opacity'],
+                          child: AuthCard(
+                            alignment: Alignment.topCenter,
+                            padding: EdgeInsets.only(top: 100),
+                            angle: animation['angle'],
                           )
                         )
-                      )
+                      ),
                     ]
                   );
                 }
