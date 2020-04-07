@@ -34,17 +34,6 @@ class Header extends StatelessWidget {
           child: logo,
         )
       )
-      // Transform(
-      //   alignment: Alignment.center,
-      //   transform: Matrix4.skewY(offset.dy)..rotateZ(-pi / 12.0),
-      //   child: logo,
-      // )
-      // Transform.translate(
-      //   // alignment: Alignment.center,
-      //   // transform: ,
-      //   offset: offset,
-      //   child: logo
-      // )
     );
   }
 }
