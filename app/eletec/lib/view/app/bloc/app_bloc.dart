@@ -5,6 +5,7 @@ import 'package:eletec/rest/client.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:wakelock/wakelock.dart';
 
 part 'app_event.dart';
 part 'app_state.dart';
@@ -27,6 +28,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     AppEvent event,
   ) async* {
     if(event is AppInitial) {
+      Wakelock.enable();
+
       yield await CacheService.instance.getToken().then((token) {
         if (token == 'unknow') {
           return state.copyWith(
@@ -44,7 +47,6 @@ class AppBloc extends Bloc<AppEvent, AppState> {
           locale: Locale(value, '')
         );
       });
-
     }
 
     if (event is LocaleUpdate) {

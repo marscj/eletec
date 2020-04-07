@@ -1,16 +1,20 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 import '../theme/theme.dart';
 
 class Header extends StatelessWidget {
   Header({
-    this.title,
     this.height = 250.0,
+    this.offset, 
+    this.opacity,
     @required this.loginTheme,
   });
 
-  final String title;
   final double height;
+  final Offset offset;
+  final double opacity;
   final LoginTheme loginTheme;
 
   @override
@@ -23,11 +27,24 @@ class Header extends StatelessWidget {
  
     return SizedBox(
       height: height,
-      child: AnimatedOpacity(
-        opacity: 1.0,
-        duration: Duration(milliseconds: 500),
-        child: logo,
-      ),
+      child: FractionalTranslation(
+        translation: offset,
+        child: Opacity(
+          opacity: opacity,
+          child: logo,
+        )
+      )
+      // Transform(
+      //   alignment: Alignment.center,
+      //   transform: Matrix4.skewY(offset.dy)..rotateZ(-pi / 12.0),
+      //   child: logo,
+      // )
+      // Transform.translate(
+      //   // alignment: Alignment.center,
+      //   // transform: ,
+      //   offset: offset,
+      //   child: logo
+      // )
     );
   }
 }

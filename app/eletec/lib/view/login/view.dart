@@ -1,7 +1,9 @@
 
+import 'dart:math';
 import 'package:eletec/view/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:simple_animations/simple_animations.dart';
 
 import 'theme/theme.dart';
 import 'widgets/widgets.dart';
@@ -43,12 +45,18 @@ class _LoginViewState extends State<LoginView>{
     final cardTopPosition = deviceSize.height / 2 - cardInitialHeight / 2;
     final headerHeight = cardTopPosition - headerMargin;
 
+    final tween = MultiTrackTween([
+      Track("offset").add(Duration(milliseconds: 400), Tween<Offset>(begin: Offset(0, -0.25), end: Offset(0, 0)), curve: Curves.easeOut),
+      Track("opacity").add(Duration(milliseconds: 400), Tween(begin: 0.0, end: 1.0), curve: Curves.easeOut),
+      Track("angle").add(Duration(milliseconds: 400), Tween(begin: pi / 2.0, end: 0), curve: Curves.easeOut)
+    ]);
+
     return Scaffold(
       body: Stack(
         children: <Widget>[
           AnimatedBackground(
             duration: Duration(seconds: 10),
-            colors: [
+            colors: [ 
               widget.theme.pageColorLight,
               widget.theme.pageColorDark
             ],
@@ -60,31 +68,38 @@ class _LoginViewState extends State<LoginView>{
           SingleChildScrollView(
             child: Theme(
               data: _theme,
-              child: Stack( 
-                alignment:Alignment.center,
-                children: <Widget>[  
-                  Positioned(
-                    child: AuthCard()
-                  ),
-                  Positioned(
-                    top: cardTopPosition - headerHeight - headerMargin,
-                    child: SafeArea(
-                      child: _buildHeader(headerHeight, widget.theme)
-                    )
-                  )
-                ]
+              child: ControlledAnimation( 
+                playback: Playback.MIRROR,
+                duration: tween.duration,
+                tween: tween,
+                builder: (context, animation) {
+                  return Stack( 
+                    alignment:Alignment.center,
+                    children: <Widget>[  
+                      Positioned(
+                        child: AuthCard(
+                          angle: animation['angle'],
+                        )
+                      ),
+                      Positioned( 
+                        top: cardTopPosition - headerHeight - headerMargin,
+                        child: SafeArea(
+                          child: Header(
+                            height: headerHeight,
+                            loginTheme: widget.theme,
+                            offset: animation['offset'],
+                            opacity: animation['opacity'],
+                          )
+                        )
+                      )
+                    ]
+                  );
+                }
               )
             )
           )
         ]
       )
-    );
-  }
-
-  Widget _buildHeader(double height, LoginTheme loginTheme) {
-    return Header(
-      height: height,
-      loginTheme: loginTheme,
     );
   }
   
