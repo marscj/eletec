@@ -14,8 +14,8 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return LoginView(
       theme: LoginTheme(
-        pageColorLight: Theme.of(context).primaryColor,
-        pageColorDark: Theme.of(context).primaryColorDark,
+        pageColorLight: Colors.blue[400],
+        pageColorDark: Colors.indigo,
         buttonTheme: LoginButtonTheme(
           splashColor: Colors.purple,
           backgroundColor: Colors.pinkAccent,
@@ -50,15 +50,16 @@ class _LoginViewState extends State<LoginView>{
   Widget build(BuildContext context) {
     final _theme = _mergeTheme(theme: Theme.of(context), loginTheme: widget.theme);
     final deviceSize = MediaQuery.of(context).size;
-    const headerMargin = 15;
-    const cardInitialHeight = 0;
-    final cardTopPosition = deviceSize.height / 2 - cardInitialHeight / 2;
-    final headerHeight = 220.0;
+
+    final double headerMargin = 15.0;
+    final double cardInitialHeight = 400.0;
+    final double cardTopPosition = deviceSize.height / 2 - cardInitialHeight / 2;
+    final double headerHeight = cardTopPosition - headerMargin;
  
     final tween = MultiTrackTween([
-      Track("offset").add(Duration(milliseconds: 800), Tween<Offset>(begin: Offset(0, 1.0), end: Offset(0, 0)), curve: Curves.easeOut),
-      Track("opacity").add(Duration(milliseconds: 800), Tween(begin: 0.0, end: 1.0), curve: Curves.easeOut),
-      Track("angle").add(Duration(milliseconds: 400), Tween(begin: pi / 2.0, end: 0), curve: Curves.easeOut)
+      Track("offset").add(Duration(milliseconds: 500), Tween<Offset>(begin: Offset(0, -.50), end: Offset(0, .2)), curve: Curves.easeOut),
+      Track("opacity").add(Duration(milliseconds: 500), Tween(begin: 0.0, end: 1.0), curve: Curves.easeOut),
+      Track("angle").add(Duration(milliseconds: 500), Tween(begin: pi / 2.0, end: 0), curve: Curves.easeOut)
     ]);
 
     return Scaffold(
@@ -66,8 +67,8 @@ class _LoginViewState extends State<LoginView>{
         children: <Widget>[
           GradientBox(
             colors: [
-              widget.theme.pageColorLight ?? Theme.of(context).primaryColor,
-              widget.theme.pageColorDark ?? Theme.of(context).primaryColorDark,
+              widget.theme.pageColorLight,
+              widget.theme.pageColorDark
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -89,9 +90,9 @@ class _LoginViewState extends State<LoginView>{
           // ),
           SingleChildScrollView(
             child: Theme(
-              data: _theme,
+              data: _theme, 
               child: ControlledAnimation( 
-                playback: Playback.MIRROR,
+                playback: Playback.LOOP,
                 duration: tween.duration,
                 tween: tween,
                 builder: (context, animation) {
@@ -99,6 +100,7 @@ class _LoginViewState extends State<LoginView>{
                     alignment:Alignment.center,
                     children: <Widget>[
                       Positioned(
+                        top: 0,
                         child: Header(
                           height: headerHeight,
                           loginTheme: widget.theme,
@@ -108,12 +110,10 @@ class _LoginViewState extends State<LoginView>{
                       ),
 
                       Positioned(
-                        child: SafeArea(
-                          child: AuthCard(
-                            alignment: Alignment.topCenter,
-                            padding: EdgeInsets.only(top: 100),
-                            angle: animation['angle'],
-                          )
+                        child: AuthCard(
+                          alignment: Alignment.topCenter,
+                          padding: EdgeInsets.only(top: cardTopPosition),
+                          angle: animation['angle'],
                         )
                       ),
                     ]

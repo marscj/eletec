@@ -113,7 +113,7 @@ class LoginCard extends StatelessWidget {
 
     return FittedBox(
       child: Card(
-        elevation: 0,
+        elevation: 1.0,
         child: form,
       ),
     );

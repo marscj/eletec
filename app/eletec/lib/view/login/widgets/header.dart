@@ -27,7 +27,6 @@ class Header extends StatelessWidget {
   
     return Container(
       height: height,
-      alignment: Alignment.topCenter,
       child: FractionalTranslation(
         translation: offset,
         child: Opacity(
