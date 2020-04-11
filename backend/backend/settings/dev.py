@@ -2,8 +2,9 @@ from .settings import *
 
 DEBUG = True
 
-SENDSMS_BACKEND = 'core.sms.backends.console.SmsBackend'
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+SENDSMS_BACKEND = 'core.sms.backends.smscountry.SmsBackend'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # channel for websocket 
 CHANNEL_LAYERS = {

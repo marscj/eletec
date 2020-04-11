@@ -153,7 +153,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 # SMS
-SENDSMS_BACKEND = 'core.sms.backends.twilio.SmsBackend'
+SENDSMS_BACKEND = 'core.sms.backends.console.SmsBackend'
 
 #Twilio
 SENDSMS_URL = 'https://api.twilio.com/2010-04-01/Accounts/ACda91c280b2cd6511484f79ec3f3e03cd/Messages.json'
@@ -165,7 +165,6 @@ SENDSMS_FROM_NUMBER = '+15804564076'
 SENDSMS_URL = 'http://www.smscountry.com/smscwebservice_bulk.aspx'
 SENDSMS_USER = 'ibdxb'
 SENDSMS_PASSWORD = '52910544'
-
 
 # EMAIL
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

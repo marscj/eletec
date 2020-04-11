@@ -13,19 +13,20 @@ class SmsBackend(BaseSmsBackend):
             
     def send_messages(self, messages):
         for message in messages:
-            for to in message.to:
-                try:
-                    params = {
-                        'user': USER,
-                        'passwd': PASSWORD,
-                        'mobilenumber' : to,
-                        'message': message.body
-                        'mtype':'N',
-                        'DR':'Y'
-                    }
-                    msg = requests.get(URL, params)
+            try:
+                params = {
+                    'user': USER,
+                    'passwd': PASSWORD,
+                    'mobilenumber' : str(message.to),
+                    'message': message.body,
+                    'mtype':'N',
+                    'DR':'Y'
+                }
+                print(params,'----')
+                msg = requests.get(URL, params)
 
-                    msg.raise_for_status()
-                except requests.exceptions.HTTPError as e:
-                    if not self.fail_silently:
-                        raise 
+                msg.raise_for_status()
+            except requests.exceptions.HTTPError as e:
+                if not self.fail_silently:
+                    raise 
+                
