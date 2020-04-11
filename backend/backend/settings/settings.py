@@ -1,4 +1,7 @@
 import os
+from dotenv import load_dotenv
+ 
+load_dotenv()
 # from .logger import LOGGING
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -163,8 +166,8 @@ SENDSMS_FROM_NUMBER = '+15804564076'
 
 #SMSCOUNTRY
 SENDSMS_URL = 'http://www.smscountry.com/smscwebservice_bulk.aspx'
-SENDSMS_USER = 'ibdxb'
-SENDSMS_PASSWORD = '52910544'
+SENDSMS_USER = os.environ.get('SENDSMS_USER', None)
+SENDSMS_PASSWORD = os.environ.get('SENDSMS_PASSWORD', None)
 
 # EMAIL
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
