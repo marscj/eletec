@@ -30,7 +30,8 @@ DATABASES = {
     }
 }
 
-SENDSMS_BACKEND = 'core.sms.backends.twilio.SmsBackend'
+# SENDSMS_BACKEND = 'core.sms.backends.twilio.SmsBackend'
+SENDSMS_BACKEND = 'core.sms.backends.smscountry.SmsBackend'
 
 # Twilio
 SENDSMS_URL = "https://api.twilio.com/2010-04-01/Accounts/ACda91c280b2cd6511484f79ec3f3e03cd/Messages.json"
