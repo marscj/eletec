@@ -5,9 +5,9 @@ from django.conf import settings
 
 from .base import BaseSmsBackend
  
-TWILIO_URL = getattr(settings, "SENDSMS_URL", "")
-TWILIO_ACCOUNT_SID = getattr(settings, "SENDSMS_ACCOUNT_SID", "")
-TWILIO_AUTH_TOKEN = getattr(settings, "SENDSMS_AUTH_TOKEN", "")
+URL = getattr(settings, "SENDSMS_URL", "")
+USER = getattr(settings, "SENDSMS_USER", "")
+PASSWORD = getattr(settings, "SENDSMS_PASSWORD", "")
 
 class SmsBackend(BaseSmsBackend):
             
@@ -15,11 +15,15 @@ class SmsBackend(BaseSmsBackend):
         for message in messages:
             for to in message.to:
                 try:
-                    msg = requests.post(TWILIO_URL, data={
-                        'Body': message.body,
-                        'From': message.from_phone,
-                        'To': to
-                    }, auth=(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN))
+                    params = {
+                        'user': USER,
+                        'passwd': PASSWORD,
+                        'mobilenumber' : to,
+                        'message': message.body
+                        'mtype':'N',
+                        'DR':'Y'
+                    }
+                    msg = requests.get(URL, params)
 
                     msg.raise_for_status()
                 except requests.exceptions.HTTPError as e:
