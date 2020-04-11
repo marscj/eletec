@@ -59,7 +59,7 @@ class _LoginViewState extends State<LoginView>{
     final tween = MultiTrackTween([
       Track("offset").add(Duration(milliseconds: 500), Tween<Offset>(begin: Offset(0, -.50), end: Offset(0, .2)), curve: Curves.easeOut),
       Track("opacity").add(Duration(milliseconds: 500), Tween(begin: 0.0, end: 1.0), curve: Curves.easeOut),
-      Track("angle").add(Duration(milliseconds: 500), Tween(begin: pi / 2.0, end: 0), curve: Curves.easeOut)
+      Track("angle").add(Duration(milliseconds: 500), Tween(begin: pi / 2.0, end: 0), curve: Curves.easeOut),
     ]);
 
     return Scaffold(
@@ -73,8 +73,8 @@ class _LoginViewState extends State<LoginView>{
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             child: Align(
-              alignment: Alignment.bottomLeft,
-              child: Image.asset('assets/images/background.png'),
+              alignment: Alignment.bottomCenter,
+              child: Image.asset('assets/images/background.png', colorBlendMode: BlendMode.srcIn, color: Colors.black26)
             )
           ),
           // AnimatedBackground(
@@ -85,14 +85,14 @@ class _LoginViewState extends State<LoginView>{
           //   ],
           //   child: Align(
           //     alignment: Alignment.bottomLeft,
-          //     child: Image.asset('assets/images/background.png'),
+          //     child: Image.asset('assets/images/background.png', colorBlendMode: BlendMode.srcIn, color: Colors.black26),
           //   )
           // ),
           SingleChildScrollView(
             child: Theme(
               data: _theme, 
               child: ControlledAnimation( 
-                playback: Playback.LOOP,
+                playback: Playback.PLAY_FORWARD,
                 duration: tween.duration,
                 tween: tween,
                 builder: (context, animation) {
