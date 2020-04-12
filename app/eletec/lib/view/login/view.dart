@@ -49,12 +49,6 @@ class _LoginViewState extends State<LoginView>{
   @override
   Widget build(BuildContext context) {
     final _theme = _mergeTheme(theme: Theme.of(context), loginTheme: widget.theme);
-    final deviceSize = MediaQuery.of(context).size;
-
-    final double headerMargin = 15.0;
-    final double cardInitialHeight = 400.0;
-    final double cardTopPosition = deviceSize.height / 2 - cardInitialHeight / 2;
-    final double headerHeight = cardTopPosition - headerMargin;
  
     final tween = MultiTrackTween([
       Track("offset").add(Duration(milliseconds: 500), Tween<Offset>(begin: Offset(0, -.50), end: Offset(0, .2)), curve: Curves.easeOut),
@@ -77,46 +71,27 @@ class _LoginViewState extends State<LoginView>{
               child: Image.asset('assets/images/background.png', colorBlendMode: BlendMode.srcIn, color: Colors.black26)
             )
           ),
-          // AnimatedBackground(
-          //   duration: Duration(seconds: 5),
-          //   colors: [ 
-          //     widget.theme.pageColorLight,
-          //     widget.theme.pageColorDark
-          //   ],
-          //   child: Align(
-          //     alignment: Alignment.bottomLeft,
-          //     child: Image.asset('assets/images/background.png', colorBlendMode: BlendMode.srcIn, color: Colors.black26),
-          //   )
-          // ),
           SingleChildScrollView(
             child: Theme(
               data: _theme, 
               child: ControlledAnimation( 
-                playback: Playback.PLAY_FORWARD,
+                playback: Playback.MIRROR,
                 duration: tween.duration,
                 tween: tween,
                 builder: (context, animation) {
-                  return Stack( 
-                    alignment:Alignment.center,
+                  return Column(
                     children: <Widget>[
-                      Positioned(
-                        top: 0,
-                        child: Header(
-                          height: headerHeight,
-                          loginTheme: widget.theme,
-                          offset: animation['offset'],
-                          opacity: animation['opacity'],
-                        ) 
+                      Header(
+                        loginTheme: widget.theme,
+                        offset: animation['offset'],
+                        opacity: animation['opacity'],
                       ),
-
-                      Positioned(
-                        child: AuthCard(
-                          alignment: Alignment.topCenter,
-                          padding: EdgeInsets.only(top: cardTopPosition),
-                          angle: animation['angle'],
-                        )
-                      ),
-                    ]
+                      SizedBox(height: 20),
+                      AuthCard(
+                        alignment: Alignment.topCenter,
+                        angle: animation['angle'],
+                      )
+                    ],
                   );
                 }
               )

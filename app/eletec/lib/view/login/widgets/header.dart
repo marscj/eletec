@@ -1,12 +1,10 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 import '../theme/theme.dart';
 
 class Header extends StatelessWidget {
   Header({
-    this.height = 250.0,
+    this.height = 180.0,
     this.offset, 
     this.opacity,
     @required this.loginTheme,
