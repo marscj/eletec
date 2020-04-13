@@ -46,17 +46,31 @@ class LoginView extends StatefulWidget {
 
 class _LoginViewState extends State<LoginView>{
 
+  Playback play = Playback.PLAY_FORWARD;
+
   @override
   Widget build(BuildContext context) {
     final _theme = _mergeTheme(theme: Theme.of(context), loginTheme: widget.theme);
  
     final tween = MultiTrackTween([
-      Track("offset").add(Duration(milliseconds: 500), Tween<Offset>(begin: Offset(0, -.50), end: Offset(0, .2)), curve: Curves.easeOut),
-      Track("opacity").add(Duration(milliseconds: 500), Tween(begin: 0.0, end: 1.0), curve: Curves.easeOut),
-      Track("angle").add(Duration(milliseconds: 500), Tween(begin: pi / 2.0, end: 0), curve: Curves.easeOut),
+      Track("offset").add(Duration(milliseconds: 400), Tween<Offset>(begin: Offset(0, -.50), end: Offset(0, .2)), curve: Curves.easeOut),
+      Track("opacity").add(Duration(milliseconds: 400), Tween(begin: 0.0, end: 1.0), curve: Curves.easeOut),
+      Track("angle").add(Duration(milliseconds: 400), Tween(begin: pi / 2.0, end: 0), curve: Curves.easeOut),
     ]);
 
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            if (play == Playback.PLAY_FORWARD) {
+              play = Playback.PLAY_REVERSE;
+            } else {
+              play = Playback.PLAY_FORWARD;
+            }
+          });
+        },
+        child: Text('action'),
+      ),
       body: Stack(
         children: <Widget>[
           GradientBox(
@@ -75,7 +89,7 @@ class _LoginViewState extends State<LoginView>{
             child: Theme(
               data: _theme, 
               child: ControlledAnimation( 
-                playback: Playback.MIRROR,
+                playback: play,
                 duration: tween.duration,
                 tween: tween,
                 builder: (context, animation) {

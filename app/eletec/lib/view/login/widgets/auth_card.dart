@@ -3,6 +3,9 @@ import 'dart:math';
 
 import 'package:eletec/plugs/flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:simple_animations/simple_animations/controlled_animation.dart';
+import 'package:simple_animations/simple_animations/multi_track_tween.dart';
 import 'package:transformer_page_view/transformer_page_view.dart';
 
 class AuthCard extends StatelessWidget{
@@ -65,13 +68,34 @@ class LoginCard extends StatelessWidget {
     final deviceSize = MediaQuery.of(context).size;
     final cardWidth = min(deviceSize.width * 0.75, 360.0);
     const cardPadding = 16.0; 
+
+    final tween = MultiTrackTween([
+      Track("scale").add(Duration(milliseconds: 400), Tween(begin: 0, end: 1.0), curve: Interval(.4, 1.0, curve: Curves.easeOutBack)),
+    ]);
     
-    final Widget submitBut = Transform.scale(
-      scale: scale,
-      child: RaisedButton(
-        onPressed: () {},
-        child: Text('data'),
-      ),
+    final Widget submitBut = ControlledAnimation(
+      playback: Playback.PLAY_FORWARD,
+      duration: tween.duration, 
+      delay: Duration(milliseconds: 500),
+      tween: tween,
+      builder: (context, animation) {
+        return Container(
+          child: Transform.scale(
+            scale: animation['scale'],
+            child: RaisedButton(
+              child: Text('Send'),
+              onPressed: (){},
+            )
+          ),
+        );
+        // return Container(
+        //   width: ss,
+        //   child: RaisedButton(
+        //     onPressed: () {},
+        //     child: Text('data'),
+        //   ),
+        // );
+      },
     );
 
     final Widget form = FormBuilder(
@@ -86,7 +110,10 @@ class LoginCard extends StatelessWidget {
           children: <Widget>[
             FormBuilderTextField(
               attribute: 'phone_number',
-              decoration: InputDecoration(labelText: "Phone"),
+              decoration: InputDecoration(
+                labelText: "Phone",
+                prefixIcon: Icon(FontAwesomeIcons.mobileAlt, size: 18,)
+              ),
               textInputAction: TextInputAction.next,
               validators: [
                 FormBuilderValidators.required(),
@@ -96,7 +123,10 @@ class LoginCard extends StatelessWidget {
             SizedBox(height: 20),
             FormBuilderTextField(
               attribute: 'otp',
-              decoration: InputDecoration(labelText: "Verify"),
+              decoration: InputDecoration(
+                labelText: "Verify",
+                prefixIcon: Icon(FontAwesomeIcons.lock, size: 18,)
+              ),
               textInputAction: TextInputAction.done,
               maxLength: 4,
               validators: [
