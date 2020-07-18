@@ -15,45 +15,57 @@
     },
     {
       "name": "android_intent",
-      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/android_intent-0.3.6+1",
+      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/android_intent-0.3.7+2",
       "packageUri": "lib/",
       "languageVersion": "2.3"
     },
     {
       "name": "animator",
-      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/animator-1.0.0+5",
+      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/animator-2.0.1",
       "packageUri": "lib/",
       "languageVersion": "2.1"
     },
     {
       "name": "archive",
-      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/archive-2.0.11",
+      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/archive-2.0.13",
       "packageUri": "lib/",
       "languageVersion": "2.0"
     },
     {
       "name": "args",
-      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/args-1.5.2",
+      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/args-1.6.0",
       "packageUri": "lib/",
-      "languageVersion": "2.0"
+      "languageVersion": "2.3"
+    },
+    {
+      "name": "asn1lib",
+      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/asn1lib-0.6.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.2"
     },
     {
       "name": "async",
-      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/async-2.4.0",
+      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/async-2.4.1",
       "packageUri": "lib/",
-      "languageVersion": "2.0"
+      "languageVersion": "2.2"
+    },
+    {
+      "name": "basic_utils",
+      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/basic_utils-2.5.6",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
     },
     {
       "name": "bloc",
-      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/bloc-3.0.0",
+      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/bloc-5.0.1",
       "packageUri": "lib/",
       "languageVersion": "2.6"
     },
     {
       "name": "boolean_selector",
-      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/boolean_selector-1.0.5",
+      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/boolean_selector-2.0.0",
       "packageUri": "lib/",
-      "languageVersion": "2.0"
+      "languageVersion": "2.4"
     },
     {
       "name": "build",
@@ -105,9 +117,9 @@
     },
     {
       "name": "charcode",
-      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/charcode-1.1.2",
+      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/charcode-1.1.3",
       "packageUri": "lib/",
-      "languageVersion": "1.0"
+      "languageVersion": "2.0"
     },
     {
       "name": "checked_yaml",
@@ -123,7 +135,7 @@
     },
     {
       "name": "collection",
-      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/collection-1.14.11",
+      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/collection-1.14.12",
       "packageUri": "lib/",
       "languageVersion": "2.0"
     },
@@ -135,7 +147,7 @@
     },
     {
       "name": "crypto",
-      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/crypto-2.1.3",
+      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/crypto-2.1.4",
       "packageUri": "lib/",
       "languageVersion": "2.1"
     },
@@ -144,6 +156,12 @@
       "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/csslib-0.16.1",
       "packageUri": "lib/",
       "languageVersion": "2.1"
+    },
+    {
+      "name": "cubit",
+      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/cubit-0.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.7"
     },
     {
       "name": "dart_style",
@@ -159,21 +177,27 @@
     },
     {
       "name": "equatable",
-      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/equatable-1.1.1",
+      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/equatable-1.2.2",
       "packageUri": "lib/",
       "languageVersion": "2.0"
     },
     {
       "name": "extended_image",
-      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/extended_image-0.7.2",
+      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/extended_image-0.9.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.6"
+    },
+    {
+      "name": "extended_image_library",
+      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/extended_image_library-0.2.3",
       "packageUri": "lib/",
       "languageVersion": "2.1"
     },
     {
-      "name": "extended_image_library",
-      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/extended_image_library-0.2.2",
+      "name": "file",
+      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/file-5.2.1",
       "packageUri": "lib/",
-      "languageVersion": "2.1"
+      "languageVersion": "2.2"
     },
     {
       "name": "fixnum",
@@ -183,7 +207,7 @@
     },
     {
       "name": "fluro",
-      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/fluro-1.6.2",
+      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/fluro-1.6.3",
       "packageUri": "lib/",
       "languageVersion": "2.6"
     },
@@ -195,9 +219,15 @@
     },
     {
       "name": "flutter_bloc",
-      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_bloc-3.2.0",
+      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_bloc-5.0.1",
       "packageUri": "lib/",
       "languageVersion": "2.6"
+    },
+    {
+      "name": "flutter_cubit",
+      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_cubit-0.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.7"
     },
     {
       "name": "flutter_localizations",
@@ -231,7 +261,7 @@
     },
     {
       "name": "geolocator",
-      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/geolocator-5.3.1",
+      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/geolocator-5.3.2+2",
       "packageUri": "lib/",
       "languageVersion": "2.1"
     },
@@ -249,15 +279,21 @@
     },
     {
       "name": "google_map_location_picker",
-      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/google_map_location_picker-3.2.1+2",
+      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/google_map_location_picker-3.3.3",
       "packageUri": "lib/",
       "languageVersion": "2.2"
     },
     {
       "name": "google_maps_flutter",
-      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/google_maps_flutter-0.5.25+3",
+      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/google_maps_flutter-0.5.28+1",
       "packageUri": "lib/",
-      "languageVersion": "2.0"
+      "languageVersion": "2.1"
+    },
+    {
+      "name": "google_maps_flutter_platform_interface",
+      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/google_maps_flutter_platform_interface-1.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
     },
     {
       "name": "graphs",
@@ -273,7 +309,7 @@
     },
     {
       "name": "http",
-      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/http-0.12.0+4",
+      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/http-0.12.2",
       "packageUri": "lib/",
       "languageVersion": "2.4"
     },
@@ -297,15 +333,15 @@
     },
     {
       "name": "image",
-      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/image-2.1.4",
+      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/image-2.1.12",
       "packageUri": "lib/",
       "languageVersion": "2.0"
     },
     {
       "name": "intl",
-      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/intl-0.16.0",
+      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/intl-0.16.1",
       "packageUri": "lib/",
-      "languageVersion": "2.0"
+      "languageVersion": "2.5"
     },
     {
       "name": "intl_translation",
@@ -339,7 +375,7 @@
     },
     {
       "name": "location_permissions",
-      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/location_permissions-2.0.5",
+      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/location_permissions-3.0.0+1",
       "packageUri": "lib/",
       "languageVersion": "2.1"
     },
@@ -416,6 +452,12 @@
       "languageVersion": "2.0"
     },
     {
+      "name": "path_provider_linux",
+      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_linux-0.0.1+2",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
+    },
+    {
       "name": "path_provider_macos",
       "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_macos-0.0.4",
       "packageUri": "lib/",
@@ -452,16 +494,28 @@
       "languageVersion": "2.1"
     },
     {
+      "name": "pointycastle",
+      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/pointycastle-1.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "0.8"
+    },
+    {
       "name": "pool",
       "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/pool-1.4.0",
       "packageUri": "lib/",
       "languageVersion": "2.0"
     },
     {
-      "name": "provider",
-      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/provider-4.0.4",
+      "name": "process",
+      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/process-3.0.13",
       "packageUri": "lib/",
-      "languageVersion": "2.2"
+      "languageVersion": "2.0"
+    },
+    {
+      "name": "provider",
+      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/provider-4.3.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.7"
     },
     {
       "name": "pub_semver",
@@ -477,13 +531,19 @@
     },
     {
       "name": "quiver",
-      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/quiver-2.0.5",
+      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/quiver-2.1.3",
       "packageUri": "lib/",
       "languageVersion": "2.0"
     },
     {
+      "name": "random_string",
+      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/random_string-2.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
+    },
+    {
       "name": "retrofit",
-      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/retrofit-1.3.1+1",
+      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/retrofit-1.3.4",
       "packageUri": "lib/",
       "languageVersion": "2.6"
     },
@@ -495,15 +555,21 @@
     },
     {
       "name": "rxdart",
-      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/rxdart-0.23.1",
+      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/rxdart-0.24.1",
       "packageUri": "lib/",
       "languageVersion": "2.6"
     },
     {
       "name": "shared_preferences",
-      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences-0.5.6+3",
+      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences-0.5.8",
       "packageUri": "lib/",
-      "languageVersion": "2.0"
+      "languageVersion": "2.1"
+    },
+    {
+      "name": "shared_preferences_linux",
+      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_linux-0.0.2+1",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
     },
     {
       "name": "shared_preferences_macos",
@@ -549,9 +615,9 @@
     },
     {
       "name": "source_span",
-      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/source_span-1.5.5",
+      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/source_span-1.7.0",
       "packageUri": "lib/",
-      "languageVersion": "1.8"
+      "languageVersion": "2.6"
     },
     {
       "name": "stack_trace",
@@ -561,7 +627,7 @@
     },
     {
       "name": "states_rebuilder",
-      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/states_rebuilder-1.14.3",
+      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/states_rebuilder-2.3.0",
       "packageUri": "lib/",
       "languageVersion": "2.5"
     },
@@ -591,9 +657,9 @@
     },
     {
       "name": "test_api",
-      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/test_api-0.2.11",
+      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/test_api-0.2.15",
       "packageUri": "lib/",
-      "languageVersion": "2.2"
+      "languageVersion": "2.4"
     },
     {
       "name": "timing",
@@ -621,7 +687,7 @@
     },
     {
       "name": "validators",
-      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/validators-2.0.0+1",
+      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/validators-2.0.1",
       "packageUri": "lib/",
       "languageVersion": "2.0"
     },
@@ -630,6 +696,12 @@
       "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/vector_math-2.0.8",
       "packageUri": "lib/",
       "languageVersion": "2.0"
+    },
+    {
+      "name": "vin_decoder",
+      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/vin_decoder-0.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
     },
     {
       "name": "watcher",
@@ -644,10 +716,16 @@
       "languageVersion": "2.0"
     },
     {
-      "name": "xml",
-      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/xml-3.5.0",
+      "name": "xdg_directories",
+      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/xdg_directories-0.1.0",
       "packageUri": "lib/",
       "languageVersion": "2.3"
+    },
+    {
+      "name": "xml",
+      "rootUri": "file:///Users/mars/develop/flutter/.pub-cache/hosted/pub.dartlang.org/xml-3.6.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.6"
     },
     {
       "name": "yaml",
@@ -662,7 +740,7 @@
       "languageVersion": "2.6"
     }
   ],
-  "generated": "2020-04-05T17:18:38.454744Z",
+  "generated": "2020-07-18T08:57:32.986771Z",
   "generator": "pub",
-  "generatorVersion": "2.7.2"
+  "generatorVersion": "2.8.4"
 }

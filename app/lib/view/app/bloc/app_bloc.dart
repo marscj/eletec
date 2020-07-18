@@ -17,10 +17,10 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
   OverlayEntry overlayEntry;
 
-  AppBloc(this.context);
+  AppBloc(this.context) : super(AppState.initial());
   
   @override
-  AppState get initialState => AppState.initial();
+  // AppState get initialState => AppState.initial();
 
   @override
   Stream<AppState> mapEventToState(

@@ -15,10 +15,7 @@ class AdBloc extends Bloc<AdEvent, AdState> {
   
   StreamSubscription<int> timerController;
 
-  AdBloc(this.context);
-
-  @override
-  AdState get initialState => AdState(5);
+  AdBloc(this.context) : super(AdState(5));
 
   @override
   Stream<AdState> mapEventToState(

@@ -12,9 +12,8 @@ class LoadingBloc extends Bloc<LoadingEvent, LoadingState> {
 
   GlobalKey<OverlayState> overlayKey = GlobalKey();
   OverlayEntry overlayEntry;
-  
-  @override
-  LoadingState get initialState => LoadingState.initial();
+
+  LoadingBloc() : super(LoadingState.initial());
 
   @override
   Stream<LoadingState> mapEventToState(

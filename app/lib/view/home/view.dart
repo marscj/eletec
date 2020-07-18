@@ -14,7 +14,7 @@ class HomeHookPage extends StatelessWidget {
         if (state.signedIn) {
           return HomePage();
         } else {
-          return LoginPage();
+          // return LoginPage();
         }
       },
     )
