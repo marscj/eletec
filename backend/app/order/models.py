@@ -30,6 +30,7 @@ class Order(models.Model):
         Electrical = 1
         Plumbing = 2
         Cleaning = 3 #'House Cleaning',
+        Duct = 4
 
     # 订单状态
     status = models.IntegerField(blank=True, null=True, choices=Status.choices, default=Status.New)
