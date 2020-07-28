@@ -29,9 +29,9 @@ class UserFilter(django_filters.FilterSet):
 
 class UserView(ModelViewSet):
     serializer_class = UserSerializer
-    permission_classes = [IsAuthenticated, CustomModelPermissions]
+    permission_classes = [IsAuthenticated]
     queryset = User.objects.all()
-
+ 
     filter_class = UserFilter
     search_fields = ['username', 'phone_number', 'email', 'first_name', 'last_name']
             

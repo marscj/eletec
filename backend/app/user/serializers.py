@@ -49,8 +49,16 @@ class GroupSerializer(serializers.ModelSerializer):
         return super().update(instance, validated_data)
 
 class UserSerializer(serializers.ModelSerializer):
-
+ 
     # groups = GroupSerializer(required=False, many=True)
+
+    is_active = serializers.BooleanField(required=False)
+
+    is_superuser = serializers.BooleanField(required=False)
+
+    first_name = serializers.CharField(required=False)
+
+    last_name = serializers.CharField(required=False)
 
     photo = VersatileImageFieldSerializer(required=False, allow_null=True, sizes='image_size')
 
@@ -82,6 +90,7 @@ class UserSerializer(serializers.ModelSerializer):
     #         return serializer.data
         
     def update(self, instance, validated_data):
+        print(validated_data , '+++++++++++')
         groups_id = validated_data.pop('groups_id', None)
         if groups_id is not None:
             for group in list(instance.groups.all()):
