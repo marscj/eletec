@@ -74,7 +74,7 @@ class ContractFilter(django_filters.FilterSet):
 
 class ContractView(ModelViewSet):
     serializer_class = ContractSerializer
-    permission_classes = [IsAuthenticated, CustomModelPermissions]
+    permission_classes = [IsAuthenticated]
     queryset = Contract.objects.all()
 
     filter_class = ContractFilter
@@ -94,7 +94,7 @@ class AddressFilter(django_filters.FilterSet):
 
 class AddressView(ModelViewSet):
     serializer_class = AddressSerializer
-    permission_classes = [IsAuthenticated, CustomModelPermissions]
+    permission_classes = [IsAuthenticated]
     queryset = Address.objects.all()
 
     filter_class = AddressFilter
@@ -114,7 +114,7 @@ class SkillFilter(django_filters.FilterSet):
 
 class SkillView(ModelViewSet):
     serializer_class = SkillSerializer
-    permission_classes = [IsAuthenticated, CustomModelPermissions]
+    permission_classes = [IsAuthenticated]
     queryset = Skill.objects.all()
 
     filter_class = SkillFilter
@@ -134,7 +134,7 @@ class WorkTimeFilter(django_filters.FilterSet):
 
 class WorkTimeView(ModelViewSet):
     serializer_class = WorkTimeSerializer
-    permission_classes = [IsAuthenticated, CustomModelPermissions]
+    permission_classes = [IsAuthenticated]
     queryset = WorkTime.objects.all()
 
     filter_class = WorkTimeFilter
@@ -145,7 +145,7 @@ class CommentFilter(django_filters.FilterSet):
 
 class CommentView(ModelViewSet):
     serializer_class = CommentSerializer
-    permission_classes = [IsAuthenticated, CustomModelPermissions]
+    permission_classes = [IsAuthenticated]
     queryset = Comment.objects.all()
 
     filter_class = CommentFilter

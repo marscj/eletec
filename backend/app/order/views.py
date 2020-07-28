@@ -26,8 +26,9 @@ class OrderFilter(django_filters.FilterSet):
     
 class OrderView(ModelViewSet):
     serializer_class = OrderSerializer
-    permission_classes = [IsAuthenticated, CustomModelPermissions]
+    # permission_classes = [IsAuthenticated, CustomModelPermissions]
+    permission_classes = [IsAuthenticated]
     queryset = Order.objects.all()
-
+    
     filter_class = OrderFilter
     search_fields = ['user__username', 'user__phone_number', 'user__first_name', 'user__last_name']
