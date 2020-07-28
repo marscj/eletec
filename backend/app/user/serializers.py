@@ -90,7 +90,6 @@ class UserSerializer(serializers.ModelSerializer):
     #         return serializer.data
         
     def update(self, instance, validated_data):
-        print(validated_data , '+++++++++++')
         groups_id = validated_data.pop('groups_id', None)
         if groups_id is not None:
             for group in list(instance.groups.all()):
