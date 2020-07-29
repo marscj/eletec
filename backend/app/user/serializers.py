@@ -52,13 +52,13 @@ class UserSerializer(serializers.ModelSerializer):
  
     # groups = GroupSerializer(required=False, many=True)
 
-    is_active = serializers.BooleanField(required=False)
+    # is_active = serializers.BooleanField(required=False)
 
-    is_superuser = serializers.BooleanField(required=False)
+    # is_superuser = serializers.BooleanField(required=False)
 
-    first_name = serializers.CharField(required=False)
+    # first_name = serializers.CharField(required=False)
 
-    last_name = serializers.CharField(required=False)
+    # last_name = serializers.CharField(required=False)
 
     photo = VersatileImageFieldSerializer(required=False, allow_null=True, sizes='image_size')
 
@@ -102,7 +102,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 class VisitSerializer(serializers.Serializer):
 
-    service = serializers.CharField(max_length=16)
+    service = serializers.IntegerField()
     
     count = serializers.IntegerField()
 
