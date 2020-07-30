@@ -13,7 +13,7 @@ from rest_framework.exceptions import NotFound, ValidationError
 import logging
 
 from .models import PhoneConfirmation, EmailAddress, EmailConfirmationHMAC
-from .serializers import PhoneSerializer, PhoneValidateSerializer, EmailAddressSerializer, EmailKeySerliazer
+from .serializers import PhoneSerializer, PhoneValidateSerializer, EmailAddressSerializer, EmailKeySerliazer, EmailCodeSerliazer
 
 logger = logging.getLogger(__name__)
 
@@ -70,7 +70,7 @@ class GenerateEmail(APIView):
         if serializer.is_valid():
             try:
                 EmailAddress.send_confirmation(request, serializer.validated_data.get('email'))
-                return Response(serializer.data)
+                return Response({'email': serializer.data['email']})
             except BaseException as e:
                 logger.error(e)
                 return Response('Failed to send', status=status.HTTP_400_BAD_REQUEST)
@@ -108,7 +108,7 @@ class GenerateCodeEmail(APIView):
         if serializer.is_valid():
             try:
                 EmailAddress.send_confirmation_code(request, serializer.validated_data.get('email'))
-                return Response(serializer.data)
+                return Response({'email': serializer.data['email']})
             except BaseException as e:
                 logger.error(e)
                 return Response('Failed to send', status=status.HTTP_400_BAD_REQUEST)
@@ -116,23 +116,12 @@ class GenerateCodeEmail(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ValidateCodeEmail(APIView):
-    serializer_class = EmailKeySerliazer
-    permission_classes = [IsAuthenticated]
+    serializer_class = EmailCodeSerliazer
 
     def post(self, request, format=None):
         serializer = self.serializer_class(data=request.data, context={'request': request})
 
         if serializer.is_valid():
-            self.object = confirmation = self.get_object(serializer.validated_data.get('key'))
-            confirmation.confirm(self.request)
-            return Response('Verification succeeded!')
-        
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'email': serializer.email})
 
-    def get_object(self, key):
-        emailconfirmation = EmailConfirmationHMAC.from_key(key)
-        
-        if not emailconfirmation:
-            raise ValidationError
-        
-        return emailconfirmation
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

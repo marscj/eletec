@@ -36,4 +36,21 @@ class EmailAddressSerializer(serializers.Serializer):
 
     verified = serializers.BooleanField(default=False)
 
-    code = serializers.CharField(required=False, allow_null=True, max_length=4)
+class EmailCodeSerliazer(serializers.Serializer):
+
+    email = serializers.EmailField()
+
+    code = serializers.CharField(max_length=4)
+
+    def validate(self, validate_data):
+        email = validate_data.get("email")
+        code = validate_data.get("code")
+
+        try:
+            email_address = EmailAddress.objects.get(email=email, code=code)
+            email_address.verified = true
+            email_address.save()
+        except EmailAddress.DoesNotExist:
+            raise serializers.ValidationError("Please enter the correct code")
+
+        return validate_data
