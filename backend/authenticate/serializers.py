@@ -33,3 +33,5 @@ class EmailKeySerliazer(serializers.Serializer):
 class EmailAddressSerializer(serializers.Serializer):
 
     email = serializers.EmailField()
+
+    verified = serializers.BooleanField(default=False)

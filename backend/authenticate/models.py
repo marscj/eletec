@@ -111,6 +111,8 @@ class EmailConfirmationHMAC:
             
             email_address.verified = True
             email_address.save()
+            email_address.user.email = email_address.email
+            email_address.user.save()
 
             return email_address
 
