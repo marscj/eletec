@@ -45,6 +45,8 @@ class EmailAddress(models.Model):
 
     code = models.CharField(blank=True, null=True, max_length=4)
 
+    create = models.DateTimeField(auto_created=True, auto_now=True)
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='email_address', on_delete=models.SET_NULL, blank=True, null=True)
 
     class Meta:
@@ -79,7 +81,7 @@ class PhoneConfirmation(models.Model):
 
     phone_number = PhoneNumberField(blank=True, null=True, unique=True)
 
-    created = models.DateTimeField(auto_now=True)
+    join = models.DateTimeField(auto_now=True)
 
     class Meta:
         db_table = 'phone_confirmation'
