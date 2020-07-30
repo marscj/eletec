@@ -61,7 +61,7 @@ class EmailAddress(models.Model):
         except EmailAddress.DoesNotExist:
             email_address = self.objects.create(email=email, user=request.user, code=code)
 
-        email_address.verified = false
+        email_address.verified = False
         email_address.code = code
         email_address.save()
 
