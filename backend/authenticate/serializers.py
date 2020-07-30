@@ -48,7 +48,7 @@ class EmailCodeSerliazer(serializers.Serializer):
 
         try:
             email_address = EmailAddress.objects.get(email=email, code=code)
-            email_address.verified = true
+            email_address.verified = True
             email_address.save()
         except EmailAddress.DoesNotExist:
             raise serializers.ValidationError("Please enter the correct code")
