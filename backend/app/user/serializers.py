@@ -78,7 +78,7 @@ class UserSerializer(serializers.ModelSerializer):
         return obj.name
 
     def get_email(self, obj):
-        email_address = obj.email_address.all().last()
+        email_address = obj.email_address.latest('join')
         if email_address:
             serializers = EmailAddressSerializer(email_address, context=self.context)
             return serializers.data

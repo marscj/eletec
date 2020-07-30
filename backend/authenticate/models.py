@@ -45,7 +45,7 @@ class EmailAddress(models.Model):
 
     code = models.CharField(blank=True, null=True, max_length=4)
 
-    create = models.DateTimeField(auto_created=True, auto_now=True)
+    join = models.DateTimeField(auto_now=True)
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='email_address', on_delete=models.SET_NULL, blank=True, null=True)
 
@@ -61,6 +61,7 @@ class EmailAddress(models.Model):
         except EmailAddress.DoesNotExist:
             email_address = self.objects.create(email=email, user=request.user, code=code)
 
+        email_address.verified = false
         email_address.code = code
         email_address.save()
 
