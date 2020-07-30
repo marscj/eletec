@@ -35,3 +35,5 @@ class EmailAddressSerializer(serializers.Serializer):
     email = serializers.EmailField()
 
     verified = serializers.BooleanField(default=False)
+
+    code = serializers.CharField(required=False, allow_null=True, max_length=4)

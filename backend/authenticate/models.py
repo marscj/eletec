@@ -43,10 +43,26 @@ class EmailAddress(models.Model):
                               
     verified = models.BooleanField(default=False)
 
+    code = models.CharField(blank=True, null=True, max_length=4)
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='email_address', on_delete=models.SET_NULL, blank=True, null=True)
 
     class Meta:
         db_table = 'email_address'
+
+    @classmethod
+    def send_confirmation_code(self, request, email):
+        code = get_random_string(length=4, allowed_chars='0987654321')
+
+        try:
+            email_address = self.objects.get(email=email)
+        except EmailAddress.DoesNotExist:
+            email_address = self.objects.create(email=email, user=request.user, code=code)
+
+        email_address.code = code
+        email_address.save()
+
+        AuthAdapter(request).send_confirmation_code_mail(email_address)
 
     @classmethod
     def send_confirmation(self, request, email):

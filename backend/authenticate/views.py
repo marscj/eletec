@@ -97,3 +97,42 @@ class ValidateEmail(APIView):
             raise ValidationError
         
         return emailconfirmation
+
+class GenerateCodeEmail(APIView):
+    serializer_class = EmailAddressSerializer
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, format=None):
+        serializer = self.serializer_class(data=request.data, context={'request': request})
+
+        if serializer.is_valid():
+            try:
+                EmailAddress.send_confirmation_code(request, serializer.validated_data.get('email'))
+                return Response(serializer.data)
+            except BaseException as e:
+                logger.error(e)
+                return Response('Failed to send', status=status.HTTP_400_BAD_REQUEST)
+            
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class ValidateCodeEmail(APIView):
+    serializer_class = EmailKeySerliazer
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, format=None):
+        serializer = self.serializer_class(data=request.data, context={'request': request})
+
+        if serializer.is_valid():
+            self.object = confirmation = self.get_object(serializer.validated_data.get('key'))
+            confirmation.confirm(self.request)
+            return Response('Verification succeeded!')
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def get_object(self, key):
+        emailconfirmation = EmailConfirmationHMAC.from_key(key)
+        
+        if not emailconfirmation:
+            raise ValidationError
+        
+        return emailconfirmation
