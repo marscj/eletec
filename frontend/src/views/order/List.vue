@@ -150,7 +150,7 @@
         </template>
       </s-table>
 
-      <a-modal v-model="modal" title="Create User" @ok="submit">
+      <a-modal v-model="modal" title="Create Order" @ok="submit">
         <validation-observer ref="observer">
           <validation-provider name="non_field_errors" v-slot="{ errors }">
             <span class="errorText">{{ errors[0] }}</span>
