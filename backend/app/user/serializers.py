@@ -9,6 +9,7 @@ from versatileimagefield.serializers import VersatileImageFieldSerializer
 from app.generic.models import Image
 from app.generic.serializers import ImageSerializer, ContentTypeField
 from authenticate.serializers import EmailAddressSerializer
+from authenticate.models  import EmailAddress
 
 from .models import User, Address, Skill, WorkTime, Contract, Comment, Application
 
@@ -78,10 +79,13 @@ class UserSerializer(serializers.ModelSerializer):
         return obj.name
 
     def get_email(self, obj):
-        email_address = obj.email_address.latest('join')
-        if email_address:
+        try:
+            email_address = obj.email_address.latest('join')
             serializers = EmailAddressSerializer(email_address, context=self.context)
-            return serializers.data
+            return serializers.data    
+        except EmailAddress.DoesNotExist:
+            return None
+        
 
     # def get_photo(self, obj):
     #     photo = obj.images.all().filter(tag='photo').last()

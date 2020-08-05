@@ -152,36 +152,36 @@ export const asyncRouterMap = [
       //     permission: ["group"]
       //   }
       // },
-      {
-        path: "/admin/faqs/",
-        name: "Faqs",
-        hideChildrenInMenu: true,
-        component: () => import("@/views/faq/Index"),
-        redirect: "/admin/faqs/english",
-        meta: {
-          title: "Faqs",
-          icon: "bars",
-          permission: ["faqs"]
-        },
-        children: [
-          {
-            path: "/admin/faqs/english",
-            name: "FaqEnglish",
-            component: () => import("@/views/faq/English.vue"),
-            meta: {
-              title: "English"
-            }
-          },
-          {
-            path: "/admin/faqs/arabic",
-            name: "FaqArabic",
-            component: () => import("@/views/faq/Arabic.vue"),
-            meta: {
-              title: "Arabic"
-            }
-          }
-        ]
-      },
+      // {
+      //   path: "/admin/faqs/",
+      //   name: "Faqs",
+      //   hideChildrenInMenu: true,
+      //   component: () => import("@/views/faq/Index"),
+      //   redirect: "/admin/faqs/english",
+      //   meta: {
+      //     title: "Faqs",
+      //     icon: "bars",
+      //     permission: ["faqs"]
+      //   },
+      //   children: [
+      //     {
+      //       path: "/admin/faqs/english",
+      //       name: "FaqEnglish",
+      //       component: () => import("@/views/faq/English.vue"),
+      //       meta: {
+      //         title: "English"
+      //       }
+      //     },
+      //     {
+      //       path: "/admin/faqs/arabic",
+      //       name: "FaqArabic",
+      //       component: () => import("@/views/faq/Arabic.vue"),
+      //       meta: {
+      //         title: "Arabic"
+      //       }
+      //     }
+      //   ]
+      // },
       {
         path: "/admin/app",
         name: "AppSetting",
@@ -192,16 +192,16 @@ export const asyncRouterMap = [
           permission: ["app"]
         }
       },
-      {
-        path: "/admin/applications",
-        name: "Applications",
-        component: () => import("@/views/user/Application.vue"),
-        meta: {
-          title: "Freelance Application",
-          icon: "form",
-          permission: ["app"]
-        }
-      }
+      // {
+      //   path: "/admin/applications",
+      //   name: "Applications",
+      //   component: () => import("@/views/user/Application.vue"),
+      //   meta: {
+      //     title: "Freelance Application",
+      //     icon: "form",
+      //     permission: ["app"]
+      //   }
+      // }
     ]
   },
   {
