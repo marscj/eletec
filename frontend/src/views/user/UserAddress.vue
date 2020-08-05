@@ -129,9 +129,18 @@
             </validation-provider>
           </a-form-item>
 
-          <a-form-item label="Default Address">
-            <a-checkbox v-model="form.defAddr" />
+          <a-form-item
+            label="Address"
+          >
+            <validation-provider vid="address" v-slot="{ errors }">
+              <a-input v-model="form.address"></a-input>
+              <span class="errorText">{{ errors[0] }}</span>
+            </validation-provider>
           </a-form-item>
+
+          <!-- <a-form-item label="Default Address">
+            <a-checkbox v-model="form.defAddr" />
+          </a-form-item> -->
         </a-form>
       </validation-observer>
     </a-modal>
