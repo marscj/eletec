@@ -122,11 +122,11 @@
           </ul>
         </template>
 
-        <template slot="job" slot-scope="data">
+        <template slot="jobs" slot-scope="data">
           <ul v-if="data" style="padding: 0px 20px;">
             <li v-for="job in data" :key="job">
               <ellipsis :length="30" tooltip>
-                {{ job }}
+                {{ job.jobID }}
               </ellipsis>
             </li>
           </ul>
@@ -290,9 +290,9 @@ export default {
         },
         {
           title: "JOB",
-          dataIndex: "job",
+          dataIndex: "jobs",
           width: "172px",
-          scopedSlots: { customRender: "job" },
+          scopedSlots: { customRender: "jobs" },
           align: "center"
         },
         {
