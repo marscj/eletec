@@ -112,7 +112,7 @@ class VisitSerializer(serializers.Serializer):
 
 class ContractSerializer(serializers.ModelSerializer):
 
-    user_id = serializers.IntegerField()
+    user_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(CurrentUserDefault()))
 
     contractID = serializers.SerializerMethodField()
 
@@ -137,7 +137,7 @@ class ContractSerializer(serializers.ModelSerializer):
 
 class AddressSerializer(serializers.ModelSerializer):
     
-    user_id = serializers.IntegerField()
+    user_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(CurrentUserDefault()))
 
     title = serializers.SerializerMethodField()
 
@@ -178,20 +178,6 @@ class WorkTimeSerializer(serializers.ModelSerializer):
         model = WorkTime
         fields = '__all__'
 
-class SubCommentSerializer(serializers.Serializer):
-    
-    content_type = ContentTypeField()
-
-    comment = serializers.CharField()
-
-    user = UserSerializer(read_only=True, many=False)
-
-    user_id = serializers.IntegerField()
-
-    class Meta:
-        model = Comment
-        fields = '__all__'
-
 class CommentSerializer(serializers.ModelSerializer):
 
     content_type = ContentTypeField()
@@ -200,7 +186,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
     user = UserSerializer(read_only=True, many=False)
 
-    user_id = serializers.IntegerField()
+    user_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(CurrentUserDefault()))
 
     child = serializers.SerializerMethodField()
 
@@ -217,7 +203,7 @@ class ApplicationSerializer(serializers.ModelSerializer):
 
     user = UserSerializer(read_only=True)
     
-    user_id = serializers.IntegerField()
+    user_id = serializers.IntegerField(default=serializers.CreateOnlyDefault(CurrentUserDefault()))
 
     class Meta:
         model = Application

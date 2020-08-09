@@ -13,6 +13,11 @@
           :avatar="item.user.photo ? item.user.photo.thumbnail : null"
         >
           <div slot="content">
+            <img
+                  v-if="item.image && item.image.medium"
+                  :src="item.image.medium"
+                  alt="image"
+                />
             <p>{{ item.comment }}</p>
             <a-rate v-model="item.rating" />
           </div>
