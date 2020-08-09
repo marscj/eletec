@@ -120,7 +120,7 @@
               </em>
             </li>
           </ul>
-        </template>
+        </template> 
 
         <template slot="jobs" slot-scope="data">
           <ul v-if="data" style="padding: 0px 20px;">
