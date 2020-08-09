@@ -7,11 +7,13 @@ class ResponseMiddleware(MiddlewareMixin):
 
     def process_request(self, request):
         if hasattr(request, 'data'):
-            print(request, request.data)
+            # print(request, request.data)
+            pass
 
     def process_response(self, request, response):
         if response and hasattr(response, 'data') and response.status_code != 200:
-            print(response.data)
+            # print(response.data)
+            pass
         return response
 
 class CustomJSONRenderer(JSONRenderer):

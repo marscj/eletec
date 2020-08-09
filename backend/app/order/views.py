@@ -32,3 +32,7 @@ class OrderView(ModelViewSet):
     
     filter_class = OrderFilter
     search_fields = ['user__username', 'user__phone_number', 'user__first_name', 'user__last_name']
+
+    def create(self, request):
+        print(request.data)
+        return super().create(request)
