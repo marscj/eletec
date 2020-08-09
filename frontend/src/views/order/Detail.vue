@@ -28,19 +28,19 @@
       </template>
 
       <template slot="tab_addition">
-        <a-badge :count="data.image_count" :offset="[12]">
+        <a-badge :count="data.images == null ? 0 : data.images.length" :offset="[12]">
           <span class="text-lg">Addition</span>
         </a-badge>
       </template>
 
       <template slot="tab_job">
-        <a-badge :count="data.job_count" :offset="[12]">
+        <a-badge :count="data.jobs == null ? 0 : data.jobs.length" :offset="[12]">
           <span class="text-lg">Job</span>
         </a-badge>
       </template>
 
       <template slot="tab_comment">
-        <a-badge :count="data.comment_count" :offset="[12]">
+        <a-badge :count="data.comments == null ? 0 : data.comments.length" :offset="[12]">
           <span class="text-lg">Comment</span>
         </a-badge>
       </template>

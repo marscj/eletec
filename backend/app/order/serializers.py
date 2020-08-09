@@ -1,4 +1,5 @@
 from rest_framework import  serializers
+from django.contrib.contenttypes.models import ContentType
 
 from versatileimagefield.serializers import VersatileImageFieldSerializer
 
@@ -8,6 +9,7 @@ from app.user.serializers import UserSerializer, ContractSerializer, CommentSeri
 from app.job.serializers import JobSerializer
 from app.job.models import Job
 from app.generic.serializers import ImageSerializer
+from app.generic.models import Image
 
 from middleware.user import CurrentUserDefault
 
@@ -23,23 +25,24 @@ class OrderSerializer(serializers.ModelSerializer):
     
     orderID = serializers.SerializerMethodField()
 
-    images = ImageSerializer(required=False, many=True) 
+    images = ImageSerializer(read_only=True, many=True) 
 
-    job = serializers.StringRelatedField(read_only=True, many=True)
+    # job = serializers.StringRelatedField(read_only=True, many=True)
+    jobs = JobSerializer(read_only=True, many=True) 
 
-    comments = CommentSerializer(required=False, many=True)
+    comments = CommentSerializer(read_only=True, many=True)
 
-    image_count = serializers.IntegerField(
-        source='images.count', 
-        read_only=True
-    )
+    # image_count = serializers.IntegerField(
+    #     source='images.count', 
+    #     read_only=True
+    # )
 
-    job_count = serializers.IntegerField(
-        source='job.count', 
-        read_only=True
-    )
+    # job_count = serializers.IntegerField(
+    #     source='job.count', 
+    #     read_only=True
+    # )
 
-    comment_count = serializers.SerializerMethodField()
+    # comment_count = serializers.SerializerMethodField()
 
     class Meta:
         model = Order
@@ -50,15 +53,3 @@ class OrderSerializer(serializers.ModelSerializer):
 
     def get_comment_count(self, obj):
         return Comment.objects.filter(object_id=obj.id, content_type__model='order').count()
-
-    def create(self, validated_data):
-        # images = validated_data.get('images')
-        # print(images)
-        print(validated_data)
-        order_data = validated_data.pop('images')
-        print(order)
-        order = Order.objects.create(**validated_data)
-        for image in images:
-            Images.objects.create(content_type='order', object_id=order.id, **image)
-
-        return order
