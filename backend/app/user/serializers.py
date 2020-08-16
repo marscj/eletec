@@ -13,6 +13,8 @@ from authenticate.models  import EmailAddress
 
 from .models import User, Address, Skill, WorkTime, Contract, Comment, Application
 
+from middleware.user import CurrentUserDefault
+
 class ContentTypeSerializer(serializers.ModelSerializer):
 
     class Meta:
