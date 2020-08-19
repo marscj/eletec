@@ -175,7 +175,7 @@ EMAIL_HOST = 'mail.eletec.ae'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 2525
 EMAIL_HOST_USER = 'mobileapp@eletec.ae'
-EMAIL_HOST_PASSWORD = 'eletec2015'
+EMAIL_HOST_PASSWORD = 'a@8981181'
 DEFAULT_FROM_EMAIL = 'eletec <mobileapp@eletec.ae>'
 
 # 图片处理
