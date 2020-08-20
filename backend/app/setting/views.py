@@ -13,7 +13,7 @@ class FaqFilter(django_filters.FilterSet):
     
 class FaqView(ModelViewSet):
     serializer_class = FaqSerializer
-    permission_classes = [IsAuthenticated, CustomModelPermissions]
+    permission_classes = [IsAuthenticated]
     queryset = Faq.objects.all()
 
     filter_class = FaqFilter

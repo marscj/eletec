@@ -51,7 +51,7 @@ class UserLogoutView(APIView):
 
 class UserGroupView(ModelViewSet):
     serializer_class = GroupSerializer
-    permission_classes = [IsAuthenticated, CustomModelPermissions]
+    permission_classes = [IsAuthenticated]
     queryset = Group.objects.all()
 
 class PermissionView(ModelViewSet):
@@ -164,7 +164,7 @@ class ApplicationFilter(django_filters.FilterSet):
             
 class ApplicationView(ModelViewSet):
     serializer_class = ApplicationSerializer
-    permission_classes = [IsAuthenticated, CustomModelPermissions]
+    permission_classes = [IsAuthenticated]
     queryset = Application.objects.all()
 
     filter_class = ApplicationFilter

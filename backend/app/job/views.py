@@ -23,7 +23,7 @@ class OrderFilter(django_filters.FilterSet):
            
 class JobView(ModelViewSet):
     serializer_class = JobSerializer
-    permission_classes = [IsAuthenticated, CustomModelPermissions]
+    permission_classes = [IsAuthenticated]
     queryset = Job.objects.all()
 
     filter_class = OrderFilter
