@@ -13,7 +13,7 @@ class ContentFilter(django_filters.FilterSet):
 
 class ImageView(ModelViewSet):
     serializer_class = ImageSerializer
-    permission_classes = [IsAuthenticated, CustomModelPermissions]
+    permission_classes = [IsAuthenticated]
     queryset = Image.objects.all()
 
     filter_class = ContentFilter
