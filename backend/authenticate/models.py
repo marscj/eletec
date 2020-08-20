@@ -20,23 +20,6 @@ class AuthUserManager(UserManager):
 
         return self._create_user(username, email, password, **extra_fields)
 
-class AuthUser(AbstractUser):
-
-    phone_number = PhoneNumberField(unique=True, blank=True, null=True)
-
-    objects = AuthUserManager()
-
-    class Meta:
-        abstract = True
-
-    def check_otp(self, phone_number, otp):
-        if otp == '1415':
-            return True
-            
-        confirmation = PhoneConfirmation.objects.get(phone_number=phone_number)
-        if confirmation:
-            return confirmation.otp == otp and not confirmation.expired()
-
 class EmailAddress(models.Model):
 
     email = models.EmailField(unique=True, max_length=128)
@@ -88,7 +71,7 @@ class PhoneConfirmation(models.Model):
         db_table = 'phone_confirmation'
 
     def expired(self):
-        expiration_date = self.created + datetime.timedelta(days=1)
+        expiration_date = self.join + datetime.timedelta(days=1)
         return expiration_date <= timezone.now()
 
     @classmethod
@@ -137,3 +120,22 @@ class EmailConfirmationHMAC:
 
     def send(self, request=None):
         AuthAdapter(request).send_confirmation_mail(self)
+
+class AuthUser(AbstractUser):
+
+    phone_number = PhoneNumberField(unique=True, blank=True, null=True)
+
+    objects = AuthUserManager()
+
+    class Meta:
+        abstract = True
+
+    def check_otp(self, phone_number, otp):
+        if otp == '1415':
+            return True
+            
+        confirmation = PhoneConfirmation.objects.get(phone_number=phone_number)
+
+        if confirmation:
+            print(confirmation.otp, confirmation.expired())
+            return confirmation.otp == otp and not confirmation.expired()
