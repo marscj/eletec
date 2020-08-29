@@ -23,7 +23,6 @@ class Order(models.Model):
         Complete = 2
         Pending = 3
         Cancel = 4
-        Delete = 5
 
     class Service(models.IntegerChoices):
         AC =  0 #'Air Conditioner',

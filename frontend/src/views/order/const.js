@@ -4,7 +4,6 @@ export const StatusOptions = [
   { value: 2, label: "Complete" },
   { value: 3, label: "Pending" },
   { value: 4, label: "Cancel" },
-  { value: 5, label: "Delete" }
 ];
 
 export const ServiceOptions = [
