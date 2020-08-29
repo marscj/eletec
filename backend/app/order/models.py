@@ -32,6 +32,9 @@ class Order(models.Model):
         Cleaning = 3 #'House Cleaning',
         Duct = 4
 
+    # 逻辑删除
+    deleted = models.BooleanField(default=False, blank=True, null=True)
+
     # 订单状态
     status = models.IntegerField(blank=True, null=True, choices=Status.choices, default=Status.New)
     

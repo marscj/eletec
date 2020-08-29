@@ -10,6 +10,7 @@ from middleware.permission import CustomModelPermissions
 class OrderFilter(django_filters.FilterSet):
     user_id = django_filters.NumberFilter('user__id')
     status = django_filters.NumberFilter('status')
+    deleted = django_filters.BooleanFilter('deleted')
     from_date__gte = django_filters.DateTimeFilter('from_date', lookup_expr='gte')
     from_date__lte = django_filters.DateTimeFilter('from_date', lookup_expr='lte')
 
